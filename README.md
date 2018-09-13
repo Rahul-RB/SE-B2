@@ -9,12 +9,11 @@
 
 * Then, do whatever changes you've to do. Once you're done with changes and feel good enough to push the code, do these inside the cloned folder:
 
-`   git add .
-`
-`    git commit -m "Put meaningful message here"
-`
-`    git push origin master
-`
+	`git add .`
+	
+	`git commit -m "Put meaningful message here"`
+	
+	`git push origin master`
 
 * Then, once the code is reviewed and approved, you can issue a Pull request by doing the following:
 	* Go to your forked repository. 
