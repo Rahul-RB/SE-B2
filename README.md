@@ -1,6 +1,5 @@
 # SE-B2
 
----
 ## What to do?
 * Fork this repository by pressing the fork button on top.
 * Then, go to your profile, find the forked repository (it has the same name as the original repository). 
