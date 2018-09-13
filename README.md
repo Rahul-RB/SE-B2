@@ -23,5 +23,5 @@
 
 * An intro to github can be found here: 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=0fKg7e37bQE
-" target="_blank"><img src="http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" 
-alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+" target="_blank"><img src="http://img.youtube.com/vi/0fKg7e37bQE/0.jpg" 
+alt="Github Basic" width="240" height="180" border="10" /></a>
