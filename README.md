@@ -21,6 +21,6 @@
 	* Put a meaningful message, changed done and issue the request.
 	* Upon resolving conflicts, the code will be merged.
 
-* An intro to github can be found here: 
+* An intro to github can be found in this link: 
 
 [![Github Basic](http://img.youtube.com/vi/0fKg7e37bQE/0.jpg)](http://www.youtube.com/watch?v=0fKg7e37bQE)
