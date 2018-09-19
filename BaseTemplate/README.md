@@ -6,4 +6,6 @@
 
 - For CSS, see the `css` folder, find the `style.css` folder and place you CSS in between the comments only.
 
+- For JS, see the `<script>` tag and place you JS in between the comments only.
+
 - Don't disturb any code which is not marked for editing. Any issues, mark as an "issue" in the repo and ask the doubt.
