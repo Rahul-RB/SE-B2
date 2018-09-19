@@ -1,5 +1,9 @@
 # Where to place your content?
 
+- Make the folder for your interface. Copy the contents of this folder into your new folder. Then do the following. 
+
+- Further instructions are mentioned in `index.html` only.
+
 - In `index.html` you'll find a comment `<!-- START EDITING FROM HERE -->`.
 
 - Below that comment is a `<div>` with `id="customContent"`. Place your `divs`  in that div only.
