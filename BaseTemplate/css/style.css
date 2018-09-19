@@ -238,12 +238,29 @@ a.article:hover {
 
 #customContent{
     margin-top: 50px;
+    margin-bottom: 50px;
 }
 
-#collapseButton{
-
+/* ---------------------------------------------------
+    FOOTER STYLE
+----------------------------------------------------- */
+.footer {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: #164719;
+    color: #FFFFFF;
 }
 
+#footerDiv{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.footerSocialIcons{
+    margin-left: 20px;
+}
 /*
     End - Don't touch this code
 */
