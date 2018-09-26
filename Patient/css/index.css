@@ -16,18 +16,89 @@
 }
 
 .topRowButtons{
+    background-color: #14489b;
+    border: none;
     white-space: normal;
 }
 
 #setReminderDiv{
-    margin-top: 10px;
-    font-size: 15px;
+    margin-top: 15px;
+    font-size: 15px;    
 }
+
+.topRowWrapper{
+    background-color: white;
+}
+#topRowLeftWrapper{
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+.timeline-body{
+    overflow-x: hidden!important;
+}
+
 #setReminderDivTitle{
     font-size: 20px;
 }
 
+#setReminderDivContent{
+    font-size: 15px;
+}
 
+#searchTextBox{
+    width: 90%;
+    padding: 15px 0 15px 20px;
+    font-size: 16px;
+    border: 0 none;
+    height: 30px;
+    margin-right: 0;
+    color: white;
+    outline: none;
+    background-color: buttonface;
+    float: left;
+    transition: all 0.15s;
+}
+
+#searchTextBox::-webkit-input-placeholder {
+  color: #000000;
+}
+#searchTextBox::-moz-placeholder {
+  color: #000000;
+}
+#searchTextBox:-ms-input-placeholder {
+  color: #000000;
+}
+#searchTextBox:-moz-placeholder {
+  color: #000000;
+}
+
+
+#searchTextBox:focus {
+    /*background: rgb(64, 151, 119);*/
+    background-color: #14489b;
+}
+
+#searchBtn {
+    width: 10%;
+    border: 0 none;
+    float: left;
+    padding: 0;
+    height: 30px;
+    cursor: pointer;
+}
+
+#doctorTimeScroll{
+    /*width: 100%;*/
+}
+
+@media screen and (max-width: 1024px) {
+    #searchTextBox{
+        width: 80%;
+    }
+    #searchBtn{
+        width: 20%;    
+    }
+}
 
 /*
     End - Writing your custom CSS here, or make your own CSS file.
@@ -45,7 +116,7 @@
 
 body {
     font-family: 'Roboto',  sans-serif;
-    background: #fafafa;
+    background: #f2f2f2;
 }
 
 nav a,
@@ -70,6 +141,9 @@ footer a:focus {
     border-radius: 0;
     margin-bottom: 40px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(143,143,143,1);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(143,143,143,1);
+    box-shadow: 0px 3px 5px 0px rgba(143,143,143,1);
 }
 
 .navbar-btn {

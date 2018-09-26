@@ -31,19 +31,30 @@ $(document).ready(function () {
     $("#myTimeline").timeline({
         startDatetime: '2017-05-28',
         rangeAlign: 'center'
-      });
+    });
 
-      $("#myTimeline").on('afterRender.timeline', function(){
+    $("#myTimeline").on('afterRender.timeline', function(){
         // usage bootstrap's popover
         $('.timeline-node').each(function(){
-          if ( $(this).data('toggle') === 'popover' ) {
-            $(this).attr( 'title', $(this).text() );
-            $(this).popover({
-              trigger: 'hover'
-            });
-          }
+            if ( $(this).data('toggle') === 'popover' ) {
+                $(this).attr( 'title', $(this).text() );
+                $(this).popover({
+                    trigger: 'hover'
+                });
+            }
         });
-      });
-
+    });
+    // $("#").on("click", function(argument) {
+        
+    // });
+    // $("#").on("click", function(argument) {
+        
+    // });
+    // $("#").on("click", function(argument) {
+        
+    // });
+    $('#doctorTimeScroll').timepicker({ 
+            'scrollDefault': 'now' 
+    });
     /* End Adding your javascript here */
 });
