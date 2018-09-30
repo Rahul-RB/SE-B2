@@ -4,6 +4,7 @@
 - I've added you as collaborators for ease of pushing in future. 
 - Do not `push` directly to `master` branch. I.e., do NOT do : `git push origin master`
 - If you do want to directly `push` into this repository, create a branch, push into that branch and then lodge a PR as:
+
 	`git checkout -b <you-branch-name>`
 
 	` Do your changes, add and commit them.`
