@@ -1,5 +1,18 @@
 # SE-B2
 
+## Important note to collaborators:
+- I've added you as collaborators for ease of pushing in future. 
+- Do not `push` directly to `master` branch. I.e., do NOT do : `git push origin master`
+- If you do want to directly `push` into this repository, create a branch, push into that branch and then lodge a PR as:
+	`git checkout -b <you-branch-name>`
+
+	` Do your changes, add and commit them.`
+
+	`git push origin <your-branch-name>`
+- If you get any doubt on what branch you're on, then you can check that by doing `git status`.
+- Also, `git status` can be used to check what files you've changed. It'll also show files waiting to be commited and files ready to be pushed.
+
+
 ## What to do?
 * Fork this repository by pressing the fork button on top.
 * Then, go to your profile, find the forked repository (it has the same name as the original repository). 
