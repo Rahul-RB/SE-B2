@@ -49,6 +49,10 @@
     border: 0 none;
 }
 
+#doctorReminderOptions{
+    margin-top: 5px;
+}
+
 #setReminderDivTitle{
     font-size: 20px;
 }
@@ -91,8 +95,15 @@
 #searchTextBox:-moz-placeholder {
   color: #000000;
 }
-
-
+#labTestDropdown,#medicineDropdown{
+    margin-top: 5px;
+    /*width: 100%;*/
+    white-space: normal;
+}
+#labTestReminderOptions,#medicineReminderOptions{
+    padding-left: 0px;
+    padding-right: 0px;
+}
 #searchTextBox:focus,#searchBtn:focus {
     /*background: rgb(64, 151, 119);*/
     background-color: #164719;

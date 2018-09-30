@@ -224,10 +224,28 @@
                                                             <input id="doctorReminderMessage" type="text" class="form-control" name="reminderMessage" placeholder="Enter a reminder message" style="margin-left: 10px;border-radius: 0 !important;">
                                                         </div>
                                                         <div class="container-fluid tab-pane fade" id="labTestReminderOptions">
-                                                                       lab
+                                                            <div class="dropdown">
+                                                                <button class="btn btn-block dropdown-toggle" type="button" id="labTestDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Choose a Lab-Test-Request Document
+                                                                </button>
+                                                                <div class="dropdown-menu" aria-labelledby="labTestDropdown">
+                                                                    <a class="dropdown-item" href="#">Options to be added via javascript</a>
+                                                                    <a class="dropdown-item" href="#">Another action</a>
+                                                                    <a class="dropdown-item" href="#">Something else here</a>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="container-fluid tab-pane fade" id="medicineReminderOptions">
-                                                                       pharmacy
+                                                            <div class="dropdown">
+                                                                <button class="btn btn-block dropdown-toggle" type="button" id="medicineDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Choose a Prescription
+                                                                </button>
+                                                                <div class="dropdown-menu" aria-labelledby="medicineDropdown">
+                                                                    <a class="dropdown-item" href="#">Options to be added via javascript</a>
+                                                                    <a class="dropdown-item" href="#">Another action</a>
+                                                                    <a class="dropdown-item" href="#">Something else here</a>
+                                                                </div>
+                                                            </div>
                                                         </div>        
                                                         <button type="button" class="btn btn-success btn-block" id="setReminderBtn">Set Reminder</button> 
                                                     </div>

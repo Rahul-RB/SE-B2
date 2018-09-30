@@ -49,10 +49,12 @@ $(document).ready(function () {
     $("#labTestReminderOptions").hide();
 
     $("#medicineReminder").on("click", function(argument) {
+        $("#searchTextBox").attr("placeholder","Search for Pharmacies");
         $("#medicineReminderOptions").show();
         $("#labTestReminderOptions").hide();
     });
     $("#labTestReminder").on("click", function(argument) {
+        $("#searchTextBox").attr("placeholder","Search for Labs");
         $("#labTestReminderOptions").show();
         $("#medicineReminderOptions").hide();
     });
