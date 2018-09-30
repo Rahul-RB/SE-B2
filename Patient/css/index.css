@@ -104,7 +104,9 @@
     padding-left: 0px;
     padding-right: 0px;
 }
-#searchTextBox:focus,#searchBtn:focus {
+
+#searchTextBox:focus,
+#searchBtn:focus {
     /*background: rgb(64, 151, 119);*/
     background-color: #164719;
     color: #FFFFFF;
