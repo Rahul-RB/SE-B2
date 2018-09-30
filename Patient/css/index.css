@@ -21,6 +21,10 @@
     white-space: normal;
 }
 
+.noRadiusBtn{
+    border-radius: 0 !important;
+}
+
 #setReminderDiv{
     font-size: 15px;    
 }

@@ -152,7 +152,7 @@
                     <div class="container-fluid">
                         <div class="row" id="welcomeDiv">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                                Welcome back XXYYZZ
+                                Welcome back {{XXYYZZ}}
                             </div>
                         </div>
                         <hr class="welcomeHorLine">
@@ -164,10 +164,10 @@
                                         <div class="container-fluid" id="mainButtons">
                                             <div class="row">
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <button type="button" class="btn btn-primary btn-block topRowButtons" style="border-radius: 0 !important;">Request Lab Test</button>
+                                                    <button type="button" id="reqLabTestBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn">Request Lab Test</button>
                                                 </div>
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <button type="button" class="btn btn-primary btn-block topRowButtons" style="border-radius: 0 !important;">Book Medicines</button>                                    
+                                                    <button type="button" id="bookMedicineBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn">Book Medicines</button>                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -180,19 +180,6 @@
                                                             Set a Reminder
                                                         </div>
                                                         <div class="row" id="setReminderDivContent">
-<!--                                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                                                <input type="radio" id="doctorReminder" name="doctorReminder" checked>
-                                                                <label for="doctorReminder">Doctor Visit</label>
-                                                            </div>
-                                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                                                <input type="radio" id="medicineReminder" name="medicineReminder" >
-                                                                <label for="medicineReminder">Order Medicines</label>
-                                                            </div>
-                                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                                                <input type="radio" id="labTestReminder" name="labTestReminder" >
-                                                                <label for="labTestReminder">Lab Test</label>
-                                                            </div> -->
-                                                            <!-- <div class="d-flex flex-row justify-content-around nav-tabs"> -->
                                                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                                                 <ul class="nav nav-tabs nav-fill">
                                                                     <li class="nav-item" id="doctorReminder">
@@ -220,8 +207,8 @@
                                                     </div>
                                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-top: 5px;">
                                                         <div class="d-flex flex-row justify-content-around"> 
-                                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input" placeholder="Pick a time" style="border-radius: 0 !important;">
-                                                            <input id="doctorReminderMessage" type="text" class="form-control" name="reminderMessage" placeholder="Enter a reminder message" style="margin-left: 10px;border-radius: 0 !important;">
+                                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input noRadiusBtn" placeholder="Pick a time">
+                                                            <input id="doctorReminderMessage" type="text" class="form-control noRadiusBtn" name="reminderMessage" placeholder="Enter a reminder message" style="margin-left: 10px;">
                                                         </div>
                                                         <div class="container-fluid tab-pane fade" id="labTestReminderOptions">
                                                             <div class="dropdown">

@@ -28,6 +28,8 @@ $(document).ready(function () {
     });
     /* Do not disturb above lines */
     /* Start Adding your javascript here */
+
+    // START: jqeury timeline calendar code
     $("#myTimeline").timeline({
         startDatetime: '2017-05-28',
         rangeAlign: 'center'
@@ -44,10 +46,19 @@ $(document).ready(function () {
             }
         });
     });
+    // END: jqeury timeline calendar code
+
+    // START : Following lines are used to control the 
+    // Set reminder functionalities in tabs.
     $("#doctorReminderOptions").show();
     $("#medicineReminderOptions").hide();
     $("#labTestReminderOptions").hide();
 
+    $("#doctorReminder").on("click", function(argument) {
+        $("#searchTextBox").attr("placeholder","Search for Doctors");
+        $("#medicineReminderOptions").hide();
+        $("#labTestReminderOptions").hide();
+    });
     $("#medicineReminder").on("click", function(argument) {
         $("#searchTextBox").attr("placeholder","Search for Pharmacies");
         $("#medicineReminderOptions").show();
@@ -58,8 +69,13 @@ $(document).ready(function () {
         $("#labTestReminderOptions").show();
         $("#medicineReminderOptions").hide();
     });
+    //END : Set Reminder tab functionalities.
+
+    // START : jquery dropdown timeline code.
     $('#doctorTimeScroll').timepicker({ 
             'scrollDefault': 'now' 
     });
+    // END : jquery dropdown timeline code.
+
     /* End Adding your javascript here */
 });
