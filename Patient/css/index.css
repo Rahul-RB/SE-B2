@@ -45,12 +45,14 @@
     font-size: 15px;
 }
 
+#searchBtn,#searchTextBox{
+    height: 40px;
+}
 #searchTextBox{
     width: 90%;
     padding: 15px 0 15px 20px;
     font-size: 16px;
     border: 0 none;
-    height: 30px;
     margin-right: 0;
     color: white;
     outline: none;
@@ -73,9 +75,10 @@
 }
 
 
-#searchTextBox:focus {
+#searchTextBox:focus,#searchBtn:focus {
     /*background: rgb(64, 151, 119);*/
-    background-color: #14489b;
+    background-color: #164719;
+    color: #FFFFFF;
 }
 
 #searchBtn {
@@ -83,7 +86,6 @@
     border: 0 none;
     float: left;
     padding: 0;
-    height: 30px;
     cursor: pointer;
 }
 

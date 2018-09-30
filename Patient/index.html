@@ -156,11 +156,12 @@
                             </div>
                         </div>
                         <hr class="welcomeHorLine">
+
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xl-5 col-lg-5 col-md-5 col-sm-10 col-12">
                                     <div class="topRowWrapper" id="topRowLeftWrapper">
-                                        <div class="container-fluid">
+                                        <div class="container-fluid" >
                                             <div class="row">
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                                                     <button type="button" class="btn btn-primary btn-block topRowButtons">Request Lab Test</button>
@@ -197,13 +198,15 @@
                                         </div>
                                         <div class="container-fluid">
                                             <div class="row">
-                                                <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                                                    <!-- <input type="doctorSearchBar" name="doctorSearchBar"> -->
+                                                <div class="col-xl-12 col-lg-12 col-md-12 col-12 input-group">
                                                     <input type="text" name="searchTextBox" id="searchTextBox" placeholder="Search for doctors">
                                                     <button name="searchBtn" id="searchBtn"><i class="fas fa-search"></i></button>
                                                 </div>
                                                 <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-top: 5px;">
-                                                    <input id="doctorTimeScroll" type="text" class="time ui-timepicker-input" placeholder="Pick a time">
+                                                    <div class="d-flex flex-row justify-content-around"> 
+                                                        <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input" placeholder="Pick a time">
+                                                        <input id="reminderMessage" type="text" class="form-control" name="reminderMessage">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
