@@ -27,6 +27,8 @@ $(document).ready(function () {
     
     });
     /* Do not disturb above lines */
+
+
     /* Start Adding your javascript here */
 
     // START: jqeury timeline calendar code
@@ -47,6 +49,18 @@ $(document).ready(function () {
         });
     });
     // END: jqeury timeline calendar code
+
+    // START: Request Lab Test functionality
+    $("#reqLabTestBtn").on("click",function(argument){
+
+    });
+    // END : Request Lab Test functionality
+
+    // START: Buy Medicine functionality
+    $("#reqLabTestBtn").on("click",function(argument){
+        
+    });
+    // END : Buy Medicine functionality
 
     // START : Following lines are used to control the 
     // Set reminder functionalities in tabs.
