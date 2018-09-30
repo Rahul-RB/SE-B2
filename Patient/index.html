@@ -159,18 +159,19 @@
 
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-10 col-12">
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-10 col-12" id="topRowLeftWrapperCol">
                                     <div class="topRowWrapper" id="topRowLeftWrapper">
                                         <div class="container-fluid" id="mainButtons">
                                             <div class="row">
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <button type="button" class="btn btn-primary btn-block topRowButtons">Request Lab Test</button>
+                                                    <button type="button" class="btn btn-primary btn-block topRowButtons" style="border-radius: 0 !important;">Request Lab Test</button>
                                                 </div>
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <button type="button" class="btn btn-primary btn-block topRowButtons">Book Medicines</button>                                    
+                                                    <button type="button" class="btn btn-primary btn-block topRowButtons" style="border-radius: 0 !important;">Book Medicines</button>                                    
                                                 </div>
                                             </div>
                                         </div>
+                                        <hr class="mainButtonsHorLine">
                                         <div class="container-fluid">
                                             <div class="row">
                                                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -179,7 +180,7 @@
                                                             Set a Reminder
                                                         </div>
                                                         <div class="row" id="setReminderDivContent">
-                                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+<!--                                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
                                                                 <input type="radio" id="doctorReminder" name="doctorReminder" checked>
                                                                 <label for="doctorReminder">Doctor Visit</label>
                                                             </div>
@@ -190,22 +191,45 @@
                                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
                                                                 <input type="radio" id="labTestReminder" name="labTestReminder" >
                                                                 <label for="labTestReminder">Lab Test</label>
+                                                            </div> -->
+                                                            <!-- <div class="d-flex flex-row justify-content-around nav-tabs"> -->
+                                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                                <ul class="nav nav-tabs nav-fill">
+                                                                    <li class="nav-item" id="doctorReminder">
+                                                                        <a class="nav-link active" href="#doctorReminderOptions" data-toggle="tab"  role="tab" aria-controls="doctorReminder" aria-selected="true">Doctor Visit</a>
+                                                                    </li>
+                                                                    <li class="nav-item" id="medicineReminder">
+                                                                        <a class="nav-link" href="#medicineReminderOptions" data-toggle="tab"  role="tab" aria-controls="medicineReminder" aria-selected="true">Order Medicines</a>
+                                                                    </li>
+                                                                    <li class="nav-item" id="labTestReminder">
+                                                                        <a class="nav-link" href="#labTestReminderOptions" data-toggle="tab"  role="tab" aria-controls="labTestReminder" aria-selected="true">Lab Test</a>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-xl-12 col-lg-12 col-md-12 col-12 input-group">
-                                                    <input type="text" name="searchTextBox" id="searchTextBox" placeholder="Search for doctors">
-                                                    <button name="searchBtn" id="searchBtn"><i class="fas fa-search"></i></button>
-                                                </div>
-                                                <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-top: 5px;">
-                                                    <div class="d-flex flex-row justify-content-around"> 
-                                                        <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input" placeholder="Pick a time">
-                                                        <input id="reminderMessage" type="text" class="form-control" name="reminderMessage">
+                                        <div class="tab-content">
+                                            <div class="container-fluid tab-pane fade show active" id="doctorReminderOptions">
+                                                <div class="row">
+                                                    <div class="col-xl-12 col-lg-12 col-md-12 col-12 input-group">
+                                                        <input type="text" name="searchTextBox" id="searchTextBox" placeholder="Search for doctors">
+                                                        <button name="searchBtn" id="searchBtn"><i class="fas fa-search"></i></button>
+                                                    </div>
+                                                    <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-top: 5px;">
+                                                        <div class="d-flex flex-row justify-content-around"> 
+                                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input" placeholder="Pick a time" style="border-radius: 0 !important;">
+                                                            <input id="doctorReminderMessage" type="text" class="form-control" name="reminderMessage" placeholder="Enter a reminder message" style="margin-left: 10px;border-radius: 0 !important;">
+                                                        </div>
+                                                        <div class="container-fluid tab-pane fade" id="labTestReminderOptions">
+                                                                       lab
+                                                        </div>
+                                                        <div class="container-fluid tab-pane fade" id="medicineReminderOptions">
+                                                                       pharmacy
+                                                        </div>        
+                                                        <button type="button" class="btn btn-success btn-block" id="setReminderBtn">Set Reminder</button> 
                                                     </div>
                                                 </div>
                                             </div>
@@ -213,7 +237,7 @@
                                     </div>
                                 </div>
                                 <div class="topRowWrapper col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12" id = "myTimelineCol">
-                                    <div class="" id="myTimeline">
+                                    <div id="myTimeline">
                                         <ul class="container-fluid timeline-events">
                                             <li>Not allowed event definition</li>
                                             <li data-timeline-node="{ start:'2017-5-29 8:00',end:'2017-5-29 10:30',content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis luctus tortor nec bibendum malesuada. Etiam sed libero cursus, placerat est at, fermentum quam. In sed fringilla mauris. Fusce auctor turpis ac imperdiet porttitor. Duis vel pharetra magna, ut mollis libero. Etiam cursus in leo et viverra. Praesent egestas dui a magna eleifend, id elementum felis maximus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum sed elit gravida, euismod nunc id, ullamcorper tellus. Morbi elementum urna faucibus tempor lacinia. Quisque pharetra purus at risus tempor hendrerit. Nam dui justo, molestie quis tincidunt sit amet, eleifend porttitor mauris. Maecenas sit amet ex vitae mi finibus pharetra. Donec vulputate leo eu vestibulum gravida. Ut in facilisis dolor, vitae iaculis dui.' }">Event Label</li>

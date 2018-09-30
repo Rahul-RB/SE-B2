@@ -44,15 +44,18 @@ $(document).ready(function () {
             }
         });
     });
-    // $("#").on("click", function(argument) {
-        
-    // });
-    // $("#").on("click", function(argument) {
-        
-    // });
-    // $("#").on("click", function(argument) {
-        
-    // });
+    $("#doctorReminderOptions").show();
+    $("#medicineReminderOptions").hide();
+    $("#labTestReminderOptions").hide();
+
+    $("#medicineReminder").on("click", function(argument) {
+        $("#medicineReminderOptions").show();
+        $("#labTestReminderOptions").hide();
+    });
+    $("#labTestReminder").on("click", function(argument) {
+        $("#labTestReminderOptions").show();
+        $("#medicineReminderOptions").hide();
+    });
     $('#doctorTimeScroll').timepicker({ 
             'scrollDefault': 'now' 
     });

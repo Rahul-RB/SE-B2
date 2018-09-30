@@ -22,7 +22,6 @@
 }
 
 #setReminderDiv{
-    margin-top: 15px;
     font-size: 15px;    
 }
 
@@ -37,12 +36,31 @@
     overflow-x: hidden!important;
 }
 
+#mainButtons{
+    padding-bottom: 5px;
+}
+
+.mainButtonsHorLine{
+    height: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#f2f2f2;
+    color:#f2f2f2;
+    border: 0 none;
+}
+
 #setReminderDivTitle{
     font-size: 20px;
 }
 
 #setReminderDivContent{
     font-size: 15px;
+}
+
+#setReminderBtn{
+    border: none;
+    margin-top: 5px; 
+    border-radius: 0 !important;
 }
 
 #searchBtn,#searchTextBox{
@@ -99,6 +117,14 @@
     }
     #searchBtn{
         width: 20%;    
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #topRowLeftWrapperCol{
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-bottom: 10px;
     }
 }
 
