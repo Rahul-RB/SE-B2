@@ -85,11 +85,11 @@ $(document).ready(function () {
     });
     //END : Set Reminder tab functionalities.
 
-    // START : jquery dropdown timeline code.
+    // START : jquery dropdown timepicker code.
     $('#doctorTimeScroll').timepicker({ 
             'scrollDefault': 'now' 
     });
-    // END : jquery dropdown timeline code.
+    // END : jquery dropdown timepicker code.
 
     /* End Adding your javascript here */
 });
