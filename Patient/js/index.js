@@ -52,7 +52,8 @@ $(document).ready(function () {
 
     // START: Request Lab Test functionality
     $("#reqLabTestBtn").on("click",function(argument){
-
+        $("#my_popup").show();
+        $("#my_popup").popup();
     });
     // END : Request Lab Test functionality
 

@@ -165,10 +165,24 @@
                                         <div class="container-fluid" id="mainButtons">
                                             <div class="row">
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <button type="button" id="reqLabTestBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn">Request Lab Test</button>
+                                                    <button type="button" id="reqLabTestBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn my_popup_open">Request Lab Test</button>
+
+                                                    <!-- Add content to the popup -->
+                                                    <div id="my_popup" style="display: none;">
+                                                        LAB TEST
+                                                        <!-- Add an optional button to close the popup -->
+                                                        <button class="my_popup_close">Close</button>
+
+                                                    </div>
                                                 </div>
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <button type="button" id="bookMedicineBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn">Buy Medicines</button>                                    
+                                                    <button type="button" id="bookMedicineBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn my_popup_open">Buy Medicines</button>                                    
+                                                    <!-- Add content to the popup -->
+                                                    <div id="my_popup_1" style="display: none;">
+                                                        BUY MEDICINES
+                                                        <!-- Add an optional button to close the popup -->
+                                                        <button class="my_popup_close">Close</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -321,21 +335,31 @@
 
         <div class="overlay"></div>
 
-        <!-- jQuery CDN - Slim version (=without AJAX) -->
+        <!-- jQuery CDN -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
         <!-- tether 1.4.0 (for using bootstrap's tooltip component) -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
+        
         <!-- Popper.JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+        
         <!-- Bootstrap JS -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+        
         <!-- jQuery Custom Scroller CDN -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+        
         <!-- jQuery Timeline -->
         <script src="./js/JqueryTimeline/timeline.min.js?ver=1.0.5"></script>
+        
         <!-- jQuery Timepicker -->
         <!-- <script src="https://cdn.jsdelivr.net/npm/timepicker/jquery.timepicker.min.js"></script> -->
         <script src="./js/JqueryTimepicker/jquery.timepicker.min.js"></script>
+        
+        <!-- Include jQuery Popup Overlay -->
+        <script src="https://cdn.rawgit.com/vast-engineering/jquery-popup-overlay/1.7.13/jquery.popupoverlay.js"></script>
+        
         <!-- Out own script -->
         <script src="./js/index.js"></script>
     </body>
