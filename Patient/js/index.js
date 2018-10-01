@@ -58,8 +58,9 @@ $(document).ready(function () {
     // END : Request Lab Test functionality
 
     // START: Buy Medicine functionality
-    $("#reqLabTestBtn").on("click",function(argument){
-        
+    $("#bookMedicineBtn").on("click",function(argument){
+        $("#my_popup_1").show();
+        $("#my_popup_1").popup();        
     });
     // END : Buy Medicine functionality
 
