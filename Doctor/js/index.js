@@ -34,7 +34,7 @@ $(document).ready(function () {
         console.log('pressed');
         $('#notifications').toggle("slow");
     }
-    $("#notifContainerClose").on("click",function(){
+    $("#notifContainerCloseBtn").on("click",function(){
         toggleNotif();
     });
     $("#navbar-toggler").on("click",function(){

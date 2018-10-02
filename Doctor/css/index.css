@@ -26,11 +26,17 @@
 
 #notifContainer {
 	width: 270px;
-	margin-top: 110px;
+	margin-top: 160px;
 }
 
-#notifContainerClose{
+#notifContainerCloseBtn{
 	position: fixed;
+	width: 270px;
+	border:none;
+	border-radius: 0;
+	background-color: #164719;
+	margin-top: 2px;
+	margin-bottom: 2px;
 }
 
 #notifications tr {
@@ -48,4 +54,16 @@
 
 #notifications::-webkit-scrollbar {
     width: 0 !important;
+}
+@media only screen and (max-width: 600px) {
+    #notifContainerCloseBtn {
+		margin-top: 10px;
+		margin-bottom: 10px;
+        top:50px;
+    }
+}
+@media only screen and (max-width: 1440px) {
+    #notifContainerCloseBtn {
+        top:55px;
+    }
 }
