@@ -27,6 +27,7 @@ $(document).ready(function () {
     
     });
     /* Do not disturb above lines */
+    
     /* Start Adding your javascript here */
     $('#notifications').hide();
     $('#navbar-toggler').click(function(){
