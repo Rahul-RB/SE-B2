@@ -30,9 +30,19 @@ $(document).ready(function () {
     
     /* Start Adding your javascript here */
     $('#notifications').hide();
-    $('#navbar-toggler').click(function(){
+    function toggleNotif(){
         console.log('pressed');
         $('#notifications').toggle("slow");
+    }
+    $("#notifContainerClose").on("click",function(){
+        toggleNotif();
     });
+    $("#navbar-toggler").on("click",function(){
+        toggleNotif();
+    });
+    // $('#navbar-toggler').click(function(){
+    //     console.log('pressed');
+    //     $('#notifications').toggle("slow");
+    // });
     /* End Adding your javascript here */
 });

@@ -24,9 +24,13 @@
 	right:0;
 }
 
-#notif-container {
+#notifContainer {
 	width: 270px;
 	margin-top: 110px;
+}
+
+#notifContainerClose{
+	position: fixed;
 }
 
 #notifications tr {
@@ -43,5 +47,5 @@
 }
 
 #notifications::-webkit-scrollbar {
-        width: 0 !important;
-    }
+    width: 0 !important;
+}
