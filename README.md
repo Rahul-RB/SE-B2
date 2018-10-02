@@ -2,7 +2,8 @@
 
 ## Important note to collaborators:
 - I've added you as collaborators for ease of pushing in future. 
-- Do not `push` directly to `master` branch. I.e., do NOT do : `git push origin master`
+- Do not `push` directly to `master` branch. I.e., do NOT do : `git push origin master`.
+- There's 7 branches including master branch. You can select your corresponding branch and work on it. Lodge PRs from that directly.
 - If you do want to directly `push` into this repository, create a branch, push into that branch and then lodge a PR as:
 
 	`git checkout -b <you-branch-name>`
