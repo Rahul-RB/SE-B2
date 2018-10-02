@@ -164,28 +164,52 @@
                                     <div class="topRowWrapper" id="topRowLeftWrapper">
                                         <div class="container-fluid" id="mainButtons">
                                             <div class="row">
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <button type="button" id="reqLabTestBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn my_popup_open">Request Lab Test</button>
-
-                                                    <!-- Add content to the popup -->
-                                                    <div id="my_popup" style="display: none;">
-                                                        LAB TEST
-                                                        <!-- Add an optional button to close the popup -->
-                                                        <button class="my_popup_close">Close</button>
-
-                                                    </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 popupClass">
+                                                    <button type="button" id="reqLabTestBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn basic_open"></button>
                                                 </div>
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <button type="button" id="bookMedicineBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn my_popup_open">Buy Medicines</button>                                    
-                                                    <!-- Add content to the popup -->
-                                                    <div id="my_popup_1" style="display: none;">
-                                                        BUY MEDICINES
-                                                        <!-- Add an optional button to close the popup -->
-                                                        <button class="my_popup_close">Close</button>
-                                                    </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 popupClass">
+                                                    <button type="button" id="bookMedicineBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn basic2_open">Buy Medicines</button>
+
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <!-- Request Lab Test -->
+
+                                        <div id="basic" class="popupWrapperDiv">
+                                            <div class="container">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-md-auto col-auto">                                                        
+                                                    </div>
+                                                    <div class="col-md-4 col-4" class="popupDiv">
+
+                                                    </div>
+                                                    <div class="col-md-auto col-auto">                                                        
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <button class="basic_close btn btn-default">Close</button>
+                                        </div>
+
+                                        <!-- Buy Medicines -->
+
+                                        <div id="basic2" class="popupWrapperDiv">
+                                            <div class="container">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-md-auto col-auto">                                                        
+                                                    </div>
+                                                    <div class="col-md-4 col-4" class="popupDiv">
+
+                                                    </div>
+                                                    <div class="col-md-auto col-auto">                                                        
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <button class="basic2_close btn btn-default">Close</button>
+                                        </div>
+
                                         <hr class="mainButtonsHorLine">
                                         <div class="container-fluid">
                                             <div class="row">
@@ -287,6 +311,9 @@
                                 </div>
                                 <!-- /.col -->
                             </div>
+                            <div class="row">
+                                
+                            </div>
                         </div>
                     </div>
                     <div class="modal fade" id="myModal">
@@ -358,7 +385,7 @@
         <script src="./js/JqueryTimepicker/jquery.timepicker.min.js"></script>
         
         <!-- Include jQuery Popup Overlay -->
-        <script src="https://cdn.rawgit.com/vast-engineering/jquery-popup-overlay/1.7.13/jquery.popupoverlay.js"></script>
+        <script src="./js/jquery.popupoverlay.js"></script>
         
         <!-- Out own script -->
         <script src="./js/index.js"></script>

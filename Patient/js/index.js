@@ -50,17 +50,23 @@ $(document).ready(function () {
     });
     // END: jqeury timeline calendar code
 
+    // START: Popup defaults
+    $.fn.popup.defaults.pagecontainer = '.popupClass';
+    $('#basic').popup();
+    $('#basic2').popup();
+
+    // END : Popup defaults
+
     // START: Request Lab Test functionality
+    $("#reqLabTestBtn").html("Request Lab Test");
     $("#reqLabTestBtn").on("click",function(argument){
-        $("#my_popup").show();
-        $("#my_popup").popup();
+
     });
     // END : Request Lab Test functionality
 
     // START: Buy Medicine functionality
     $("#bookMedicineBtn").on("click",function(argument){
-        $("#my_popup_1").show();
-        $("#my_popup_1").popup();        
+          
     });
     // END : Buy Medicine functionality
 

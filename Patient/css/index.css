@@ -25,6 +25,13 @@
     border-radius: 0 !important;
 }
 
+.popupWrapperDiv{
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    display:none;
+    margin:1em;
+}
+
+
 #setReminderDiv{
     font-size: 15px;    
 }
