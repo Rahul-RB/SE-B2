@@ -37,7 +37,7 @@ $(document).ready(function () {
     $("#notifContainerCloseBtn").on("click",function(){
         toggleNotif();
     });
-    $("#navbar-toggler").on("click",function(){
+    $("#notifToggler").on("click",function(){
         toggleNotif();
     });
     // $('#navbar-toggler').click(function(){
