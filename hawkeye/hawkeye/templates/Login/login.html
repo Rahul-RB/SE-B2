@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--Favicon-->
-        <link rel="icon" type="image/png" href="./images/icons/favicon.ico"/>
+        <link rel="icon" type="image/png" href = {{ url_for("static",filename="images/icons/favicon.ico") }}/>
         
         <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -17,17 +17,17 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         
         <!--animate.css-->
-        <link rel="stylesheet" type="text/css" href = {{url_for("static",filename="vendor/animate/animate.css")}} >
+        <link rel="stylesheet" type="text/css" href = {{ url_for("static",filename="vendor/animate/animate.css") }} >
         
         <!--Hamburgers-CSS-->
-        <link rel="stylesheet" type="text/css" href= {{url_for("static",filename="vendor/css-hamburgers/hamburgers.min.css")}}>
+        <link rel="stylesheet" type="text/css" href= {{ url_for("static",filename="vendor/css-hamburgers/hamburgers.min.css") }}>
         
         <!--Selecte2-CSS-->
-        <link rel="stylesheet" type="text/css" href= {{url_for("static",filename="vendor/select2/select2.min.css")}}>
+        <link rel="stylesheet" type="text/css" href= {{ url_for("static",filename="vendor/select2/select2.min.css") }}>
         
         <!--Our Custom CSS-->
-        <link rel="stylesheet" type="text/css" href = {{url_for("static",filename="css/Login/main.css")}} >
-        <link rel="stylesheet" type="text/css" href = {{url_for("static",filename="css/Login/util.css")}} >
+        <link rel="stylesheet" type="text/css" href = {{ url_for("static",filename="css/Login/login.css") }} >
+        <link rel="stylesheet" type="text/css" href = {{ url_for("static",filename="css/Login/util.css") }} >
 
     </head>
     <body>
@@ -36,7 +36,7 @@
             <div class="container-login100">
                 <div class="wrap-login100">
                     <div class="login100-pic js-tilt" data-tilt>
-                        <img src={{url_for("static",filename="images/Login/img-01.png")}} alt="IMG">
+                        <img src={{ url_for("static",filename="images/Login/img-01.png") }} alt="IMG">
                     </div>
 
                     <form class="login100-form validate-form">
@@ -76,7 +76,7 @@
                         </div>
 
                         <div class="text-center p-t-136">
-                            <a class="txt2" href="./register/index_patient.html">
+                            <a class="txt2" href= {{ url_for("register_patient") }}>
                                 Create your Account
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                             </a>
@@ -100,10 +100,10 @@
 
         
         <!--Select2 - JS-->
-        <script src={{url_for("static",filename="vendor/select2/select2.min.js")}}></script>
+        <script src={{ url_for("static",filename="vendor/select2/select2.min.js") }}></script>
         
         <!--Tilt - JS-->
-        <script src={{url_for("static",filename="vendor/tilt/tilt.jquery.min.js")}}></script>
+        <script src={{ url_for("static",filename="vendor/tilt/tilt.jquery.min.js") }}></script>
         
         <script type="text/javascript">
             $('.js-tilt').tilt({
@@ -112,7 +112,7 @@
         </script>
 
         <!--Our JS-->
-        <script src={{url_for("static",filename="js/Login/main.js")}}></script>
+        <script src={{ url_for("static",filename="js/Login/login.js") }}></script>
 
 </body>
 </html>
