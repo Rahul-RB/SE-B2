@@ -1,5 +1,5 @@
 from hawkeye import app
-from flask import render_template
+from flask import Flask,render_template,redirect,url_for
 
 @app.route("/")
 def home():
@@ -8,6 +8,10 @@ def home():
 @app.route("/login")
 def login():
 	return render_template("Login/login.html")
+
+@app.route("/register")
+def register():
+	return redirect(url_for("register_patient"))
 
 @app.route("/register_patient")
 def register_patient():
@@ -24,3 +28,7 @@ def register_lab():
 @app.route("/register_pharmacy")
 def register_pharmacy():
 	return render_template("Register/register_pharmacy.html",title="Pharmacy")
+
+@app.route("/patient")
+def patient():
+	return render_template("Patient/patient.html",title="Patient",user="BABA")
