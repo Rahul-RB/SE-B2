@@ -32,3 +32,20 @@ def register_pharmacy():
 @app.route("/patient")
 def patient():
 	return render_template("Patient/patient.html",title="Patient",user="BABA")
+
+@app.route("/doctor")
+def doctor():
+	return render_template("Doctor/doctor.html",title="Doctor",user="BABA")
+
+
+@app.route("/prescription_history")
+def prescription_history():
+	return render_template("Doctor/prescription_history.html",title="Doctor",user="BABA")
+
+@app.route("/history")
+def history():
+	return render_template("Doctor/history.html",title="Doctor",user="BABA")
+
+@app.route("/eprescription")
+def eprescription():
+	return render_template("Doctor/eprescription.html",title="Doctor",user="BABA")
