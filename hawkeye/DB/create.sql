@@ -155,7 +155,6 @@ CREATE TABLE Doctor_feedback (
 );
 
 
-
 CREATE TABLE Lab_login (
     lab_id integer,
     password varchar(100),
