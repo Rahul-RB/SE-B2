@@ -1,0 +1,410 @@
+/*
+    Start - Writing your custom CSS here, or make your own CSS file.
+*/
+#welcomeDiv{
+    font-size: 24px;
+    margin-bottom: 10px; 
+}
+
+.welcomeHorLine{ 
+    border: 0; 
+    height: 1px; 
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); 
+}
+
+.topRowButtons{
+    background-color: #14489b;
+    border: none;
+    white-space: normal;
+}
+
+.noRadiusBtn{
+    border-radius: 0 !important;
+}
+
+.popupWrapperDiv{
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    display:none;
+    margin:1em;
+}
+
+
+#setReminderDiv{
+    font-size: 15px;    
+}
+
+.topRowWrapper{
+    background-color: white;
+}
+#topRowLeftWrapper{
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+.timeline-body{
+    overflow-x: hidden!important;
+}
+
+#mainButtons{
+    padding-bottom: 5px;
+}
+
+.mainButtonsHorLine{
+    height: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#f2f2f2;
+    color:#f2f2f2;
+    border: 0 none;
+}
+
+#doctorReminderOptions{
+    margin-top: 5px;
+}
+
+#setReminderDivTitle{
+    font-size: 20px;
+}
+
+#setReminderDivContent{
+    font-size: 15px;
+}
+
+#setReminderBtn{
+    border: none;
+    margin-top: 5px; 
+    border-radius: 0 !important;
+}
+
+#searchBtn,#searchTextBox{
+    height: 40px;
+}
+#searchTextBox{
+    width: 90%;
+    padding: 15px 0 15px 20px;
+    font-size: 16px;
+    border: 0 none;
+    margin-right: 0;
+    color: white;
+    outline: none;
+    background-color: buttonface;
+    float: left;
+    transition: all 0.4s;
+}
+
+#searchTextBox::-webkit-input-placeholder {
+  color: #000000;
+}
+#searchTextBox::-moz-placeholder {
+  color: #000000;
+}
+#searchTextBox:-ms-input-placeholder {
+  color: #000000;
+}
+#searchTextBox:-moz-placeholder {
+  color: #000000;
+}
+#labTestDropdown,#medicineDropdown{
+    margin-top: 5px;
+    /*width: 100%;*/
+    white-space: normal;
+}
+#labTestReminderOptions,#medicineReminderOptions{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#searchTextBox:focus,
+#searchBtn:focus {
+    /*background: rgb(64, 151, 119);*/
+    background-color: #164719;
+    color: #FFFFFF;
+}
+
+#searchBtn:focus{
+    transition: all 0.4s;
+}
+
+#searchBtn {
+    width: 10%;
+    border: 0 none;
+    float: left;
+    padding: 0;
+    cursor: pointer;
+}
+
+#doctorTimeScroll{
+    /*width: 100%;*/
+}
+
+@media screen and (max-width: 1024px) {
+    #searchTextBox{
+        width: 80%;
+    }
+    #searchBtn{
+        width: 20%;    
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #topRowLeftWrapperCol{
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-bottom: 10px;
+    }
+}
+
+/*
+    End - Writing your custom CSS here, or make your own CSS file.
+*/
+
+
+
+
+
+
+/*
+    Start - Don't touch this code
+*/
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+
+body {
+    font-family: 'Roboto',  sans-serif;
+    background: #f2f2f2;
+}
+
+nav a,
+nav a:hover,
+nav a:focus,
+footer a,
+footer a:hover,
+footer a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+/* ---------------------------------------------------
+    NAVBAR STYLE
+----------------------------------------------------- */
+.navbar {
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(143,143,143,1);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(143,143,143,1);
+    box-shadow: 0px 3px 5px 0px rgba(143,143,143,1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+#topNav{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+    width: 100%;
+    background-color: #14489b;
+    color: #FFFFFF;
+}
+
+#navbarBrand{
+    font-size: 24px;
+    text-align: center;
+}
+
+#navbarList li{
+    display: inline;
+}
+
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    height: 100vh;
+    z-index: 999;
+    background: #7386D5;
+    color: #fff;
+    transition: all 0.3s;
+    overflow-y: scroll;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+#sidebarCollapse{
+    background-color: transparent;
+}
+
+#sidebarCollapse:hover{
+    cursor: pointer;
+}
+
+#sidebar.active {
+    left: 0;
+}
+
+#dismiss {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background: #7386D5;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+#dismiss:hover {
+    background: #fff;
+    color: #7386D5;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #6d7fcc;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #7386D5;
+    background: #fff;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #6d7fcc;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6d7fcc;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#customContent{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* ---------------------------------------------------
+    FOOTER STYLE
+----------------------------------------------------- */
+.footer {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: #164719;
+    color: #FFFFFF;
+    margin-top: 50px;
+    /*z-index: 99999!important;*/
+}
+
+#footerDiv{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.footerSocialIcons{
+    margin-left: 20px;
+}
+/*
+    End - Don't touch this code
+*/
+

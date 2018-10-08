@@ -1,0 +1,69 @@
+/*-----------------------------------------------------------
+  Index page css additions
+  ----------------------------------------------------------*/
+
+#buttons-patient {
+	margin-top: 10%;
+}
+
+#num-patients {
+	font-size: 20px;
+}
+
+#notifications {
+	position: fixed;
+	top:0;
+	margin-top: 60px;
+	margin-right: 30px;
+	background-color: #eee; 
+	height: 400px;
+	width: 280px;
+	padding: 5px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	right:0;
+}
+
+#notifContainer {
+	width: 270px;
+	margin-top: 160px;
+}
+
+#notifContainerCloseBtn{
+	position: fixed;
+	width: 270px;
+	border:none;
+	border-radius: 0;
+	background-color: #164719;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+#notifications tr {
+	background: #fff;
+	border: #eee 6px solid;
+	height: 60px;
+}
+
+#notifications tr td {
+	/*border-radius: 15px;*/
+	padding: 10px;
+	color: black;
+	font-size: 10px; 	
+}
+
+#notifications::-webkit-scrollbar {
+    width: 0 !important;
+}
+@media only screen and (max-width: 600px) {
+    #notifContainerCloseBtn {
+		margin-top: 10px;
+		margin-bottom: 10px;
+        top:50px;
+    }
+}
+@media only screen and (max-width: 1440px) {
+    #notifContainerCloseBtn {
+        top:55px;
+    }
+}

@@ -1,0 +1,63 @@
+{% extends "Base/base.html" %}
+
+{% block customCSS %}
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href={{ url_for("static",filename="css/Doctor/style.css") }}>
+
+{% endblock %}
+
+{% block customContent %}
+
+    <div class="container">
+        <h2>Hover Rows</h2>
+        <a href={{ url_for("eprescription") }} class="btn btn-info" role="button">Write Prescription</a>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Prescription</th>
+                    <th>Lab Reports</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mr ABC</td>
+                    <td>Mr ABC</td>
+                </tr>
+                <tr>
+                    <td>Mr XYZ</td>
+                    <td>Mr XYZ</td>
+                </tr>
+                <tr>
+                    <td>Ms DEF</td>
+                    <td>Ms DEF</td>
+                </tr>
+                <tr>
+                    <td>Mr Rahul</td>
+                    <td>Mr Rahul</td>
+                </tr>
+                <tr>
+                    <td>Mr Gaurav</td>
+                    <td>Mr Gaurav</td>
+                </tr>
+                <tr>
+                    <td>John Doe</td>
+                    <td>John Doe</td>
+                </tr>
+                <tr>
+                    <td>Mary Moe</td>
+                    <td>Mary Moe</td>
+                </tr>
+                <tr>
+                    <td>July Dooley</td>
+                    <td>July Dooley</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+
+{% block customJS %}
+
+{% endblock %}

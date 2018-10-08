@@ -1,0 +1,62 @@
+{% extends "Base/base.html" %}
+
+{% block customCSS %}
+
+{% endblock %}
+
+{% block customContent %}
+    <div class="container-fluid">
+        <div class="row" id="welcomeDiv">
+            <div class="col-xl-4 col-lg-4 col-md-12 col-4">
+                Welcome back XYZ
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12 col-4">
+                Address:Abc
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12 col-4">
+                Ph_no:123
+            </div>
+        </div>
+        <hr class="welcomeHorLine">
+        <div class="container-fluid">
+            <div class="row">
+                <div id="sidebar2" class="col-sm-2 p-t-2 hidden-xs-down">
+
+                    <div class="card card-body">
+                        Updates.
+                    </div>
+                    <div class="card card-body ">
+                        Updates.
+                    </div>
+                    <div class="card card-body">
+                        Updates.
+                    </div>
+                </div>
+
+                <div class="row">
+                    <form class="form-horizontal" action="new.html" method="get" role="form" id="Cent">
+
+                        <div class="form-group">
+                            <label for="ID" class="col-lg-2 control-label">Patient_id</label>
+                            <div class="col-lg-10">
+                                <input type="ID" class="form-control" id="ID" placeholder="ID">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="offset-lg-2 col-lg-10">
+                                <button type="submit" form="Cent" class="btn btn-default">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block customJS %}
+
+{% endblock %}
