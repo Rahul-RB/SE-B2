@@ -35,17 +35,24 @@ def patient():
 
 @app.route("/doctor")
 def doctor():
-	return render_template("Doctor/doctor.html",title="Doctor",user="BABA")
-
+	return render_template("Doctor/doctor.html",title="Doctor")
 
 @app.route("/prescription_history")
 def prescription_history():
-	return render_template("Doctor/prescription_history.html",title="Doctor",user="BABA")
+	return render_template("Doctor/prescription_history.html",title="Doctor")
 
 @app.route("/history")
 def history():
-	return render_template("Doctor/history.html",title="Doctor",user="BABA")
+	return render_template("Doctor/history.html",title="Doctor")
 
 @app.route("/eprescription")
 def eprescription():
-	return render_template("Doctor/eprescription.html",title="Doctor",user="BABA")
+	return render_template("Doctor/eprescription.html",title="Doctor")
+
+@app.route("/pharmacy")
+def pharmacy():
+	return render_template("Pharmacy/pharmacy.html",title="Pharmacy")
+
+@app.route("/pharmacy_prescription")
+def pharmacy_prescription():
+	return render_template("Pharmacy/pharmacy_prescription.html",title="Pharmacy")
