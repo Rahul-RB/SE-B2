@@ -23,13 +23,15 @@ CREATE TABLE Doctor_details (
 CREATE TABLE Lab_details (
     lab_id integer PRIMARY KEY AUTOINCREMENT,
     lab_name varchar,
+    email varchar,
     address varchar,
     phone_no integer    
 );
 
 CREATE TABLE Pharmacy_details (
     pharmacy_id integer PRIMARY KEY AUTOINCREMENT,
-    pharmacy_name text(1),
+    pharmacy_name text,
+    email varchar,
     address varchar,
     phone_no integer
 );
