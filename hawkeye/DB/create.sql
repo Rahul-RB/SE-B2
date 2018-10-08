@@ -4,8 +4,9 @@ CREATE DATABASE test;
 USE test;
 
 CREATE TABLE Patient_details (
-    patient_id integer,
+    patient_id integer ,
     name text,
+    email varchar,
     dob datetime,
     address varchar(100),
     sex text(1),
@@ -16,6 +17,7 @@ CREATE TABLE Patient_details (
 CREATE TABLE Doctor_details (
     doctor_id integer,
     doctor_name text,
+    email varchar,
     dob datetime,
     address varchar(100),
     sex text(1),
@@ -28,6 +30,7 @@ CREATE TABLE Lab_details (
     lab_id integer PRIMARY KEY AUTO_INCREMENT,
     lab_name varchar(100),
     address varchar(100),
+    email varchar(100),
     phone_no integer    
 );
 
@@ -35,6 +38,7 @@ CREATE TABLE Pharmacy_details (
     pharmacy_id integer PRIMARY KEY AUTO_INCREMENT,
     pharmacy_name text(1),
     address varchar(100),
+    email varchar(100),
     phone_no integer
 );
 
