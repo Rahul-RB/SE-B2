@@ -1,6 +1,7 @@
 CREATE TABLE Patient_details (
-patient_id integer ,
+    patient_id integer ,
     name text,
+    email varchar,
     dob datetime,
     address varchar,
     sex text(1),
@@ -10,6 +11,7 @@ patient_id integer ,
 CREATE TABLE Doctor_details (
     doctor_id integer ,
     doctor_name text,
+    email varchar,
     dob datetime,
     address varchar,
     sex text(1),
