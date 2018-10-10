@@ -1,5 +1,8 @@
 from hawkeye import app
+from hawkeye.forms import SignupForm 
 from flask import Flask,render_template,redirect,url_for
+
+app.secret_key = 'secretkeyhereplease'
 
 @app.route("/")
 def home():
