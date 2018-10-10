@@ -151,6 +151,22 @@
 #doctorTimeScroll{
     /*width: 100%;*/
 }
+#dropdownMenuPrescriptionList{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#prescriptionsViewDivTitle{
+    border-bottom: 1px solid black;
+}
+#prescriptionsViewDivTitleDiv{
+    font-size: 24px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.individualPrescription{
+
+}
 
 @media screen and (max-width: 1024px) {
     .searchTextBox{
