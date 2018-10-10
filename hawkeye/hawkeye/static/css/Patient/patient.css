@@ -37,11 +37,11 @@
     padding: 0px 0px 0px 0px;
 }
 
-#popupDoctorSearch{
+#popupDoctorSearch,#popupMedicineSearch,#popupLabSearch{
     margin-bottom: 5px;
 }
 
-.popupCloseBtn{
+.popupCloseBtn, .popupFinalBtn{
     margin-top: 5px;
 }
 
