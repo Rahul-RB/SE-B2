@@ -107,5 +107,14 @@ $(document).ready(function () {
     });
     // END : jquery dropdown timepicker code.
 
+    // START : individualPrescription functionality
+    $(".individualPrescription").each(function(){
+        $(this).on("click",function(){
+            // alert("clicked mate");
+            
+        });
+    });
+    // END : individualPrescription functionality
+
     /* End Adding your javascript here */
 });
