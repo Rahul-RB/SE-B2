@@ -155,19 +155,21 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
-#prescriptionsViewDivTitle{
+#prescriptionsViewDivTitle,#labTestPendingTitle,#labTestDoneTitle{
     border-bottom: 1px solid black;
 }
-#prescriptionsViewDivTitleDiv{
+#labTestDoneTitle{
+    border-top: 1px solid black;
+}
+#prescriptionsViewDivTitleDiv,#labTestDoneTitle,#labTestPendingTitle{
     font-size: 24px;
     padding-top: 5px;
     padding-bottom: 5px;
 }
 
-.individualPrescription{
+.individualRowTwoItem{
     cursor: pointer;
 }
-
 @media screen and (max-width: 1024px) {
     .searchTextBox{
         width: 80%;

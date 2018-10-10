@@ -108,11 +108,27 @@ $(document).ready(function () {
     // END : jquery dropdown timepicker code.
 
     // START : individualPrescription functionality
-    $(".individualPrescription").each(function(){
-        $(this).on("click",function(){
-            // alert("clicked mate");
-            
-        });
+    var i = 4; //since previous popus took 1,2,3.
+    $(".individualRowTwoItem").each(function(){
+        var popupDiv = "<div id=basic"+i.toString()+" "+"class='popupWrapperDiv'>\
+                            <div class='container-fluid'>\
+                                <div class='row justify-content-center'>\
+                                    <div class='col-xl-12 col-lg-12 col-md-12 col-12 popupDiv'>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                            <div class='container-fluid'>\
+                                <div class='row justify-content-center'>\
+                                    <div class='col-xl-12 col-lg-12 col-md-12 col-12' style='padding-right: 0px;'>\
+                                        <button class='basic"+i+"_close btn btn-danger popupCloseBtn noRadiusBtn' id='basic"+i+"_close'>Close</button>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>";
+        $("#popupDivHolder").append(popupDiv);
+        $("#basic"+i).popup();
+        $(this).addClass("basic"+i+"_open");    
+        i++;
     });
     // END : individualPrescription functionality
 
