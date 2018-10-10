@@ -41,7 +41,7 @@
 
                     <form class="login100-form validate-form">
                         <span class="login100-form-title">
-                            Member Login
+                            Login
                         </span>
 
                         <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
@@ -59,7 +59,13 @@
                                 <i class="fa fa-lock" aria-hidden="true"></i>
                             </span>
                         </div>
-
+                        <select class="form-control input100" style="cursor: pointer;border:none;">
+                            <option value="" disabled selected>Select account type</option>
+                            <option>Patient</option>
+                            <option>Doctor</option>
+                            <option>Pharmacy</option>
+                            <option>Lab</option>
+                        </select>
                         <div class="container-login100-form-btn">
                             <button class="login100-form-btn">
                                 Login
