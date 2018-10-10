@@ -45,7 +45,7 @@
                                 <div class="row justify-content-center">
                                     <div class="col-md-auto col-auto">                                                        
                                     </div>
-                                    <div class="col-md-4 col-4" class="popupDiv">
+                                    <div class="col-md-4 col-4 popupDiv">
 
                                     </div>
                                     <div class="col-md-auto col-auto">                                                        
@@ -53,7 +53,7 @@
 
                                 </div>
                             </div>
-                            <button class="basic_close btn btn-default">Close</button>
+                            <button class="basic_close btn btn-success btn-block popupCloseBtn noRadiusBtn">Close</button>
                         </div>
 
                         <!-- Buy Medicines -->
@@ -63,7 +63,7 @@
                                 <div class="row justify-content-center">
                                     <div class="col-md-auto col-auto">                                                        
                                     </div>
-                                    <div class="col-md-4 col-4" class="popupDiv">
+                                    <div class="col-md-4 col-4 popupDiv">
 
                                     </div>
                                     <div class="col-md-auto col-auto">                                                        
@@ -71,7 +71,7 @@
 
                                 </div>
                             </div>
-                            <button class="basic2_close btn btn-default">Close</button>
+                            <button class="basic2_close btn btn-success btn-block popupCloseBtn noRadiusBtn">Close</button>
                         </div>
 
                         <!-- Book Doctor Appointment -->
@@ -79,17 +79,22 @@
                         <div id="basic3" class="popupWrapperDiv">
                             <div class="container">
                                 <div class="row justify-content-center">
-                                    <div class="col-md-auto col-auto">                                                        
-                                    </div>
-                                    <div class="col-md-4 col-4" class="popupDiv">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-12 popupDiv">
                                         
-                                    </div>
-                                    <div class="col-md-auto col-auto">                                                        
+                                        <div class="d-flex flex-row justify-content-around"> 
+                                            <input type="text" name="searchTextBox" class="searchTextBox" id="popupDoctorSearch" placeholder="Search for doctors">
+                                            <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
+                                        </div>
+
+                                        <div class="d-flex flex-row justify-content-around"> 
+                                            <input id="doctorDateScroll" type="date" class="form-control noRadiusBtn" placeholder="Pick a date">
+                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input noRadiusBtn" placeholder="Pick a time" style="margin-left: 10px;">
+                                        </div>
                                     </div>
 
                                 </div>
                             </div>
-                            <button class="basic3_close btn btn-default">Close</button>
+                            <button class="basic3_close btn btn-success btn-block popupCloseBtn noRadiusBtn">Close</button>
                         </div>
 
                         <hr class="mainButtonsHorLine">
@@ -123,13 +128,17 @@
                             <div class="container-fluid tab-pane fade show active" id="doctorReminderOptions">
                                 <div class="row">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 input-group">
-                                        <input type="text" name="searchTextBox" id="searchTextBox" placeholder="Search for doctors">
-                                        <button name="searchBtn" id="searchBtn"><i class="fas fa-search"></i></button>
+                                        <input type="text" name="searchTextBox" class="searchTextBox" placeholder="Search for doctors">
+                                        <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
                                     </div>
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-top: 5px;">
                                         <div class="d-flex flex-row justify-content-around"> 
-                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input noRadiusBtn" placeholder="Pick a time">
-                                            <input id="doctorReminderMessage" type="text" class="form-control noRadiusBtn" name="reminderMessage" placeholder="Enter a reminder message" style="margin-left: 10px;">
+                                            <input id="doctorDateScroll" type="date" class="form-control noRadiusBtn" placeholder="Pick a date">
+                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input noRadiusBtn" placeholder="Pick a time" style="margin-left: 10px;">
+                                        </div>
+
+                                        <div class="d-flex flex-row justify-content-around" style="margin-top: 5px;"> 
+                                            <input id="doctorReminderMessage" type="text" class="form-control noRadiusBtn" name="reminderMessage" placeholder="Enter a reminder message">
                                         </div>
                                         <div class="container-fluid tab-pane fade" id="labTestReminderOptions">
                                             <div class="dropdown">

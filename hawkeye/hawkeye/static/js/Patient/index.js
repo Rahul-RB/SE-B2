@@ -83,16 +83,19 @@ $(document).ready(function () {
 
     $("#doctorReminder").on("click", function(argument) {
         $("#searchTextBox").attr("placeholder","Search for Doctors");
+        $("#doctorReminderMessage").show();
         $("#medicineReminderOptions").hide();
         $("#labTestReminderOptions").hide();
     });
     $("#medicineReminder").on("click", function(argument) {
         $("#searchTextBox").attr("placeholder","Search for Pharmacies");
+        $("#doctorReminderMessage").hide();
         $("#medicineReminderOptions").show();
         $("#labTestReminderOptions").hide();
     });
     $("#labTestReminder").on("click", function(argument) {
         $("#searchTextBox").attr("placeholder","Search for Labs");
+        $("#doctorReminderMessage").hide();
         $("#labTestReminderOptions").show();
         $("#medicineReminderOptions").hide();
     });
