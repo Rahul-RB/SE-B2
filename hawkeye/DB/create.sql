@@ -1,218 +1,223 @@
-CREATE TABLE Patient_details (
-    patient_id integer ,
-    name text,
-    email varchar,
-    dob datetime,
-    address varchar,
-    sex text(1),
-    phone_no integer ,
-    PRIMARY KEY (patient_id )
-);
-CREATE TABLE Doctor_details (
-    doctor_id integer ,
-    doctor_name text,
-    email varchar,
-    dob datetime,
-    address varchar,
-    sex text(1),
-    phone_no integer,
-    designation varchar,
-    PRIMARY KEY(doctor_id)
+DROP DATABASE Hawkeye;
+CREATE DATABASE Hawkeye;
+
+USE Hawkeye;
+
+CREATE TABLE PatientDetails (
+    patientID CHAR(12) ,
+    name VARCHAR(20),
+    email VARCHAR(100) UNIQUE NOT NULL,
+    dob DATE,
+    address VARCHAR(100),
+    sex CHAR(1),
+    phoneNO VARCHAR(10),
+    PRIMARY KEY (patientID)
 );
 
-CREATE TABLE Lab_details (
-    lab_id integer PRIMARY KEY AUTOINCREMENT,
-    lab_name varchar,
-    email varchar,
-    address varchar,
-    phone_no integer    
+CREATE TABLE DoctorDetails (
+    doctorID CHAR(12),
+    doctorName VARCHAR(20),
+    email VARCHAR(100) UNIQUE NOT NULL,
+    dob DATE,
+    address VARCHAR(100),
+    sex CHAR(1),
+    phoneNO VARCHAR(10),
+    designation VARCHAR(100),
+    PRIMARY KEY(doctorID)
 );
 
-CREATE TABLE Pharmacy_details (
-    pharmacy_id integer PRIMARY KEY AUTOINCREMENT,
-    pharmacy_name text,
-    email varchar,
-    address varchar,
-    phone_no integer
+CREATE TABLE LabDetails (
+    labID CHAR(12),
+    labName VARCHAR(20),
+    address VARCHAR(100),
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phoneNO VARCHAR(10),
+    PRIMARY KEY(labID)    
+);
+
+CREATE TABLE PharmacyDetails (
+    pharmacyID CHAR(12),
+    pharmacyName VARCHAR(20),
+    address VARCHAR(100),
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phoneNO VARCHAR(10),
+    PRIMARY KEY(pharmacyID)    
 );
 
 
 CREATE TABLE Consultation (
-    patient_id integer ,
-    doctor_id integer ,
-    FOREIGN KEY (patient_id) REFERENCES  Patient_details (patient_id),
-    FOREIGN KEY (doctor_id) REFERENCES  Doctor_details (doctor_id),
-    PRIMARY KEY (patient_id ,doctor_id )
+    patientID CHAR(12),
+    doctorID CHAR(12),
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
+    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID),
+    PRIMARY KEY (patientID ,doctorID)
 );
 
-CREATE TABLE Patient_lab (
-    patient_id integer ,
-    lab_id integer ,
-    access_right integer(1) ,
-    FOREIGN KEY (patient_id) REFERENCES  Patient_details (patient_id) ,
-    FOREIGN KEY (lab_id) REFERENCES  Lab_details (lab_id),
-    PRIMARY KEY (patient_id ,lab_id )
+CREATE TABLE PatientLab (
+    patientID CHAR(12),
+    labID CHAR(12),
+    accessRight TINYINT,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
+    FOREIGN KEY (labID) REFERENCES  LabDetails (labID),
+    PRIMARY KEY (patientID ,labID )
 );
 
-CREATE TABLE Patient_pharmacy (
-    patient_id integer ,
-    pharmacy_id integer ,
-    FOREIGN KEY (patient_id) REFERENCES  Patient_details (patient_id) ,
-    FOREIGN KEY (pharmacy_id) REFERENCES  Pharmacy_details (pharmacy_id),
-    PRIMARY KEY( patient_id,pharmacy_id )
+CREATE TABLE PatientPharmacy (
+    patientID CHAR(12) ,
+    pharmacyID CHAR(12) ,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
+    FOREIGN KEY (pharmacyID) REFERENCES  PharmacyDetails (pharmacyID),
+    PRIMARY KEY( patientID,pharmacyID )
 );
 
-CREATE TABLE Patient_login (
-    patient_id integer
-    password varchar,
-    hint_question varchar,
-    hint_answer varchar ,
-    FOREIGN KEY (patient_id) REFERENCES  Patient_details (patient_id) ,
-    PRIMARY KEY (patient_id)
+CREATE TABLE PatientLogin (
+    email VARCHAR(100),
+    password VARCHAR(100),
+    FOREIGN KEY (email) REFERENCES  PatientDetails (email),
+    PRIMARY KEY (email)
 );
 
-
-CREATE TABLE Gen_patient_history (
-    patient_id integer ,
-    blood_group varchar,
-    allergies varchar,
-    hereditary_problems varchar,
-    diet_advice varchar,
-    injection_history varchar ,
-    FOREIGN KEY (patient_id) REFERENCES  Patient_details (patient_id),
-    PRIMARY KEY( patient_id)
+-- Should be split for "Analysis"
+CREATE TABLE GenPatientHistory (
+    patientID CHAR(12) ,
+    bloodGroup CHAR(2),
+    allergies VARCHAR(100),
+    hereditaryProblems VARCHAR(100),
+    dietAdvice VARCHAR(100),
+    injectionHistory VARCHAR(100) ,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
+    PRIMARY KEY( patientID)
 );
 
-CREATE TABLE Medicine_reminder (
-    patient_id integer NOT NULL,
-    med_reminder_id integer PRIMARY KEY AUTOINCREMENT,
-    medicine_name varchar,
-    description varchar,
-    alarm_date datetime,
-    alarm_duration integer,
-    no_of_doses integer ,
-    FOREIGN KEY (patient_id) REFERENCES  Patient_details (patient_id),
-    UNIQUE( patient_id,med_reminder_id)
+CREATE TABLE MedicineReminder (
+    patientID CHAR(12) NOT NULL,
+    medReminderID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    medicineName VARCHAR(50),
+    description VARCHAR(100),
+    alarmDate DATETIME,
+    alarmDuration INTEGER,
+    noOfDoses INTEGER ,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
+    UNIQUE( patientID,medReminderID)
 );
 
-CREATE TABLE Visit_reminder (
-    patient_id integer NOT NULL,
-    visit_reminder_id integer PRIMARY KEY AUTOINCREMENT,
-    doc_name text,
-    description varchar,
-    alarm_date datetime,
-    alarm_duration integer ,
-    FOREIGN KEY (patient_id) REFERENCES  Patient_details (patient_id),
-    UNIQUE(patient_id,visit_reminder_id)
+CREATE TABLE VisitReminder (
+    patientID CHAR(12) NOT NULL,
+    visitReminderID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    docName VARCHAR(20),
+    description VARCHAR(100),
+    alarmDate DATETIME,
+    alarmDuration INTEGER ,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
+    UNIQUE(patientID,visitReminderID)
 );
 
-CREATE TABLE Doctor_login (
-    doctor_id integer PRIMARY KEY ,
-    password varchar,
-    hint_question varchar,
-    hint_answer varchar ,
-    FOREIGN KEY (doctor_id) REFERENCES  Doctor_details (doctor_id)
+CREATE TABLE DoctorLogin (
+    email VARCHAR(100),
+    password VARCHAR(100),
+    FOREIGN KEY (email) REFERENCES  DoctorDetails (email),
+    PRIMARY KEY(email)
 );
-
-CREATE TABLE E_prescription (
-    e_prescription_id integer ,
-    patient_id integer ,
-    sl_no integer,
-    symptoms varchar,
-    medicine_suggestion varchar,
-    remarks varchar,
-    doctor_id integer ,
-    FOREIGN KEY (patient_id) REFERENCES  Patient_details (patient_id) ,
-    FOREIGN KEY (doctor_id) REFERENCES  Doctor_details (doctor_id) ,
-    PRIMARY KEY(e_prescription_id ,patient_id ,sl_no)
+CREATE TABLE EPrescription (
+    ePrescriptionID INTEGER,
+    patientID CHAR(12) ,
+    slNo INTEGER,
+    symptoms VARCHAR(100),
+    medicineSuggestion VARCHAR(100),
+    remarks VARCHAR(100),
+    doctorID CHAR(12) ,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
+    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID) ,
+    PRIMARY KEY(ePrescriptionID ,patientID ,slNo)
 );
 
 CREATE TABLE Prescription (
-    patient_id integer NOT NULL ,
-    prescription_id integer PRIMARY KEY AUTOINCREMENT,
-    timestamp datetime,
-    file_location varchar ,
-    FOREIGN KEY (patient_id) REFERENCES  Patient_details (patient_id),
-    UNIQUE (patient_id, prescription_id)
+    patientID CHAR(12) NOT NULL ,
+    prescriptionID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    dateTimeStamp DATETIME,
+    fileLocation VARCHAR(100) ,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
+    UNIQUE (patientID, prescriptionID)
 );
 
-CREATE TABLE Doctor_feedback (
-    report_id integer ,
-    prescription_id integer,
-    patient_id integer,
-    doctor_id integer,
-    suggestions varchar,
-    FOREIGN KEY (doctor_id) REFERENCES  Doctor_details (doctor_id) ,
-    FOREIGN KEY (patient_id) REFERENCES  Patient_details (patient_id),
-    PRIMARY KEY(report_id,prescription_id)
-    
+CREATE TABLE LabRequest (
+    labRequestID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    prescriptionID INTEGER ,
+    erescriptionID INTEGER ,
+    labID CHAR(12),
+    patientID CHAR(12),
+    doctorID CHAR(12),
+    testType VARCHAR(100),
+    description VARCHAR(100),
+    dateTimeStamp DATETIME,
+    isPending INTEGER,
+    FOREIGN KEY (labID) REFERENCES  LabDetails (labID) ,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
+    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID)
+);
+
+CREATE TABLE LabResponse (
+    labRequestID INTEGER NOT NULL ,
+    resultLink VARCHAR(100),
+    reportID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    description VARCHAR(100),
+    dateTimeStamp DATETIME,
+    FOREIGN KEY(labRequestID) REFERENCES LabRequest(labRequestID),
+    UNIQUE(labRequestID,reportID)
+);
+
+CREATE TABLE DoctorFeedback (
+    reportID INTEGER ,
+    prescriptionID INTEGER,
+    patientID CHAR(12),
+    doctorID CHAR(12),
+    suggestions VARCHAR(100),
+    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID) ,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
+    FOREIGN KEY (reportID) REFERENCES LabResponse(reportID),
+    PRIMARY KEY(reportID,prescriptionID)
 );
 
 
-
-CREATE TABLE Lab_login (
-    lab_id integer,
-    password varchar,
-    hint_question varchar,
-    hint_answer varchar ,
-    FOREIGN KEY (lab_id) REFERENCES  Lab_details (lab_id),
-    PRIMARY KEY( lab_id)
-);
-
-
-CREATE TABLE Lab_request (
-    lab_request_id integer PRIMARY KEY AUTOINCREMENT,
-    prescription_id integer ,
-    lab_id integer,
-    patient_id integer,
-    doctor_id integer,
-    test_type varchar,
-    description varchar,
-    timestamp datetime,
-    isPending integer ,
-    FOREIGN KEY (lab_id) REFERENCES  Lab_details (lab_id) ,
-    FOREIGN KEY (patient_id) REFERENCES  Patient_details (patient_id) ,
-    FOREIGN KEY (doctor_id) REFERENCES  Doctor_details (doctor_id)
-);
-
-CREATE TABLE Lab_response (
-    lab_request_id integer NOT NULL ,
-    result_link integer,
-    report_id integer PRIMARY KEY AUTOINCREMENT,
-    description varchar,
-    timestamp datetime,
-    FOREIGN KEY(lab_request_id) REFERENCES Lab_request(lab_request_id),
-    UNIQUE(lab_request_id,report_id)
-);
-
-CREATE TABLE Pharmacy_login (
-    pharmacy_id integer ,
-    password varchar,
-    hint_question varchar,
-    hint_answer varchar ,
-    FOREIGN KEY (pharmacy_id) REFERENCES  Pharmacy_details (pharmacy_id) ,
-    PRIMARY KEY(pharmacy_id)
-
-);
-
-CREATE TABLE Medicine_request (
-    medicine_req_id integer PRIMARY KEY AUTOINCREMENT,
-    patient_id integer,
-    pharmacy_id integer,
-    eprescription_id integer,
-    pickup_time datetime ,
-    FOREIGN KEY (pharmacy_id) REFERENCES  Pharmacy_details (pharmacy_id)  ,
-    FOREIGN KEY (patient_id) REFERENCES  Patient_details (patient_id)  ,
-    FOREIGN KEY (eprescription_id) REFERENCES  E_prescription (eprescription_id)
-);
-
-CREATE TABLE Medicine_response (
-    medicine_response_id integer PRIMARY KEY AUTOINCREMENT,
-    medicine_req_id integer,
-    remarks varchar ,
-    FOREIGN KEY (medicine_req_id) REFERENCES  Medicine_request (medicine_req_id) 
+CREATE TABLE LabLogin (
+    email VARCHAR(100),
+    password VARCHAR(100),
+    FOREIGN KEY (email) REFERENCES  LabDetails (email),
+    PRIMARY KEY( email)
 );
 
 
 
+CREATE TABLE PharmacyLogin (
+    email VARCHAR(100) ,
+    password VARCHAR(100),
+    FOREIGN KEY (email) REFERENCES  PharmacyDetails (email) ,
+    PRIMARY KEY(email)
+);
 
+CREATE TABLE MedicineRequest (
+    medicineReqID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    patientID CHAR(12),
+    pharmacyID CHAR(12),
+    ePrescriptionID INTEGER NOT NULL,
+    pickupTime DATETIME ,
+    FOREIGN KEY (pharmacyID) REFERENCES  PharmacyDetails (pharmacyID)  ,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID)  ,
+    FOREIGN KEY (ePrescriptionID) REFERENCES  EPrescription (ePrescriptionID)
+);
+
+CREATE TABLE MedicineResponse (
+    medicineResponseID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    medicineReqID INTEGER NOT NULL,
+    remarks VARCHAR(100) ,
+    FOREIGN KEY (medicineReqID) REFERENCES  MedicineRequest (medicineReqID) 
+);
+
+CREATE TABLE DoctorAppointments (
+    patientID CHAR(12),
+    doctorID CHAR(12),
+    dateTimeStamp DATETIME,
+    FOREIGN KEY (patientID) REFERENCES PatientDetails (patientID)  ,
+    FOREIGN KEY (doctorID) REFERENCES DoctorDetails (doctorID) ,
+    PRIMARY KEY (doctorID,patientID)
+)

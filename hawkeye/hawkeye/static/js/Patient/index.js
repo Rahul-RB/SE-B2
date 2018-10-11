@@ -54,11 +54,16 @@ $(document).ready(function () {
     $.fn.popup.defaults.pagecontainer = '.popupClass';
     $('#basic').popup();
     $('#basic2').popup();
+    $('#basic3').popup();
+
+    var topRowBtnHeight = $("#mainButtons").css("height");
+    $("#reqLabTestBtn").css("height",topRowBtnHeight);
+    $("#bookMedicineBtn").css("height",topRowBtnHeight);
+    $("#bookApptBtn").css("height",topRowBtnHeight);
 
     // END : Popup defaults
 
     // START: Request Lab Test functionality
-    $("#reqLabTestBtn").html("Request Lab Test");
     $("#reqLabTestBtn").on("click",function(argument){
 
     });
