@@ -104,8 +104,8 @@
                                         <i class="far fa-bell"></i>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href = {{ url_for("login") }} id = "navbarCollapseBtnUser">
+                                <li class="nav-item" id="userInfoToggler" style="cursor: pointer;">
+                                    <a class="nav-link" {#href = {{ url_for("login") }}#} id = "navbarCollapseBtnUser">
                                         <i class="far fa-user"></i>
                                     </a>
                                 </li>
@@ -136,6 +136,18 @@
                             </tr>
                             <tr>
                                 <td>7.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standa</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="container" id="userInfo">
+                        <button class="btn btn-primary" id="userInfoCloseBtn">Close</button>
+                        <table id="userInfoContainer">
+                            <tr>
+                                <td><a href="#">View Profile</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href={{ url_for("login") }}>Logout</a></td>
                             </tr>
                         </table>
                     </div>
