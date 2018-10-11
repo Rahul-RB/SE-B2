@@ -213,7 +213,7 @@ CREATE TABLE MedicineResponse (
     FOREIGN KEY (medicineReqID) REFERENCES  MedicineRequest (medicineReqID) 
 );
 
-CREATE TABLE doctorAppointments (
+CREATE TABLE DoctorAppointments (
     patientID CHAR(12),
     doctorID CHAR(12),
     dateTimeStamp DATETIME,
