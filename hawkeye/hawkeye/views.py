@@ -9,7 +9,6 @@ app.secret_key = 'secretkeyhereplease'
 
 @app.route("/")
 def home():
-    print(session.get("loggedIn"))
     if not session.get("loggedIn"):
         return redirect(url_for("login"),302)
 
@@ -45,53 +44,83 @@ def login():
 
 @app.route("/logout")
 def logout():
+    if not session.get("loggedIn"):
+        return redirect(url_for("login"),302)
     session['loggedIn'] = False
     return redirect(url_for("home"))
 
 @app.route("/register")
 def register():
+    if not session.get("loggedIn"):
+        return redirect(url_for("login"),302)
     return redirect(url_for("register_patient"))
 
 @app.route("/register_patient")
 def register_patient():
+    if not session.get("loggedIn"):
+        return redirect(url_for("login"),302)
     return render_template("Register/register_patient.html",title="Patient")
 
 @app.route("/register_doctor")
 def register_doctor():
+    if not session.get("loggedIn"):
+        return redirect(url_for("login"),302)
     return render_template("Register/register_doctor.html",title="Doctor")
 
 @app.route("/register_lab")
 def register_lab():
+    if not session.get("loggedIn"):
+        return redirect(url_for("login"),302)
     return render_template("Register/register_lab.html",title="Lab")
 
 @app.route("/register_pharmacy")
 def register_pharmacy():
+    if not session.get("loggedIn"):
+        return redirect(url_for("login"),302)
     return render_template("Register/register_pharmacy.html",title="Pharmacy")
 
 @app.route("/patient")
 def patient():
+    if not session.get("loggedIn"):
+        return redirect(url_for("login"),302)
     return render_template("Patient/patient.html",title="Patient",user="BABA")
 
 @app.route("/doctor")
 def doctor():
+    if not session.get("loggedIn"):
+        return redirect(url_for("login"),302)
     return render_template("Doctor/doctor.html",title="Doctor")
 
 @app.route("/prescription_history")
 def prescription_history():
+    if not session.get("loggedIn"):
+        return redirect(url_for("login"),302)
     return render_template("Doctor/prescription_history.html",title="Doctor")
 
 @app.route("/history")
 def history():
+    if not session.get("loggedIn"):
+        return redirect(url_for("login"),302)
+    
     return render_template("Doctor/history.html",title="Doctor")
 
 @app.route("/eprescription")
 def eprescription():
+    if not session.get("loggedIn"):
+        return redirect(url_for("login"),302)
+    
     return render_template("Doctor/eprescription.html",title="Doctor")
 
 @app.route("/pharmacy")
 def pharmacy():
+    if not session.get("loggedIn"):
+        return redirect(url_for("login"),302)
+    
     return render_template("Pharmacy/pharmacy.html",title="Pharmacy")
 
 @app.route("/pharmacy_prescription")
 def pharmacy_prescription():
+    if not session.get("loggedIn"):
+        return redirect(url_for("login"),302)
+    
     return render_template("Pharmacy/pharmacy_prescription.html",title="Pharmacy")
