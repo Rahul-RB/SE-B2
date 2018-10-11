@@ -21,6 +21,7 @@ def loginCheck(email,password,acctType):
         return ("Error")
 
     cursor.execute(query)
+    conn.commit()
     data = cursor.fetchall()
     try:
         if(password!=data[0][0]):
@@ -46,6 +47,7 @@ def isExistingUser(ID,acctType):
         return("Error")
 
     res = cursor.execute(query)
+    conn.commit()
 
     if(res==0):
         return False
@@ -116,6 +118,7 @@ def insertNewUser(inpDict,acctType):
     print(insertLoginDetailQuery)
     res1 = cursor.execute(insertDetailQuery)
     res2 = cursor.execute(insertLoginDetailQuery)
+    conn.commit()
 
     if(res1==1 and res2==1):
         return True
