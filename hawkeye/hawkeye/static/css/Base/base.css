@@ -240,60 +240,72 @@ ul.CTAs a {
     Start - Writing your custom CSS here, or make your own CSS file.
 */
 
-#notifications {
+#notifications,#userInfo{
     position: fixed;
     top:0;
     margin-top: 60px;
     margin-right: 30px;
     background-color: #eee; 
-    height: 400px;
-    width: 280px;
     padding: 5px;
     overflow-y: scroll;
     overflow-x: hidden;
     right:0;
 }
-
-#notifContainer {
+#notifications{
+    width: 280px;
+    height: 400px;
+}
+#userInfo{
+    width: 140px;
+    height: 200px;
+}
+#userInfoContainer{
+    width: 130px;
+}
+#notifContainer{
     width: 270px;
     margin-top: 160px;
 }
 
-#notifContainerCloseBtn{
+#notifContainerCloseBtn,#userInfoCloseBtn{
     position: fixed;
-    width: 270px;
     border:none;
     border-radius: 0;
     background-color: #164719;
     margin-top: 2px;
     margin-bottom: 2px;
 }
-
-#notifications tr {
+#notifContainerCloseBtn{
+    width: 270px;
+}
+#userInfoCloseBtn{
+    width: 130px;   
+}
+#notifications tr,#userInfo tr {
     background: #fff;
     border: #eee 6px solid;
     height: 60px;
 }
 
-#notifications tr td {
+#notifications tr td, #userInfo tr td {
     /*border-radius: 15px;*/
     padding: 10px;
     color: black;
     font-size: 10px;    
 }
 
-#notifications::-webkit-scrollbar {
+#notifications::-webkit-scrollbar, #userInfo::-webkit-scrollbar {
     width: 0 !important;
 }
 @media only screen and (max-width: 600px) {
-    #notifContainerCloseBtn {
+    #notifContainerCloseBtn, #userInfoCloseBtn {
         margin-top: 10px;
         margin-bottom: 10px;
         top:50px;
     }
 }
 @media only screen and (max-width: 1440px) {
-    #notifContainerCloseBtn {
+    #notifContainerCloseBtn, #userInfoCloseBtn {
         top:55px;
     }
 }

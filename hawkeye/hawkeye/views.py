@@ -1,6 +1,10 @@
 from hawkeye import app
 from flask import Flask,render_template,redirect,url_for
 
+@app.route("/base")
+def base():
+	return render_template("Base/base.html",title="User")
+
 @app.route("/")
 def home():
 	return render_template("Home/home.html",title="User")
