@@ -6,22 +6,22 @@ USE Hawkeye;
 CREATE TABLE PatientDetails (
     patientID CHAR(12) ,
     name VARCHAR(20),
-    email VARCHAR(100),
+    email VARCHAR(100) UNIQUE NOT NULL,
     dob DATE,
     address VARCHAR(100),
     sex CHAR(1),
-    phoneNO INTEGER,
+    phoneNO VARCHAR(10),
     PRIMARY KEY (patientID)
 );
 
 CREATE TABLE DoctorDetails (
     doctorID CHAR(12),
     doctorName VARCHAR(20),
-    email VARCHAR(20),
+    email VARCHAR(100) UNIQUE NOT NULL,
     dob DATE,
     address VARCHAR(100),
     sex CHAR(1),
-    phoneNO INTEGER,
+    phoneNO VARCHAR(10),
     designation VARCHAR(100),
     PRIMARY KEY(doctorID)
 );
@@ -30,8 +30,8 @@ CREATE TABLE LabDetails (
     labID CHAR(12),
     labName VARCHAR(20),
     address VARCHAR(100),
-    email VARCHAR(20),
-    phoneNO INTEGER,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phoneNO VARCHAR(10),
     PRIMARY KEY(labID)    
 );
 
@@ -39,8 +39,8 @@ CREATE TABLE PharmacyDetails (
     pharmacyID CHAR(12),
     pharmacyName VARCHAR(20),
     address VARCHAR(100),
-    email VARCHAR(20),
-    phoneNO INTEGER,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phoneNO VARCHAR(10),
     PRIMARY KEY(pharmacyID)    
 );
 
@@ -71,12 +71,10 @@ CREATE TABLE PatientPharmacy (
 );
 
 CREATE TABLE PatientLogin (
-    email CHAR(12),
+    email VARCHAR(100),
     password VARCHAR(100),
-    hintQuestion VARCHAR(100),
-    hintAnswer VARCHAR(100) ,
-    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
-    PRIMARY KEY (patientID)
+    FOREIGN KEY (email) REFERENCES  PatientDetails (email),
+    PRIMARY KEY (email)
 );
 
 -- Should be split for "Analysis"
@@ -115,13 +113,11 @@ CREATE TABLE VisitReminder (
 );
 
 CREATE TABLE DoctorLogin (
-    doctorID CHAR(12) PRIMARY KEY ,
+    email VARCHAR(100),
     password VARCHAR(100),
-    hintQuestion VARCHAR(100),
-    hintAnswer VARCHAR(100) ,
-    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID)
+    FOREIGN KEY (email) REFERENCES  DoctorDetails (email),
+    PRIMARY KEY(email)
 );
-
 CREATE TABLE EPrescription (
     ePrescriptionID INTEGER,
     patientID CHAR(12) ,
@@ -184,23 +180,19 @@ CREATE TABLE DoctorFeedback (
 
 
 CREATE TABLE LabLogin (
-    labID CHAR(12),
+    email VARCHAR(100),
     password VARCHAR(100),
-    hintQuestion VARCHAR(100),
-    hintAnswer VARCHAR(100) ,
-    FOREIGN KEY (labID) REFERENCES  LabDetails (labID),
-    PRIMARY KEY( labID)
+    FOREIGN KEY (email) REFERENCES  LabDetails (email),
+    PRIMARY KEY( email)
 );
 
 
 
 CREATE TABLE PharmacyLogin (
-    pharmacyID CHAR(12) ,
+    email VARCHAR(100) ,
     password VARCHAR(100),
-    hintQuestion VARCHAR(100),
-    hintAnswer VARCHAR(100) ,
-    FOREIGN KEY (pharmacyID) REFERENCES  PharmacyDetails (pharmacyID) ,
-    PRIMARY KEY(pharmacyID)
+    FOREIGN KEY (email) REFERENCES  PharmacyDetails (email) ,
+    PRIMARY KEY(email)
 );
 
 CREATE TABLE MedicineRequest (
