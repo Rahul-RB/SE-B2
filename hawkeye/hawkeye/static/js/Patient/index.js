@@ -54,11 +54,16 @@ $(document).ready(function () {
     $.fn.popup.defaults.pagecontainer = '.popupClass';
     $('#basic').popup();
     $('#basic2').popup();
+    $('#basic3').popup();
+
+    var topRowBtnHeight = $("#mainButtons").css("height");
+    $("#reqLabTestBtn").css("height",topRowBtnHeight);
+    $("#bookMedicineBtn").css("height",topRowBtnHeight);
+    $("#bookApptBtn").css("height",topRowBtnHeight);
 
     // END : Popup defaults
 
     // START: Request Lab Test functionality
-    $("#reqLabTestBtn").html("Request Lab Test");
     $("#reqLabTestBtn").on("click",function(argument){
 
     });
@@ -78,16 +83,19 @@ $(document).ready(function () {
 
     $("#doctorReminder").on("click", function(argument) {
         $("#searchTextBox").attr("placeholder","Search for Doctors");
+        $("#doctorReminderMessage").show();
         $("#medicineReminderOptions").hide();
         $("#labTestReminderOptions").hide();
     });
     $("#medicineReminder").on("click", function(argument) {
         $("#searchTextBox").attr("placeholder","Search for Pharmacies");
+        $("#doctorReminderMessage").hide();
         $("#medicineReminderOptions").show();
         $("#labTestReminderOptions").hide();
     });
     $("#labTestReminder").on("click", function(argument) {
         $("#searchTextBox").attr("placeholder","Search for Labs");
+        $("#doctorReminderMessage").hide();
         $("#labTestReminderOptions").show();
         $("#medicineReminderOptions").hide();
     });
@@ -98,6 +106,31 @@ $(document).ready(function () {
             'scrollDefault': 'now' 
     });
     // END : jquery dropdown timepicker code.
+
+    // START : individualPrescription functionality
+    var i = 4; //since previous popus took 1,2,3.
+    $(".individualRowTwoItem").each(function(){
+        var popupDiv = "<div id=basic"+i.toString()+" "+"class='popupWrapperDiv'>\
+                            <div class='container-fluid'>\
+                                <div class='row justify-content-center'>\
+                                    <div class='col-xl-12 col-lg-12 col-md-12 col-12 popupDiv'>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                            <div class='container-fluid'>\
+                                <div class='row justify-content-center'>\
+                                    <div class='col-xl-12 col-lg-12 col-md-12 col-12' style='padding-right: 0px;'>\
+                                        <button class='basic"+i+"_close btn btn-danger popupCloseBtn noRadiusBtn' id='basic"+i+"_close'>Close</button>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>";
+        $("#popupDivHolder").append(popupDiv);
+        $("#basic"+i).popup();
+        $(this).addClass("basic"+i+"_open");    
+        i++;
+    });
+    // END : individualPrescription functionality
 
     /* End Adding your javascript here */
 });
