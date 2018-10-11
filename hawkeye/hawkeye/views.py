@@ -32,13 +32,14 @@ def login():
         result = models.loginCheck(POST_EMAIL,POST_PASSWORD,POST_ACC_TYPE)
         if result=="Error":
             flash("Error")
-        if result:
+
+        if result==True:
             session['loggedIn'] = True
             print("RESULT")
             return redirect(url_for("home"))
         else:
             flash('wrong password!')
-        return redirect(url_for("home"))
+            return redirect(url_for("login"))
     else:
         flash("Error")
 
