@@ -52,26 +52,18 @@ def logout():
 
 @app.route("/register")
 def register():
-    if not session.get("loggedIn"):
-        return redirect(url_for("login"),302)
     return redirect(url_for("register_patient"))
 
 @app.route("/register_patient")
 def register_patient():
-    if not session.get("loggedIn"):
-        return redirect(url_for("login"),302)
     return render_template("Register/register_patient.html",title="Patient")
 
 @app.route("/register_doctor")
 def register_doctor():
-    if not session.get("loggedIn"):
-        return redirect(url_for("login"),302)
     return render_template("Register/register_doctor.html",title="Doctor")
 
 @app.route("/register_lab")
 def register_lab():
-    if not session.get("loggedIn"):
-        return redirect(url_for("login"),302)
     return render_template("Register/register_lab.html",title="Lab")
 
 @app.route("/register_pharmacy")
