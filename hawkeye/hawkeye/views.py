@@ -56,6 +56,7 @@ def register():
 
 @app.route("/register_patient")
 def register_patient():
+
     return render_template("Register/register_patient.html",title="Patient")
 
 @app.route("/register_doctor")
