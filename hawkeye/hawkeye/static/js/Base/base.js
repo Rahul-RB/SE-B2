@@ -39,5 +39,16 @@ $(document).ready(function () {
         toggleNotif();
     });
 
+    $('#userInfo').hide();
+    function toggleUserInfo(){
+        $('#userInfo').toggle("slow");
+    }
+    $("#userInfoCloseBtn").on("click",function(){
+        toggleUserInfo();
+    });
+    $("#userInfoToggler").on("click",function(){
+        toggleUserInfo();
+    });
+
     /* End Adding your javascript here */
 });

@@ -14,7 +14,7 @@
 {% block customContent %}
     <div class="container-fluid">
         <div class="row" id="welcomeDiv">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-left: 10px">
                 Welcome back {{ user }}
             </div>
         </div>
@@ -26,12 +26,14 @@
                     <div class="topRowWrapper" id="topRowLeftWrapper">
                         <div class="container-fluid" id="mainButtons">
                             <div class="row">
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 popupClass">
-                                    <button type="button" id="reqLabTestBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn basic_open"></button>
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 popupClass">
+                                    <button type="button" id="reqLabTestBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn basic_open">Request Lab Test</button>
                                 </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 popupClass">
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 popupClass">
                                     <button type="button" id="bookMedicineBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn basic2_open">Buy Medicines</button>
-
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 popupClass">
+                                    <button type="button" id="bookApptBtn" class="btn btn-primary btn-block topRowButtons noRadiusBtn basic3_open">Book Doctor Appointment</button>
                                 </div>
                             </div>
                         </div>
@@ -39,37 +41,114 @@
                         <!-- Request Lab Test -->
 
                         <div id="basic" class="popupWrapperDiv">
-                            <div class="container">
+                            <div class="container-fluid">
                                 <div class="row justify-content-center">
-                                    <div class="col-md-auto col-auto">                                                        
-                                    </div>
-                                    <div class="col-md-4 col-4" class="popupDiv">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-12 popupDiv">
+                                        <div class="d-flex flex-row justify-content-around"> 
+                                            <input type="text" name="searchTextBox" class="searchTextBox" id="popupLabSearch" placeholder="Search for labs">
+                                            <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
+                                        </div>
+                                        <div class="dropdown show">
+                                            <a class="btn btn-block noRadiusBtn dropdown-toggle" href="#" role="button" id="dropdownMenuLinkLabPopup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Choose a Lab Document
+                                            </a>
+
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkLabPopup">
+                                                <a class="dropdown-item" href="#">Action</a>
+                                                <a class="dropdown-item" href="#">Another action</a>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-row justify-content-around"> 
+                                            <input id="doctorDateScroll" type="date" class="form-control noRadiusBtn" placeholder="Pick a date">
+                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input noRadiusBtn" placeholder="Pick a time" style="margin-left: 10px;">
+                                        </div>
 
                                     </div>
-                                    <div class="col-md-auto col-auto">                                                        
+                                </div>
+                            </div>                            
+                            <div class="container-fluid">
+                                <div class="row justify-content-center">
+                                    <div class="col-xl-9 col-lg-9 col-md-9 col-9" style="padding: 0px 0px 0px 0px;">
+                                        <button class="btn btn-success btn-block popupFinalBtn noRadiusBtn">Book</button>
                                     </div>
-
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-3" style="padding-right: 0px;">
+                                        <button class="basic_close btn btn-danger popupCloseBtn noRadiusBtn float-right">Close</button>
+                                    </div>
                                 </div>
                             </div>
-                            <button class="basic_close btn btn-default">Close</button>
                         </div>
 
                         <!-- Buy Medicines -->
 
                         <div id="basic2" class="popupWrapperDiv">
-                            <div class="container">
+                            <div class="container-fluid">
                                 <div class="row justify-content-center">
-                                    <div class="col-md-auto col-auto">                                                        
-                                    </div>
-                                    <div class="col-md-4 col-4" class="popupDiv">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-12 popupDiv">
+                                        <div class="d-flex flex-row justify-content-around"> 
+                                            <input type="text" name="searchTextBox" class="searchTextBox" id="popupMedicineSearch" placeholder="Search for pharmacies">
+                                            <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
+                                        </div>
+                                        <div class="dropdown show">
+                                            <a class="btn btn-block noRadiusBtn dropdown-toggle" href="#" role="button" id="dropdownMenuLinkPrescriptionPopup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Choose a prescription
+                                            </a>
 
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkPrescriptionPopup">
+                                                <a class="dropdown-item" href="#">Action</a>
+                                                <a class="dropdown-item" href="#">Another action</a>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-row justify-content-around"> 
+                                            <input id="doctorDateScroll" type="date" class="form-control noRadiusBtn" placeholder="Pick a date">
+                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input noRadiusBtn" placeholder="Pick a time" style="margin-left: 10px;">
+                                        </div>
                                     </div>
-                                    <div class="col-md-auto col-auto">                                                        
+                                </div>
+                            </div>                            
+                            <div class="container-fluid">
+                                <div class="row justify-content-center">
+                                    <div class="col-xl-9 col-lg-9 col-md-9 col-9" style="padding: 0px 0px 0px 0px;">
+                                        <button class="btn btn-success btn-block popupFinalBtn noRadiusBtn">Book</button>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-3" style="padding-right: 0px;">
+                                        <button class="basic2_close btn btn-danger popupCloseBtn noRadiusBtn float-right">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Book Doctor Appointment -->
+
+                        <div id="basic3" class="popupWrapperDiv">
+                            <div class="container-fluid">
+                                <div class="row justify-content-center">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-12 popupDiv">
+                                        
+                                        <div class="d-flex flex-row justify-content-around"> 
+                                            <input type="text" name="searchTextBox" class="searchTextBox" id="popupDoctorSearch" placeholder="Search for doctors">
+                                            <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
+                                        </div>
+
+                                        <div class="d-flex flex-row justify-content-around"> 
+                                            <input id="doctorDateScroll" type="date" class="form-control noRadiusBtn" placeholder="Pick a date">
+                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input noRadiusBtn" placeholder="Pick a time" style="margin-left: 10px;">
+                                        </div>
                                     </div>
 
                                 </div>
                             </div>
-                            <button class="basic2_close btn btn-default">Close</button>
+                            <div class="container-fluid">
+                                <div class="row justify-content-center">
+                                    <div class="col-xl-9 col-lg-9 col-md-9 col-9" style="padding: 0px 0px 0px 0px;">
+                                        <button class="btn btn-success btn-block popupFinalBtn noRadiusBtn">Book</button>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-3" style="padding-right: 0px;">
+                                        <button class="basic3_close btn btn-danger popupCloseBtn noRadiusBtn float-right">Close</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <hr class="mainButtonsHorLine">
@@ -103,13 +182,17 @@
                             <div class="container-fluid tab-pane fade show active" id="doctorReminderOptions">
                                 <div class="row">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 input-group">
-                                        <input type="text" name="searchTextBox" id="searchTextBox" placeholder="Search for doctors">
-                                        <button name="searchBtn" id="searchBtn"><i class="fas fa-search"></i></button>
+                                        <input type="text" name="searchTextBox" class="searchTextBox" placeholder="Search for doctors">
+                                        <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
                                     </div>
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-top: 5px;">
                                         <div class="d-flex flex-row justify-content-around"> 
-                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input noRadiusBtn" placeholder="Pick a time">
-                                            <input id="doctorReminderMessage" type="text" class="form-control noRadiusBtn" name="reminderMessage" placeholder="Enter a reminder message" style="margin-left: 10px;">
+                                            <input id="doctorDateScroll" type="date" class="form-control noRadiusBtn" placeholder="Pick a date">
+                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input noRadiusBtn" placeholder="Pick a time" style="margin-left: 10px;">
+                                        </div>
+
+                                        <div class="d-flex flex-row justify-content-around" style="margin-top: 5px;"> 
+                                            <input id="doctorReminderMessage" type="text" class="form-control noRadiusBtn" name="reminderMessage" placeholder="Enter a reminder message">
                                         </div>
                                         <div class="container-fluid tab-pane fade" id="labTestReminderOptions">
                                             <div class="dropdown">
@@ -173,8 +256,136 @@
                 </div>
                 <!-- /.col -->
             </div>
-            <div class="row">
-                
+            <div class="row" style="margin-top: 15px;">
+                <!-- View previous prescriptions div -->
+                <!-- provide options to select only a few prescriptions -->
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="container-fluid">
+                        <div class="row" id="prescriptionsViewDivTitle">
+                            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-12 topRowWrapper" id="prescriptionsViewDivTitleDiv">
+                                Previous Prescriptions 
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 topRowWrapper">
+                                <div class="dropdown">
+                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuPrescriptionList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Sort By
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuPrescriptionList">
+                                        <a class="dropdown-item" href="#">Date ascending</a>
+                                        <a class="dropdown-item" href="#">Date descending</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="prescriptionsViewDiv">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 topRowWrapper list-group list-group-flush" style="padding-left: 15px!important">
+                                <div class="individualRowTwoItem list-group-item">
+                                    Prescription 1.
+                                </div>
+                                <div class="individualRowTwoItem list-group-item">
+                                    Prescription 2.
+                                </div>
+                                <div class="individualRowTwoItem list-group-item">
+                                    Prescription 3.
+                                </div>                              
+                                <div class="individualRowTwoItem list-group-item">
+                                    Prescription 4.
+                                </div>                              
+                                <div class="individualRowTwoItem list-group-item">
+                                    Prescription 5.
+                                </div>                              
+                                <div class="individualRowTwoItem list-group-item">
+                                    Prescription 6.
+                                </div>                              
+                                <div class="individualRowTwoItem list-group-item">
+                                    Prescription 7.
+                                </div>                              
+                                <div class="individualRowTwoItem list-group-item">
+                                    Prescription 8.
+                                </div>                              
+                                <div class="individualRowTwoItem list-group-item">
+                                    Prescription 9.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="popupDivHolder" id="popupDivHolder" hidden>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- View lab-tests -- with result and pending and unsent ones div -->
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 topRowWrapper">
+                    <div class="container-fluid">
+                        <div class="row" id="labTestPendingTitle">
+                            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
+                                Pending Lab Tests
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                                <div class="dropdown">
+                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuPendingLabTestList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Sort By
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuPendingLabTestList">
+                                        <a class="dropdown-item" href="#">Date ascending</a>
+                                        <a class="dropdown-item" href="#">Date descending</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="list-group list-group-flush" id="labTestPendingDiv">
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Pending Test 1.
+                                    </div>
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Pending Test 2.
+                                    </div>
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Pending Test 3.
+                                    </div>                              
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Pending Test 4.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="labTestDoneTitle">
+                            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
+                                Previous Lab Tests
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                                <div class="dropdown">
+                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuPDoneLabTestist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Sort By
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuDoneLabTestList">
+                                        <a class="dropdown-item" href="#">Date ascending</a>
+                                        <a class="dropdown-item" href="#">Date descending</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="list-group list-group-flush" id="labTestPendingDiv">
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Completed Test 1.
+                                    </div>
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Completed Test 2.
+                                    </div>
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Completed Test 3.
+                                    </div>                              
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Completed Test 4.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
             </div>
         </div>
     </div>
