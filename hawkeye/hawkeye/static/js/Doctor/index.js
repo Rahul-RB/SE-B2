@@ -40,9 +40,43 @@ $(document).ready(function () {
     $("#notifToggler").on("click",function(){
         toggleNotif();
     });
+
+
+
+    $(".addCF").click(function(){
+        $("#customFields").append('<tr valign="top"><th scope="row"><label for="customFieldName">Symptoms and Medicines </label></th><td><input type="text" class="code" id="customFieldName" name="customFieldName[]" value="" placeholder="Enter symptoms here...." /> &nbsp; <input type="text" class="code" id="customFieldValue" name="customFieldValue[]" value="" placeholder="Enter medicines here...." /> &nbsp; <a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
+    });
+
+    $("#customFields").on('click','.remCF',function(){
+        $(this).parent().parent().remove();
+    });
+
+
     // $('#navbar-toggler').click(function(){
     //     console.log('pressed');
     //     $('#notifications').toggle("slow");
     // });
     /* End Adding your javascript here */
+    // function deleteRow(row) {
+    //   var i = row.parentNode.parentNode.rowIndex;
+    //   document.getElementById('POITable').deleteRow(i);
+    // }
+
+
+    // function insRow() {
+    //   console.log('hi');
+    //   var x = document.getElementById('POITable');
+    //   var new_row = x.rows[1].cloneNode(true);
+    //   var len = x.rows.length;
+    //   new_row.cells[0].innerHTML = len;
+
+    //   var inp1 = new_row.cells[1].getElementsByTagName('input')[0];
+    //   inp1.id += len;
+    //   inp1.value = '';
+    //   var inp2 = new_row.cells[2].getElementsByTagName('input')[0];
+    //   inp2.id += len;
+    //   inp2.value = '';
+    //   x.appendChild(new_row);
+    // }
+  
 });
