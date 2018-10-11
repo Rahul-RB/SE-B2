@@ -54,24 +54,106 @@ def logout():
 def register():
     return redirect(url_for("register_patient"))
 
-@app.route("/register_patient")
+@app.route("/register_patient",methods=["GET","POST"])
 def register_patient():
+    if (request.method=="GET"):
+        return render_template("Register/register_patient.html",title="Patient")
 
-    return render_template("Register/register_patient.html",title="Patient")
+    elif (request.method == "POST"):
+        inpDict = {
+            "patientID"  : str(request.form["patientID"]), 
+            "name"       : str(request.form["patientName"]), 
+            "email"      : str(request.form["email"]), 
+            "dob"        : str(request.form["dob"]), 
+            "address"    : str(request.form["address"]), 
+            "sex"        : str(request.form["sex"]), 
+            "phoneNO"    : str(request.form["phoneNo"]),
+            "password"   : str(request.form["password"]), 
+        }
+        if not models.isExistingUser(inpDict["patientID"],"Patient"): # Insert if not existing
+            res = models.insertNewUser(inpDict,"Patient")
+            if(res==True):
+                return redirect(url_for("home"))
+            else:
+                flash("Error")
 
-@app.route("/register_doctor")
+    else:
+        flash("Error")
+
+@app.route("/register_doctor",methods=["GET","POST"])
 def register_doctor():
-    return render_template("Register/register_doctor.html",title="Doctor")
+    if (request.method=="GET"):
+        return render_template("Register/register_doctor.html",title="Doctor")
 
-@app.route("/register_lab")
+    elif (request.method == "POST"):
+        inpDict = {
+            "doctorID"    : str(request.form["doctorID"]), 
+            "doctorName"  : str(request.form["doctorName"]), 
+            "email"       : str(request.form["email"]), 
+            "dob"         : str(request.form["dob"]), 
+            "address"     : str(request.form["address"]), 
+            "sex"         : str(request.form["sex"]), 
+            "phoneNO"     : str(request.form["phoneNo"]), 
+            "designation" : str(request.form["designation"]),
+            "password"    : str(request.form["password"]), 
+        }
+        if not models.isExistingUser(inpDict["doctorID"],"Doctor"): # Insert if not existing
+            res = models.insertNewUser(inpDict,"Doctor")
+            if(res==True):
+                return redirect(url_for("home"))
+            else:
+                flash("Error")
+
+    else:
+        flash("Error")
+
+@app.route("/register_lab",methods=["GET","POST"])
 def register_lab():
-    return render_template("Register/register_lab.html",title="Lab")
+    if (request.method=="GET"):
+        return render_template("Register/register_lab.html",title="Lab")
 
-@app.route("/register_pharmacy")
+    elif (request.method == "POST"):
+        inpDict = {
+            "labID"    : str(request.form["labID"]),
+            "labName"  : str(request.form["labName"]),
+            "address"  : str(request.form["address"]),
+            "email"    : str(request.form["email"]),
+            "phoneNO"  : str(request.form["phoneNo"]),
+            "password" : str(request.form["password"]), 
+        }
+        if not models.isExistingUser(inpDict["labID"],"Lab"): # Insert if not existing
+            res = models.insertNewUser(inpDict,"Lab")
+            if(res==True):
+                return redirect(url_for("home"))
+            else:
+                flash("Error")
+
+    else:
+        flash("Error")
+
+@app.route("/register_pharmacy",methods=["GET","POST"])
 def register_pharmacy():
-    if not session.get("loggedIn"):
-        return redirect(url_for("login"),302)
-    return render_template("Register/register_pharmacy.html",title="Pharmacy")
+    if (request.method=="GET"):
+        return render_template("Register/register_pharmacy.html",title="Pharmacy")
+
+    elif (request.method == "POST"):
+        inpDict = {
+            "pharmacyID"   : str(request.form["pharmacyID"]),
+            "pharmacyName" : str(request.form["pharmacyName"]),
+            "address"      : str(request.form["address"]),
+            "email"        : str(request.form["email"]),
+            "phoneNO"      : str(request.form["phoneNo"]),
+            "password"     : str(request.form["password"]),
+        }
+        if not models.isExistingUser(inpDict["pharmacyID"],"Pharmacy"): # Insert if not existing
+            res = models.insertNewUser(inpDict,"Pharmacy")
+            if(res==True):
+                return redirect(url_for("home"))
+            else:
+                flash("Error")
+
+    else:
+        flash("Error")
 
 @app.route("/patient")
 def patient():
