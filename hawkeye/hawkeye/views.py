@@ -7,10 +7,6 @@ from flask import Flask,render_template,redirect,url_for,flash, redirect, reques
 
 app.secret_key = 'secretkeyhereplease'
 
-@app.route("/base")
-def base():
-	return render_template("Base/base.html",title="User")
-
 @app.route("/")
 def home():
     if not session.get("loggedIn"):
