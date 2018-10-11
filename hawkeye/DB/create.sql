@@ -71,7 +71,7 @@ CREATE TABLE PatientPharmacy (
 );
 
 CREATE TABLE PatientLogin (
-    patientID CHAR(12),
+    email CHAR(12),
     password VARCHAR(100),
     hintQuestion VARCHAR(100),
     hintAnswer VARCHAR(100) ,
