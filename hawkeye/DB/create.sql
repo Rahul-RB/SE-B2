@@ -212,3 +212,12 @@ CREATE TABLE MedicineResponse (
     remarks VARCHAR(100) ,
     FOREIGN KEY (medicineReqID) REFERENCES  MedicineRequest (medicineReqID) 
 );
+
+CREATE TABLE doctorAppointments (
+    patientID CHAR(12),
+    doctorID CHAR(12),
+    dateTimeStamp DATETIME,
+    FOREIGN KEY (patientID) REFERENCES PatientDetails (patientID)  ,
+    FOREIGN KEY (doctorID) REFERENCES DoctorDetails (doctorID) ,
+    PRIMARY KEY (doctorID,patientID)
+)
