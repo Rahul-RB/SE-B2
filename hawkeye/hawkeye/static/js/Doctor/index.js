@@ -27,6 +27,24 @@ $(document).ready(function () {
     
     });
     /* Do not disturb above lines */
+    // START: jqeury timeline calendar code
+    $("#myTimeline").timeline({
+        startDatetime: '2017-05-28',
+        rangeAlign: 'center'
+    });
+
+    $("#myTimeline").on('afterRender.timeline', function(){
+        // usage bootstrap's popover
+        $('.timeline-node').each(function(){
+            if ( $(this).data('toggle') === 'popover' ) {
+                $(this).attr( 'title', $(this).text() );
+                $(this).popover({
+                    trigger: 'hover'
+                });
+            }
+        });
+    });
+    // END: jqeury timeline calendar code
     
     /* Start Adding your javascript here */
     $('#notifications').hide();
@@ -42,7 +60,7 @@ $(document).ready(function () {
     });
 
 
-
+    // START: meant for dynamic addition of rows in a table
     $(".addCF").click(function(){
         $("#customFields").append('<tr valign="top"><th scope="row"><label for="customFieldName">Symptoms and Medicines </label></th><td><input type="text" class="code" id="customFieldName" name="customFieldName[]" value="" placeholder="Enter symptoms here...." /> &nbsp; <input type="text" class="code" id="customFieldValue" name="customFieldValue[]" value="" placeholder="Enter medicines here...." /> &nbsp; <a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
     });
@@ -50,6 +68,8 @@ $(document).ready(function () {
     $("#customFields").on('click','.remCF',function(){
         $(this).parent().parent().remove();
     });
+    //END
+
 
 
     // $('#navbar-toggler').click(function(){
