@@ -1,21 +1,7 @@
 /*
     Start - Writing your custom CSS here, or make your own CSS file.
 */
-.search {
-    position: fixed;
-    top: 75px;
-    max-width: 100%;    
-}
-.search input{
-    width:100%;
-}
 
-.details{
-    position: fixed;
-    top: 200px;
-    max-width: 100%;
-    text-align: center;
-}
 /*
     End - Writing your custom CSS here, or make your own CSS file.
 */
@@ -29,7 +15,11 @@
     Start - Don't touch this code
 */
 
+/*
+    Start - Don't touch this code
+*/
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+
 body {
     font-family: 'Roboto',  sans-serif;
     background: #f2f2f2;
@@ -57,6 +47,9 @@ footer a:focus {
     border-radius: 0;
     margin-bottom: 40px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(143,143,143,1);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(143,143,143,1);
+    box-shadow: 0px 3px 5px 0px rgba(143,143,143,1);
 }
 
 .navbar-btn {
@@ -76,7 +69,7 @@ footer a:focus {
     position: fixed;
     top: 0px;
     left: 0px;
-    /*height: 50px;*/
+    z-index: 10;
     width: 100%;
     background-color: #14489b;
     color: #FFFFFF;
@@ -250,6 +243,8 @@ ul.CTAs a {
     width: 100%;
     background-color: #164719;
     color: #FFFFFF;
+    margin-top: 50px;
+    /*z-index: 99999!important;*/
 }
 
 #footerDiv{
