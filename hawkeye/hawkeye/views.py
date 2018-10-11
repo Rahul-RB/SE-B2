@@ -30,7 +30,9 @@ def login():
 
         # Make DB query to see if User with 'email' and 'acc_type'
         # has the same password as in the DB.
-        result = models.loginCheck(POST_EMAIL,POST_PASSWORD)
+        result = models.loginCheck(POST_EMAIL,POST_PASSWORD,POST_ACC_TYPE)
+        if result=="Error":
+            flash("Error")
         if result:
             session['loggedIn'] = True
             print("RESULT")
