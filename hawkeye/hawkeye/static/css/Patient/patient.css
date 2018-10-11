@@ -26,11 +26,24 @@
 }
 
 .popupWrapperDiv{
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    /*box-shadow: 0 0 10px rgba(0,0,0,0.3);*/
+    background-color: white;
+    padding: 10px;
     display:none;
     margin:1em;
 }
 
+.popupDiv{
+    padding: 0px 0px 0px 0px;
+}
+
+#popupDoctorSearch,#popupMedicineSearch,#popupLabSearch{
+    margin-bottom: 5px;
+}
+
+.popupCloseBtn, .popupFinalBtn{
+    margin-top: 5px;
+}
 
 #setReminderDiv{
     font-size: 15px;    
@@ -78,10 +91,10 @@
     border-radius: 0 !important;
 }
 
-#searchBtn,#searchTextBox{
+.searchBtn,.searchTextBox{
     height: 40px;
 }
-#searchTextBox{
+.searchTextBox{
     width: 90%;
     padding: 15px 0 15px 20px;
     font-size: 16px;
@@ -94,16 +107,16 @@
     transition: all 0.4s;
 }
 
-#searchTextBox::-webkit-input-placeholder {
+.searchTextBox::-webkit-input-placeholder {
   color: #000000;
 }
-#searchTextBox::-moz-placeholder {
+.searchTextBox::-moz-placeholder {
   color: #000000;
 }
-#searchTextBox:-ms-input-placeholder {
+.searchTextBox:-ms-input-placeholder {
   color: #000000;
 }
-#searchTextBox:-moz-placeholder {
+.searchTextBox:-moz-placeholder {
   color: #000000;
 }
 #labTestDropdown,#medicineDropdown{
@@ -116,18 +129,18 @@
     padding-right: 0px;
 }
 
-#searchTextBox:focus,
-#searchBtn:focus {
+.searchTextBox:focus,
+.searchBtn:focus {
     /*background: rgb(64, 151, 119);*/
     background-color: #164719;
     color: #FFFFFF;
 }
 
-#searchBtn:focus{
+.searchBtn:focus{
     transition: all 0.4s;
 }
 
-#searchBtn {
+.searchBtn {
     width: 10%;
     border: 0 none;
     float: left;
@@ -138,12 +151,30 @@
 #doctorTimeScroll{
     /*width: 100%;*/
 }
+#dropdownMenuPrescriptionList{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#prescriptionsViewDivTitle,#labTestPendingTitle,#labTestDoneTitle{
+    border-bottom: 1px solid black;
+}
+#labTestDoneTitle{
+    border-top: 1px solid black;
+}
+#prescriptionsViewDivTitleDiv,#labTestDoneTitle,#labTestPendingTitle{
+    font-size: 24px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
 
+.individualRowTwoItem{
+    cursor: pointer;
+}
 @media screen and (max-width: 1024px) {
-    #searchTextBox{
+    .searchTextBox{
         width: 80%;
     }
-    #searchBtn{
+    .searchBtn{
         width: 20%;    
     }
 }
