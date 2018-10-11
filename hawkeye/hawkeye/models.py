@@ -22,8 +22,10 @@ def loginCheck(email,password,acctType):
 
     cursor.execute(query)
     data = cursor.fetchall()
-    print("data:",data)
-    if(password!=data[0][0]):
+    try:
+        if(password!=data[0][0]):
+            return False
+        else:
+            return True
+    except Exception as e:
         return False
-    else:
-        return True
