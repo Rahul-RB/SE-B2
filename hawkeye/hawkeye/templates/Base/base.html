@@ -47,18 +47,18 @@
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Login to a different account</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <li>
-                                <a href="#">
+                                <a href= {{ url_for("patient") }} >
                                     <i class="fas fa-user-circle"></i> &nbsp;&nbsp;&nbsp;Patient
                                 </a>
                             </li>
                             <li>
-                                <a href="#"><i class="fas fa-user-md"></i> &nbsp;&nbsp;&nbsp;Doctor</a>
+                                <a href= {{ url_for("doctor") }} ><i class="fas fa-user-md"></i> &nbsp;&nbsp;&nbsp;Doctor</a>
                             </li>
                             <li>
-                                <a href="#"><i class="fas fa-x-ray"></i> &nbsp;&nbsp;Lab</a>
+                                <a href= {# {{ url_for("lab") }} #} ><i class="fas fa-x-ray"></i> &nbsp;&nbsp;Lab</a>
                             </li>
                             <li>
-                                <a href="#"><i class="fas fa-notes-medical"></i> &nbsp;&nbsp;&nbsp;Pharmacy</a>
+                                <a href= {{ url_for("pharmacy") }} ><i class="fas fa-notes-medical"></i> &nbsp;&nbsp;&nbsp;Pharmacy</a>
                             </li>
                         </ul>
                     </li>
