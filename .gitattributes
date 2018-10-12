@@ -1,0 +1,4 @@
+hawkeye/static/css* linguist-vendored
+hawkeye/static/fonts* linguist-vendored
+hawkeye/static/images* linguist-vendored
+# hawkeye/static/vendor* linguist-vendored
