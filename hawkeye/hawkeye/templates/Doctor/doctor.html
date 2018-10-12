@@ -17,15 +17,15 @@
         <a href={{ url_for("history") }} class="btn btn-info" role="button">Existing Patient</a>
     </div>
 
-    <div class="container">
+    <!-- <div class="container">
 	    <div class="row">
 		    <div class="topRowWrapper col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12" id = "myTimelineCol">
 		        <div id="myTimeline">
-		            <ul class="container-fluid timeline-events">
-		                <li>Not allowed event definition</li>
-		                <li data-timeline-node="{ start:'2017-5-29 8:00',end:'2017-5-29 10:30',content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis luctus tortor nec bibendum malesuada. Etiam sed libero cursus, placerat est at, fermentum quam. In sed fringilla mauris. Fusce auctor turpis ac imperdiet porttitor. Duis vel pharetra magna, ut mollis libero. Etiam cursus in leo et viverra. Praesent egestas dui a magna eleifend, id elementum felis maximus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum sed elit gravida, euismod nunc id, ullamcorper tellus. Morbi elementum urna faucibus tempor lacinia. Quisque pharetra purus at risus tempor hendrerit. Nam dui justo, molestie quis tincidunt sit amet, eleifend porttitor mauris. Maecenas sit amet ex vitae mi finibus pharetra. Donec vulputate leo eu vestibulum gravida. Ut in facilisis dolor, vitae iaculis dui.' }">Event Label</li>
-		                <li data-timeline-node="{ start:'2017-5-29 10:30',end:'2017-5-29 12:15',bgColor:'#a3d6cc',content:'<p>In this way, you can include <em>HTML tags</em> in the event body.<br><i class=\'fa fa-ellipsis-v\'></i><br><i class=\'fa fa-ellipsis-v\'></i></p>' }">HTML tags is included in the event content</li>
-		                <li data-timeline-node="{ start:'2017-5-29 13:00',content:'For the bar type on the timeline, event blocks are displayed in minimum units unless you specify an event end time.' }">Event with undefined of end date</li>
+		            <ul class="container-fluid timeline-events" id="timelineul">
+		                <li>Not allowed event definition</li> -->
+		                <!-- <li data-timeline-node="{ start:'2017-5-29 8:00',end:'2017-5-29 10:30',content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis luctus tortor nec bibendum malesuada. Etiam sed libero cursus, placerat est at, fermentum quam. In sed fringilla mauris. Fusce auctor turpis ac imperdiet porttitor. Duis vel pharetra magna, ut mollis libero. Etiam cursus in leo et viverra. Praesent egestas dui a magna eleifend, id elementum felis maximus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum sed elit gravida, euismod nunc id, ullamcorper tellus. Morbi elementum urna faucibus tempor lacinia. Quisque pharetra purus at risus tempor hendrerit. Nam dui justo, molestie quis tincidunt sit amet, eleifend porttitor mauris. Maecenas sit amet ex vitae mi finibus pharetra. Donec vulputate leo eu vestibulum gravida. Ut in facilisis dolor, vitae iaculis dui.' }">Event Label</li> -->
+		                <!-- <li data-timeline-node="{ start:'2018-9-09 10:30:00',end:'2018-9-09 11:00:00',bgColor:'#a3d6cc',content:'<p>In this way, you can include <em>HTML tags</em> in the event body.<br><i class=\'fa fa-ellipsis-v\'></i><br><i class=\'fa fa-ellipsis-v\'></i></p>' }">HTML tags is included in the event content</li>
+		                <li data-timeline-node="{ start:'2018-9-8 00:00:00',content:'For the bar type on the timeline, event blocks are displayed in minimum units unless you specify an event end time.' }">Event with undefined of end date</li>
 		                <li data-timeline-node="{ end:'2017-5-29 15:00',bgColor:'#e6eb94',content:'In this case, no displayed.' }">Event with undefined of start date</li>
 		                <li data-timeline-node="{ start:'2017-5-29 12:45',end:'2017-5-29 16:00',row:2,bgColor:'#89c997',color:'#ffffff',callback:'$(\'#myModal\').modal()',content:'Show modal window via bootstrap' }">Event having callback</li>
 		                <li data-timeline-node="{ start:'2017-5-29 16:03',end:'2017-5-29 19:05',row:3,bgColor:'#a1d8e6',color:'#008db7',extend:{toggle:'popover',placement:'bottom',content:'It is also possible to bind external custom events.'} }">Show popover via bootstrap</li>
@@ -38,8 +38,8 @@
 		        </div>
 		    </div>
 		</div>
-	</div>
-    <div class="col-lg-6 col-md-12" hidden>
+	</div> -->
+   <!--  <div class="col-lg-6 col-md-12" hidden>
 		<div class="card mb-3">
 			<div class="card-block">
 				<h5><i class="fa fa-cog"></i> Timeline Configuration</h5>
@@ -48,11 +48,10 @@
 				</div>
 			</div>
 		</div>
-		<!-- /.card -->
-    </div>
-    <!-- /.col -->
+	
+    </div> -->
         
-    <div class="modal fade" id="myModal">
+    <!-- <div class="modal fade" id="myModal">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -69,11 +68,57 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+
+    <!-- <div id="testing-ajax">
+      <p id="ctime">Hiii</p>
+    </div> -->
 {% endblock %}
 
 
 {% block customJS %}
     <script src={{ url_for("static",filename="js/Doctor/index.js") }}></script>
-    <script src= {{ url_for("static",filename="js/Doctor/JqueryTimeline/timeline.min.js", ver="1.0.5") }}></script>
+    <!-- <script src= {{ url_for("static",filename="js/Doctor/JqueryTimeline/timeline.min.js", ver="1.0.5") }}></script> -->
+
+    <!--  <script type=text/javascript>
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script> -->
+
+    <!-- <script type=text/javascript>
+    $(function update() {
+    $.getJSON($SCRIPT_ROOT + '/ctime', {}, function(data) {
+    
+    var obj = jQuery.parseJSON(data.result);
+    // $.each(obj, function(key,value) {
+    //    var x = key;
+    //    // alert(value);
+    //    $.each(value, function(key1,value1) {
+    //       alert(value1);
+    //    });
+    // });  
+    $("#ctime").text(data.result);
+    // alert(typeof(obj));
+    addToTimeline(obj);
+    
+    //$("#array").text(data.array);
+    window.setTimeout(update, 1000); // 1 second update interval
+  });
+}); // automatically invoke for first run
+
+// function addToTimeline(appt_json_arr){
+//   // for(i = 0; i < appt_json_arr['patientID'].length; i++){
+//       // alert(appt_json_arr['patientID'][i] + appt_json_arr['dateTimeStamp'][i]);
+//     $("myTimeline").timeline()
+//       .timeline( 'addEvent', [
+//         {start:'2018-09-07 12:00:00',end:'2018-09-07 12:30:00',label:'patient',content:'Event body'}
+//       ],
+//       function( self, data ){
+//         console.log('Events addition successfully!');
+//     });
+//       // alert(appt_json_arr['patientID'][i] + appt_json_arr['dateTimeStamp'][i]);
+//   // }
+//   //return ;
+
+// }
+</script> -->
 {% endblock %}

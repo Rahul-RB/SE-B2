@@ -28,22 +28,22 @@ $(document).ready(function () {
     });
     /* Do not disturb above lines */
     // START: jqeury timeline calendar code
-    $("#myTimeline").timeline({
-        startDatetime: '2017-05-28',
-        rangeAlign: 'center'
-    });
+    // $("#myTimeline").timeline({
+    //     startDatetime: '2018-09-07',
+    //     rangeAlign: 'center'
+    // });
 
-    $("#myTimeline").on('afterRender.timeline', function(){
-        // usage bootstrap's popover
-        $('.timeline-node').each(function(){
-            if ( $(this).data('toggle') === 'popover' ) {
-                $(this).attr( 'title', $(this).text() );
-                $(this).popover({
-                    trigger: 'hover'
-                });
-            }
-        });
-    });
+    // $("#myTimeline").on('afterRender.timeline', function(){
+    //     // usage bootstrap's popover
+    //     $('.timeline-node').each(function(){
+    //         if ( $(this).data('toggle') === 'popover' ) {
+    //             $(this).attr( 'title', $(this).text() );
+    //             $(this).popover({
+    //                 trigger: 'hover'
+    //             });
+    //         }
+    //     });
+    // });
     // END: jqeury timeline calendar code
     
     /* Start Adding your javascript here */
@@ -60,12 +60,22 @@ $(document).ready(function () {
     });
 
 
-    // START: meant for dynamic addition of rows in a table
+    // START: meant for dynamic addition of rows in a table for symptoms and medicines
     $(".addCF").click(function(){
-        $("#customFields").append('<tr valign="top"><th scope="row"><label for="customFieldName">Symptoms and Medicines </label></th><td><input type="text" class="code" id="customFieldName" name="customFieldName[]" value="" placeholder="Enter symptoms here...." /> &nbsp; <input type="text" class="code" id="customFieldValue" name="customFieldValue[]" value="" placeholder="Enter medicines here...." /> &nbsp; <a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
+        $("#customFields").append('<tr valign="top"><th scope="row"><label for="customFieldName">Symptoms and Medicines </label></th><td><input type="text" class="code" id="customFieldName" name="customFieldName[]" value="" placeholder="Enter symptoms here...." /> &nbsp; <input type="text" class="code" id="customFieldValue" name="customFieldValue[]" value="" placeholder="Enter medicines here...." /> &nbsp;<input type="checkbox" value="M" >Morning</input>&nbsp;<input type="checkbox" value="A" >Afternoon </input>&nbsp;<input type="checkbox" value="N" > Night </input>&nbsp; <a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
     });
 
     $("#customFields").on('click','.remCF',function(){
+        $(this).parent().parent().remove();
+    });
+    //END
+
+    // START: meant for dynamic addition of rows in a table for labtests and type
+    $(".addCF1").click(function(){
+        $("#labFields").append('<tr valign="top"><th scope="row"></th><td><input type="text" class="code" id="labFieldName" name="customFieldName[]" value="" placeholder="Enter labtests here...." /> &nbsp; <input type="text" class="code" id="labFieldValue" name="customFieldValue[]" value="" placeholder="Enter test-type here...." /> &nbsp;<a href="javascript:void(0);" class="remCF1">Remove</a></td></tr>');
+    });
+
+    $("#labFields").on('click','.remCF1',function(){
         $(this).parent().parent().remove();
     });
     //END
