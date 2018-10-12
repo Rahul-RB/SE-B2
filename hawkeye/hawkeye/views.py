@@ -26,7 +26,7 @@ def login():
         print(POST_EMAIL)
         print(POST_PASSWORD)
         print(POST_ACC_TYPE)
-
+        session["accType"] = POST_ACC_TYPE
         # Make DB query to see if User with 'email' and 'acc_type'
         # has the same password as in the DB.
         result = models.loginCheck(POST_EMAIL,POST_PASSWORD,POST_ACC_TYPE)
@@ -34,7 +34,7 @@ def login():
             flash("Error")
 
         if result==True:
-            session['loggedIn'] = True
+            session[POST_ACC_TYPE+"LoggedIn"] = True
             print("RESULT")
             return redirect(url_for("home"))
         else:
@@ -45,9 +45,9 @@ def login():
 
 @app.route("/logout")
 def logout():
-    if not session.get("loggedIn"):
+    if not session.get(session["accType"]+"LoggedIn"):
         return redirect(url_for("login"),302)
-    session['loggedIn'] = False
+    session[session["accType"]+"LoggedIn"] = False
     return redirect(url_for("home"))
 
 @app.route("/register")
@@ -157,46 +157,46 @@ def register_pharmacy():
 
 @app.route("/patient")
 def patient():
-    if not session.get("loggedIn"):
+    if ((not session["accType"]=="Patient") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
     return render_template("Patient/patient.html",title="Patient",user="BABA")
 
 @app.route("/doctor")
 def doctor():
-    if not session.get("loggedIn"):
+    if((not session["accType"]=="Doctor") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
     return render_template("Doctor/doctor.html",title="Doctor")
 
 @app.route("/prescription_history")
 def prescription_history():
-    if not session.get("loggedIn"):
+    if((not session["accType"]=="Doctor") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
     return render_template("Doctor/prescription_history.html",title="Doctor")
 
 @app.route("/history")
 def history():
-    if not session.get("loggedIn"):
+    if((not session["accType"]=="Doctor") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
     return render_template("Doctor/history.html",title="Doctor")
 
 @app.route("/eprescription")
 def eprescription():
-    if not session.get("loggedIn"):
+    if((not session["accType"]=="Doctor") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
     return render_template("Doctor/eprescription.html",title="Doctor")
 
 @app.route("/pharmacy")
 def pharmacy():
-    if not session.get("loggedIn"):
+    if ((not session["accType"]=="Pharmacy") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
     return render_template("Pharmacy/pharmacy.html",title="Pharmacy")
 
 @app.route("/pharmacy_prescription")
 def pharmacy_prescription():
-    if not session.get("loggedIn"):
+    if ((not session["accType"]=="Pharmacy") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
     return render_template("Pharmacy/pharmacy_prescription.html",title="Pharmacy")
