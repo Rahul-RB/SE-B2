@@ -200,3 +200,17 @@ def pharmacy_prescription():
         return redirect(url_for("login"),302)
     
     return render_template("Pharmacy/pharmacy_prescription.html",title="Pharmacy")
+
+@app.route("/lab")
+def lab():
+    if ((not session["accType"]=="Lab") or (not session.get(session["accType"]+"LoggedIn"))):
+        return redirect(url_for("login"),302)
+    
+    return render_template("Lab/lab.html",title="Pharmacy")
+
+@app.route("/labResponse")
+def labResponse():
+    if ((not session["accType"]=="Lab") or (not session.get(session["accType"]+"LoggedIn"))):
+        return redirect(url_for("login"),302)
+    
+    return render_template("Lab/labResponse.html",title="Pharmacy")
