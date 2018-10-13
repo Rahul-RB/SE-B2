@@ -357,7 +357,30 @@
             });
             /* Do not disturb above lines */
             /* Start Adding your javascript here */
+            $("#pres").hide();
+            $('#viewPrescription').click(function(){
+                if($(this).prop("checked") == true){
+                /*alert("Checkbox is checked.");*/
+                    $("#pres").show();
+
+                }
+                else if($(this).prop("checked") == false){
+                /*alert("Checkbox is unchecked.");*/
+                    $("#pres").hide();
+                }
+            });
             
+            
+            $('#writeResponse').click(function(){
+                if($(this).prop("checked") == true){
+                    /*alert("Checkbox is checked.");*/
+                    $("#labform").show();
+                }
+                else if($(this).prop("checked") == false){
+                    /*alert("Checkbox is unchecked.");*/
+                    $("#labform").hide();
+                }
+            });
         
             /* End Adding your javascript here */
         });
