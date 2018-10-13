@@ -1,28 +1,50 @@
-# SE-B2
+# Hawkeye
+
+## Do NOT put a Pull request from your master branch to my master branch. PR SHOULD come from your development (or any other non-master branch) to my master branch.
+
+## First time reading? Read from section named "What to do?".
 
 ## Important note to collaborators:
 - I've added you as collaborators for ease of pushing in future. 
-- Do not `push` directly to `master` branch. I.e., do NOT do : `git push origin master`.
-- There's 7 branches including master branch. You can select your corresponding branch and work on it. Lodge PRs from that directly.
-- If you do want to directly `push` into this repository, create a branch, push into that branch and then lodge a PR as:
+- Do not `push` directly to `master` branch. I.e., do **NOT** do : `git push upstream master`.
+- There's 2 branches including master branch. Lodge Pull Requests to `master` branch.
 
-	`git checkout -b <you-branch-name>`
-
-	` Do your changes, add and commit them.`
-
-	`git push origin <your-branch-name>`
-- If you get any doubt on what branch you're on, then you can check that by doing `git status`.
-- Also, `git status` can be used to check what files you've changed. It'll also show files waiting to be commited and files ready to be pushed.
+## What to do when I/someone say "update _your_ master":
+- When you `forked` from my repository, you had the version of my repository at that date and time.
+- Overtime there's some changes from various members which cause changes into my `master` branch.
+- These changes won't be directly reflected into _your_ master branch. To get these changes, here's what you've to do:
+    1. `git remote add upstream https://github.com/Rahul-RB/SE-B2.git`
+    2. `git fetch upstream`
+    3. `git checkout master`
+    4. `git rebase upstream/master`
+    4.1. IF you see some "Auto-merging, CONFLICT", it means there's been some `merge-conflict`. If this happens, leave it then and there (unless you know to handle merge-conflicts).
+	5. `git push -f origin master`
+	
+- Note how the step `5` pushes into `origin` and **not** `upstream`. This is because, when you `forked` and `cloned` the same into your desktop, the `origin` points to **your** forked repo and by step 1, `upstream` points to the original repository.
 
 
 ## What to do?
 * Fork this repository by pressing the fork button on top.
-* Then, go to your profile, find the forked repository (it has the same name as the original repository). 
+
+* Then, go to your profile, find the forked repository (it has the same name as the original repository).
+
 * Now, press the `Clone or download` button and copy the URL. Then clone it into a folder by doing:
+	
+	`git clone <URL>`
 
-    `git clone <URL>`
+* Create a branch, name it as "development" branch.
+	
+	`git checkout -b development`
+	
+* Then, do whatever changes you've to do. Check your changes by doing this command, it shows what files you made changes into.
 
-* Then, do whatever changes you've to do. Once you're done with changes and feel good enough to push the code, do these inside the cloned folder:
+	`git status`
+	
+* [OPTIONAL] If you do see a file you changed but forgot what exactly you changed, you can refer to that by doing:
+
+	`git diff`
+	
+* Once you're done with changes and feel good enough to push the code, do these inside the cloned folder:
 
 	`git add .`
 	
