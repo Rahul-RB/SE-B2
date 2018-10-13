@@ -1,0 +1,200 @@
+{% extends "Base/base.html" %}
+
+{% block customCSS %}
+
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href = {{url_for("static",filename="css/Lab/lab.css")}} >
+
+{% endblock %}
+
+{% block customContent %}
+
+    <div class="container -fluid" style="margin-top: 50px ; margin-bottom: 50px;">
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 col-4">
+                <span id="paitient_id">Patient ID : 12345 </span>
+            </div>
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 col-4">
+                <span id="doctor"> Doctor ID: D4507 </span>
+            </div>
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 col-4">
+                <span id="labreq_id">LabRequest ID: LR467 </span>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 "> </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-1 col-lg-1 col-md-1  col-1"> </div>
+            <div class="col-xl-10 col-lg-10 col-md-10 col-10">
+                <hr class="my-5">
+                <!--<button type="button" class="btn btn-primary" id="view_pres">View Prescription</button>-->
+                View Prescription
+                <label class="switch ">
+                    <input type="checkbox" class="primary" id="viewPrescription">
+                    <span class="slider round"></span></label>
+
+            </div>
+            <div class="col-xl-1 col-lg-1 col-md-1  col-1"> </div>
+        </div>
+        <div class="row" id="pres">
+            <div class="col-xl-1 col-lg-1 col-md-1 "></div>
+            <div class="col-xl-10 col-lg-10 col-md-10 col-12 table-responsive-sm" style="padding: 10px 10px 10px 10px;">
+                <hr class="my-5">
+                <table id="myTable" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Symptom</th>
+                            <th>Medicine</th>
+                            <th>Morn</th>
+                            <th>Noon</th>
+                            <th>Night</th>
+                            <th>Num</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cold</td>
+                            <td>Dolo</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>Continue after 3days only if necessary</td>
+
+                        </tr>
+                        <tr>
+                            <td>Cold</td>
+                            <td>Dolo</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>Continue after 3days only if necessary</td>
+                        </tr>
+                        <tr>
+                            <td>Cold</td>
+                            <td>Dolo</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>Continue after 3days only if necessary</td>
+                        </tr>
+                        <tr>
+                            <td>Cold</td>
+                            <td>Dolo</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>Continue after 3days only if necessary</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+            <div class="col">
+                <hr class="my-5">
+                <h3>Lab Request Details</h3>
+            </div>
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+        </div>
+        <div class="row" id="labreq">
+            <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 col-4">
+                <span id="paitient_id">Test type: Blood Test </span>
+            </div>
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 col-4">
+                <span id="doctor"> Description: </span>
+            </div>
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 col-4">
+                <span id="labreq_id">Additional</span>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 "> </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-1 col-lg-1 col-md-1  col-1"> </div>
+            <div class="col-xl-10 col-lg-10 col-md-10 col-10">
+                <hr class="my-5">
+                <!--<button type="button" class="btn btn-primary" id="view_pres">View Prescription</button>-->
+                Respond
+                <label class="switch ">
+                    <input type="checkbox" class="primary" id="writeResponse" checked>
+                    <span class="slider round"></span></label>
+
+            </div>
+            <div class="col-xl-1 col-lg-1 col-md-1  col-1"> </div>
+        </div>
+        <div class="row" id="labform">
+            <div class="col-md-10 offset-md-1">
+                <span class="anchor" id="formComplex"></span>
+                <hr class="my-5">
+                <h3>Lab Response Form </h3>
+                <!-- form complex example -->
+                <div class="form-row mt-4">
+                    <div class="col-sm-5 pb-3">
+                        <label for="exampleAccount">Bill #</label>
+                        <input type="text" class="form-control" id="billno" placeholder="XXXXXXXXXXXXXXXX">
+                    </div>
+                    <div class="col-sm-3 pb-3">
+                        <label for="exampleCtrl">LabId #</label>
+                        <input type="text" class="form-control" id="labid" placeholder="LabId" readonly>
+                    </div>
+                    <div class="col-sm-4 pb-3">
+                        <label for="exampleAmount">Amount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">$</span></div>
+                            <input type="text" class="form-control" id="exampleAmount" placeholder="Amount">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 pb-3">
+                        <label for="exampleFirst">Lab Reviewer Name</label>
+                        <input type="text" class="form-control" id="exampleFirst">
+                    </div>
+                    <div class="col-sm-6 pb-3">
+                        <label for="exampleLast">Lab Reviewer ID</label>
+                        <input type="text" class="form-control" id="exampleLast">
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <label for="exampleFormControlFile1">Example file input</label>
+                        <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <label for="exampleMessage">Notes</label>
+                        <textarea class="form-control" id="exampleMessage"></textarea>
+                        <small class="text-info">
+                                    Add the patient notes here.
+                                    </small>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-row">
+                            <label class="col-md col-form-label" for="name">Generated Id</label>
+                            <input type="text" class="form-control col-md-4" name="gid" id="gid" />
+                            <label class="col-md col-form-label" for="name">Date Assigned</label>
+                            <input type="text" class="form-control col-md-4" name="da" id="da" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding: 10px 10px 10px 10px;">
+        </div>
+
+    </div>
+
+{% endblock %}
+
+
+{% block customJS %}
+
+    <script src={{url_for("static",filename="js/Lab/labResponse.js")}}></script>}
+
+{% endblock %}
