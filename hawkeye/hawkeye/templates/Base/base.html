@@ -13,13 +13,16 @@
         <link rel="stylesheet" type="text/css" href= {{ url_for("static",filename="vendor/bootstrap/css/bootstrap.min.css") }} >
 
         <!-- Scrollbar Custom CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"> -->
+        <link rel="stylesheet" href = {{ url_for("static",filename="vendor/jQueryCustomScroller/jquery.mCustomScrollbar.min.css") }} ></link>
 
         <!-- Font Awesome JS -->
-        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script>
+        <!-- <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script> -->
+        <script src= {{ url_for("static",filename="vendor/fontawesome/js/all.min.js") }} ></script>
 
         <!-- Font Awesome CSS -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"> -->
+        <link rel="stylesheet" type="text/css" href= {{ url_for("static",filename="vendor/fontawesome/css/all.min.css") }} >
 
         <!-- Our Custom CSS -->
         <link rel="stylesheet" href={{url_for('static', filename='css/Base/base.css')}}>
