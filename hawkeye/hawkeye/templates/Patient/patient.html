@@ -374,7 +374,8 @@
 <script src='fullcalendar/fullcalendar.js'></script>
 {% block customJS %}
     <!-- MomentJS - FullCalendar -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script> -->
+    <script src= {{ url_for("static",filename="vendor/moment/moment.js") }}></script>
     
     <!-- FullCalendar JS -->
     <script src= {{ url_for("static",filename="js/Patient/fullcalendar/fullcalendar.min.js") }}></script>
