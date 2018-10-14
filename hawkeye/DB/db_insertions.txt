@@ -1,3 +1,7 @@
 INSERT INTO PatientDetails VALUES(123456789012, 'Christopher', 'abc@gmail.com', 1982-07-02, 'Banashankari', 'M', 9287262524);
 INSERT INTO PatientDetails VALUES(123456789013, 'Christina', 'christina@gmail.com', 1985-06-02, 'Yelahanka', 'F', 9287286524);
 INSERT INTO PatientDetails VALUES(123456789014, 'James', 'james@gmail.com', 1992-02-05, 'Vidyaranyapura', 'M', 9283262524);
+
+INSERT INTO DoctorDetails VALUES(123456789021, 'Allan','allan@gmail.com', 1984-03-31, 'Banaswadi' , 'F', 8871327541, 'Neurologist');
+INSERT INTO DoctorDetails VALUES(123456789022, 'Jack','jack@gmail.com', 1982-02-12, 'Banashankari' , 'M', 9871327541, 'Opthalmologist');
+INSERT INTO DoctorDetails VALUES(123456789023, 'Jane','jane@gmail.com', 1991-02-21, 'Yelahanka' , 'F', 8854327541, 'Psychotherapist');
