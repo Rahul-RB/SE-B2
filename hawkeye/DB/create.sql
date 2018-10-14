@@ -91,7 +91,7 @@ CREATE TABLE GenPatientHistory (
 
 CREATE TABLE MedicineReminder (
     patientID CHAR(12) NOT NULL,
-    medReminderID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    medReminderID INTEGER  AUTO_INCREMENT,
     medicineName VARCHAR(50),
     description VARCHAR(100),
     alarmDate DATETIME,
@@ -103,7 +103,7 @@ CREATE TABLE MedicineReminder (
 
 CREATE TABLE VisitReminder (
     patientID CHAR(12) NOT NULL,
-    visitReminderID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    visitReminderID INTEGER  AUTO_INCREMENT,
     docName VARCHAR(20),
     description VARCHAR(100),
     alarmDate DATETIME,
@@ -133,7 +133,7 @@ CREATE TABLE EPrescription (
 
 CREATE TABLE Prescription (
     patientID CHAR(12) NOT NULL ,
-    prescriptionID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    prescriptionID INTEGER  AUTO_INCREMENT,
     dateTimeStamp DATETIME,
     fileLocation VARCHAR(100) ,
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
@@ -141,7 +141,7 @@ CREATE TABLE Prescription (
 );
 
 CREATE TABLE LabRequest (
-    labRequestID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    labRequestID INTEGER  AUTO_INCREMENT,
     prescriptionID INTEGER ,
     erescriptionID INTEGER ,
     labID CHAR(12),
@@ -159,7 +159,7 @@ CREATE TABLE LabRequest (
 CREATE TABLE LabResponse (
     labRequestID INTEGER NOT NULL ,
     resultLink VARCHAR(100),
-    reportID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    reportID INTEGER  AUTO_INCREMENT,
     description VARCHAR(100),
     dateTimeStamp DATETIME,
     FOREIGN KEY(labRequestID) REFERENCES LabRequest(labRequestID),
@@ -196,7 +196,7 @@ CREATE TABLE PharmacyLogin (
 );
 
 CREATE TABLE MedicineRequest (
-    medicineReqID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    medicineReqID INTEGER  AUTO_INCREMENT,
     patientID CHAR(12),
     pharmacyID CHAR(12),
     ePrescriptionID INTEGER NOT NULL,
@@ -207,7 +207,7 @@ CREATE TABLE MedicineRequest (
 );
 
 CREATE TABLE MedicineResponse (
-    medicineResponseID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    medicineResponseID INTEGER  AUTO_INCREMENT,
     medicineReqID INTEGER NOT NULL,
     remarks VARCHAR(100) ,
     FOREIGN KEY (medicineReqID) REFERENCES  MedicineRequest (medicineReqID) 
