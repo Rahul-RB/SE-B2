@@ -27,6 +27,7 @@ def login():
         print(POST_PASSWORD)
         print(POST_ACC_TYPE)
         session["accType"] = POST_ACC_TYPE
+        session["accEmail"] = POST_EMAIL
         # Make DB query to see if User with 'email' and 'acc_type'
         # has the same password as in the DB.
         result = models.loginCheck(POST_EMAIL,POST_PASSWORD,POST_ACC_TYPE)
@@ -159,7 +160,7 @@ def register_pharmacy():
 def patient():
     if ((not session["accType"]=="Patient") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
-    return render_template("Patient/patient.html",title="Patient",user="BABA")
+    return render_template("Patient/patient.html",title="Patient",user=models.getUsername(session["accEmail"],session["accType"]))
 
 @app.route("/doctor")
 def doctor():
