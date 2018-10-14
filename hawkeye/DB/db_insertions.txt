@@ -9,3 +9,7 @@ INSERT INTO DoctorDetails VALUES(123456789023, 'Jane','jane@gmail.com', 1991-02-
 INSERT INTO LabDetails VALUES(123456789031, 'SparshLabs', 'Katriguppe','sparshlabs@yahoo.com', 7876567541);
 INSERT INTO LabDetails VALUES(123456789032, 'GeckoLabs', 'Outerringroad','geckolabs@yahoo.com', 9676567541);
 INSERT INTO LabDetails VALUES(123456789033, 'BaptistLabs', 'Banashankari','baptistlabs@yahoo.com', 9976567541);
+
+INSERT INTO PharmacyDetails VALUES(123456789041, 'GeckoPharmacies', 'Banashankari' ,'geckopharma@hotmail.com' ,9176567541);
+INSERT INTO PharmacyDetails VALUES(123456789042, 'MedplusPharma', 'Katriguppe' ,'medpharma@yahoo.com', 9876467541);
+INSERT INTO PharmacyDetails VALUES(123456789043, 'BaptistPharmacies', 'Nayandahalli','baptistpharma@gmail.com' , 9676554541);
