@@ -21,4 +21,4 @@ INSERT INTO PatientLab VALUES(123456789012,123456789033, 1);
 
 INSERT INTO PatientPharmacy VALUES(123456789012,123456789041);
 
-
+INSERT INTO GenPatientHistory VALUES(123456789012, 'O+', 'Mushroom', 'Artheretis ',' Mediterranean','NA');
