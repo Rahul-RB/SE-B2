@@ -5,7 +5,7 @@ USE Hawkeye;
 
 CREATE TABLE PatientDetails (
     patientID CHAR(12) ,
-    name VARCHAR(20),
+    patientName VARCHAR(20),
     email VARCHAR(100) UNIQUE NOT NULL,
     dob DATE,
     address VARCHAR(100),
@@ -44,6 +44,7 @@ CREATE TABLE PharmacyDetails (
     PRIMARY KEY(pharmacyID)    
 );
 
+-- What's these tables for?
 
 CREATE TABLE Consultation (
     patientID CHAR(12),
@@ -69,6 +70,8 @@ CREATE TABLE PatientPharmacy (
     FOREIGN KEY (pharmacyID) REFERENCES  PharmacyDetails (pharmacyID),
     PRIMARY KEY( patientID,pharmacyID )
 );
+
+-- End of question area.
 
 CREATE TABLE PatientLogin (
     email VARCHAR(100),
@@ -101,10 +104,21 @@ CREATE TABLE MedicineReminder (
     UNIQUE( patientID,medReminderID)
 );
 
-CREATE TABLE VisitReminder (
+CREATE TABLE DoctorVisitReminder (
     patientID CHAR(12) NOT NULL,
     visitReminderID INTEGER PRIMARY KEY AUTO_INCREMENT,
     docName VARCHAR(20),
+    description VARCHAR(100),
+    alarmDate DATETIME,
+    alarmDuration INTEGER ,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
+    UNIQUE(patientID,visitReminderID)
+);
+
+CREATE TABLE LabVisitReminder (
+    patientID CHAR(12) NOT NULL,
+    visitReminderID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    labName VARCHAR(20),
     description VARCHAR(100),
     alarmDate DATETIME,
     alarmDuration INTEGER ,
@@ -118,17 +132,20 @@ CREATE TABLE DoctorLogin (
     FOREIGN KEY (email) REFERENCES  DoctorDetails (email),
     PRIMARY KEY(email)
 );
+
+-- no AUTO_INCREMENT in ePrescriptionID so have to manually enter random number - time is a number, best.
 CREATE TABLE EPrescription (
-    ePrescriptionID INTEGER,
+    ePrescriptionID INTEGER, 
     patientID CHAR(12) ,
-    slNo INTEGER,
+    doctorID CHAR(12) ,
+    -- slNo INTEGER AUTO_INCREMENT,
     symptoms VARCHAR(100),
     medicineSuggestion VARCHAR(100),
     remarks VARCHAR(100),
-    doctorID CHAR(12) ,
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
     FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID) ,
-    PRIMARY KEY(ePrescriptionID ,patientID ,slNo)
+    -- PRIMARY KEY(ePrescriptionID ,patientID ,slNo)
+    PRIMARY KEY(ePrescriptionID ,patientID)
 );
 
 CREATE TABLE Prescription (
@@ -140,29 +157,51 @@ CREATE TABLE Prescription (
     UNIQUE (patientID, prescriptionID)
 );
 
-CREATE TABLE LabRequest (
-    labRequestID INTEGER PRIMARY KEY AUTO_INCREMENT,
-    prescriptionID INTEGER ,
-    erescriptionID INTEGER ,
-    labID CHAR(12),
+CREATE TABLE LabRequestDocument(
+    labRequestDocumentID INTEGER PRIMARY KEY AUTO_INCREMENT,
+
     patientID CHAR(12),
     doctorID CHAR(12),
     testType VARCHAR(100),
     description VARCHAR(100),
+    fileLocation VARCHAR(100) ,
+
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
+    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID)
+); 
+
+CREATE TABLE ELabRequestDocument(
+    labRequestDocumentID INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    doctorID CHAR(12),
+    ePrescriptionID INTEGER ,
+    patientID CHAR(12),
+
+    testType VARCHAR(100),
+    description VARCHAR(100),
+
+    FOREIGN KEY (ePrescriptionID) REFERENCES  EPrescription (ePrescriptionID) ,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
+    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID)
+); 
+
+CREATE TABLE LabRequest (
+    labRequestDocumentID INTEGER,
+    labID CHAR(12),
     dateTimeStamp DATETIME,
     isPending INTEGER,
     FOREIGN KEY (labID) REFERENCES  LabDetails (labID) ,
-    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
-    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID)
+    FOREIGN KEY (labRequestDocumentID) REFERENCES ELabRequestDocument (labRequestDocumentID) ,
+    PRIMARY KEY (labRequestDocumentID)
 );
 
 CREATE TABLE LabResponse (
-    labRequestID INTEGER NOT NULL ,
-    resultLink VARCHAR(100),
     reportID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    labRequestID INTEGER NOT NULL,
+    resultLink VARCHAR(100),
     description VARCHAR(100),
     dateTimeStamp DATETIME,
-    FOREIGN KEY(labRequestID) REFERENCES LabRequest(labRequestID),
+    FOREIGN KEY (labRequestID) REFERENCES LabRequest(labRequestDocumentID),
     UNIQUE(labRequestID,reportID)
 );
 
@@ -196,21 +235,24 @@ CREATE TABLE PharmacyLogin (
 );
 
 CREATE TABLE MedicineRequest (
-    medicineReqID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    -- medicineReqID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    ePrescriptionID INTEGER,
     patientID CHAR(12),
     pharmacyID CHAR(12),
-    ePrescriptionID INTEGER NOT NULL,
     pickupTime DATETIME ,
-    FOREIGN KEY (pharmacyID) REFERENCES  PharmacyDetails (pharmacyID)  ,
+    isPending INTEGER,
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID)  ,
-    FOREIGN KEY (ePrescriptionID) REFERENCES  EPrescription (ePrescriptionID)
+    FOREIGN KEY (pharmacyID) REFERENCES  PharmacyDetails (pharmacyID)  ,
+    FOREIGN KEY (ePrescriptionID) REFERENCES  EPrescription (ePrescriptionID),
+    PRIMARY KEY (ePrescriptionID,patientID)
 );
 
 CREATE TABLE MedicineResponse (
     medicineResponseID INTEGER PRIMARY KEY AUTO_INCREMENT,
-    medicineReqID INTEGER NOT NULL,
+    ePrescriptionID INTEGER NOT NULL,
+    patientID CHAR(12),
     remarks VARCHAR(100) ,
-    FOREIGN KEY (medicineReqID) REFERENCES  MedicineRequest (medicineReqID) 
+    FOREIGN KEY (ePrescriptionID,patientID) REFERENCES  MedicineRequest (ePrescriptionID,patientID) 
 );
 
 CREATE TABLE DoctorAppointments (

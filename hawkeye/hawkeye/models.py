@@ -19,7 +19,7 @@ def loginCheck(email,password,acctType):
         return False
 
 def isExistingUser(ID,acctType):
-    query = "SELECT * from "+ acctType+"Details where patientID='"+ID+"'"
+    query = "SELECT * from "+ acctType+"Details where " + acctType.lower() + "ID='"+ID+"'"
 
     res = cursor.execute(query)
     # conn.commit()
@@ -103,9 +103,7 @@ def insertNewUser(inpDict,acctType):
 
 def getUsername(email,acctType):
     query = "SELECT "+ acctType.lower() + "Name from "+ acctType+"Details where email='"+email+"'"
-    if(acctType=="Patient"):
-        query = "SELECT name from "+ acctType+"Details where email='"+email+"'"
-
+    print(query)
     res = cursor.execute(query)
 
     data = cursor.fetchall()
