@@ -1,0 +1,3 @@
+INSERT INTO PatientDetails VALUES(123456789012, 'Christopher', 'abc@gmail.com', 1982-07-02, 'Banashankari', 'M', 9287262524);
+INSERT INTO PatientDetails VALUES(123456789013, 'Christina', 'christina@gmail.com', 1985-06-02, 'Yelahanka', 'F', 9287286524);
+INSERT INTO PatientDetails VALUES(123456789014, 'James', 'james@gmail.com', 1992-02-05, 'Vidyaranyapura', 'M', 9283262524);
