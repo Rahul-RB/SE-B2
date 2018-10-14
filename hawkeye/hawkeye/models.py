@@ -3,22 +3,9 @@ from hawkeye import mysql
 conn = mysql.connect()
 cursor =conn.cursor()
 
+
 def loginCheck(email,password,acctType):
-
-    if(acctType=="Patient"):
-        query = "SELECT password from PatientLogin where email='"+email+"'"
-
-    elif(acctType=="Doctor"):
-        query = "SELECT password from DoctorLogin where email='"+email+"'"
-        
-    elif(acctType=="Lab"):
-        query = "SELECT password from LabLogin where email='"+email+"'"
-        
-    elif(acctType=="Pharmacy"):
-        query = "SELECT password from PharmacyLogin where email='"+email+"'"
-        
-    else :
-        return ("Error")
+    query = "SELECT password from "+ acctType+"Login where email='"+email+"'"   
 
     cursor.execute(query)
     conn.commit()
@@ -32,19 +19,7 @@ def loginCheck(email,password,acctType):
         return False
 
 def isExistingUser(ID,acctType):
-    if(acctType=="Patient"):
-        query = "SELECT * from PatientDetails where patientID='"+ID+"'"
-
-    elif(acctType=="Doctor"):
-        query = "SELECT * from DoctorDetails where doctorID='"+ID+"'"
-        
-    elif(acctType=="Lab"):
-        query = "SELECT * from LabDetails where labID='"+ID+"'"
-        
-    elif(acctType=="Pharmacy"):
-        query = "SELECT * from PharmacyDetails where pharmacyID='"+ID+"'"
-    else:
-        return("Error")
+    query = "SELECT * from "+ acctType+"Details where patientID='"+ID+"'"
 
     res = cursor.execute(query)
     conn.commit()
@@ -124,3 +99,4 @@ def insertNewUser(inpDict,acctType):
         return True
     else:
         return False
+
