@@ -1,8 +1,18 @@
 # Hawkeye
 
-## Do NOT put a Pull request from your master branch to my master branch. PR SHOULD come from your development (or any other non-master branch) to my master branch.
+> Do **NOT** put a Pull Request(PR) from your master branch. <br>
+> PR **SHOULD** come from a development branch of yours (i.e. a non-master branch) to my master branch.
 
-## First time reading? Read from section named "What to do?".
+### Dependencies
+- Check `requirements.txt`
+
+### How to run?
+`cd hawkeye/` 
+> Add your Database root password into `__init__.py`
+
+`$ export FLASK_APP=run.py`<br>
+`$ export FLASK_ENV=development`<br>
+`$ flask run`
 
 ## Important note to collaborators:
 - I've added you as collaborators for ease of pushing in future. 
@@ -46,10 +56,8 @@
 	
 * Once you're done with changes and feel good enough to push the code, do these inside the cloned folder:
 
-	`git add .`
-	
-	`git commit -m "Put meaningful message here"`
-	
+	`git add .`<br>
+	`git commit -m "Put meaningful message here"`<br>
 	`git push origin master`
 
 * Then, once the code is reviewed and approved, you can issue a Pull request by doing the following:
