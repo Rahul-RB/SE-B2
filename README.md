@@ -4,6 +4,7 @@
 > PR **SHOULD** come from a development branch of yours (i.e. a non-master branch) to my master branch.
 
 ### Dependencies
+- Check `requirements.txt`
 
 ### How to run?
 `cd hawkeye/` 
