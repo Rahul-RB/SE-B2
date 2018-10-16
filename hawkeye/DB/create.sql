@@ -92,6 +92,7 @@ CREATE TABLE GenPatientHistory (
     PRIMARY KEY( patientID)
 );
 
+ -- No entres requried
 CREATE TABLE MedicineReminder (
     patientID CHAR(12) NOT NULL,
     medReminderID INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -125,6 +126,7 @@ CREATE TABLE LabVisitReminder (
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
     UNIQUE(patientID,visitReminderID)
 );
+ -- No entres requried
 
 CREATE TABLE DoctorLogin (
     email VARCHAR(100),
@@ -148,6 +150,7 @@ CREATE TABLE EPrescription (
     PRIMARY KEY(ePrescriptionID ,patientID)
 );
 
+ -- No entres requried
 CREATE TABLE Prescription (
     patientID CHAR(12) NOT NULL ,
     prescriptionID INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -156,7 +159,9 @@ CREATE TABLE Prescription (
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
     UNIQUE (patientID, prescriptionID)
 );
+ -- No entres requried
 
+ -- No entres requried
 CREATE TABLE LabRequestDocument(
     labRequestDocumentID INTEGER PRIMARY KEY AUTO_INCREMENT,
 
@@ -169,6 +174,7 @@ CREATE TABLE LabRequestDocument(
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
     FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID)
 ); 
+ -- No entres requried
 
 CREATE TABLE ELabRequestDocument(
     labRequestDocumentID INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -226,7 +232,6 @@ CREATE TABLE LabLogin (
 );
 
 
-
 CREATE TABLE PharmacyLogin (
     email VARCHAR(100) ,
     password VARCHAR(100),
@@ -255,11 +260,14 @@ CREATE TABLE MedicineResponse (
     FOREIGN KEY (ePrescriptionID,patientID) REFERENCES  MedicineRequest (ePrescriptionID,patientID) 
 );
 
+ -- No entres requried
 CREATE TABLE DoctorAppointments (
     patientID CHAR(12),
     doctorID CHAR(12),
-    dateTimeStamp DATETIME,
+    dateStamp DATE,
+    pickATime TIME,
     FOREIGN KEY (patientID) REFERENCES PatientDetails (patientID)  ,
     FOREIGN KEY (doctorID) REFERENCES DoctorDetails (doctorID) ,
     PRIMARY KEY (doctorID,patientID)
-)
+);
+ -- No entres requried
