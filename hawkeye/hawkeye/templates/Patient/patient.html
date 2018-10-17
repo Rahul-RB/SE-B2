@@ -3,9 +3,6 @@
 {% block customCSS %}
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href= {{ url_for("static",filename="css/Patient/patient.css") }}>
-    <!-- jQuery Timeline -->
-    <link href={{ url_for("static",filename="css/Patient/JqueryTimeline/timeline.min.css", ver="1.0.5") }} rel="stylesheet">
-
     <!-- Full Calendar -->
     <link rel='stylesheet' href={{ url_for("static",filename="css/Patient/fullcalendar/fullcalendar.min.css") }} />
 
@@ -359,9 +356,6 @@
 
 {% endblock %}
 
-<script src='lib/jquery.min.js'></script>
-<script src='lib/moment.min.js'></script>
-<script src='fullcalendar/fullcalendar.js'></script>
 {% block customJS %}
     <!-- MomentJS - FullCalendar -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script> -->
