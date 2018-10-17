@@ -195,7 +195,7 @@ CREATE TABLE LabRequest (
     labRequestDocumentID INTEGER,
     labID CHAR(12),
     dateTimeStamp DATETIME,
-    isPending INTEGER,
+    isPending TINYINT,
     FOREIGN KEY (labID) REFERENCES  LabDetails (labID) ,
     FOREIGN KEY (labRequestDocumentID) REFERENCES ELabRequestDocument (labRequestDocumentID) ,
     PRIMARY KEY (labRequestDocumentID)
@@ -245,7 +245,7 @@ CREATE TABLE MedicineRequest (
     patientID CHAR(12),
     pharmacyID CHAR(12),
     pickupTime DATETIME ,
-    isPending INTEGER,
+    isPending TINYINT,
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID)  ,
     FOREIGN KEY (pharmacyID) REFERENCES  PharmacyDetails (pharmacyID)  ,
     FOREIGN KEY (ePrescriptionID) REFERENCES  EPrescription (ePrescriptionID),
@@ -266,6 +266,7 @@ CREATE TABLE DoctorAppointments (
     doctorID CHAR(12),
     dateStamp DATE,
     pickATime TIME,
+    addedToDoctorCalendar TINYINT,
     FOREIGN KEY (patientID) REFERENCES PatientDetails (patientID)  ,
     FOREIGN KEY (doctorID) REFERENCES DoctorDetails (doctorID) ,
     PRIMARY KEY (doctorID,patientID)
