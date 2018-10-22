@@ -92,42 +92,6 @@ CREATE TABLE GenPatientHistory (
     PRIMARY KEY( patientID)
 );
 
- -- No entres requried
-CREATE TABLE MedicineReminder (
-    patientID CHAR(12) NOT NULL,
-    medReminderID INTEGER PRIMARY KEY AUTO_INCREMENT,
-    medicineName VARCHAR(50),
-    description VARCHAR(100),
-    alarmDate DATETIME,
-    alarmDuration INTEGER,
-    noOfDoses INTEGER ,
-    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
-    UNIQUE( patientID,medReminderID)
-);
-
-CREATE TABLE DoctorVisitReminder (
-    patientID CHAR(12) NOT NULL,
-    visitReminderID INTEGER PRIMARY KEY AUTO_INCREMENT,
-    docName VARCHAR(20),
-    description VARCHAR(100),
-    alarmDate DATETIME,
-    alarmDuration INTEGER ,
-    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
-    UNIQUE(patientID,visitReminderID)
-);
-
-CREATE TABLE LabVisitReminder (
-    patientID CHAR(12) NOT NULL,
-    visitReminderID INTEGER PRIMARY KEY AUTO_INCREMENT,
-    labName VARCHAR(20),
-    description VARCHAR(100),
-    alarmDate DATETIME,
-    alarmDuration INTEGER ,
-    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
-    UNIQUE(patientID,visitReminderID)
-);
- -- No entres requried
-
 CREATE TABLE DoctorLogin (
     email VARCHAR(100),
     password VARCHAR(100),
@@ -141,13 +105,20 @@ CREATE TABLE EPrescription (
     patientID CHAR(12) ,
     doctorID CHAR(12) ,
     -- slNo INTEGER AUTO_INCREMENT,
-    symptoms VARCHAR(100),
-    medicineSuggestion VARCHAR(100),
-    remarks VARCHAR(100),
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
     FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID) ,
     -- PRIMARY KEY(ePrescriptionID ,patientID ,slNo)
     PRIMARY KEY(ePrescriptionID ,patientID)
+);
+
+CREATE TABLE MedicineDetails(
+    ePrescriptionID INTEGER,
+    symptoms VARCHAR(100),
+    medicineSuggestion VARCHAR(100),
+    timeToTake TIME,
+    startDate DATE,
+    endDate DATE,
+    FOREIGN KEY (ePrescriptionID) REFERENCES  EPrescription (ePrescriptionID)     
 );
 
  -- No entres requried
@@ -272,3 +243,38 @@ CREATE TABLE DoctorAppointments (
     PRIMARY KEY (doctorID,patientID)
 );
  -- No entres requried
+
+-- reminderDate and reminderTime for order medicines only
+-- for take medicines time and dates in MedicineDetails tables.
+CREATE TABLE MedicineReminder (
+    ePrescriptionID INTEGER NOT NULL,
+    patientID CHAR(12) NOT NULL,
+    reminderDate DATE, 
+    reminderTime TIME,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
+    FOREIGN KEY (ePrescriptionID) REFERENCES  EPrescription (ePrescriptionID)
+);
+
+CREATE TABLE LabVisitReminder (
+    patientID CHAR(12) NOT NULL,
+    labID CHAR(12) NOT NULL,
+    labRequestDocumentID INTEGER,
+
+    reminderDate DATE,
+    reminderTime TIME,
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
+    FOREIGN KEY (labID) REFERENCES  LabDetails (labID),
+    FOREIGN KEY (labRequestDocumentID) REFERENCES  ELabRequestDocument (labRequestDocumentID)
+);
+
+
+CREATE TABLE DoctorVisitReminder (
+    patientID CHAR(12) NOT NULL,
+    doctorID CHAR(12) NOT NULL,
+
+    reminderDate DATE,
+    reminderTime TIME,
+    message VARCHAR(100),
+    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
+    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID)
+);

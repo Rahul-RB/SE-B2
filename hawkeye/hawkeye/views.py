@@ -2,7 +2,7 @@ from hawkeye import app
 # from hawkeye.forms import SignupForm 
 
 from hawkeye import models 
-from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort
+from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify
 
 
 app.secret_key = 'secretkeyhereplease'
@@ -168,7 +168,7 @@ def register_pharmacy():
 def patient():
     if ((not session.get("accType")=="Patient") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
-    return render_template("Patient/patient.html",title="Patient",user=models.getUsername(session.get("accEmail"),session.get("accType")))
+    return render_template("Patient/patient.html",title="Patient",user=models.getUsernameByEmail(session.get("accEmail"),session.get("accType")))
 
 @app.route("/doctor")
 def doctor():
@@ -223,3 +223,29 @@ def labResponse():
         return redirect(url_for("login"),302)
     
     return render_template("Lab/labResponse.html",title="Pharmacy")
+
+i=1
+@app.route("/testAjax")
+def testAjax():
+    # global i
+    i+=1
+    return jsonify(result="test:"+str(i))
+
+@app.route("/patientCalendarReminderUpdate")
+def patientCalendarReminderUpdate():
+    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    res = models.patientCalendarReminderUpdate(patientID)
+    return jsonify(res)
+
+@app.route("/patientDoctorAppointment",methods=["GET","POST"])
+def patientDoctorAppointment():
+    if(request.method=="GET"): #GET all appointment
+        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        res = models.patientDoctorAppointment(patientID,None,"GET")
+        return jsonify(res)
+
+    elif(request.method=="POST"):#POST a new appointment
+        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        doctorID = request.form["doctorID"]
+        res = models.patientDoctorAppointment(patientID,doctorID,"POST")
+        return jsonify(res)

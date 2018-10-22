@@ -30,6 +30,27 @@ $(document).ready(function () {
 
 
     /* Start Adding your javascript here */
+    // On page load do:
+    //   - Get all DoctorAppointment, *reminders
+    //   - Get all Prescriptions and Lab Tests.
+    //   - Load them into calendar.  
+
+    // Get all reminders onetime-AJAX call.
+    (function worker() {
+        // $.get('http://localhost:5000/testAjax', function(data) {
+        $.get('patientCalendarReminderUpdate', function(data) { //http://localhost:5000/testAjax
+            // console.log(data); data is returning successfully, make sure calendar entries are done appropriately.
+        });
+    })();
+
+    // Get all DoctorAppointment onetime-AJAX call.
+    (function worker() {
+        // $.get('http://localhost:5000/testAjax', function(data) {
+        $.get('patientCalendarReminderUpdate', function(data) { //http://localhost:5000/testAjax
+            // console.log(data); data is returning successfully, make sure calendar entries are done appropriately.
+        });
+    })();
+    
     function getTodayDate(){
         var today = new Date();
         var dd = today.getDate();
@@ -177,9 +198,20 @@ $(document).ready(function () {
 
     // START: Buy Medicine functionality
     $("#bookMedicineBtn").on("click",function(argument){
-          
+        // Func 1: Early fetch doctors names as per customer's typing. -- make it such that any search can be invoked.
+        // Func 2: Fetch times as per doctor suggested. Refresh this every 5 seconds.
+        // Func 3: Poll Reminder tables and add them into calendar every 5 seconds.
+        // Func 4: On page load, get all entries from DoctorAppointment table and load to calendar. Then call func3 periodically.
+        // Step 1: Upon Doctor-Date-Time selection, make entry into DoctorAppointment table.
+        // Step 2: Make an entry into DoctorReminder table. Let Func3 handle updation part.           
     });
     // END : Buy Medicine functionality
+
+    // START : Book Doctors Appointment functionality   
+    $("#bookApptBtn").on("click",function(argument){
+
+    });
+    // END : Book Doctors Appointment functionality 
 
     // START : Following lines are used to control the 
     // Set reminder functionalities in tabs.
@@ -238,5 +270,19 @@ $(document).ready(function () {
     });
     // END : individualPrescription functionality
 
+    // START : Testing AJAX
+    // (function worker() {
+    //     // $.get('http://localhost:5000/testAjax', function(data) {
+    //     $.get('testAjax', function(data) { //http://localhost:5000/testAjax
+
+    //         // Now that we've completed the request schedule the next one.
+    //         $("#welcomeDivTitle").text(data["result"]);
+    //         // console.log(data);
+    //         // $('.result').html(data);
+    //         setTimeout(worker, 5000);
+    //     });
+    // })();
+    
+    // END : Testing AJAX
     /* End Adding your javascript here */
 });
