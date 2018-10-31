@@ -87,12 +87,12 @@ def patient():
         return redirect(url_for("login"),302)
     return render_template("Patient/patient.html",title="Patient",user="BABA")
 
-# @app.route("/ctime",methods=['GET'])
-# def ctime():
-#     result = models.checkForAppointments(session["currentEmail"])
-#     print("result is: ", result)
-#     print("In ctime:",session["currentEmail"])
-#     return jsonify(result=result)
+@app.route("/ctime",methods=['GET'])
+def ctime():
+    result = models.checkForAppointments(session["currentEmail"])
+    print("result is: ", result)
+    print("In ctime:",session["currentEmail"])
+    return jsonify(result=result)
 
 @app.route("/doctor")
 def doctor():

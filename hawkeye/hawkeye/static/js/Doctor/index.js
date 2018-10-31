@@ -70,15 +70,143 @@ $(document).ready(function () {
     });
     //END
 
-    // START: meant for dynamic addition of rows in a table for labtests and type
+    // START: meant for dynamic addition of rows in a table for labtests and description
     $(".addCF1").click(function(){
-        $("#labFields").append('<tr valign="top"><th scope="row"></th><td><input type="text" class="code" id="labFieldName" name="customFieldName[]" value="" placeholder="Enter labtests here...." /> &nbsp; <input type="text" class="code" id="labFieldValue" name="customFieldValue[]" value="" placeholder="Enter test-type here...." /> &nbsp;<a href="javascript:void(0);" class="remCF1">Remove</a></td></tr>');
+        $("#labFields").append('<tr valign="top"><th scope="row"></th><td><input type="text" class="code" id="labFieldName" name="customFieldName[]" value="" placeholder="Enter labtests here...." /> &nbsp; <input type="text" class="code" id="labFieldValue" name="customFieldValue[]" value="" placeholder="Enter description of tests here...." /> &nbsp;<a href="javascript:void(0);" class="remCF1">Remove</a></td></tr>');
     });
 
     $("#labFields").on('click','.remCF1',function(){
         $(this).parent().parent().remove();
     });
     //END
+
+
+    /* Start Adding your javascript here */
+    function getTodayDate(){
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if(dd<10) {
+            dd = '0'+dd
+        } 
+
+        if(mm<10) {
+            mm = '0'+mm
+        } 
+
+        today = yyyy + '/' + mm + '/' + dd;
+        return(today);
+    }
+
+    $("#calendar").fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,listWeek'
+        },
+        themeSystem:'bootstrap4',
+        bootstrapFontAwesome: true,
+        nowIndicator: true,
+        // defaultDate: '2018-03-12',
+        slotDuration: '00:30:00',
+        defaultDate: getTodayDate(),
+        height: function(){
+            var height = $(window).height();
+            var width = $(window).width();
+            if(width<2560){
+                return 400;    
+            }
+            else if(width<1440){
+                return 400;    
+            }
+            else if(width<1024){
+                return 480;    
+            }
+            else if(width<768){
+                return 480;    
+            }
+            else if(width<425){
+                return 360;                    
+            }
+            else if(width<375){
+                return 360;                    
+            }
+            else if(width<320){
+                return 310;                    
+            }
+        },
+        defaultView: "listWeek",
+        navLinks: true, // can click day/week names to navigate views
+        editable: true,
+        eventLimit: true, // allow "more" link when too many events
+        events: [
+            {
+                title: 'All Day Event',
+                start: '2018-10-12',
+            },
+            {
+                title: 'Long Event',
+                start: '2018-10-12',
+                end: '2018-10-13'
+            },
+            {
+                id: 999,
+                title: 'Repeating Event',
+                start: '2018-10-13T16:00:00'
+            },
+            {
+                id: 999,
+                title: 'Repeating Event',
+                start: '2018-10-15T16:00:00'
+            },
+            {
+                title: 'Conference',
+                start: '2018-10-15',
+                end: '2018-10-17'
+            },
+            {
+                title: 'Meeting',
+                start: '2018-10-15T10:30:00',
+                end: '2018-10-16T12:30:00'
+            },
+            {
+                title: 'Lunch',
+                start: '2018-10-15T12:00:00'
+            },
+            {
+                title: 'Meeting',
+                start: '2018-10-17T14:30:00'
+            },
+            {
+                title: 'Happy Hour',
+                start: '2018-10-19T17:30:00'
+            },
+            {
+                title: 'Dinner',
+                start: '2018-10-21T20:00:00'
+            },
+        ]
+    });
+    // var someEvent1 = {
+    //         title: 'Birthday Party',
+    //         start: '2018-10-12T23:00:00'
+    //     }
+    // function temp(){
+    //     var someEvent2 = {
+    //             title: 'Click for Google',
+    //             url: 'http://google.com/',
+    //             start: '2018-10-12'
+    //         }
+    //     return someEvent2;
+    // }
+    // $("#calendar").fullCalendar("renderEvent",someEvent1,"stick");
+    // $("#calendar").fullCalendar("renderEvent",temp(),"stick");
+
+
+    // END: jqeury timeline calendar code
+
 
 
 
