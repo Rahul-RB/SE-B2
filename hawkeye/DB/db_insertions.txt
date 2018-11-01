@@ -24,3 +24,5 @@ INSERT INTO PatientPharmacy VALUES(123456789012,123456789041);
 INSERT INTO GenPatientHistory VALUES(123456789012, 'O+', 'Mushroom', 'Artheretis ',' Mediterranean','NA');
 
 INSERT INTO LabRequest VALUES(1,123456789033, 1982-07-02, 1);
+
+INSERT INTO EPrescription VALUES(1230,123456789012,123456789022, "Severe eye and head pain,Blurred vision","laser-surgery","Use eye drops twice a day");
