@@ -2,7 +2,7 @@ from hawkeye import app
 # from hawkeye.forms import SignupForm 
 
 from hawkeye import models 
-from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort
+from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify
 
 
 app.secret_key = 'secretkeyhereplease'
@@ -26,7 +26,10 @@ def login():
         print(POST_EMAIL)
         print(POST_PASSWORD)
         print(POST_ACC_TYPE)
+        session["currentEmail"] = POST_EMAIL
+        print("Login:",session["currentEmail"])
         session["accType"] = POST_ACC_TYPE
+
         # Make DB query to see if User with 'email' and 'acc_type'
         # has the same password as in the DB.
         result = models.loginCheck(POST_EMAIL,POST_PASSWORD,POST_ACC_TYPE)
@@ -161,10 +164,19 @@ def patient():
         return redirect(url_for("login"),302)
     return render_template("Patient/patient.html",title="Patient",user="BABA")
 
+@app.route("/ctime",methods=['GET'])
+def ctime():
+    result = models.checkForAppointments(session["currentEmail"])
+    print("result is: ", result)
+    print("In ctime:",session["currentEmail"])
+    return jsonify(result=result)
+
 @app.route("/doctor")
 def doctor():
     if((not session["accType"]=="Doctor") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
+    print("Doctor:",session["currentEmail"])
+    
     return render_template("Doctor/doctor.html",title="Doctor")
 
 @app.route("/prescription_history")
