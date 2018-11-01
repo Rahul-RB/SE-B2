@@ -40,7 +40,7 @@ def checkForAppointments(email):
     print("somedict1 is ",somedict1)
 
     return somedict1
-=======
+
 def isExistingUser(ID,acctType):
     query = "SELECT * from "+ acctType+"Details where patientID='"+ID+"'"
 

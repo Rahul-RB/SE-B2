@@ -39,7 +39,8 @@ def login():
         if result==True:
             session[POST_ACC_TYPE+"LoggedIn"] = True
             print("RESULT")
-            return redirect(url_for("home"))
+            #return redirect(url_for("home"))
+            return render_template("Home/home.html",title="User")
         else:
             flash('wrong password!')
             return redirect(url_for("login"))
@@ -218,11 +219,11 @@ def lab():
     if ((not session["accType"]=="Lab") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Lab/lab.html",title="Pharmacy")
+    return render_template("Lab/lab.html",title="Lab")
 
 @app.route("/labResponse")
 def labResponse():
     if ((not session["accType"]=="Lab") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Lab/labResponse.html",title="Pharmacy")
+    return render_template("Lab/labResponse.html",title="Lab")
