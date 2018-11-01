@@ -9,16 +9,20 @@
         <title>{{title}}</title>
 
         <!-- Bootstrap CSS CDN -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"> -->
+        <link rel="stylesheet" type="text/css" href= {{ url_for("static",filename="vendor/bootstrap/css/bootstrap.min.css") }} >
 
         <!-- Scrollbar Custom CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"> -->
+        <link rel="stylesheet" href = {{ url_for("static",filename="vendor/jQueryCustomScroller/jquery.mCustomScrollbar.min.css") }} ></link>
 
         <!-- Font Awesome JS -->
-        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script>
+        <!-- <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script> -->
+        <script src= {{ url_for("static",filename="vendor/fontawesome/js/all.min.js") }} ></script>
 
         <!-- Font Awesome CSS -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"> -->
+        <link rel="stylesheet" type="text/css" href= {{ url_for("static",filename="vendor/fontawesome/css/all.min.css") }} >
 
         <!-- Our Custom CSS -->
         <link rel="stylesheet" href={{url_for('static', filename='css/Base/base.css')}}>
@@ -47,18 +51,18 @@
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Login to a different account</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <li>
-                                <a href="#">
+                                <a href= {{ url_for("patient") }} >
                                     <i class="fas fa-user-circle"></i> &nbsp;&nbsp;&nbsp;Patient
                                 </a>
                             </li>
                             <li>
-                                <a href="#"><i class="fas fa-user-md"></i> &nbsp;&nbsp;&nbsp;Doctor</a>
+                                <a href= {{ url_for("doctor") }} ><i class="fas fa-user-md"></i> &nbsp;&nbsp;&nbsp;Doctor</a>
                             </li>
                             <li>
-                                <a href="#"><i class="fas fa-x-ray"></i> &nbsp;&nbsp;Lab</a>
+                                <a href= {{ url_for("lab") }} ><i class="fas fa-x-ray"></i> &nbsp;&nbsp;Lab</a>
                             </li>
                             <li>
-                                <a href="#"><i class="fas fa-notes-medical"></i> &nbsp;&nbsp;&nbsp;Pharmacy</a>
+                                <a href= {{ url_for("pharmacy") }} ><i class="fas fa-notes-medical"></i> &nbsp;&nbsp;&nbsp;Pharmacy</a>
                             </li>
                         </ul>
                     </li>
@@ -184,18 +188,25 @@
         <div class="overlay"></div>
 
         <!-- jQuery CDN-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+        <script src= {{ url_for("static",filename="vendor/jquery/jquery-3.3.1.min.js") }} ></script>
+
         <!-- tether 1.4.0 (for using bootstrap's tooltip component) -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script> -->
+        <script src= {{ url_for("static",filename="vendor/tether/tether.min.js") }} ></script>
 
         <!-- Popper.JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script> -->
+        <script src= {{ url_for("static",filename="vendor/popper/popper.min.js") }} ></script>
 
         <!-- Bootstrap JS -->
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+        <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script> -->
+
+        <script src= {{ url_for("static",filename="vendor/bootstrap/js/bootstrap.min.js") }} ></script>
 
         <!-- jQuery Custom Scroller CDN -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script> -->
+        <script src= {{ url_for("static",filename="vendor/jQueryCustomScroller/jquery.mCustomScrollbar.concat.min.js") }} ></script>
 
         <!-- Our Custom JS -->
         <script src={{url_for("static",filename="js/Base/base.js")}}></script>

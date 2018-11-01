@@ -12,20 +12,20 @@
 				<a href= {{ url_for("register_doctor") }} class="dis-block txt3 hov1 p-r-30"> Doctor </a>
 				<a href= {{ url_for("register_patient") }} class="dis-block txt3 hov1 p-r-30"> Patient </a>
 				<a href= {{ url_for("register_lab") }} class="dis-block txt3 hov1"> Lab </a>
-				<form class="login100-form validate-form">
+				<form class="login100-form validate-form" method="POST">
 					<span class="login100-form-title p-b-30">
 						Pharmacy
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate="Name is required">
 						<span class="label-input100">Full Name</span>
-						<input class="input100" type="text" name="pharmacy_name" placeholder="Enter pharmacy name">
+						<input class="input100" type="text" name="pharmacyName" placeholder="Enter pharmacy name">
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 						<span class="label-input100">Phone Number</span>
-						<input class="input100" type="text" name="phone_no" placeholder="Enter phone number">
+						<input class="input100" type="text" name="phoneNo" placeholder="Enter phone number">
 						<span class="focus-input100"></span>
 					</div>
 
@@ -37,7 +37,7 @@
 
 					<div class="wrap-input100 validate-input" data-validate="Username is required">
 						<span class="label-input100">Pharmacy Identification</span>
-						<input class="input100" type="text" name="pharmacy_id" placeholder="Enter Unique Pharmacy Id">
+						<input class="input100" type="text" name="pharmacyID" placeholder="Enter Unique Pharmacy Id">
 						<span class="focus-input100"></span>
 					</div>
 
@@ -49,13 +49,13 @@
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
 						<span class="label-input100">Password</span>
-						<input class="input100" type="text" name="password" placeholder="*************">
+						<input class="input100" type="password" name="password" placeholder="*************">
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Repeat Password is required">
 						<span class="label-input100">Repeat Password</span>
-						<input class="input100" type="text" name="repeat-pass" placeholder="*************">
+						<input class="input100" type="password" name="repeatPassword" placeholder="*************">
 						<span class="focus-input100"></span>
 					</div>
 
