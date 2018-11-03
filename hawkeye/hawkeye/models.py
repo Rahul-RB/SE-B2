@@ -42,11 +42,19 @@ def checkForAppointments(email):
     return somedict1
 
 def isExistingUser(ID,acctType):
-    query = "SELECT * from "+ acctType+"Details where patientID='"+ID+"'"
-
+    if(acctType=="Patient"):
+        query = "SELECT * from PatientDetails where patientID='"+ID+"'"
+    elif(acctType=="Doctor"):
+        query = "SELECT * from DoctorDetails where doctorID='"+ID+"'"
+        
+    elif(acctType=="Lab"):
+        query = "SELECT * from LabDetails where labID='"+ID+"'"
+        
+    elif(acctType=="Pharmacy"):
+        query = "SELECT * from PharmacyDetails where pharmacyID='"+ID+"'"
+    else:
+        return("Error")
     res = cursor.execute(query)
-    conn.commit()
-
     if(res==0):
         return False
     else:
@@ -122,4 +130,7 @@ def insertNewUser(inpDict,acctType):
         return True
     else:
         return False
+
+def getLabRequests(email):
+	return NULL;
 

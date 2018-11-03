@@ -125,6 +125,8 @@ def register_lab():
             "phoneNO"  : str(request.form["phoneNo"]),
             "password" : str(request.form["password"]), 
         }
+	res = models.insertNewUser(inpDict,"Lab")
+	return redirect(url_for("home"))
         if not models.isExistingUser(inpDict["labID"],"Lab"): # Insert if not existing
             res = models.insertNewUser(inpDict,"Lab")
             if(res==True):
@@ -218,12 +220,12 @@ def pharmacy_prescription():
 def lab():
     if ((not session["accType"]=="Lab") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
-    
-    return render_template("Lab/lab.html",title="Lab")
+     
+    return render_template("Lab/lab.html",title="Lab", useremail=session["currentEmail"], **kwargs=models.getLabRequests(session["currentEmail"]))
 
 @app.route("/labResponse")
 def labResponse():
     if ((not session["accType"]=="Lab") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Lab/labResponse.html",title="Lab")
+    return render_template("Lab/labResponse.html",title="Lab", useremail="yoyo")

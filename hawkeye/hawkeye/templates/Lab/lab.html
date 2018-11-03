@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
             <div class="col-xl-10 col-lg-10 col-md-10 col-12">
-                <h5>Lab Request Search</h5>
+                <h5>Lab Request Search!! {{ useremail }}</h5>
                 <br>
                 <div class="input-group">
 
@@ -44,38 +44,17 @@
                         </tr>
                     </thead>
                     <tbody>
+		    {% for d in data %}
                         <tr>
-                            <td>2345</td>
-                            <td>DK90</td>
-                            <td>LR78</td>
+                            <td>{{d[0]}}</td>
+                            <td>{{d[1]}}</td>
+                            <td>{{d[2]}}</td>
                             <td>
                                 <button type="button" class="btn btn-primary">Info</button>
                             </td>
+
                         </tr>
-                        <tr>
-                            <td>2345</td>
-                            <td>DK90</td>
-                            <td>LR67</td>
-                            <td>
-                                <button type="button" class="btn btn-primary">Info</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1607</td>
-                            <td>D890</td>
-                            <td>LR45</td>
-                            <td>
-                                <button type="button" class="btn btn-primary">Info</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2378</td>
-                            <td>D77</td>
-                            <td>LR89</td>
-                            <td>
-                                <button type="button" class="btn btn-primary">Info</button>
-                            </td>
-                        </tr>
+                     {% endfor %}
                     </tbody>
                 </table>
             </div>
