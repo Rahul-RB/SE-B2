@@ -132,5 +132,9 @@ def insertNewUser(inpDict,acctType):
         return False
 
 def getLabRequests(email):
-	return NULL;
+	query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID FROM ELabRequestDocument a ,LabRequest lr, LabLogin lo, LabDetails ld where lo.email= '"+email+"' and ld.email = lo.email and ld.labid= lr.labid and lr.labRequestDocumentID=a.labRequestDocumentID ;"
+        cursor.execute(query)
+        res=cursor.fetchall()
+        print(res)
+        return (res)
 

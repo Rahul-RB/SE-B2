@@ -221,7 +221,8 @@ def lab():
     if ((not session["accType"]=="Lab") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
      
-    return render_template("Lab/lab.html",title="Lab", useremail=session["currentEmail"], **kwargs=models.getLabRequests(session["currentEmail"]))
+    return render_template("Lab/lab.html",title="Lab", useremail=session["currentEmail"],data=models.getLabRequests(session["currentEmail"]))
+
 
 @app.route("/labResponse")
 def labResponse():
