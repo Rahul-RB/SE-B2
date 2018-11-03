@@ -60,9 +60,23 @@ $(document).ready(function () {
     });
 
 
+    var timingVar=2; // because epresrioption.html has  timing1 used.
     // START: meant for dynamic addition of rows in a table for symptoms and medicines
     $(".addCF").click(function(){
-        $("#customFields").append('<tr valign="top"><th scope="row"><label for="customFieldName">Symptoms and Medicines </label></th><td><input type="text" class="code" id="customFieldName" name="customFieldName[]" value="" placeholder="Enter symptoms here...." /> &nbsp; <input type="text" class="code" id="customFieldValue" name="customFieldValue[]" value="" placeholder="Enter medicines here...." /> &nbsp;<input type="checkbox" value="M" >Morning</input>&nbsp;<input type="checkbox" value="A" >Afternoon </input>&nbsp;<input type="checkbox" value="N" > Night </input>&nbsp; <a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
+        $("#customFields").append("\
+            <tr valign='top'>\
+                <th scope='row'>\
+                </th>\
+                <td>\
+                    <input type='text' class='code' id='customSymptomName' name='customSymptomName' value='' placeholder='Enter symptoms here....' /> &nbsp; \
+                    <input type='text' class='code' id='customMedicineValue' name='customMedicineValue' value='' placeholder='Enter medicines here....' /> &nbsp;\
+                    <input type='checkbox' name='timing"+timingVar+"' value='9:00:00' >Morning</input>&nbsp;\
+                    <input type='checkbox' name='timing"+timingVar+"' value='13:00:00' >Afternoon </input>&nbsp;\
+                    <input type='checkbox' name='timing"+timingVar+"' value='19:00:00' > Night </input>&nbsp;\
+                    <a href='javascript:void(0);' class='remCF'>Remove</a>\
+                </td>\
+            </tr>");
+        timingVar++;
     });
 
     $("#customFields").on('click','.remCF',function(){
@@ -72,7 +86,7 @@ $(document).ready(function () {
 
     // START: meant for dynamic addition of rows in a table for labtests and description
     $(".addCF1").click(function(){
-        $("#labFields").append('<tr valign="top"><th scope="row"></th><td><input type="text" class="code" id="labFieldName" name="customFieldName[]" value="" placeholder="Enter labtests here...." /> &nbsp; <input type="text" class="code" id="labFieldValue" name="customFieldValue[]" value="" placeholder="Enter description of tests here...." /> &nbsp;<a href="javascript:void(0);" class="remCF1">Remove</a></td></tr>');
+        $("#labFields").append('<tr valign="top"><th scope="row"></th><td><input type="text" class="code" id="labTestTypeName" name="labTestTypeName" value="" placeholder="Enter labtests here...." /> &nbsp; <input type="text" class="code" id="labTestDescriptionValue" name="labTestDescriptionValue" value="" placeholder="Enter description of tests here...." /> &nbsp;<a href="javascript:void(0);" class="remCF1">Remove</a></td></tr>');
     });
 
     $("#labFields").on('click','.remCF1',function(){

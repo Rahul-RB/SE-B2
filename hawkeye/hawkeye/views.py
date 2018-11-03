@@ -46,6 +46,43 @@ def login():
     else:
         flash("Error")
 
+@app.route("/eprescription",methods=["GET","POST"])
+def eprescription():
+    if((not session["accType"]=="Doctor") or (not session.get(session["accType"]+"LoggedIn"))):
+        return redirect(url_for("login"),302)
+
+    if(request.method == "GET"):
+        return render_template("Doctor/eprescription.html",title="Doctor")
+
+    elif(request.method == "POST"):
+        POST_NAME = str(request.form["name"])
+        # POST_SYMPTOMS = str(request.form["customSymptomName[]"])
+        # print(POST_NAME)
+        # POST_SYMPTOMS = request.POST.getall('customSymptomName[]')
+        # POST_MEDICINES = request.POST.getall('customMedicineValue[]')
+        print("request.form.getlist(customSymptomName):", POST_NAME,request.form.getlist('customSymptomName'))
+        print("request.form.getlist(customMedicineValue):",request.form.getlist('customMedicineValue'))
+        print("request.form.getlist(labTestTypeName):",request.form.getlist('labTestTypeName'))
+        print("request.form.getlist(timing1):",request.form.getlist('timing1'))
+        print("request.form.getlist(timing2):",request.form.getlist('timing2'))
+        # print("request.form.getlist('timing2):",request.form.getlist('timing2))
+        # print("length jus ", request.form.getlist('customSymptomName'))
+
+        # print(POST_NAME, POST_SYMPTOMS, POST_MEDICINES)
+
+        # for symptoms, medicines in zip(request.form.getlist('customSymptomName[]'),request.form.getlist('customMedicineValue[]')):
+        #     print(symptoms,medicines)
+
+        # for labTestType, labTestDescription in zip(request.form.getlist('labTestTypeName[]'),request.form.getlist('labTestDescriptionValue[]')):
+        #     print(labTestType,labTestDescription)
+
+    else:
+        flash("Error")
+
+
+    
+    # return render_template("Doctor/eprescription.html",title="Doctor")
+
 @app.route("/logout")
 def logout():
     if not session.get(session["accType"]+"LoggedIn"):
@@ -192,12 +229,12 @@ def history():
     
     return render_template("Doctor/history.html",title="Doctor")
 
-@app.route("/eprescription")
-def eprescription():
-    if((not session["accType"]=="Doctor") or (not session.get(session["accType"]+"LoggedIn"))):
-        return redirect(url_for("login"),302)
+# @app.route("/eprescription")
+# def eprescription():
+#     if((not session["accType"]=="Doctor") or (not session.get(session["accType"]+"LoggedIn"))):
+#         return redirect(url_for("login"),302)
     
-    return render_template("Doctor/eprescription.html",title="Doctor")
+#     return render_template("Doctor/eprescription.html",title="Doctor")
 
 @app.route("/pharmacy")
 def pharmacy():

@@ -12,7 +12,8 @@
 
     <div class="container">
         <h2>E-prescription</h2>
-        <form action="/action_page.php">
+        <!-- <form method="POST" target="_self"> -->
+        <form method="POST">
             <div class="form-group">
                 <label>Name:</label>
                 <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
@@ -48,15 +49,15 @@
             <div class="form-group">
               <table class="form-table" id="customFields">
                       <tr valign="top">
-                          <th scope="row"><label for="customFieldName">Symptoms and Medicines </label></th>
+                          <th scope="row">Symptoms and Medicines </th>
                           <td>
-                              <input type="text" class="code" id="customFieldName" name="customFieldName[]" value="" placeholder="Enter symptoms here.." /> &nbsp;
-                              <input type="text" class="code" id="customFieldValue" name="customFieldValue[]" value="" placeholder="Enter medicines here.." /> &nbsp;
+                              <input type="text" class="code" id="customSymptomName" name="customSymptomName" value="" placeholder="Enter symptoms here.." /> &nbsp;
+                              <input type="text" class="code" id="customMedicineValue" name="customMedicineValue" value="" placeholder="Enter medicines here.." /> &nbsp;
 
                               
-                              <input type="checkbox" value="M" >Morning</input>&nbsp;
-                              <input type="checkbox" value="A" >Afternoon </input>&nbsp;
-                              <input type="checkbox" value="N" > Night </input>&nbsp;
+                              <input type="checkbox" name="timing1" value="9:00:00" >Morning</input>&nbsp;
+                              <input type="checkbox" name="timing1" value="13:00:00" >Afternoon </input>&nbsp;
+                              <input type="checkbox" name="timing1" value="19:00:00" > Night </input>&nbsp;
                               <a href="javascript:void(0);" class="addCF">Add</a>
                           </td>
 
@@ -64,18 +65,18 @@
               </table>
             </div>
            
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="remarks">Remarks:</label>
               <textarea class="form-control" rows="4" id="remarks"></textarea>
-            </div>
+            </div> -->
 
             <div class="form-group">
               <table class="form-table" id="labFields">
                       <tr valign="top">
-                          <th scope="row"><label for="labFieldName">Labtests and Type </label></th>
+                          <th scope="row">Labtests and Type </th>
                           <td>
-                              <input type="text" class="code" id="labFieldName" name="customFieldName[]" value="" placeholder="Enter labtests here.." /> &nbsp;
-                              <input type="text" class="code" id="labFieldValue" name="customFieldValue[]" value="" placeholder="Enter description of tests here.." /> &nbsp;
+                              <input type="text" class="code" id="labTestTypeName" name="labTestTypeName" value="" placeholder="Enter labtests here.." /> &nbsp;
+                              <input type="text" class="code" id="labTestDescriptionValue" name="labTestDescriptionValue" value="" placeholder="Enter description of tests here.." /> &nbsp;
                               <a href="javascript:void(0);" class="addCF1">Add</a>
                           </td>
 

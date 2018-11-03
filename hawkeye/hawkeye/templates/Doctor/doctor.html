@@ -105,24 +105,28 @@
 
     <script type=text/javascript>
     $(function update() {
-    $.getJSON($SCRIPT_ROOT + '/ctime', {}, function(data) {
-    
-    var obj = jQuery.parseJSON(data.result);
-    // $.each(obj, function(key,value) {
-    //    var x = key;
-    //    // alert(value);
-    //    $.each(value, function(key1,value1) {
-    //       alert(value1);
-    //    });
-    // });  
-    $("#ctime").text(data.result);
-    // alert(typeof(obj));
-    addToTimeline(obj);
-    
-    //$("#array").text(data.array);
-    window.setTimeout(update, 1000); // 1 second update interval
-  });
-}); // automatically invoke for first run
+      $.getJSON($SCRIPT_ROOT + '/ctime', {}, function(data) {
+      
+      var obj = jQuery.parseJSON(data.result);
+      // $.each(obj, function(key,value) {
+      //    var x = key;
+      //    // alert(value);
+      //    $.each(value, function(key1,value1) {
+      //       alert(value1);
+      //    });
+      // });  
+      //$("#ctime").text(data.result);
+      // alert(typeof(obj));
+      if(data.result.patientID != ''){
+          addToTimeline(obj);
+          $("#ctime").text(data.result);
+
+      }
+      
+      //$("#array").text(data.array);
+      window.setTimeout(update, 1000); // 1 second update interval
+    });
+  }); // automatically invoke for first run
 
 
   // function addToTimeline(event_time){
@@ -131,21 +135,36 @@
   //           start: 
   //       }
   //   }
+// function addToTimeline(appt_json_arr){
+//   for(i = 0; i < appt_json_arr['patientID'].length; i++){
+//       // alert(appt_json_arr['patientID'][i] + appt_json_arr['dateTimeStamp'][i]);
+//       var someEvent = {
+//         title: 'Appointment for patient id '+ appt_json_arr['patientID'][i],
+//         start: appt_json_arr['dateTimeStamp'][i],
+//         overlap: false
+//       }
+
+//       // $("#calendar").fullCalendar("renderEvent",someEvent,"stick");
+//       //alert("Hello ............." + appt_json_arr['patientID'][i])
+
+//   }
+//   return ;
+
+// }
+
 function addToTimeline(appt_json_arr){
   for(i = 0; i < appt_json_arr['patientID'].length; i++){
       // alert(appt_json_arr['patientID'][i] + appt_json_arr['dateTimeStamp'][i]);
       var someEvent = {
         title: 'Appointment for patient id '+ appt_json_arr['patientID'][i],
-        start: appt_json_arr['dateTimeStamp'][i],
-        overlap: false
+        start: appt_json_arr['start_datetime'][i],
+        end: appt_json_arr['end_datetime'][i],
+        allDay: false
       }
-
-      // $("#calendar").fullCalendar("renderEvent",someEvent,"stick");
+      $("#calendar").fullCalendar("renderEvent",someEvent,"stick");
       //alert("Hello ............." + appt_json_arr['patientID'][i])
-
   }
   return ;
-
 }
 </script>
 <script src={{ url_for("static",filename="js/Doctor/index.js") }}></script>

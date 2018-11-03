@@ -1,6 +1,7 @@
 from hawkeye import mysql
 import json
 import datetime
+#import mysql.connector
 
 conn = mysql.connect()
 cursor =conn.cursor()
@@ -25,22 +26,58 @@ def myconverter(o):
         return o.__str__()
 
 def checkForAppointments(email):
+    # conn = mysql.connect()
+    # print(mysql)
+    # #conn = mysql.connection
+    # query= "SELECT patientID, dateTimeStamp from doctorAppointments where doctorID='"+'12'+"'"
+    # cursor =conn.cursor()
+    # cursor.execute(query)
+    # data = cursor.fetchall()
+    # somedict = {"patientID" : [x[0] for x in data],
+    #             "dateTimeStamp" : [x[1] for x in data]}
+    # print("somedict is ",somedict)
+    # print(type(somedict))
+    # somedict1 = json.dumps(somedict,default=myconverter)
+    # print("somedict1 is ",somedict1)
+
+    # return somedict1
+    #try:
     conn = mysql.connect()
+    conn.autocommit = False
     print(mysql)
     #conn = mysql.connection
-    query= "SELECT patientID, dateTimeStamp from doctorAppointments where doctorID='"+'12'+"'"
+    
+
+    query= "SELECT patientID, dateStamp, pickATime from DoctorAppointments where addedToDoctorCalendar=0 and doctorID in (SELECT doctorID from DoctorDetails where email='" + email + "') for update"
     cursor =conn.cursor()
     cursor.execute(query)
     data = cursor.fetchall()
-    somedict = {"patientID" : [x[0] for x in data],
-                "dateTimeStamp" : [x[1] for x in data]}
-    print("somedict is ",somedict)
-    print(type(somedict))
-    somedict1 = json.dumps(somedict,default=myconverter)
-    print("somedict1 is ",somedict1)
+    print("data is ",data)
+    if(data != ''):
+        somedict = {"patientID" : [x[0] for x in data],
+                    "start_datetime" : [datetime.datetime.combine(x[1],(datetime.datetime.min + x[2]).time()) for x in data],
+                    "end_datetime" : [datetime.datetime.combine(x[1],(datetime.datetime.min + x[2]+datetime.timedelta(minutes=30)).time()) for x in data]
+                        }
+        print("somedict is ",somedict)
+        print(type(somedict))
+        somedict1 = json.dumps(somedict,default=myconverter)
+        print("somedict1 is ",somedict1)
+        if len(somedict) > 0: # ensure that the dictionary is not empty
+            # print("\nInside if top\n")
+            query1= "UPDATE DoctorAppointments SET  addedToDoctorCalendar=1 where addedToDoctorCalendar=0 and doctorID in (SELECT doctorID from DoctorDetails where email='" + email + "')"
+            cursor1 =conn.cursor()
+            cursor1.execute(query1)
+            print("\nInside if\n")
+        conn.commit()
+        # print("Hello Hii I am inside try block\n")
+        return somedict1
+    else:
+        somedict1 = dict()
+        return somedict1
 
-    return somedict1
-=======
+# def insertIntoPrescription():
+    
+
 def isExistingUser(ID,acctType):
     query = "SELECT * from "+ acctType+"Details where patientID='"+ID+"'"
 
