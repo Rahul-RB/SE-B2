@@ -291,3 +291,22 @@ def patientDoctorAppointment(patientID,payload,method):
             return {"Success":True}
         else:
             return {"Failed":True}
+
+def getDetailsByName(inpText,resType):
+    query = "SELECT {0}Name,{0}ID FROM {1}Details WHERE {0}Name LIKE '{2}%'".format(resType.lower(),resType,inpText)
+    conn = mysql.connect()
+
+    cursor =mysql.get_db().cursor()
+    queryResults = cursor.execute(query)
+    data = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+    res = {}
+    if(queryResults!=0):
+        for i,result in enumerate(data):
+            res[i] = [result[0],result[1]]
+        print("res:",res)
+        return res
+    else:
+        return {"data":None}

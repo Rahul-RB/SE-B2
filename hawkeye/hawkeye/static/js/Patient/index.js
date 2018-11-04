@@ -220,19 +220,22 @@ $(document).ready(function () {
     $("#labTestReminderOptions").hide();
 
     $("#doctorReminder").on("click", function(argument) {
-        $("#searchTextBox").attr("placeholder","Search for Doctors");
+        $(".reminderSearchTextBox").attr("placeholder","Search for Doctors");
+        $(".reminderSearchTextBox").attr("name","popupDoctorSearch");
         $("#doctorReminderMessage").show();
         $("#medicineReminderOptions").hide();
         $("#labTestReminderOptions").hide();
     });
     $("#medicineReminder").on("click", function(argument) {
-        $("#searchTextBox").attr("placeholder","Search for Pharmacies");
+        $(".reminderSearchTextBox").attr("placeholder","Search for Pharmacies");
+        $(".reminderSearchTextBox").attr("name","popupMedicineSearch");
         $("#doctorReminderMessage").hide();
         $("#medicineReminderOptions").show();
         $("#labTestReminderOptions").hide();
     });
     $("#labTestReminder").on("click", function(argument) {
-        $("#searchTextBox").attr("placeholder","Search for Labs");
+        $(".reminderSearchTextBox").attr("placeholder","Search for Labs");
+        $(".reminderSearchTextBox").attr("name","popupLabSearch");
         $("#doctorReminderMessage").hide();
         $("#labTestReminderOptions").show();
         $("#medicineReminderOptions").hide();
@@ -270,6 +273,82 @@ $(document).ready(function () {
     });
     // END : individualPrescription functionality
 
+    // START : Search functionality
+    function getResTypeByName(name) {
+        if(name.search("Doctor"))
+        {
+            return "Doctor";
+        }
+        else if(name.search("Medicine"))
+        {
+            return "Medicine";
+        }
+        else if(name.search("Lab"))
+        {
+            return "Lab";
+        }
+    }
+
+    $(".popupSearchTextBox").each(function(index, el){
+        $(this).on('input', function(event) {
+            var inpData = {
+                inpText : $(this).val(),
+                resType : getResTypeByName($(this).attr('name'))
+            }
+            
+            // Remove all children
+            $("#popup"+inpData["resType"]+"SearchResults").empty();
+            
+            console.log(inpData)
+            if(inpData["inpText"].length >= 3) // send request only when 3+ characters are typed
+            {
+                $.ajax({
+                    url: 'commonSearch',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: inpData,
+                })
+                .done(function(data) {
+
+                    if(!data.hasOwnProperty("data"))//make divs and put data
+                    {
+                        $.each(data, function(index, val) {
+                            /* iterate through data */
+                            $("#popup"+inpData["resType"]+"SearchResults").append("\
+                                <div class='popupSearchResultsDiv'>\
+                                    <div class='popupSearchResultsName'>"
+                                        + val[0] +
+                                    "</div>\
+                                    <div class='popupSearchResultsID' hidden>"
+                                        + val[1] +
+                                    "</div>\
+                                </div>\
+                            ");
+                            $(".popupSearchResultsDiv").on('click', function(event) {
+                                /* Act on the event */
+                                console.log("$('.popupSearchResultsName').text():",$(".popupSearchResultsName").text());
+                                $(".popupSearchTextBox").val($(".popupSearchResultsName").text());
+                                $(".selectedSearchID").val($(".popupSearchResultsID").text());
+                            }); 
+                        });
+                    }
+                })
+                .fail(function(err) {
+                    console.log("error");
+                    console.log(err);
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+                
+            }
+        });
+    });
+ 
+
+
+    // END : Search functionality
+
     // START : Popup Book button fucntionality -> Booking doctor appointment, buy medicines etc.
     function getInputTypeDateByID(ID){
         var date = new Date($("#"+ID).val());
@@ -284,12 +363,11 @@ $(document).ready(function () {
         /* Act on the event */
 
         var payload = {
-            doctorID : $("#popupDoctorSearch").val(),
+            doctorID : $("#selectedDoctorID").val(),
             apptDate : getInputTypeDateByID("popupDoctorDate"),
             apptTime : $("#popupDoctorTime").val() // must be 24 hrs, like 18:30
         }
         var jsonPayload = JSON.stringify(payload);
-        // var jsonPayload = payload;
         console.log(jsonPayload)
 
         $.ajax({
