@@ -12,7 +12,6 @@ def home():
     res = session["{0}LoggedIn".format(session["accType"])]
     if not res:
         return redirect(url_for("login"),302)
-
     return render_template("Home/home.html",title="User")
 
 @app.route("/login",methods=["GET","POST"])
@@ -24,12 +23,13 @@ def login():
         POST_EMAIL = str(request.form["email"])
         POST_PASSWORD = str(request.form["password"])
         POST_ACC_TYPE = str(request.form["accType"])
+        
         print(POST_EMAIL)
         print(POST_PASSWORD)
         print(POST_ACC_TYPE)
-        session["currentEmail"] = POST_EMAIL
-        print("Login:",session["currentEmail"])
+
         session["accType"] = POST_ACC_TYPE
+        session["accEmail"] = POST_EMAIL
 
         # Make DB query to see if User with 'email' and 'acc_type'
         # has the same password as in the DB.
@@ -49,9 +49,11 @@ def login():
 
 @app.route("/logout")
 def logout():
-    if not session.get(session["accType"]+"LoggedIn"):
+    if not session.get(session.get("accType")+"LoggedIn"):
         return redirect(url_for("login"),302)
-    session[session["accType"]+"LoggedIn"] = False
+    session[session.get("accType")+"LoggedIn"] = False
+    session["accType"] = None
+    session["accEmail"] = None
     return redirect(url_for("home"))
 
 @app.route("/register")
@@ -161,9 +163,9 @@ def register_pharmacy():
 
 @app.route("/patient")
 def patient():
-    if ((not session["accType"]=="Patient") or (not session.get(session["accType"]+"LoggedIn"))):
+    if ((not session.get("accType")=="Patient") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
-    return render_template("Patient/patient.html",title="Patient",user="BABA")
+    return render_template("Patient/patient.html",title="Patient",user=models.getUsernameByEmail(session.get("accEmail"),session.get("accType")))
 
 @app.route("/ctime",methods=['GET'])
 def ctime():
@@ -174,7 +176,7 @@ def ctime():
 
 @app.route("/doctor")
 def doctor():
-    if((not session["accType"]=="Doctor") or (not session.get(session["accType"]+"LoggedIn"))):
+    if((not session.get("accType")=="Doctor") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     print("Doctor:",session["currentEmail"])
     
@@ -182,48 +184,74 @@ def doctor():
 
 @app.route("/prescription_history")
 def prescription_history():
-    if((not session["accType"]=="Doctor") or (not session.get(session["accType"]+"LoggedIn"))):
+    if((not session.get("accType")=="Doctor") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     return render_template("Doctor/prescription_history.html",title="Doctor")
 
 @app.route("/history")
 def history():
-    if((not session["accType"]=="Doctor") or (not session.get(session["accType"]+"LoggedIn"))):
+    if((not session.get("accType")=="Doctor") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
     return render_template("Doctor/history.html",title="Doctor")
 
 @app.route("/eprescription")
 def eprescription():
-    if((not session["accType"]=="Doctor") or (not session.get(session["accType"]+"LoggedIn"))):
+    if((not session.get("accType")=="Doctor") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
     return render_template("Doctor/eprescription.html",title="Doctor")
 
 @app.route("/pharmacy")
 def pharmacy():
-    if ((not session["accType"]=="Pharmacy") or (not session.get(session["accType"]+"LoggedIn"))):
+    if ((not session.get("accType")=="Pharmacy") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
     return render_template("Pharmacy/pharmacy.html",title="Pharmacy")
 
 @app.route("/pharmacy_prescription")
 def pharmacy_prescription():
-    if ((not session["accType"]=="Pharmacy") or (not session.get(session["accType"]+"LoggedIn"))):
+    if ((not session.get("accType")=="Pharmacy") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
     return render_template("Pharmacy/pharmacy_prescription.html",title="Pharmacy")
 
 @app.route("/lab")
 def lab():
-    if ((not session["accType"]=="Lab") or (not session.get(session["accType"]+"LoggedIn"))):
+    if ((not session.get("accType")=="Lab") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
     return render_template("Lab/lab.html",title="Pharmacy")
 
 @app.route("/labResponse")
 def labResponse():
-    if ((not session["accType"]=="Lab") or (not session.get(session["accType"]+"LoggedIn"))):
+    if ((not session.get("accType")=="Lab") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
     return render_template("Lab/labResponse.html",title="Pharmacy")
+
+i=1
+@app.route("/testAjax")
+def testAjax():
+    # global i
+    i+=1
+    return jsonify(result="test:"+str(i))
+
+@app.route("/patientCalendarReminderUpdate")
+def patientCalendarReminderUpdate():
+    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    res = models.patientCalendarReminderUpdate(patientID)
+    return jsonify(res)
+
+@app.route("/patientDoctorAppointment",methods=["GET","POST"])
+def patientDoctorAppointment():
+    if(request.method=="GET"): #GET all appointment
+        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        res = models.patientDoctorAppointment(patientID,None,"GET")
+        return jsonify(res)
+
+    elif(request.method=="POST"):#POST a new appointment
+        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        doctorID = request.form["doctorID"]
+        res = models.patientDoctorAppointment(patientID,doctorID,"POST")
+        return jsonify(res)
