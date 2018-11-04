@@ -9,13 +9,9 @@ app.secret_key = 'secretkeyhereplease'
 
 @app.route("/")
 def home():
-    if session.get("accType") == None:
+    res = session["{0}LoggedIn".format(session["accType"])]
+    if not res:
         return redirect(url_for("login"),302)
-
-    if session.get("accType") != None:
-        if not session.get(session.get("accType")+"LoggedIn"):
-            return redirect(url_for("login"),302)
-
     return render_template("Home/home.html",title="User")
 
 @app.route("/login",methods=["GET","POST"])
@@ -34,15 +30,16 @@ def login():
 
         session["accType"] = POST_ACC_TYPE
         session["accEmail"] = POST_EMAIL
+
         # Make DB query to see if User with 'email' and 'acc_type'
         # has the same password as in the DB.
         result = models.loginCheck(POST_EMAIL,POST_PASSWORD,POST_ACC_TYPE)
-        if result=="Error":
+        if (result=="Error"):
             flash("Error")
 
-        if result==True:
-            session[session.get("accType")+"LoggedIn"] = True
-            print("RESULT")
+        if (result==True):
+            session[POST_ACC_TYPE+"LoggedIn"] = True
+            print("Correct Login, redirecting to:",url_for("home"))
             return redirect(url_for("home"))
         else:
             flash('wrong password!')
@@ -170,10 +167,19 @@ def patient():
         return redirect(url_for("login"),302)
     return render_template("Patient/patient.html",title="Patient",user=models.getUsernameByEmail(session.get("accEmail"),session.get("accType")))
 
+@app.route("/ctime",methods=['GET'])
+def ctime():
+    result = models.checkForAppointments(session["currentEmail"])
+    print("result is: ", result)
+    print("In ctime:",session["currentEmail"])
+    return jsonify(result=result)
+
 @app.route("/doctor")
 def doctor():
     if((not session.get("accType")=="Doctor") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
+    print("Doctor:",session["currentEmail"])
+    
     return render_template("Doctor/doctor.html",title="Doctor")
 
 @app.route("/prescription_history")
