@@ -265,3 +265,14 @@ def patientDoctorAppointment():
         print(payload)
         res = models.patientDoctorAppointment(patientID,payload,"POST")
         return jsonify(res)
+
+@app.route("/commonSearch",methods=["GET","POST"])
+def commonSearch():
+    if(request.method=="GET"):
+        inpText = request.args.get('inpText', "", type=str)
+        resType = request.args.get('resType', "", type=str)
+        # print(inpText,resType)
+        res = models.getDetailsByName(inpText,resType)
+        return jsonify(res)
+
+

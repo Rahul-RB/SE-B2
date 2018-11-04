@@ -42,9 +42,13 @@
                                 <div class="row justify-content-center">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 popupDiv">
                                         <div class="d-flex flex-row justify-content-around"> 
-                                            <input type="text" name="searchTextBox" class="searchTextBox" id="popupLabSearch" placeholder="Search for labs">
+                                            <input type="text" name="popupLabSearch" class="popupSearchTextBox" id="popupLabSearch" placeholder="Search for labs"> 
+                                            <input type="text" class="selectedSearchID" id="selectedLabID" hidden>
                                             <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
                                         </div>
+                                        <div class="searchTextBoxResults" id="popupLabSearchResults">
+                                            
+                                        </div>                                        
                                         <div class="dropdown show">
                                             <a class="btn btn-block noRadiusBtn dropdown-toggle" href="#" role="button" id="dropdownMenuLinkLabPopup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Choose a Lab Document
@@ -58,7 +62,6 @@
                                         </div>
                                         <div class="d-flex flex-row justify-content-around"> 
                                             <input type="date" class="form-control noRadiusBtn" id="popupLabDate" placeholder="Pick a date">
-                                            <input type="text" class="form-control time ui-timepicker-input noRadiusBtn" id="popupLabTime" placeholder="Pick a time" style="margin-left: 10px;">
                                         </div>
                                     </div>
                                 </div>
@@ -82,9 +85,13 @@
                                 <div class="row justify-content-center">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 popupDiv">
                                         <div class="d-flex flex-row justify-content-around"> 
-                                            <input type="text" name="searchTextBox" class="searchTextBox" id="popupMedicineSearch" placeholder="Search for pharmacies">
+                                            <input type="text" name="popupMedicineSearch" class="popupSearchTextBox" id="popupMedicineSearch" placeholder="Search for pharmacies">
+                                            <input type="text" class="selectedSearchID" id="selectedMedicineID" hidden>
                                             <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
                                         </div>
+                                        <div class="searchTextBoxResults" id="popupMedicineSearchResults">
+                                            
+                                        </div>                                        
                                         <div class="dropdown show">
                                             <a class="btn btn-block noRadiusBtn dropdown-toggle" href="#" role="button" id="dropdownMenuLinkPrescriptionPopup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Choose a prescription
@@ -98,7 +105,6 @@
                                         </div>
                                         <div class="d-flex flex-row justify-content-around"> 
                                             <input type="date" class="form-control noRadiusBtn" id="popupMedicineDate" placeholder="Pick a date">
-                                            <input type="text" class="form-control time ui-timepicker-input noRadiusBtn" id="popupMedicineTime" placeholder="Pick a time" style="margin-left: 10px;">
                                         </div>
                                     </div>
                                 </div>
@@ -123,13 +129,16 @@
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 popupDiv">
                                         
                                         <div class="d-flex flex-row justify-content-around"> 
-                                            <input type="text" name="searchTextBox" class="searchTextBox" id="popupDoctorSearch" placeholder="Search for doctors">
+                                            <input type="text" name="popupDoctorSearch" class="popupSearchTextBox" id="popupDoctorSearch" placeholder="Search for doctors">
+                                            <input type="text" class="selectedSearchID" id="selectedDoctorID" hidden>
                                             <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
                                         </div>
-
+                                        <div class="searchTextBoxResults" id="popupDoctorSearchResults">
+                                            
+                                        </div>
                                         <div class="d-flex flex-row justify-content-around"> 
-                                            <input type="date" class="form-control noRadiusBtn" id="popupDoctorDate" placeholder="Pick a date">
-                                            <input type="text" class="form-control time ui-timepicker-input noRadiusBtn" id="popupDoctorTime" placeholder="Pick a time" style="margin-left: 10px;">
+                                            <input type="date" class="form-control noRadiusBtn" id="popupDoctorDate" placeholder="Pick a date" >
+                                            <input type="text" class="form-control time ui-timepicker-input noRadiusBtn" id="popupDoctorTime" placeholder="Pick a time" style="margin-left: 10px;" >
                                         </div>
                                     </div>
 
@@ -178,7 +187,7 @@
                             <div class="container-fluid tab-pane fade show active" id="doctorReminderOptions">
                                 <div class="row">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 input-group">
-                                        <input type="text" name="searchTextBox" class="searchTextBox" placeholder="Search for doctors">
+                                        <input type="text" name="popupDoctorSearch" id="docReminderSearchTextBox" class="reminderSearchTextBox" placeholder="Search for doctors">
                                         <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
                                     </div>
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-top: 5px;">
