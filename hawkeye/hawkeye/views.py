@@ -9,7 +9,7 @@ app.secret_key = 'secretkeyhereplease'
 
 @app.route("/")
 def home():
-    res = session["{0}LoggedIn".format(session["accType"])]
+    res = session.get("{0}LoggedIn".format(session["accType"]),True)
     if not res:
         return redirect(url_for("login"),302)
     return render_template("Home/home.html",title="User")
@@ -49,11 +49,18 @@ def login():
 
 @app.route("/logout")
 def logout():
-    if not session.get(session.get("accType")+"LoggedIn"):
+    try:
+        res = session.get(session.get("accType")+"LoggedIn")
+    except Exception as e:
+        res = None
+        pass
+    if not res:
         return redirect(url_for("login"),302)
+    
     session[session.get("accType")+"LoggedIn"] = False
     session["accType"] = None
     session["accEmail"] = None
+    
     return redirect(url_for("home"))
 
 @app.route("/register")
@@ -247,11 +254,13 @@ def patientCalendarReminderUpdate():
 def patientDoctorAppointment():
     if(request.method=="GET"): #GET all appointment
         patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
-        res = models.patientDoctorAppointment(patientID,None,"GET")
+        res = models.patientDoctorAppointment(patientID,None,"GET") #None is no payload
         return jsonify(res)
 
     elif(request.method=="POST"):#POST a new appointment
         patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
-        doctorID = request.form["doctorID"]
-        res = models.patientDoctorAppointment(patientID,doctorID,"POST")
+        payload = request.get_json() #Converts incoming JSON into Python Dictionary
+        print("--------------------------------")
+        print(payload)
+        res = models.patientDoctorAppointment(patientID,payload,"POST")
         return jsonify(res)

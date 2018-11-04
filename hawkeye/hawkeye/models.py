@@ -2,16 +2,21 @@ from hawkeye import mysql
 import json
 import datetime
 
-conn = mysql.connect()
-cursor =conn.cursor()
+# conn = mysql.connect()
+
 
 
 def loginCheck(email,password,acctType): 
     query = "SELECT password FROM {0}Login WHERE email='{1}'".format(acctType,email)   
-
+    
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
     cursor.execute(query)
-    # conn.commit()
+    # mysql.get_db().commit()
     data = cursor.fetchall()
+    cursor.close()
+
+    conn.close()
     print("loginCheck data:",data)
     try:
         if(password!=data[0][0]):
@@ -26,13 +31,17 @@ def myconverter(o):
         return o.__str__()
 
 def checkForAppointments(email):
-    conn = mysql.connect()
-    print(mysql)
+    # conn = mysql.connect()
+    # print(mysql)
     #conn = mysql.connection
     query= "SELECT patientID, dateTimeStamp FROM doctorAppointments WHERE doctorID='{0}'".format("12")
-    cursor =conn.cursor()
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
     cursor.execute(query)
     data = cursor.fetchall()
+    cursor.close()
+
+    conn.close()
     somedict = {"patientID" : [x[0] for x in data],
                 "dateTimeStamp" : [x[1] for x in data]}
     print("somedict is ",somedict)
@@ -45,9 +54,12 @@ def checkForAppointments(email):
 def isExistingUser(ID,acctType):
     query = "SELECT * FROM {0}Details WHERE {1}ID={2}".format(acctType,acctType.lower(),ID)
 
-
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
     res = cursor.execute(query)
-    # conn.commit()
+    cursor.close()
+
+    conn.close()
 
     if(res==0):
         return False
@@ -106,10 +118,14 @@ def insertNewUser(inpDict,acctType):
 
     print(insertDetailQuery)
     print(insertLoginDetailQuery)
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
     insertDetailRes = cursor.execute(insertDetailQuery)
     insertLoginDetailRes = cursor.execute(insertLoginDetailQuery)
-    conn.commit()
+    mysql.get_db().commit()
+    cursor.close()
 
+    conn.close()
     if(insertDetailRes==1 and insertLoginDetailRes==1):
         return True
     else:
@@ -119,16 +135,26 @@ def insertNewUser(inpDict,acctType):
 def getUsernameByEmail(email,acctType):
     query = "SELECT "+ acctType.lower() + "Name from "+ acctType +"Details where email='"+email+"'"
     print(query)
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
     res = cursor.execute(query)
-
     data = cursor.fetchall()
+    cursor.close()
+
+    conn.close()
     return data[0][0]
 
 def getIDByEmail(email,acctType):
     query = "SELECT "+ acctType.lower() + "ID from "+ acctType +"Details where email='"+email+"'"
-    res = cursor.execute(query)
 
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+    res = cursor.execute(query)
     data = cursor.fetchall()
+    cursor.close()
+
+    conn.close()
+
     return data[0][0]
 
     symptoms,medicineSuggestion,timeToTake,startDate,endDate,
@@ -141,7 +167,10 @@ def patientMedReminderUpdate(patientID):
     # Take Medicine updates:
     query = "SELECT symptoms,medicineSuggestion,timeToTake,startDate,endDate \
             FROM MedicineDetails \
-            WHERE ePrescriptionID IN (SELECT ePrescriptionID FROM MedicineReminder WHERE patientID='"+patientID+"')"
+            WHERE ePrescriptionID IN (SELECT ePrescriptionID FROM MedicineReminder WHERE patientID='{0}')".format(patientID)
+    
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
     queryResults = cursor.execute(query)
     data = cursor.fetchall()
     takeMedicineRes = {}
@@ -152,9 +181,12 @@ def patientMedReminderUpdate(patientID):
     res["TakeMedicine"] = takeMedicineRes
     
     # Order Medicine updates:
-    query = "SELECT ePrescriptionID,reminderDate,reminderTime FROM MedicineReminder WHERE patientID='"+patientID+"'"
+    query = "SELECT ePrescriptionID,reminderDate,reminderTime FROM MedicineReminder WHERE patientID='{0}'".format(patientID)
     queryResults = cursor.execute(query)
     data = cursor.fetchall()
+    cursor.close()
+
+    conn.close()
     orderMedicineRes = {}
 
     for i,result in enumerate(data):
@@ -166,9 +198,15 @@ def patientMedReminderUpdate(patientID):
 
     # patientID,labID,labRequestDocumentID,reminderDate,reminderTime
 def patientLabVisitReminderUpdate(patientID):
-    query = "SELECT labID,labRequestDocumentID,reminderDate,reminderTime FROM LabVisitReminder WHERE patientID='"+patientID+"'"
+    query = "SELECT labID,labRequestDocumentID,reminderDate,reminderTime FROM LabVisitReminder WHERE patientID='{0}'".format(patientID)
+
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
     queryResults = cursor.execute(query)
     data = cursor.fetchall()
+    cursor.close()
+
+    conn.close()
     labVisitRes = {}
 
     for i,result in enumerate(data):
@@ -177,9 +215,15 @@ def patientLabVisitReminderUpdate(patientID):
     return labVisitRes
 
 def patientDocVisitReminderUpdate(patientID):
-    query = "SELECT doctorID,reminderDate,reminderTime FROM DoctorVisitReminder WHERE patientID='"+patientID+"'"
+    query = "SELECT doctorID,reminderDate,reminderTime FROM DoctorVisitReminder WHERE patientID='{0}'".format(patientID)
+
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
     queryResults = cursor.execute(query)
     data = cursor.fetchall()
+    cursor.close()
+
+    conn.close()
     docVisitRes = {}
 
     for i,result in enumerate(data):
@@ -198,18 +242,24 @@ def patientCalendarReminderUpdate(patientID):
 
     return res
 
-def patientDoctorAppointmentUpdate(patientID,doctorID,method):
+def patientDoctorAppointment(patientID,payload,method):
     if(method=="GET"):
-        query = "SELECT doctorID,dateStamp,pickATime \
-                FROM DoctorAppointments \
-                WHERE patientID='"+patientID+"' AND addedToDoctorCalendar=0"
+        query = "SELECT doctorID,dateStamp,pickATime FROM DoctorAppointments WHERE patientID='{0}' AND addedToDoctorCalendar=0".format(\
+                patientID
+            )
+
+        conn = mysql.connect()
+        cursor =mysql.get_db().cursor()
         queryResults = cursor.execute(query)
         data = cursor.fetchall()
+        cursor.close()
+
+        conn.close()
+        
         doctorApptRes = {}
 
         for i,result in enumerate(data):
             doctorApptRes[i] = str(result[0])+","+str(result[1])+","+str(result[2])
-
 
         return doctorApptRes
 
@@ -217,4 +267,27 @@ def patientDoctorAppointmentUpdate(patientID,doctorID,method):
         # get date from form
         # Check all times already input in for that date
         # return json of available times.
-        query = "SELECT"
+        # query = "SELECT"
+
+        query = "INSERT INTO DoctorAppointments VALUES ('{0}','{1}','{2}','{3}','{4}')".format(\
+                patientID,
+                payload["doctorID"],
+                payload["apptDate"],
+                payload["apptTime"],
+                1
+            )
+        conn = mysql.connect()
+
+        cursor =mysql.get_db().cursor()
+        queryResults = cursor.execute(query)
+        data = cursor.fetchall()
+
+        mysql.get_db().commit()
+
+        cursor.close()
+        conn.close()
+
+        if queryResults==1:
+            return {"Success":True}
+        else:
+            return {"Failed":True}
