@@ -39,15 +39,15 @@ $(document).ready(function () {
     (function worker() {
         // $.get('http://localhost:5000/testAjax', function(data) {
         $.get('patientCalendarReminderUpdate', function(data) { //http://localhost:5000/testAjax
-            // console.log(data); data is returning successfully, make sure calendar entries are done appropriately.
+            console.log(data); //data is returning successfully, make sure calendar entries are done appropriately.
         });
     })();
 
     // Get all DoctorAppointment onetime-AJAX call.
     (function worker() {
         // $.get('http://localhost:5000/testAjax', function(data) {
-        $.get('patientCalendarReminderUpdate', function(data) { //http://localhost:5000/testAjax
-            // console.log(data); data is returning successfully, make sure calendar entries are done appropriately.
+        $.get('patientDoctorAppointment', function(data) { //http://localhost:5000/testAjax
+            console.log(data); //data is returning successfully, make sure calendar entries are done appropriately.
         });
     })();
     
@@ -270,19 +270,61 @@ $(document).ready(function () {
     });
     // END : individualPrescription functionality
 
-    // START : Testing AJAX
-    // (function worker() {
-    //     // $.get('http://localhost:5000/testAjax', function(data) {
-    //     $.get('testAjax', function(data) { //http://localhost:5000/testAjax
+    // START : Popup Book button fucntionality -> Booking doctor appointment, buy medicines etc.
+    function getInputTypeDateByID(ID){
+        var date = new Date($("#"+ID).val());
+        day = date.getDate();
+        month = date.getMonth() + 1;
+        year = date.getFullYear();
+        return([year, month, day].join('-'));
+    }
+    // For doctor appt booking:
+    $("#doctorApptBookBtn").on('click',function(event) {
+        event.preventDefault();
+        /* Act on the event */
 
-    //         // Now that we've completed the request schedule the next one.
-    //         $("#welcomeDivTitle").text(data["result"]);
-    //         // console.log(data);
-    //         // $('.result').html(data);
-    //         setTimeout(worker, 5000);
-    //     });
-    // })();
+        var payload = {
+            doctorID : $("#popupDoctorSearch").val(),
+            apptDate : getInputTypeDateByID("popupDoctorDate"),
+            apptTime : $("#popupDoctorTime").val() // must be 24 hrs, like 18:30
+        }
+        var jsonPayload = JSON.stringify(payload);
+        // var jsonPayload = payload;
+        console.log(jsonPayload)
+
+        $.ajax({
+            url: 'patientDoctorAppointment',
+            type: 'POST',
+            dataType: 'json',
+            data: jsonPayload,
+            contentType:"application/json; charset=UTF-8"
+        })
+        .done(function(data) {
+            console.log("success");
+            console.log(data);
+        })
+        .fail(function(err) {
+            console.log("error");
+            console.log(err);
+        })
+        .always(function() {
+            console.log("complete");
+        });
+        
+    });
+
+    $("#labBookBtn").on('click',function(event) {
+        event.preventDefault();
+        /* Act on the event */
+    });
     
-    // END : Testing AJAX
+    $("#medicineBookBtn").on('click',function(event) {
+        event.preventDefault();
+        /* Act on the event */
+    });
+    
+        
+    // END : Popup Book button fucntionality -> Booking doctor appointment, buy medicines etc.
+
     /* End Adding your javascript here */
 });
