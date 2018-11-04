@@ -9,7 +9,8 @@ app.secret_key = 'secretkeyhereplease'
 
 @app.route("/")
 def home():
-    if not session.get("loggedIn"):
+    res = session["{0}LoggedIn".format(session["accType"])]
+    if not res:
         return redirect(url_for("login"),302)
 
     return render_template("Home/home.html",title="User")
@@ -33,12 +34,12 @@ def login():
         # Make DB query to see if User with 'email' and 'acc_type'
         # has the same password as in the DB.
         result = models.loginCheck(POST_EMAIL,POST_PASSWORD,POST_ACC_TYPE)
-        if result=="Error":
+        if (result=="Error"):
             flash("Error")
 
-        if result==True:
+        if (result==True):
             session[POST_ACC_TYPE+"LoggedIn"] = True
-            print("RESULT")
+            print("Correct Login, redirecting to:",url_for("home"))
             return redirect(url_for("home"))
         else:
             flash('wrong password!')
