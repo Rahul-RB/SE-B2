@@ -9,10 +9,11 @@ app.secret_key = 'secretkeyhereplease'
 
 @app.route("/")
 def home():
-    res = session["{0}LoggedIn".format(session["accType"])]
-    if not res:
-        return redirect(url_for("login"),302)
-    return render_template("Home/home.html",title="User")
+    try:
+        res = session["{0}LoggedIn".format(session["accType"])]
+        return render_template("Home/home.html",title="User",userLoggedIn=True)
+    except Exception as e:
+        return render_template("Home/home.html",title="User",userLoggedIn=False)
 
 @app.route("/login",methods=["GET","POST"])
 def login():
@@ -165,7 +166,7 @@ def register_pharmacy():
 def patient():
     if ((not session.get("accType")=="Patient") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
-    return render_template("Patient/patient.html",title="Patient",user=models.getUsernameByEmail(session.get("accEmail"),session.get("accType")))
+    return render_template("Patient/patient.html",title="Patient",user=models.getUsernameByEmail(session.get("accEmail"),session.get("accType")), userLoggedIn=True)
 
 @app.route("/ctime",methods=['GET'])
 def ctime():
@@ -180,55 +181,55 @@ def doctor():
         return redirect(url_for("login"),302)
     print("Doctor:",session["currentEmail"])
     
-    return render_template("Doctor/doctor.html",title="Doctor")
+    return render_template("Doctor/doctor.html",title="Doctor", userLoggedIn=True)
 
 @app.route("/prescription_history")
 def prescription_history():
     if((not session.get("accType")=="Doctor") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
-    return render_template("Doctor/prescription_history.html",title="Doctor")
+    return render_template("Doctor/prescription_history.html",title="Doctor", userLoggedIn=True)
 
 @app.route("/history")
 def history():
     if((not session.get("accType")=="Doctor") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Doctor/history.html",title="Doctor")
+    return render_template("Doctor/history.html",title="Doctor", userLoggedIn=True)
 
 @app.route("/eprescription")
 def eprescription():
     if((not session.get("accType")=="Doctor") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Doctor/eprescription.html",title="Doctor")
+    return render_template("Doctor/eprescription.html",title="Doctor", userLoggedIn=True)
 
 @app.route("/pharmacy")
 def pharmacy():
     if ((not session.get("accType")=="Pharmacy") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Pharmacy/pharmacy.html",title="Pharmacy")
+    return render_template("Pharmacy/pharmacy.html",title="Pharmacy", userLoggedIn=True)
 
 @app.route("/pharmacy_prescription")
 def pharmacy_prescription():
     if ((not session.get("accType")=="Pharmacy") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Pharmacy/pharmacy_prescription.html",title="Pharmacy")
+    return render_template("Pharmacy/pharmacy_prescription.html",title="Pharmacy", userLoggedIn=True)
 
 @app.route("/lab")
 def lab():
     if ((not session.get("accType")=="Lab") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Lab/lab.html",title="Pharmacy")
+    return render_template("Lab/lab.html",title="Pharmacy", userLoggedIn=True)
 
 @app.route("/labResponse")
 def labResponse():
     if ((not session.get("accType")=="Lab") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Lab/labResponse.html",title="Pharmacy")
+    return render_template("Lab/labResponse.html",title="Pharmacy", userLoggedIn=True)
 
 i=1
 @app.route("/testAjax")
