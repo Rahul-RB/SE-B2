@@ -5,9 +5,7 @@
     <link rel="stylesheet" href = {{ url_for("static",filename="css/Patient/patient.css") }}>
     <!-- Full Calendar -->
     <link rel='stylesheet' href = {{ url_for("static",filename="css/Patient/fullcalendar/fullcalendar.min.css") }} />
-    <!-- jQuery Timepicker -->
-    <link rel="stylesheet" href = {{ url_for("static",filename="css/Patient/JqueryTimepicker/jquery.timepicker.min.css") }}></link>
-
+    
 {% endblock %}
 
 {% block customContent %}
@@ -140,7 +138,8 @@
                                         </div>
                                         <div class="d-flex flex-row justify-content-around"> 
                                             <input type="date" class="form-control noRadiusBtn" id="popupDoctorDate" placeholder="Pick a date" >
-                                            <input type="text" class="form-control time ui-timepicker-input noRadiusBtn timeScroller" id="popupDoctorTime" placeholder="Pick a time" style="margin-left: 10px;" >
+                                            <!-- <input type="text" class="form-control time ui-timepicker-input noRadiusBtn timeScroller" id="popupDoctorTime" placeholder="Pick a time" style="margin-left: 10px;" > -->
+                                            <select class="form-control time ui-timepicker-input noRadiusBtn timeScroller" id="popupDoctorTime" placeholder="Pick a time" style="margin-left: 10px;"></select>
                                         </div>
                                     </div>
 
@@ -382,8 +381,6 @@
     <!-- FullCalendar JS -->
     <script src= {{ url_for("static",filename="js/Patient/fullcalendar/fullcalendar.min.js") }}></script>
 
-    <!-- jQuery Timepicker -->
-    <script src= {{ url_for("static",filename="js/Patient/JqueryTimepicker/jquery.timepicker.min.js") }}></script>
     
     <!-- Include jQuery Popup Overlay -->
     <script src= {{ url_for("static",filename="js/Patient/jquery.popupoverlay.js") }}></script>

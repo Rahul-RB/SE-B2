@@ -357,3 +357,24 @@ def patientLabRequest(labID,payload,method):
             return {"Success":True}
         else:
             return {"Failed":True}
+
+def getAvailableTimeSlots(doctorID,inpDate):
+    query = "SELECT pickATime FROM DoctorAppointments WHERE doctorID='{0}' AND dateStamp='{1}'".format(\
+                doctorID,
+                inpDate
+            )
+
+    conn = mysql.connect()
+
+    cursor =mysql.get_db().cursor()
+    queryResults = cursor.execute(query)
+    data = cursor.fetchall()
+    res = {}
+
+    for i,result in enumerate(data):
+        res[i] = str(result[i]) # str to convert datetime.timedelta to a time representation
+
+    cursor.close()
+    conn.close()
+
+    return res
