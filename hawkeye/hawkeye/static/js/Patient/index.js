@@ -196,6 +196,19 @@ $(document).ready(function () {
     $("#bookMedicineBtn").css("height",topRowBtnHeight);
     $("#bookApptBtn").css("height",topRowBtnHeight);
 
+    $("#reqLabTestBtn").on("click",function(event) {
+        $(".popupSearchTextBox").val("");
+        $(".selectedSearchID").val("");
+    });
+    $("#bookMedicineBtn").on("click",function(event) {
+        $(".popupSearchTextBox").val("");
+        $(".selectedSearchID").val("");
+    });
+    $("#bookApptBtn").on("click",function(event) {
+        $(".popupSearchTextBox").val("");
+        $(".selectedSearchID").val("");
+    });
+
     // END : Popup defaults
 
     // START: Buy Medicine functionality
@@ -239,13 +252,13 @@ $(document).ready(function () {
     //END : Set Reminder tab functionalities.
 
     // START : jquery dropdown timepicker code.
-    $('.timeScroller').each(function(index, el) {
-        $(this).timepicker({ 
-            'scrollDefault': 'now',
-            'forceRoundTime': true,
-            'timeFormat': 'H:i:s' 
-        });
-    }); 
+    // $('.timeScroller').each(function(index, el) {
+    //     $(this).timepicker({ 
+    //         'scrollDefault': 'now',
+    //         'forceRoundTime': true,
+    //         'timeFormat': 'H:i:s' 
+    //     });
+    // }); 
     // END : jquery dropdown timepicker code.
 
     // START : individualPrescription functionality
@@ -357,15 +370,95 @@ $(document).ready(function () {
         year = date.getFullYear();
         return([year, month, day].join('-'));
     }
+
+    function diffBetweenArrs (a1, a2) {
+
+        var a = [], diff = [];
+        for (var i = 0; i < a1.length; i++) {
+            a[a1[i]] = true;
+        }
+
+        for (var i = 0; i < a2.length; i++) {
+            if (a[a2[i]]) {
+                delete a[a2[i]];
+            } else {
+                a[a2[i]] = true;
+            }
+        }
+
+        for (var k in a) {
+            diff.push(k);
+        }
+
+        return diff;
+    }
+
+    var allTimeSlots = ["00:00:00", "00:30:00", "01:00:00", "01:30:00", 
+                        "02:00:00", "02:30:00", "03:00:00", "03:30:00", 
+                        "04:00:00", "04:30:00", "05:00:00", "05:30:00", 
+                        "06:00:00", "06:30:00", "07:00:00", "07:30:00", 
+                        "08:00:00", "08:30:00", "09:00:00", "09:30:00", 
+                        "10:00:00", "10:30:00", "11:00:00", "11:30:00", 
+                        "12:00:00", "12:30:00", "13:00:00", "13:30:00", 
+                        "14:00:00", "14:30:00", "15:00:00", "15:30:00", 
+                        "16:00:00", "16:30:00", "17:00:00", "17:30:00", 
+                        "18:00:00", "18:30:00", "19:00:00", "19:30:00", 
+                        "20:00:00", "20:30:00", "21:00:00", "21:30:00", 
+                        "22:00:00", "22:30:00", "23:00:00", "23:30:00"];
+
+    function setAvailableTimeSlots(doctorID, inpDate)
+    {
+        var inpData = {
+            doctorID : doctorID,
+            inpDate : inpDate
+        };
+        $.ajax({
+            url: 'getAvailableTimeSlots',
+            type: 'GET',
+            dataType: 'json',
+            data: inpData,
+        })
+        .done(function(data) {
+            var dataToArr = [];
+            $.each(data, function(index, val) {
+                dataToArr.push(val);
+            });
+            var res = diffBetweenArrs(allTimeSlots,dataToArr);
+            console.log("res:",res);
+        
+            $.each(res, function(index, val) {
+                $(".timeScroller").append("<option>"+val+"</option>");
+            });
+        })
+        .fail(function(err) {
+            console.log("error");
+            console.log(err);
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    }
+
+
     // For doctor appt booking:
+    $("#popupDoctorTime").on('click', function(event) {
+        //might need to clear old doctorID and inpDate
+
+        var doctorID = $("#selectedDoctorID").val();
+        var inpDate = getInputTypeDateByID("popupDoctorDate");
+        setAvailableTimeSlots(doctorID,inpDate);
+    });
+
     $("#doctorApptBookBtn").on('click',function(event) {
         event.preventDefault();
         /* Act on the event */
-
+        var doctorID = $("#selectedDoctorID").val();
+        var inpDate = getInputTypeDateByID("popupDoctorDate");
+        
         var payload = {
-            doctorID : $("#selectedDoctorID").val(),
-            apptDate : getInputTypeDateByID("popupDoctorDate"),
-            apptTime : $("#popupDoctorTime").val() // must be 24 hrs, like 18:30
+            doctorID : doctorID,
+            apptDate : inpDate,
+            apptTime : $("#popupDoctorTime").find(":selected").text() // must be 24 hrs, like 18:30
         }
         var jsonPayload = JSON.stringify(payload);
         console.log(jsonPayload)

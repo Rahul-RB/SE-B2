@@ -289,3 +289,11 @@ def patientLabRequest():
         print(payload)
         res = models.patientLabRequest(labID,payload,"POST")
         return jsonify(res)
+
+@app.route("/getAvailableTimeSlots",methods=["GET"])
+def getAvailableTimeSlots():
+    if(request.method=="GET"):
+        doctorID = request.args.get('doctorID', "", type=str)
+        inpDate = request.args.get('inpDate', "", type=str)
+        res = models.getAvailableTimeSlots(doctorID,inpDate)
+        return jsonify(res)    
