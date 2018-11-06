@@ -36,20 +36,28 @@ $(document).ready(function () {
     //   - Load them into calendar.  
 
     // Get all reminders onetime-AJAX call.
-    (function worker() {
-        // $.get('http://localhost:5000/testAjax', function(data) {
-        $.get('patientCalendarReminderUpdate', function(data) { //http://localhost:5000/testAjax
-            console.log(data); //data is returning successfully, make sure calendar entries are done appropriately.
-        });
-    })();
+    // setInterval(function worker1() {
+    //     // $.get('http://localhost:5000/testAjax', function(data) {
+    //     $.get('patientCalendarReminderUpdate', function(data) { //http://localhost:5000/testAjax
+    //         console.log(data); //data is returning successfully, make sure calendar entries are done appropriately.
+    //     });
+    // },10000);
 
     // Get all DoctorAppointment onetime-AJAX call.
-    (function worker() {
-        // $.get('http://localhost:5000/testAjax', function(data) {
-        $.get('patientDoctorAppointment', function(data) { //http://localhost:5000/testAjax
-            console.log(data); //data is returning successfully, make sure calendar entries are done appropriately.
-        });
-    })();
+    // setInterval(function worker2() {
+    //     // $.get('http://localhost:5000/testAjax', function(data) {
+    //     $.get('patientDoctorAppointment', function(data) { //http://localhost:5000/testAjax
+    //         console.log(data); //data is returning successfully, make sure calendar entries are done appropriately.
+    //     });
+    // },10000);
+    
+    // Get all DoctorAppointment onetime-AJAX call.
+    // setInterval(function worker3() {
+    //     // $.get('http://localhost:5000/testAjax', function(data) {
+    //     $.get('patientLabRequest', function(data) { //http://localhost:5000/testAjax
+    //         console.log(data); //data is returning successfully, make sure calendar entries are done appropriately.
+    //     });
+    // },10000);
     
     function getTodayDate(){
         var today = new Date();
@@ -190,28 +198,16 @@ $(document).ready(function () {
 
     // END : Popup defaults
 
-    // START: Request Lab Test functionality
-    $("#reqLabTestBtn").on("click",function(argument){
-
-    });
-    // END : Request Lab Test functionality
-
     // START: Buy Medicine functionality
-    $("#bookMedicineBtn").on("click",function(argument){
+    // $("#bookMedicineBtn").on("click",function(argument){
         // Func 1: Early fetch doctors names as per customer's typing. -- make it such that any search can be invoked.
         // Func 2: Fetch times as per doctor suggested. Refresh this every 5 seconds.
         // Func 3: Poll Reminder tables and add them into calendar every 5 seconds.
         // Func 4: On page load, get all entries from DoctorAppointment table and load to calendar. Then call func3 periodically.
         // Step 1: Upon Doctor-Date-Time selection, make entry into DoctorAppointment table.
         // Step 2: Make an entry into DoctorReminder table. Let Func3 handle updation part.           
-    });
+    // });
     // END : Buy Medicine functionality
-
-    // START : Book Doctors Appointment functionality   
-    $("#bookApptBtn").on("click",function(argument){
-
-    });
-    // END : Book Doctors Appointment functionality 
 
     // START : Following lines are used to control the 
     // Set reminder functionalities in tabs.
@@ -329,6 +325,7 @@ $(document).ready(function () {
                                 console.log("$('.popupSearchResultsName').text():",$(".popupSearchResultsName").text());
                                 $(".popupSearchTextBox").val($(".popupSearchResultsName").text());
                                 $(".selectedSearchID").val($(".popupSearchResultsID").text());
+                                $("#popup"+inpData["resType"]+"SearchResults").empty();
                             }); 
                         });
                     }
@@ -345,7 +342,6 @@ $(document).ready(function () {
         });
     });
  
-
 
     // END : Search functionality
 
@@ -394,6 +390,33 @@ $(document).ready(function () {
     $("#labBookBtn").on('click',function(event) {
         event.preventDefault();
         /* Act on the event */
+
+        var payload = {
+            labID : $("#selectedLabID").val(),
+            apptDate : getInputTypeDateByID("popupLabDate"),
+        }
+        var jsonPayload = JSON.stringify(payload);
+        console.log(jsonPayload)
+
+        $.ajax({
+            url: 'patientLabRequest',
+            type: 'POST',
+            dataType: 'json',
+            data: jsonPayload,
+            contentType:"application/json; charset=UTF-8"
+        })
+        .done(function(data) {
+            console.log("success");
+            console.log(data);
+        })
+        .fail(function(err) {
+            console.log("error");
+            console.log(err);
+        })
+        .always(function() {
+            console.log("complete");
+        });
+        
     });
     
     $("#medicineBookBtn").on('click',function(event) {

@@ -275,4 +275,17 @@ def commonSearch():
         res = models.getDetailsByName(inpText,resType)
         return jsonify(res)
 
+@app.route("/patientLabRequest",methods=["GET","POST"])
+def patientLabRequest():
+    if(request.method=="GET"): #GET all appointment
+        labID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        res = models.patientLabRequest(labID,None,"GET") #None is no payload
+        return jsonify(res)
 
+    elif(request.method=="POST"):#POST a new appointment
+        labID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        payload = request.get_json() #Converts incoming JSON into Python Dictionary
+        print("--------------------------------")
+        print(payload)
+        res = models.patientLabRequest(labID,payload,"POST")
+        return jsonify(res)
