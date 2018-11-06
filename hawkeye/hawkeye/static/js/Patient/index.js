@@ -239,9 +239,13 @@ $(document).ready(function () {
     //END : Set Reminder tab functionalities.
 
     // START : jquery dropdown timepicker code.
-    $('#doctorTimeScroll').timepicker({ 
-            'scrollDefault': 'now' 
-    });
+    $('.timeScroller').each(function(index, el) {
+        $(this).timepicker({ 
+            'scrollDefault': 'now',
+            'forceRoundTime': true,
+            'timeFormat': 'H:i:s' 
+        });
+    }); 
     // END : jquery dropdown timepicker code.
 
     // START : individualPrescription functionality
