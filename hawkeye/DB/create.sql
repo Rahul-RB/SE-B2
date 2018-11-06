@@ -165,7 +165,7 @@ CREATE TABLE ELabRequestDocument(
 CREATE TABLE LabRequest (
     labRequestDocumentID INTEGER,
     labID CHAR(12),
-    dateTimeStamp DATETIME,
+    dateStamp DATE,
     isPending TINYINT,
     FOREIGN KEY (labID) REFERENCES  LabDetails (labID) ,
     FOREIGN KEY (labRequestDocumentID) REFERENCES ELabRequestDocument (labRequestDocumentID) ,
