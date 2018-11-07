@@ -30,6 +30,16 @@ $(document).ready(function () {
 
 
     /* Start Adding your javascript here */
+    
+    // Seven types of continuous fetch I've to do:
+    //      1. Fetch all reminders - medicine, doc visit, lab test
+    //      2. Fetch all doctor appointments
+    //      3. Previous Prescriptions
+    //      4. Lab Requests
+    //      5. Lab Responses
+    //      6. Medicine Requests
+    //      7. Medicine Responses
+
     // On page load do:
     //   - Get all DoctorAppointment, *reminders
     //   - Get all Prescriptions and Lab Tests.
@@ -43,7 +53,7 @@ $(document).ready(function () {
     //     });
     // },10000);
 
-    // Get all DoctorAppointment onetime-AJAX call.
+    // Get all DoctorAppointment timedout-AJAX call.
     // setInterval(function worker2() {
     //     // $.get('http://localhost:5000/testAjax', function(data) {
     //     $.get('patientDoctorAppointment', function(data) { //http://localhost:5000/testAjax
@@ -51,7 +61,7 @@ $(document).ready(function () {
     //     });
     // },10000);
     
-    // Get all DoctorAppointment onetime-AJAX call.
+    // Get all Prescriptions timedout-AJAX call.
     // setInterval(function worker3() {
     //     // $.get('http://localhost:5000/testAjax', function(data) {
     //     $.get('patientLabRequest', function(data) { //http://localhost:5000/testAjax
@@ -288,15 +298,15 @@ $(document).ready(function () {
 
     // START : Search functionality
     function getResTypeByName(name) {
-        if(name.search("Doctor"))
+        if(name.search("Doctor")!=-1)
         {
             return "Doctor";
         }
-        else if(name.search("Medicine"))
+        else if(name.search("Medicine")!=-1)
         {
             return "Medicine";
         }
-        else if(name.search("Lab"))
+        else if(name.search("Lab")!=-1)
         {
             return "Lab";
         }
@@ -307,7 +317,8 @@ $(document).ready(function () {
             var inpData = {
                 inpText : $(this).val(),
                 resType : getResTypeByName($(this).attr('name'))
-            }
+            };
+            console.log("$(this).attr('name'):",$(this).attr('name'));
             
             // Remove all children
             $("#popup"+inpData["resType"]+"SearchResults").empty();
@@ -441,7 +452,7 @@ $(document).ready(function () {
 
 
     // For doctor appt booking:
-    $("#popupDoctorTime").on('click', function(event) {
+    $("#popupDoctorDate").on('blur', function(event) {
         //might need to clear old doctorID and inpDate
 
         var doctorID = $("#selectedDoctorID").val();
@@ -473,10 +484,26 @@ $(document).ready(function () {
         .done(function(data) {
             console.log("success");
             console.log(data);
+            $("#doctorBookMessage").append("\
+                <div class='alert alert-success alert-dismissible fade show' role='alert'>\
+                    <strong>Appointment booked successfully!</strong><br> Your calendar will be updated soon.\
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+                        <span aria-hidden='true'>&times;</span>\
+                    </button>\
+                </div>\
+            ");
         })
         .fail(function(err) {
             console.log("error");
             console.log(err);
+            $("#doctorBookMessage").append("\
+                <div class='alert alert-danger alert-dismissible fade show' role='alert'>\
+                    <strong>Server Error:</strong>"+err+".\
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+                        <span aria-hidden='true'>&times;</span>\
+                    </button>\
+                </div>\
+            ");
         })
         .always(function() {
             console.log("complete");
