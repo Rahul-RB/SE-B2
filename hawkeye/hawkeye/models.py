@@ -370,9 +370,10 @@ def getAvailableTimeSlots(doctorID,inpDate):
     queryResults = cursor.execute(query)
     data = cursor.fetchall()
     res = {}
-
+    # print("------------------data------------------\n",data)
     for i,result in enumerate(data):
-        res[i] = str(result[i]) # str to convert datetime.timedelta to a time representation
+        # print(i,result)
+        res[i] = str(result[0]) # str to convert datetime.timedelta to a time representation
 
     cursor.close()
     conn.close()

@@ -2,7 +2,7 @@ from hawkeye import app
 # from hawkeye.forms import SignupForm 
 
 from hawkeye import models 
-from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify
+from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify, Response
 
 
 app.secret_key = 'secretkeyhereplease'
@@ -293,7 +293,25 @@ def patientLabRequest():
 @app.route("/getAvailableTimeSlots",methods=["GET"])
 def getAvailableTimeSlots():
     if(request.method=="GET"):
-        doctorID = request.args.get('doctorID', "", type=str)
-        inpDate = request.args.get('inpDate', "", type=str)
+        doctorID = request.args.get("doctorID", "", type=str)
+        inpDate = request.args.get("inpDate", "", type=str)
         res = models.getAvailableTimeSlots(doctorID,inpDate)
-        return jsonify(res)    
+        return jsonify(res)
+
+@app.route("/test")
+def test():
+    return render_template("Test/test.html")
+
+@app.route("/stream")
+def stream():
+    from time import sleep
+    def eventStream():
+        while True:
+            # Poll data from the database
+            # and see if there's a new message
+            # if len(messages) > len(previous_messages):
+            #     yield "data:{}\n\n".format(messages[len(messages):-1])
+            res = {"d1":"dd1"}
+            yield "event:someEvent\ndata:{0}\n\n".format(str(res))
+            sleep(10)
+    return Response(eventStream(), mimetype="text/event-stream")
