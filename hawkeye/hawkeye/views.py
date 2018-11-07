@@ -3,7 +3,8 @@ from hawkeye import app
 
 from hawkeye import models 
 from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify, Response
-
+import time
+    
 
 app.secret_key = 'secretkeyhereplease'
 
@@ -238,25 +239,36 @@ def labResponse():
     
     return render_template("Lab/labResponse.html",title="Pharmacy", userLoggedIn=True)
 
-i=1
-@app.route("/testAjax")
-def testAjax():
-    # global i
-    i+=1
-    return jsonify(result="test:"+str(i))
-
 @app.route("/patientCalendarReminderUpdate")
 def patientCalendarReminderUpdate():
-    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
-    res = models.patientCalendarReminderUpdate(patientID)
-    return jsonify(res)
-
+    if request.headers.get('accept') == 'text/event-stream':
+        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        def events():
+            with app.app_context():
+                oldRes = models.patientCalendarReminderUpdate(patientID)
+                yield "data: {0}\n\n".format(str(oldRes)) # One time for first load
+                while True:
+                    newRes = models.patientCalendarReminderUpdate(patientID)
+                    if(newRes!=oldRes): #send back result only if stuff gets updated
+                        yield "data: {0}\n\n".format(str(newRes))
+                    time.sleep(5)  # an artificial delay
+        return Response(events(), content_type='text/event-stream')
+    
 @app.route("/patientDoctorAppointment",methods=["GET","POST"])
 def patientDoctorAppointment():
     if(request.method=="GET"): #GET all appointment
-        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
-        res = models.patientDoctorAppointment(patientID,None,"GET") #None is no payload
-        return jsonify(res)
+        if request.headers.get('accept') == 'text/event-stream':
+            patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+            def events():
+                with app.app_context():
+                    oldRes = models.patientDoctorAppointment(patientID,None,"GET") #None is no payload
+                    yield "data: {0}\n\n".format(str(oldRes)) # One time for first load
+                    while True:
+                        newRes = models.patientDoctorAppointment(patientID,None,"GET")
+                        if(newRes!=oldRes): #send back result only if stuff gets updated
+                            yield "data: {0}\n\n".format(str(newRes))
+                        time.sleep(5)  # an artificial delay
+            return Response(events(), content_type='text/event-stream')
 
     elif(request.method=="POST"):#POST a new appointment
         patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
@@ -290,6 +302,21 @@ def patientLabRequest():
         res = models.patientLabRequest(labID,payload,"POST")
         return jsonify(res)
 
+@app.route("/patientMedicineRequest",methods=["GET","POST"])
+def patientMedicineRequest():
+    if(request.method=="GET"): #GET all appointment
+        labID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        res = models.patientMedicineRequest(labID,None,"GET") #None is no payload
+        return jsonify(res)
+
+    elif(request.method=="POST"):#POST a new appointment
+        labID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        payload = request.get_json() #Converts incoming JSON into Python Dictionary
+        print("--------------------------------")
+        print(payload)
+        res = models.patientMedicineRequest(labID,payload,"POST")
+        return jsonify(res)
+
 @app.route("/getAvailableTimeSlots",methods=["GET"])
 def getAvailableTimeSlots():
     if(request.method=="GET"):
@@ -298,20 +325,18 @@ def getAvailableTimeSlots():
         res = models.getAvailableTimeSlots(doctorID,inpDate)
         return jsonify(res)
 
-@app.route("/test")
-def test():
-    return render_template("Test/test.html")
-
-@app.route("/stream")
-def stream():
-    from time import sleep
-    def eventStream():
-        while True:
-            # Poll data from the database
-            # and see if there's a new message
-            # if len(messages) > len(previous_messages):
-            #     yield "data:{}\n\n".format(messages[len(messages):-1])
-            res = {"d1":"dd1"}
-            yield "event:someEvent\ndata:{0}\n\n".format(str(res))
-            sleep(10)
-    return Response(eventStream(), mimetype="text/event-stream")
+@app.route("/patientFetchPrescriptions",methods=["GET"])
+def patientFetchPrescriptions():
+    if(request.method=="GET"): #GET all prescriptions
+        if request.headers.get('accept') == 'text/event-stream':
+            patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+            def events():
+                with app.app_context():
+                    oldRes = models.patientFetchPrescriptions(patientID) #None is no payload
+                    yield "data: {0}\n\n".format(str(oldRes)) # One time for first load
+                    while True:
+                        newRes = models.patientFetchPrescriptions(patientID)
+                        if(newRes!=oldRes): #send back result only if stuff gets updated
+                            yield "data: {0}\n\n".format(str(newRes))
+                        time.sleep(5)  # an artificial delay
+            return Response(events(), content_type='text/event-stream')

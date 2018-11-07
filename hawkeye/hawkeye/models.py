@@ -358,6 +358,53 @@ def patientLabRequest(labID,payload,method):
         else:
             return {"Failed":True}
 
+def patientMedicineRequest(labID,payload,method):
+    if(method=="GET"):
+        query = "SELECT labID,dateStamp FROM MedicineRequest WHERE labID='{0}' AND isPending=1".format(\
+                labID
+            )
+
+        conn = mysql.connect()
+        cursor =mysql.get_db().cursor()
+        queryResults = cursor.execute(query)
+        data = cursor.fetchall()
+        cursor.close()
+
+        conn.close()
+        
+        labReqRes = {}
+
+        for i,result in enumerate(data):
+            labReqRes[i] = str(result[0])+","+str(result[1])+","+str(result[2])
+
+        return labReqRes
+
+    elif(method=="POST"):
+        # get date from form
+        # return json of available times.
+
+        query = "INSERT INTO MedicineRequest VALUES ('{0}','{1}','{2}','{3}')".format(\
+                payload["labDocID"],
+                labID,
+                payload["apptDate"],
+                1
+            )
+        conn = mysql.connect()
+
+        cursor =mysql.get_db().cursor()
+        queryResults = cursor.execute(query)
+        data = cursor.fetchall()
+
+        mysql.get_db().commit()
+
+        cursor.close()
+        conn.close()
+
+        if queryResults==1:
+            return {"Success":True}
+        else:
+            return {"Failed":True}
+
 def getAvailableTimeSlots(doctorID,inpDate):
     query = "SELECT pickATime FROM DoctorAppointments WHERE doctorID='{0}' AND dateStamp='{1}'".format(\
                 doctorID,
@@ -379,3 +426,4 @@ def getAvailableTimeSlots(doctorID,inpDate):
     conn.close()
 
     return res
+

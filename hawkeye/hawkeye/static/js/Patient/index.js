@@ -517,7 +517,7 @@ $(document).ready(function () {
 
         var payload = {
             labID : $("#selectedLabID").val(),
-            apptDate : getInputTypeDateByID("popupLabDate"),
+            // apptDate : getInputTypeDateByID("popupLabDate"),
         }
         var jsonPayload = JSON.stringify(payload);
         console.log(jsonPayload)
@@ -532,24 +532,133 @@ $(document).ready(function () {
         .done(function(data) {
             console.log("success");
             console.log(data);
+            $("#labBookMessage").append("\
+                <div class='alert alert-success alert-dismissible fade show' role='alert'>\
+                    <strong>Lab request sent successfully!</strong><br> Your calendar will be updated soon.\
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+                        <span aria-hidden='true'>&times;</span>\
+                    </button>\
+                </div>\
+            ");
         })
         .fail(function(err) {
             console.log("error");
             console.log(err);
+            $("#labBookMessage").append("\
+                <div class='alert alert-danger alert-dismissible fade show' role='alert'>\
+                    <strong>Server Error:</strong>"+err+".\
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+                        <span aria-hidden='true'>&times;</span>\
+                    </button>\
+                </div>\
+            ");
         })
         .always(function() {
             console.log("complete");
-        });
-        
+        });  
     });
     
     $("#medicineBookBtn").on('click',function(event) {
         event.preventDefault();
         /* Act on the event */
+
+        var payload = {
+            labID : $("#selectedMedicineID").val(),
+            // apptDate : getInputTypeDateByID("popupMedicineDate"),
+        }
+        var jsonPayload = JSON.stringify(payload);
+        console.log(jsonPayload)
+
+        $.ajax({
+            url: 'patientMedicineRequest',
+            type: 'POST',
+            dataType: 'json',
+            data: jsonPayload,
+            contentType:"application/json; charset=UTF-8"
+        })
+        .done(function(data) {
+            console.log("success");
+            console.log(data);
+            $("#labBookMessage").append("\
+                <div class='alert alert-success alert-dismissible fade show' role='alert'>\
+                    <strong>Medicine request sent successfully!</strong><br> Your calendar will be updated soon.\
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+                        <span aria-hidden='true'>&times;</span>\
+                    </button>\
+                </div>\
+            ");
+        })
+        .fail(function(err) {
+            console.log("error");
+            console.log(err);
+            $("#labBookMessage").append("\
+                <div class='alert alert-danger alert-dismissible fade show' role='alert'>\
+                    <strong>Server Error:</strong>"+err+".\
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+                        <span aria-hidden='true'>&times;</span>\
+                    </button>\
+                </div>\
+            ");
+        })
+        .always(function() {
+            console.log("complete");
+        });
     });
     
         
     // END : Popup Book button fucntionality -> Booking doctor appointment, buy medicines etc.
+    
+
+    // Seven types of continuous fetch I've to do:
+    //      1. Fetch all reminders - medicine, doc visit, lab test
+    //      2. Fetch all doctor appointments
+    //      3. Previous Prescriptions
+    //      4. Lab Requests
+    //      5. Lab Responses
+    //      6. Medicine Requests
+    //      7. Medicine Responses
+    
+    // START : EventSource : Reminder fetch and update calendar
+    var pcr = new EventSource("/patientCalendarReminderUpdate");
+    pcr.addEventListener("someEvent",function (event) {
+        console.log("success:",event.data);
+    });
+
+    pcr.onmessage = function(event) {
+        console.log(event.data);
+    };
+    pcr.onerror = function(event) {
+        console.log(event.data);
+    };
+    // END : EventSource : Reminder fetch and update calendar
+
+    // START : EventSource : Appointment fetch and update calendar
+    var pda = new EventSource("/patientDoctorAppointment");
+    pda.addEventListener("someEvent",function (event) {
+        console.log("success:",event.data);
+    });
+
+    pda.onmessage = function(event) {
+        console.log(event.data);
+    };
+    pda.onerror = function(event) {
+        console.log(event.data);
+    };
+    // END : EventSource : Appointment fetch and update calendar
+
+    // START : EventSource : Prescription fetch and update calendar
+    var pda = new EventSource("/patientDoctorAppointment");
+    pda.addEventListener("someEvent",function (event) {
+        console.log("success:",event.data);
+    });
+
+    pda.onmessage = function(event) {
+        console.log(event.data);
+    };
+    pda.onerror = function(event) {
+        console.log(event.data);
+    };
+    // END : EventSource : Prescription fetch and update calendar
 
     /* End Adding your javascript here */
 });
