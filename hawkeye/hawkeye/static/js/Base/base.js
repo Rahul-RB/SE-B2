@@ -19,11 +19,17 @@ $(document).ready(function () {
     $('#navbarCollapseBtn').on('shown.bs.collapse', function () {
         console.log("Toggled!");
         $("#navbarCollapseBtnLink").children('.fa-align-justify').remove();
-    
+        $("#navbarCollapseBtnLink").empty();
+        $("#navbarCollapseBtnEnv").empty();
+        $("#navbarCollapseBtnBell").empty();
+        $("#navbarCollapseBtnUser").empty();
+        
+        
+        
         $("#navbarCollapseBtnLink").append("<span><i class='fas fa-sliders-h'></i>&nbsp;&nbsp;&nbsp;Options</span>");
-        $("#navbarCollapseBtnEnv").append("&nbsp;&nbsp; Messages");
-        $("#navbarCollapseBtnBell").append("&nbsp;&nbsp; Notifications");
-        $("#navbarCollapseBtnUser").append("&nbsp;&nbsp; You");
+        $("#navbarCollapseBtnEnv").append("<span><i class='far fa-envelope'></i>&nbsp;&nbsp;&nbsp;Messages</span>");
+        $("#navbarCollapseBtnBell").append("<span><i class='far fa-bell'></i>&nbsp;&nbsp;&nbsp;Notifications</span>");
+        $("#navbarCollapseBtnUser").append("<span><i class='far fa-user'></i>&nbsp;&nbsp;&nbsp;Account</span>");
     
     });
     /* Do not disturb above lines */
