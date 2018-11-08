@@ -3,7 +3,14 @@ from hawkeye import app
 
 from hawkeye import models 
 from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify
+from werkzeug import secure_filename
+from flask import send_from_directory
+import os
+import datetime
+UPLOAD_FOLDER = './uploads'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'doc'])
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.secret_key = 'secretkeyhereplease'
 
@@ -228,5 +235,27 @@ def lab():
 def labResponse():
     if ((not session["accType"]=="Lab") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
-    
-    return render_template("Lab/labResponse.html",title="Lab", useremail="yoyo")
+    reqid=request.args.get('reqdata')
+    email=session["currentEmail"]
+    return render_template("Lab/labResponse.html",title="Lab", useremail=email,labReqData=models.getLabRequestDetails(email,reqid),labPresData= models.getLabPrescriptionDetails(reqid))
+
+def allowed_file(filename):
+   return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/uploader', methods = ['GET', 'POST'])
+def upload_file():
+   if request.method == 'POST':
+      if 'file' not in request.files:
+          return redirect(url_for("lab"))
+      file = request.files['file']
+      if file.filename == '':
+          return redirect( url_for("lab"))
+      if file and allowed_file(file.filename):
+          format = "%Y-%m-%dT%H:%M:%S"
+          now = datetime.datetime.utcnow().strftime(format)
+          filename = now + '_' +file.filename # +str(current_user) + '_' + file.filename
+          filename = secure_filename(filename)
+          file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+          #return 'file upoaded successfully'
+          return redirect(url_for("lab")) #url_for("uploaded_file",filename=filename))
+      return redirect( url_for("lab"))

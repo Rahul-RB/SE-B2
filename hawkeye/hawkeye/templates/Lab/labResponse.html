@@ -11,19 +11,21 @@
 
     <div class="container -fluid" style="margin-top: 50px ; margin-bottom: 50px;">
         <div class="row">
+         {% for d in labReqData %}
             <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
             <div class="col-xl-2 col-lg-2 col-md-2 col-4">
-                <span id="paitient_id">Patient ID : 12345 </span>
+                <span id="paitient_id">Patient ID : {{ d[0] }}</span>
             </div>
             <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
             <div class="col-xl-2 col-lg-2 col-md-2 col-4">
-                <span id="doctor"> Doctor ID: D4507 </span>
+                <span id="doctor"> Doctor ID: {{ d[1] }}</span>
             </div>
             <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
             <div class="col-xl-2 col-lg-2 col-md-2 col-4">
-                <span id="labreq_id">LabRequest ID: LR467 </span>
+                <span id="labreq_id">LabRequest ID: {{ d[2] }} </span>
             </div>
             <div class="col-xl-2 col-lg-2 col-md-2 "> </div>
+         {% endfor %}
         </div>
         <div class="row">
             <div class="col-xl-1 col-lg-1 col-md-1  col-1"> </div>
@@ -139,6 +141,8 @@
                 <hr class="my-5">
                 <h3>Lab Response Form </h3>
                 <!-- form complex example -->
+                 <form action = {{ url_for("upload_file") }} method = "POST" 
+         enctype = "multipart/form-data">
                 <div class="form-row mt-4">
                     <div class="col-sm-5 pb-3">
                         <label for="exampleAccount">Bill #</label>
@@ -165,7 +169,7 @@
                     </div>
                     <div class="col-md-6 pb-3">
                         <label for="exampleFormControlFile1">Example file input</label>
-                        <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name = "file">
                     </div>
                     <div class="col-md-6 pb-3">
                         <label for="exampleMessage">Notes</label>
@@ -176,13 +180,14 @@
                     </div>
                     <div class="col-12">
                         <div class="form-row">
-                            <label class="col-md col-form-label" for="name">Generated Id</label>
-                            <input type="text" class="form-control col-md-4" name="gid" id="gid" />
                             <label class="col-md col-form-label" for="name">Date Assigned</label>
-                            <input type="text" class="form-control col-md-4" name="da" id="da" />
+                            <input type="text" class="form-control col-md-4" name="gid" id="gid" />
+                            <label class="col-md col-form-label" for="name"></label>
+                            <input type = "submit"/>
                         </div>
                     </div>
                 </div>
+            </form>
             </div>
         </div>
         <div class="row" style="padding: 10px 10px 10px 10px;">
