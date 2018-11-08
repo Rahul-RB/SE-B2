@@ -16,6 +16,7 @@ class DevelopmentConfig(Config):
     MYSQL_DATABASE_PASSWORD = 'RahulRB@1997'# Put your MySQL root password here
     MYSQL_DATABASE_DB = 'Hawkeye'
     MYSQL_DATABASE_HOST = 'localhost'
+    CACHE_TYPE = "null"
 
 class TestingConfig(Config):
     TESTING = True

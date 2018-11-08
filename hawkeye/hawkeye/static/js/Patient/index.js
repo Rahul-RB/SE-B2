@@ -618,47 +618,111 @@ $(document).ready(function () {
     //      6. Medicine Requests
     //      7. Medicine Responses
     
-    // START : EventSource : Reminder fetch and update calendar
-    var pcr = new EventSource("/patientCalendarReminderUpdate");
-    pcr.addEventListener("someEvent",function (event) {
-        console.log("success:",event.data);
+    // START : 1. EventSource : Reminder fetch and update calendar
+    // var pcr = new EventSource("/patientCalendarReminderUpdate");
+    // pcr.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES1> PCR success:",event.data);
+    // });
+
+    // pcr.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // pcr.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // END : 1. EventSource : Reminder fetch and update calendar
+
+    // START : 2. EventSource : Appointment fetch and update calendar
+    // var pda = new EventSource("/patientDoctorAppointment");
+    // pda.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES2> PDA success:",event.data);
+    // });
+
+    // pda.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // pda.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // END : 2. EventSource : Appointment fetch and update calendar
+
+    // START : 3. EventSource : Prescription fetch and update calendar
+    var pfp = new EventSource("/patientFetchPrescriptions");
+    pfp.addEventListener("someEvent",function (event) {
+        // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+        console.log("<ES3> PFP success:",event.data);
     });
 
-    pcr.onmessage = function(event) {
+    pfp.onmessage = function(event) {
         console.log(event.data);
     };
-    pcr.onerror = function(event) {
+    pfp.onerror = function(event) {
         console.log(event.data);
     };
-    // END : EventSource : Reminder fetch and update calendar
+    // END : 3. EventSource : Prescription fetch and update calendar
 
-    // START : EventSource : Appointment fetch and update calendar
-    var pda = new EventSource("/patientDoctorAppointment");
-    pda.addEventListener("someEvent",function (event) {
-        console.log("success:",event.data);
+    // START : 4. EventSource : LabRequest fetch and update calendar
+    var plReq = new EventSource("/patientLabRequest");
+    plReq.addEventListener("someEvent",function (event) {
+        // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+        console.log("<ES4> PLReq success:",event.data);
     });
 
-    pda.onmessage = function(event) {
+    plReq.onmessage = function(event) {
         console.log(event.data);
     };
-    pda.onerror = function(event) {
+    plReq.onerror = function(event) {
         console.log(event.data);
     };
-    // END : EventSource : Appointment fetch and update calendar
+    // END : 4. EventSource : LabRequest fetch and update calendar
 
-    // START : EventSource : Prescription fetch and update calendar
-    var pda = new EventSource("/patientDoctorAppointment");
-    pda.addEventListener("someEvent",function (event) {
-        console.log("success:",event.data);
+    // START : 5. EventSource : LabRequest fetch and update calendar
+    var plResp = new EventSource("/patientLabResponse");
+    plResp.addEventListener("someEvent",function (event) {
+        // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+        console.log("<ES5> PLResp success:",event.data);
     });
 
-    pda.onmessage = function(event) {
+    plResp.onmessage = function(event) {
         console.log(event.data);
     };
-    pda.onerror = function(event) {
+    plResp.onerror = function(event) {
         console.log(event.data);
     };
-    // END : EventSource : Prescription fetch and update calendar
+    // END : 5. EventSource : LabRequest fetch and update calendar
+
+    // // START : 6. EventSource : MedicineRequest fetch and update calendar
+    // var pmReq = new EventSource("/patientMedicineRequest");
+    // pmReq.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES6> PMReq success:",event.data);
+    // });
+
+    // pmReq.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // pmReq.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // // END : 6. EventSource : MedicineRequest fetch and update calendar
+
+    // // START : 7. EventSource : MedicineResponse fetch and update calendar
+    // var pmResp = new EventSource("/patientMedicineResponse");
+    // pmResp.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES7> PMResp success:",event.data);
+    // });
+
+    // pmResp.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // pmResp.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // // END : 7. EventSource : MedicineResponse fetch and update calendar
+
 
     /* End Adding your javascript here */
 });

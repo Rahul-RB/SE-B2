@@ -311,11 +311,11 @@ def getDetailsByName(inpText,resType):
     else:
         return {"data":None}
 
-def patientLabRequest(labID,payload,method):
+def patientLabRequest(ID,payload,method): #ID is labID if POST, patientID if GET
     if(method=="GET"):
-        query = "SELECT labID,dateStamp FROM LabRequest WHERE labID='{0}' AND isPending=1".format(\
-                labID
-            )
+        query = "SELECT doctorID,ePrescriptionID,testType,description FROM ELabRequestDocument WHERE patientID='{0}' AND labRequestDocumentID IN (\
+                 SELECT labRequestDocumentID FROM LabRequest WHERE isPending=1\
+                )".format(ID)
 
         conn = mysql.connect()
         cursor =mysql.get_db().cursor()
@@ -328,7 +328,7 @@ def patientLabRequest(labID,payload,method):
         labReqRes = {}
 
         for i,result in enumerate(data):
-            labReqRes[i] = str(result[0])+","+str(result[1])+","+str(result[2])
+            labReqRes[i] = [result[0],result[1],result[2],result[3]]
 
         return labReqRes
 
@@ -358,26 +358,35 @@ def patientLabRequest(labID,payload,method):
         else:
             return {"Failed":True}
 
-def patientMedicineRequest(labID,payload,method):
-    if(method=="GET"):
-        query = "SELECT labID,dateStamp FROM MedicineRequest WHERE labID='{0}' AND isPending=1".format(\
-                labID
-            )
 
+
+
+def patientMedicineRequest(ID,payload,method):
+    if(method=="GET"):
+
+        queryGetAllPrescriptions = "SELECT * FROM MedicineRequest WHERE patientID={0}".format(ID);
+        
+        # queryPrescriptionDetails = "SELECT MedicineDetails.symptoms,MedicineDetails.medicineSuggestion,MedicineDetails.timeToTake,MedicineDetails.startDate,MedicineDetails.endDate\
+        #                             FROM MedicineRequest,MedicineDetails \
+        #                             WHERE MedicineDetails.ePrescriptionID <=> MedicineRequest.ePrescriptionID \
+        #                             AND MedicineRequest.patientID<=>'{0}'".format(ID);
+        queryPrescriptionDetails = "SELECT * FROM MedicineDetails \
+                                    WHERE ePrescriptionID IN (SELECT ePrescriptionID FROM MedicineRequest WHERE \
+                                    patientID = {0} \
+                                    )".format(ID)
         conn = mysql.connect()
         cursor =mysql.get_db().cursor()
-        queryResults = cursor.execute(query)
-        data = cursor.fetchall()
+        queryGetAllPrescriptionsRes = cursor.execute(queryGetAllPrescriptions)
+        data1 = cursor.fetchall()
+        queryPrescriptionDetailsRes = cursor.execute(queryPrescriptionDetails)
+        data2 = cursor.fetchall()
         cursor.close()
 
         conn.close()
-        
-        labReqRes = {}
+        res = {}
+        # for i,result in enumerate(data1):
 
-        for i,result in enumerate(data):
-            labReqRes[i] = str(result[0])+","+str(result[1])+","+str(result[2])
-
-        return labReqRes
+        return res
 
     elif(method=="POST"):
         # get date from form
@@ -427,3 +436,56 @@ def getAvailableTimeSlots(doctorID,inpDate):
 
     return res
 
+def patientFetchPrescriptions(patientID):
+    query = "SELECT * FROM MedicineDetails WHERE ePrescriptionID IN (\
+             SELECT ePrescriptionID FROM EPrescription WHERE patientID = {0}\
+            )".format(patientID)
+
+    conn = mysql.connect()
+
+    cursor =mysql.get_db().cursor()
+    queryResults = cursor.execute(query)
+    data = cursor.fetchall()
+    res = {}
+    
+    for i,result in enumerate(data):
+        res[i] = [result[0],result[1],result[2],result[3],result[4]]
+
+    cursor.close()
+    conn.close()
+
+    return res
+
+def patientLabResponse(patientID): 
+    query = "SELECT doctorID,ePrescriptionID,testType,description FROM ELabRequestDocument WHERE patientID='{0}' AND labRequestDocumentID IN (\
+             SELECT labRequestDocumentID FROM LabResponse\
+            )".format(patientID)
+
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+    queryResults = cursor.execute(query)
+    data = cursor.fetchall()
+    cursor.close()
+
+    conn.close()
+    
+    labReqRes = {}
+
+    for i,result in enumerate(data):
+        labReqRes[i] = [result[0],result[1],result[2],result[3]]
+
+    return labReqRes
+
+def patientMedicineResponse(ID):
+    # query = ""
+    # conn = mysql.connect()
+    # cursor =mysql.get_db().cursor()
+    # res = cursor.execute(query)
+    # data = cursor.fetchall()
+    # cursor.close()
+
+    # conn.close()
+    res = {}
+    # for i,result in enumerate(data1):
+
+    return res    
