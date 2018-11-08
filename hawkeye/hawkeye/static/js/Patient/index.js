@@ -39,36 +39,61 @@ $(document).ready(function () {
     //      5. Lab Responses
     //      6. Medicine Requests
     //      7. Medicine Responses
-
     // On page load do:
     //   - Get all DoctorAppointment, *reminders
     //   - Get all Prescriptions and Lab Tests.
     //   - Load them into calendar.  
-
-    // Get all reminders onetime-AJAX call.
-    // setInterval(function worker1() {
-    //     // $.get('http://localhost:5000/testAjax', function(data) {
-    //     $.get('patientCalendarReminderUpdate', function(data) { //http://localhost:5000/testAjax
-    //         console.log(data); //data is returning successfully, make sure calendar entries are done appropriately.
-    //     });
-    // },10000);
-
-    // Get all DoctorAppointment timedout-AJAX call.
-    // setInterval(function worker2() {
-    //     // $.get('http://localhost:5000/testAjax', function(data) {
-    //     $.get('patientDoctorAppointment', function(data) { //http://localhost:5000/testAjax
-    //         console.log(data); //data is returning successfully, make sure calendar entries are done appropriately.
-    //     });
-    // },10000);
     
-    // Get all Prescriptions timedout-AJAX call.
-    // setInterval(function worker3() {
-    //     // $.get('http://localhost:5000/testAjax', function(data) {
-    //     $.get('patientLabRequest', function(data) { //http://localhost:5000/testAjax
-    //         console.log(data); //data is returning successfully, make sure calendar entries are done appropriately.
-    //     });
-    // },10000);
+    // Get all CalendarReminderUpdate.
+    setInterval(function worker1() {
+        $.get('patientCalendarReminderUpdate', function(data) {
+            console.log("<GET:1> success",data);
+        });
+    },10000);
+
+    // Get all DoctorAppointment.
+    setInterval(function worker2() {
+        $.get('patientDoctorAppointment', function(data) {
+            console.log("<GET:2> success",data);
+        });
+    },10000);
     
+    // Get all FetchPrescriptions.
+    setInterval(function worker3() {
+        $.get('patientFetchPrescriptions', function(data) {
+            console.log("<GET:3> success",data);
+        });
+    },10000);
+    
+    // Get all LabRequest.
+    setInterval(function worker4() {
+        $.get('patientLabRequest', function(data) {
+            console.log("<GET:4> success",data);
+        });
+    },10000);
+    
+    // Get all LabResponse.
+    setInterval(function worker5() {
+        $.get('patientLabResponse', function(data) {
+            console.log("<GET:5> success",data);
+        });
+    },10000);
+    
+    // Get all MedicineRequest.
+    setInterval(function worker6() {
+        $.get('patientMedicineRequest', function(data) {
+            console.log("<GET:6> success",data);
+        });
+    },10000);
+    
+    // Get all MedicineResponse.
+    setInterval(function worker7() {
+        $.get('patientMedicineResponse', function(data) {
+            console.log("<GET:7> success",data);
+        });
+    },10000);
+    
+
     function getTodayDate(){
         var today = new Date();
         var dd = today.getDate();
@@ -618,7 +643,7 @@ $(document).ready(function () {
     //      6. Medicine Requests
     //      7. Medicine Responses
     
-    // START : 1. EventSource : Reminder fetch and update calendar
+    // // START : 1. EventSource : Reminder fetch and update calendar
     // var pcr = new EventSource("/patientCalendarReminderUpdate");
     // pcr.addEventListener("someEvent",function (event) {
     //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
@@ -631,9 +656,9 @@ $(document).ready(function () {
     // pcr.onerror = function(event) {
     //     console.log(event.data);
     // };
-    // END : 1. EventSource : Reminder fetch and update calendar
+    // // END : 1. EventSource : Reminder fetch and update calendar
 
-    // START : 2. EventSource : Appointment fetch and update calendar
+    // // START : 2. EventSource : Appointment fetch and update calendar
     // var pda = new EventSource("/patientDoctorAppointment");
     // pda.addEventListener("someEvent",function (event) {
     //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
@@ -646,52 +671,52 @@ $(document).ready(function () {
     // pda.onerror = function(event) {
     //     console.log(event.data);
     // };
-    // END : 2. EventSource : Appointment fetch and update calendar
+    // // END : 2. EventSource : Appointment fetch and update calendar
 
-    // START : 3. EventSource : Prescription fetch and update calendar
-    var pfp = new EventSource("/patientFetchPrescriptions");
-    pfp.addEventListener("someEvent",function (event) {
-        // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-        console.log("<ES3> PFP success:",event.data);
-    });
+    // // START : 3. EventSource : Prescription fetch and update calendar
+    // var pfp = new EventSource("/patientFetchPrescriptions");
+    // pfp.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES3> PFP success:",event.data);
+    // });
 
-    pfp.onmessage = function(event) {
-        console.log(event.data);
-    };
-    pfp.onerror = function(event) {
-        console.log(event.data);
-    };
-    // END : 3. EventSource : Prescription fetch and update calendar
+    // pfp.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // pfp.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // // END : 3. EventSource : Prescription fetch and update calendar
 
-    // START : 4. EventSource : LabRequest fetch and update calendar
-    var plReq = new EventSource("/patientLabRequest");
-    plReq.addEventListener("someEvent",function (event) {
-        // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-        console.log("<ES4> PLReq success:",event.data);
-    });
+    // // START : 4. EventSource : LabRequest fetch and update calendar
+    // var plReq = new EventSource("/patientLabRequest");
+    // plReq.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES4> PLReq success:",event.data);
+    // });
 
-    plReq.onmessage = function(event) {
-        console.log(event.data);
-    };
-    plReq.onerror = function(event) {
-        console.log(event.data);
-    };
-    // END : 4. EventSource : LabRequest fetch and update calendar
+    // plReq.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // plReq.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // // END : 4. EventSource : LabRequest fetch and update calendar
 
-    // START : 5. EventSource : LabRequest fetch and update calendar
-    var plResp = new EventSource("/patientLabResponse");
-    plResp.addEventListener("someEvent",function (event) {
-        // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-        console.log("<ES5> PLResp success:",event.data);
-    });
+    // // START : 5. EventSource : LabRequest fetch and update calendar
+    // var plResp = new EventSource("/patientLabResponse");
+    // plResp.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES5> PLResp success:",event.data);
+    // });
 
-    plResp.onmessage = function(event) {
-        console.log(event.data);
-    };
-    plResp.onerror = function(event) {
-        console.log(event.data);
-    };
-    // END : 5. EventSource : LabRequest fetch and update calendar
+    // plResp.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // plResp.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // // END : 5. EventSource : LabRequest fetch and update calendar
 
     // // START : 6. EventSource : MedicineRequest fetch and update calendar
     // var pmReq = new EventSource("/patientMedicineRequest");
