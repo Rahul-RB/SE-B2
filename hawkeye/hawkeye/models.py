@@ -176,7 +176,7 @@ def patientMedReminderUpdate(patientID):
     takeMedicineRes = {}
 
     for i,result in enumerate(data):
-        takeMedicineRes[i] = str(result[0])+","+str(result[1])+","+str(result[2])+","+str(result[3])+","+str(result[4])
+        takeMedicineRes[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3]),str(result[4])]
 
     res["TakeMedicine"] = takeMedicineRes
     
@@ -190,7 +190,7 @@ def patientMedReminderUpdate(patientID):
     orderMedicineRes = {}
 
     for i,result in enumerate(data):
-        orderMedicineRes[i] = str(result[0])+","+str(result[1])+","+str(result[2])
+        orderMedicineRes[i] = [str(result[0]),str(result[1]),str(result[2])]
 
     res["OrderMedicine"] = orderMedicineRes
 
@@ -210,7 +210,7 @@ def patientLabVisitReminderUpdate(patientID):
     labVisitRes = {}
 
     for i,result in enumerate(data):
-        labVisitRes[i] = str(result[0])+","+str(result[1])+","+str(result[2])+","+str(result[3])
+        labVisitRes[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3])]
 
     return labVisitRes
 
@@ -227,7 +227,7 @@ def patientDocVisitReminderUpdate(patientID):
     docVisitRes = {}
 
     for i,result in enumerate(data):
-        docVisitRes[i] = str(result[0])+","+str(result[1])+","+str(result[2])
+        docVisitRes[i] = [str(result[0]),str(result[1]),str(result[2])]
 
     return docVisitRes
 
@@ -259,7 +259,7 @@ def patientDoctorAppointment(patientID,payload,method):
         doctorApptRes = {}
 
         for i,result in enumerate(data):
-            doctorApptRes[i] = str(result[0])+","+str(result[1])+","+str(result[2])
+            doctorApptRes[i] = [str(result[0]),str(result[1]),str(result[2])]
 
         return doctorApptRes
 
@@ -488,4 +488,5 @@ def patientMedicineResponse(ID):
     res = {}
     # for i,result in enumerate(data1):
 
-    return res    
+    return res
+
