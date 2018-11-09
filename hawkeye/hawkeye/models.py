@@ -1,6 +1,7 @@
 from hawkeye import mysql
 import json
 import datetime
+import time    
 
 conn = mysql.connect()
 cursor =conn.cursor()
@@ -42,13 +43,23 @@ def checkForAppointments(email):
 
     return somedict1
 
-def isExistingUser(ID,acctType):
+  def isExistingUser(ID,acctType):
     query = "SELECT * FROM {0}Details WHERE {1}ID={2}".format(acctType,acctType.lower(),ID)
 
-
+def isExistingUser(ID,acctType):
+    if(acctType=="Patient"):
+        query = "SELECT * from PatientDetails where patientID='"+ID+"'"
+    elif(acctType=="Doctor"):
+        query = "SELECT * from DoctorDetails where doctorID='"+ID+"'"
+        
+    elif(acctType=="Lab"):
+        query = "SELECT * from LabDetails where labID='"+ID+"'"
+        
+    elif(acctType=="Pharmacy"):
+        query = "SELECT * from PharmacyDetails where pharmacyID='"+ID+"'"
+    else:
+        return("Error")
     res = cursor.execute(query)
-    # conn.commit()
-
     if(res==0):
         return False
     else:
@@ -115,6 +126,50 @@ def insertNewUser(inpDict,acctType):
     else:
         return False
 
+def getLabRequests(email):
+    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID FROM ELabRequestDocument a ,LabRequest lr, LabLogin lo, LabDetails ld where lo.email= '"+email+"' and ld.email = lo.email and ld.labid= lr.labid and lr.labRequestDocumentID=a.labRequestDocumentID ;"
+    cursor.execute(query)
+    res=cursor.fetchall()
+    print(res)
+    return (res)
+
+def getLabRequestDetails(email, reqid):
+    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID FROM ELabRequestDocument a WHERE a.labRequestDocumentID='"+reqid+"';"
+    cursor.execute(query)
+    res=cursor.fetchall()
+    print(res)
+    return (res)
+
+def getLabPrescriptionDetails(reqid):
+    return True
+
+def getLabId(email) :
+    query = "SELECT labID FROM LabDetails WHERE email ='"+email+"';"
+    cursor.execute(query)
+    res = cursor.fetchall()
+    print(res)
+    return (res)
+
+def putLabReponse(labRequestID,resultLink, description):
+    #responseTime = datetime.datetime.strptime(str(datetime.datetime.now()), "%Y-%m-%d %H:%M:%S")
+    format = "%Y-%m-%d"
+    now = datetime.datetime.utcnow().strftime(format)
+    responseTime =now
+    print(responseTime)
+    print(labRequestID)
+    print(resultLink)
+    #query = "INSERT INTO LabResponse ('labRequestID','resultLink', 'description','dateTimeStamp') VALUES  ('"+ labRequestID+"','"+(resultLink)+"','"+description+"','"+ responseTime+"';"
+    #query = "INSERT INTO LabResponse ('labRequestID', 'description','dateTimeStamp') VALUES  (%s,%s,%s)"
+    #query = "INSERT INTO Files Values ('"+resultLink+"');"
+    query = "INSERT INTO LabResponse (labRequestID, description , dateTimeStamp, resultLink) VALUES ('{0}','{1}','{2}','{3}')".format(labRequestID,description,responseTime,resultLink)
+    print("----------------------query:---------------\n",query)
+    # res=cursor.execute("INSERT INTO LabResponse ('labRequestID', 'description') VALUES  (%s,%s)",(labRequestID,description))
+    res=cursor.execute(query)
+    conn.commit()
+    #res=1
+    if (res==1):
+        print("Successful entry")
+    return True
 
 def getUsernameByEmail(email,acctType):
     query = "SELECT "+ acctType.lower() + "Name from "+ acctType +"Details where email='"+email+"'"

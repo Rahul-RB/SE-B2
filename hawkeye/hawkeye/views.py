@@ -3,7 +3,14 @@ from hawkeye import app
 
 from hawkeye import models 
 from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify
+from werkzeug import secure_filename
+from flask import send_from_directory
+import os
+import datetime
+UPLOAD_FOLDER = './uploads'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'doc'])
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.secret_key = 'secretkeyhereplease'
 
@@ -128,6 +135,8 @@ def register_lab():
             "phoneNO"  : str(request.form["phoneNo"]),
             "password" : str(request.form["password"]), 
         }
+	res = models.insertNewUser(inpDict,"Lab")
+	return redirect(url_for("home"))
         if not models.isExistingUser(inpDict["labID"],"Lab"): # Insert if not existing
             res = models.insertNewUser(inpDict,"Lab")
             if(res==True):
@@ -221,22 +230,42 @@ def pharmacy_prescription():
 def lab():
     if ((not session.get("accType")=="Lab") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
-    
-    return render_template("Lab/lab.html",title="Pharmacy", userLoggedIn=True)
+    email=session["currentEmail"]
+    session["user_id"]= models.getLabId(email)[0][0];
+    print(session["user_id"])
+    return render_template("Lab/lab.html",title="Lab", useremail=email,data=models.getLabRequests(email))
 
 @app.route("/labResponse")
 def labResponse():
     if ((not session.get("accType")=="Lab") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
-    
-    return render_template("Lab/labResponse.html",title="Pharmacy", userLoggedIn=True)
+    reqid=request.args.get('reqdata')
+    email=session["currentEmail"]
+    return render_template("Lab/labResponse.html",title="Lab", useremail=email,userid= session["user_id"],labReqData=models.getLabRequestDetails(email,reqid),labPresData= models.getLabPrescriptionDetails(reqid))
 
-i=1
-@app.route("/testAjax")
-def testAjax():
-    # global i
-    i+=1
-    return jsonify(result="test:"+str(i))
+def allowed_file(filename):
+   return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/uploader', methods = ['GET', 'POST'])
+def upload_file():
+   if request.method == 'POST':
+      if 'file' not in request.files:
+          return redirect(url_for("lab"))
+      file = request.files['file']
+      if file.filename == '':
+          return redirect( url_for("lab"))
+      if file and allowed_file(file.filename):
+          labRequestId=str(request.form["labReqId"])
+          description=str(request.form["message"])
+          print(labRequestId, description)
+          format = "%Y-%m-%dT%H:%M:%S"
+          now = datetime.datetime.utcnow().strftime(format)
+          filename = now + '_' +str(session["user_id"]) + '_' + file.filename
+          filename = secure_filename(filename)
+          file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+          models.putLabReponse(labRequestId, str(filename), description)
+          return redirect(url_for("lab")) 
+      return redirect( url_for("lab"))
 
 @app.route("/patientCalendarReminderUpdate")
 def patientCalendarReminderUpdate():
