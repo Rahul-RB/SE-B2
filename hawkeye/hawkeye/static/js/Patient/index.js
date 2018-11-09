@@ -44,12 +44,12 @@ $(document).ready(function () {
     })();
 
     // Get all DoctorAppointment onetime-AJAX call.
-    (function worker() {
-        // $.get('http://localhost:5000/testAjax', function(data) {
-        $.get('patientCalendarReminderUpdate', function(data) { //http://localhost:5000/testAjax
-            // console.log(data); data is returning successfully, make sure calendar entries are done appropriately.
-        });
-    })();
+    // (function worker() {
+    //     // $.get('http://localhost:5000/testAjax', function(data) {
+    //     $.get('patientCalendarReminderUpdate', function(data) { //http://localhost:5000/testAjax
+    //         // console.log(data); data is returning successfully, make sure calendar entries are done appropriately.
+    //     });
+    // })();
     
     function getTodayDate(){
         var today = new Date();

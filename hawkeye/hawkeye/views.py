@@ -37,7 +37,7 @@ def login():
         print(POST_ACC_TYPE)
 
         session["accType"] = POST_ACC_TYPE
-        session["accEmail"] = POST_EMAIL
+        session["currentEmail"] = POST_EMAIL
 
         # Make DB query to see if User with 'email' and 'acc_type'
         # has the same password as in the DB.
@@ -120,7 +120,7 @@ def logout():
         return redirect(url_for("login"),302)
     session[session.get("accType")+"LoggedIn"] = False
     session["accType"] = None
-    session["accEmail"] = None
+    session["currentEmail"] = None
     return redirect(url_for("home"))
 
 @app.route("/register")
@@ -194,8 +194,6 @@ def register_lab():
             "phoneNO"  : str(request.form["phoneNo"]),
             "password" : str(request.form["password"]), 
         }
-	res = models.insertNewUser(inpDict,"Lab")
-	return redirect(url_for("home"))
         if not models.isExistingUser(inpDict["labID"],"Lab"): # Insert if not existing
             res = models.insertNewUser(inpDict,"Lab")
             if(res==True):
@@ -234,7 +232,7 @@ def register_pharmacy():
 def patient():
     if ((not session.get("accType")=="Patient") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
-    return render_template("Patient/patient.html",title="Patient",user=models.getUsernameByEmail(session.get("accEmail"),session.get("accType")), userLoggedIn=True)
+    return render_template("Patient/patient.html",title="Patient",user=models.getUsernameByEmail(session.get("currentEmail"),session.get("accType")), userLoggedIn=True)
 
 @app.route("/ctime",methods=['GET'])
 def ctime():
@@ -331,19 +329,19 @@ def upload_file():
 
 @app.route("/patientCalendarReminderUpdate")
 def patientCalendarReminderUpdate():
-    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
     res = models.patientCalendarReminderUpdate(patientID)
     return jsonify(res)
 
 @app.route("/patientDoctorAppointment",methods=["GET","POST"])
 def patientDoctorAppointment():
     if(request.method=="GET"): #GET all appointment
-        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
         res = models.patientDoctorAppointment(patientID,None,"GET")
         return jsonify(res)
 
     elif(request.method=="POST"):#POST a new appointment
-        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
         doctorID = request.form["doctorID"]
         res = models.patientDoctorAppointment(patientID,doctorID,"POST")
         return jsonify(res)
