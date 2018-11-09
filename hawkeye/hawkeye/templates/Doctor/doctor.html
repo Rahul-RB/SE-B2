@@ -12,75 +12,58 @@
 {% endblock %}
 
 {% block customContent %}
-    <div class="container" id="buttons-patient">
-        <p id="num-patients">Number of patients seen today</p>
+    <div class="container-fluid" id="buttons-patient">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-bottom: 10px;">
+                            <a href={{ url_for("eprescription") }} class="btn btn-info" role="button">Write Prescription</a>
+                            <div id="testing-ajax">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row" style="margin-left: 0px;margin-right: 0px;font-size: 24px;"> 
+                        Get Patient History :
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-10 col-lg-10 col-md-10 col-10">
+                            <div class="search-container">
+                                <input type="text" class="form form-control" id="patientIDInp" placeholder="Enter Patient's ID" name="search"/>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-2 col-md-2 col-2">
+                            <button class="btn btn-success" id="patientIDSeachBtn"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-12" id="patientHistoryDispDiv">
 
-        <a href={{ url_for("prescription_history") }} class="btn btn-info" role="button">New Patient</a>
-        <a href={{ url_for("history") }} class="btn btn-info" role="button">Existing Patient</a>
-    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="topRowWrapper col-xl-6 col-lg-6 col-md-6 col-12" id = "myTimelineCol">
+                <div id="calendar" style="padding-top: 10px;padding-bottom: 10px">
 
-     <div class="topRowWrapper col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12" id = "myTimelineCol">
-        <div id="calendar" style="padding-top: 10px;padding-bottom: 10px">
-            
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- <a href={{ url_for("prescription_history") }} class="btn btn-info" role="button">New Patient</a>
+            <a href={{ url_for("history") }} class="btn btn-info" role="button">Existing Patient</a> -->
         </div>
     </div>
 
-    <!-- <div class="container">
-	    <div class="row">
-		    <div class="topRowWrapper col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12" id = "myTimelineCol">
-		        <div id="myTimeline">
-		            <ul class="container-fluid timeline-events" id="timelineul">
-		                <li>Not allowed event definition</li> -->
-		                <!-- <li data-timeline-node="{ start:'2017-5-29 8:00',end:'2017-5-29 10:30',content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis luctus tortor nec bibendum malesuada. Etiam sed libero cursus, placerat est at, fermentum quam. In sed fringilla mauris. Fusce auctor turpis ac imperdiet porttitor. Duis vel pharetra magna, ut mollis libero. Etiam cursus in leo et viverra. Praesent egestas dui a magna eleifend, id elementum felis maximus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum sed elit gravida, euismod nunc id, ullamcorper tellus. Morbi elementum urna faucibus tempor lacinia. Quisque pharetra purus at risus tempor hendrerit. Nam dui justo, molestie quis tincidunt sit amet, eleifend porttitor mauris. Maecenas sit amet ex vitae mi finibus pharetra. Donec vulputate leo eu vestibulum gravida. Ut in facilisis dolor, vitae iaculis dui.' }">Event Label</li> -->
-		                <!-- <li data-timeline-node="{ start:'2018-9-09 10:30:00',end:'2018-9-09 11:00:00',bgColor:'#a3d6cc',content:'<p>In this way, you can include <em>HTML tags</em> in the event body.<br><i class=\'fa fa-ellipsis-v\'></i><br><i class=\'fa fa-ellipsis-v\'></i></p>' }">HTML tags is included in the event content</li>
-		                <li data-timeline-node="{ start:'2018-9-8 00:00:00',content:'For the bar type on the timeline, event blocks are displayed in minimum units unless you specify an event end time.' }">Event with undefined of end date</li>
-		                <li data-timeline-node="{ end:'2017-5-29 15:00',bgColor:'#e6eb94',content:'In this case, no displayed.' }">Event with undefined of start date</li>
-		                <li data-timeline-node="{ start:'2017-5-29 12:45',end:'2017-5-29 16:00',row:2,bgColor:'#89c997',color:'#ffffff',callback:'$(\'#myModal\').modal()',content:'Show modal window via bootstrap' }">Event having callback</li>
-		                <li data-timeline-node="{ start:'2017-5-29 16:03',end:'2017-5-29 19:05',row:3,bgColor:'#a1d8e6',color:'#008db7',extend:{toggle:'popover',placement:'bottom',content:'It is also possible to bind external custom events.'} }">Show popover via bootstrap</li>
-		                <li data-timeline-node="{ start:'2017-5-28 23:00',end:'2017-5-29 5:15',row:3,extend:{'post_id':13,'permalink':'https://www.google.com/'} }">Event having extended params</li>
-		                <li data-timeline-node="{ start:'2017-5-29 5:40',end:'2017-5-29 8:20',row:3,bgColor:'#ef857d',color:'#fff',content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis luctus tortor nec bibendum malesuada. Etiam sed libero cursus, placerat est at, fermentum quam. In sed fringilla mauris. Fusce auctor turpis ac imperdiet porttitor.' }">Lorem Ipsum</li>
-		                <li data-timeline-node="{ start:'2017-5-29 10:00',end:'2017-5-29 19:00',row:4,bdColor:'#942343' }">Event having image for point type</li>
-		                <li data-timeline-node="{ start:'2017-4-1 20:00',end:'2017-5-29 8:30',row:5 }">Long event from the past over range</li>
-		                <li data-timeline-node="{ start:'2017-5-29 19:00',end:'2017-6-14 1:00',row:5,bgColor:'#fbdac8' }">Long event until the future over range</li>
-		            </ul>
-		        </div>
-		    </div>
-		</div>
-	</div> -->
-   <!--  <div class="col-lg-6 col-md-12" hidden>
-		<div class="card mb-3">
-			<div class="card-block">
-				<h5><i class="fa fa-cog"></i> Timeline Configuration</h5>
-				<div class="card-text">
-					configuration content
-				</div>
-			</div>
-		</div>
-	
-    </div> -->
-        
-    <!-- <div class="modal fade" id="myModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="timeline-event-view"></div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
+    <!-- <div class="topnav">
+      <a class="active" href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      Search for Patient's History <input type="text" placeholder="Write Patient's ID..">
     </div> -->
 
-    <div id="testing-ajax">
-      <p id="ctime">Hiii</p>
-    </div>
 {% endblock %}
 
 <!-- <script src='lib/jquery.min.js'></script>
@@ -105,24 +88,28 @@
 
     <script type=text/javascript>
     $(function update() {
-    $.getJSON($SCRIPT_ROOT + '/ctime', {}, function(data) {
-    
-    var obj = jQuery.parseJSON(data.result);
-    // $.each(obj, function(key,value) {
-    //    var x = key;
-    //    // alert(value);
-    //    $.each(value, function(key1,value1) {
-    //       alert(value1);
-    //    });
-    // });  
-    $("#ctime").text(data.result);
-    // alert(typeof(obj));
-    addToTimeline(obj);
-    
-    //$("#array").text(data.array);
-    window.setTimeout(update, 1000); // 1 second update interval
-  });
-}); // automatically invoke for first run
+      $.getJSON($SCRIPT_ROOT + '/ctime', {}, function(data) {
+      
+      var obj = jQuery.parseJSON(data.result);
+      // $.each(obj, function(key,value) {
+      //    var x = key;
+      //    // alert(value);
+      //    $.each(value, function(key1,value1) {
+      //       alert(value1);
+      //    });
+      // });  
+      //$("#ctime").text(data.result);
+      // alert(typeof(obj));
+      if(data.result.patientID != ''){
+          addToTimeline(obj);
+          $("#ctime").text(data.result);
+
+      }
+      
+      //$("#array").text(data.array);
+      window.setTimeout(update, 60000); // 1 minute update interval
+    });
+  }); // automatically invoke for first run
 
 
   // function addToTimeline(event_time){
@@ -131,21 +118,36 @@
   //           start: 
   //       }
   //   }
+// function addToTimeline(appt_json_arr){
+//   for(i = 0; i < appt_json_arr['patientID'].length; i++){
+//       // alert(appt_json_arr['patientID'][i] + appt_json_arr['dateTimeStamp'][i]);
+//       var someEvent = {
+//         title: 'Appointment for patient id '+ appt_json_arr['patientID'][i],
+//         start: appt_json_arr['dateTimeStamp'][i],
+//         overlap: false
+//       }
+
+//       // $("#calendar").fullCalendar("renderEvent",someEvent,"stick");
+//       //alert("Hello ............." + appt_json_arr['patientID'][i])
+
+//   }
+//   return ;
+
+// }
+
 function addToTimeline(appt_json_arr){
   for(i = 0; i < appt_json_arr['patientID'].length; i++){
       // alert(appt_json_arr['patientID'][i] + appt_json_arr['dateTimeStamp'][i]);
       var someEvent = {
         title: 'Appointment for patient id '+ appt_json_arr['patientID'][i],
-        start: appt_json_arr['dateTimeStamp'][i],
-        overlap: false
+        start: appt_json_arr['start_datetime'][i],
+        end: appt_json_arr['end_datetime'][i],
+        allDay: false
       }
-
-      // $("#calendar").fullCalendar("renderEvent",someEvent,"stick");
+      $("#calendar").fullCalendar("renderEvent",someEvent,"stick");
       //alert("Hello ............." + appt_json_arr['patientID'][i])
-
   }
   return ;
-
 }
 </script>
 <script src={{ url_for("static",filename="js/Doctor/index.js") }}></script>

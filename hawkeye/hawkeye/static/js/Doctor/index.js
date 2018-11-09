@@ -52,6 +52,7 @@ $(document).ready(function () {
         console.log('pressed');
         $('#notifications').toggle("slow");
     }
+
     $("#notifContainerCloseBtn").on("click",function(){
         toggleNotif();
     });
@@ -60,9 +61,23 @@ $(document).ready(function () {
     });
 
 
+    var timingVar=2; // because epresrioption.html has  timing1 used.
     // START: meant for dynamic addition of rows in a table for symptoms and medicines
     $(".addCF").click(function(){
-        $("#customFields").append('<tr valign="top"><th scope="row"><label for="customFieldName">Symptoms and Medicines </label></th><td><input type="text" class="code" id="customFieldName" name="customFieldName[]" value="" placeholder="Enter symptoms here...." /> &nbsp; <input type="text" class="code" id="customFieldValue" name="customFieldValue[]" value="" placeholder="Enter medicines here...." /> &nbsp;<input type="checkbox" value="M" >Morning</input>&nbsp;<input type="checkbox" value="A" >Afternoon </input>&nbsp;<input type="checkbox" value="N" > Night </input>&nbsp; <a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
+        $("#customFields").append("\
+            <tr valign='top'>\
+                <th scope='row'>\
+                </th>\
+                <td>\
+                    <input type='text' class='code' id='customSymptomName' name='customSymptomName' value='' placeholder='Enter symptoms here....' /> &nbsp; \
+                    <input type='text' class='code' id='customMedicineValue' name='customMedicineValue' value='' placeholder='Enter medicines here....' /> &nbsp;\
+                    <input type='checkbox' name='timing"+timingVar+"' value='9:00:00' >Morning</input>&nbsp;\
+                    <input type='checkbox' name='timing"+timingVar+"' value='13:00:00' >Afternoon </input>&nbsp;\
+                    <input type='checkbox' name='timing"+timingVar+"' value='19:00:00' > Night </input>&nbsp;\
+                    <a href='javascript:void(0);' class='remCF'>Remove</a>\
+                </td>\
+            </tr>");
+        timingVar++;
     });
 
     $("#customFields").on('click','.remCF',function(){
@@ -72,7 +87,7 @@ $(document).ready(function () {
 
     // START: meant for dynamic addition of rows in a table for labtests and description
     $(".addCF1").click(function(){
-        $("#labFields").append('<tr valign="top"><th scope="row"></th><td><input type="text" class="code" id="labFieldName" name="customFieldName[]" value="" placeholder="Enter labtests here...." /> &nbsp; <input type="text" class="code" id="labFieldValue" name="customFieldValue[]" value="" placeholder="Enter description of tests here...." /> &nbsp;<a href="javascript:void(0);" class="remCF1">Remove</a></td></tr>');
+        $("#labFields").append('<tr valign="top"><th scope="row"></th><td><input type="text" class="code" id="labTestTypeName" name="labTestTypeName" value="" placeholder="Enter labtests here...." /> &nbsp; <input type="text" class="code" id="labTestDescriptionValue" name="labTestDescriptionValue" value="" placeholder="Enter description of tests here...." /> &nbsp;<a href="javascript:void(0);" class="remCF1">Remove</a></td></tr>');
     });
 
     $("#labFields").on('click','.remCF1',function(){
@@ -214,7 +229,7 @@ $(document).ready(function () {
     //     console.log('pressed');
     //     $('#notifications').toggle("slow");
     // });
-    /* End Adding your javascript here */
+    // /* End Adding your javascript here */
     // function deleteRow(row) {
     //   var i = row.parentNode.parentNode.rowIndex;
     //   document.getElementById('POITable').deleteRow(i);
@@ -236,5 +251,67 @@ $(document).ready(function () {
     //   inp2.value = '';
     //   x.appendChild(new_row);
     // }
-  
+
+    // $('#submitBtn').on("click",function(e){
+    //     console.log($('.form').serialize());
+    //     alert(12312312);
+
+    //     $.ajax({
+    //       url: '/eprescription',
+    //       data: ;
+    //     })
+    //     return false;
+    // });
+    $("#patientIDSeachBtn").on("click",function (event) {
+        var inpData = {
+            patientID : $("#patientIDInp").val()
+        };
+        $.ajax({
+            url: 'searchPatientHistory',
+            type: 'GET',
+            dataType: 'json',
+            data: inpData,
+        })
+        .done(function(data) {
+            // 0:
+            // description:Array(1)
+            // ePrescriptionID:Array(1)
+            // medicineSuggestion:Array(2)
+            // symptoms:Array(2)
+            // testType:Array(1)
+            console.log("Success:");
+            $.each(data,function(index,value){
+                // console.log(index);
+                // console.log(value["description"]);
+                // console.log(value["ePrescriptionID"]);
+                // console.log(value["medicineSuggestion"]);
+                // console.log(value["symptoms"]);
+                // console.log(value["testType"]);
+                console.log(value);
+                $.each(value["ePrescriptionID"],function (index,value) {
+                    $("#patientHistoryDispDiv").append("<div> Prescription ID is : "+value+"</div>");
+                });
+                $.each(value["symptoms"],function (index,value) {
+                    $("#patientHistoryDispDiv").append("<div> Symptoms are : "+value+"</div>");
+                });
+                $.each(value["medicineSuggestion"],function (index,value) {
+                    $("#patientHistoryDispDiv").append("<div> Medicines suggested is : "+value+"</div>");
+                });
+                $.each(value["testType"],function (index,value) {
+                    $("#patientHistoryDispDiv").append("<div> Test suggested is : "+value+"</div>");
+                });
+                $.each(value["description"],function (index,value) {
+                    $("#patientHistoryDispDiv").append("<div> Description of Lab Test is : "+value+"</div>");
+                });
+                
+            });
+        })
+        .fail(function(err) {
+            console.log("error");
+            console.log(err);
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    })
 });

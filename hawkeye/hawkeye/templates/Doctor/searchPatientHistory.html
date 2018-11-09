@@ -1,0 +1,25 @@
+{% extends "Base/base.html" %}
+
+{% block customCSS %}
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href={{ url_for("static",filename="css/Doctor/style.css") }}>
+
+{% endblock %}
+
+{% block customContent %}
+    
+   
+
+
+{% endblock %}
+
+<!-- <script src='lib/jquery.min.js'></script>
+<script src='lib/moment.min.js'></script>
+<script src='fullcalendar/fullcalendar.js'></script> -->
+
+{% block customJS %}
+
+
+<script src={{ url_for("static",filename="js/Doctor/index.js") }}></script>
+
+{% endblock %}
