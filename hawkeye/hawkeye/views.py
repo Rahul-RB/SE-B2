@@ -227,8 +227,12 @@ def pharmacy_prescription():
 def lab():
     if ((not session["accType"]=="Lab") or (not session.get(session["accType"]+"LoggedIn"))):
         return redirect(url_for("login"),302)
-     
-    return render_template("Lab/lab.html",title="Lab", useremail=session["currentEmail"],data=models.getLabRequests(session["currentEmail"]))
+    email=session["currentEmail"]
+    session["user_id"]= models.getLabId(email)[0][0];
+    print(session["user_id"])
+    return render_template("Lab/lab.html",title="Lab", useremail=email,data=models.getLabRequests(email))
+
+
 
 
 @app.route("/labResponse")
@@ -237,7 +241,7 @@ def labResponse():
         return redirect(url_for("login"),302)
     reqid=request.args.get('reqdata')
     email=session["currentEmail"]
-    return render_template("Lab/labResponse.html",title="Lab", useremail=email,labReqData=models.getLabRequestDetails(email,reqid),labPresData= models.getLabPrescriptionDetails(reqid))
+    return render_template("Lab/labResponse.html",title="Lab", useremail=email,userid= session["user_id"],labReqData=models.getLabRequestDetails(email,reqid),labPresData= models.getLabPrescriptionDetails(reqid))
 
 def allowed_file(filename):
    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -251,11 +255,14 @@ def upload_file():
       if file.filename == '':
           return redirect( url_for("lab"))
       if file and allowed_file(file.filename):
+          labRequestId=str(request.form["labReqId"])
+          description=str(request.form["message"])
+          print(labRequestId, description)
           format = "%Y-%m-%dT%H:%M:%S"
           now = datetime.datetime.utcnow().strftime(format)
-          filename = now + '_' +file.filename # +str(current_user) + '_' + file.filename
+          filename = now + '_' +str(session["user_id"]) + '_' + file.filename
           filename = secure_filename(filename)
           file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-          #return 'file upoaded successfully'
-          return redirect(url_for("lab")) #url_for("uploaded_file",filename=filename))
+          models.putLabReponse(labRequestId, str(filename), description)
+          return redirect(url_for("lab")) 
       return redirect( url_for("lab"))

@@ -1,6 +1,7 @@
 from hawkeye import mysql
 import json
 import datetime
+import time    
 
 conn = mysql.connect()
 cursor =conn.cursor()
@@ -147,3 +148,33 @@ def getLabRequestDetails(email, reqid):
 
 def getLabPrescriptionDetails(reqid):
     return True
+
+def getLabId(email) :
+    query = "SELECT labID FROM LabDetails WHERE email ='"+email+"';"
+    cursor.execute(query)
+    res = cursor.fetchall()
+    print(res)
+    return (res)
+
+def putLabReponse(labRequestID,resultLink, description):
+    #responseTime = datetime.datetime.strptime(str(datetime.datetime.now()), "%Y-%m-%d %H:%M:%S")
+    format = "%Y-%m-%d"
+    now = datetime.datetime.utcnow().strftime(format)
+    responseTime =now
+    print(responseTime)
+    print(labRequestID)
+    print(resultLink)
+    #query = "INSERT INTO LabResponse ('labRequestID','resultLink', 'description','dateTimeStamp') VALUES  ('"+ labRequestID+"','"+(resultLink)+"','"+description+"','"+ responseTime+"';"
+    #query = "INSERT INTO LabResponse ('labRequestID', 'description','dateTimeStamp') VALUES  (%s,%s,%s)"
+    #query = "INSERT INTO Files Values ('"+resultLink+"');"
+    query = "INSERT INTO LabResponse (labRequestID, description , dateTimeStamp, resultLink) VALUES ('{0}','{1}','{2}','{3}')".format(labRequestID,description,responseTime,resultLink)
+    print("----------------------query:---------------\n",query)
+    # res=cursor.execute("INSERT INTO LabResponse ('labRequestID', 'description') VALUES  (%s,%s)",(labRequestID,description))
+    res=cursor.execute(query)
+    conn.commit()
+    #res=1
+    if (res==1):
+        print("Successful entry")
+    return True
+
+
