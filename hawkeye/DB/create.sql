@@ -115,7 +115,7 @@ CREATE TABLE EPrescription (
 CREATE TABLE MedicineDetails(
     ePrescriptionID INTEGER,
     symptoms VARCHAR(100),
-    medicineSuggestion VARCHAR(100),
+    medicineSuggestion VARCHAR(100),    
     timeToTake TIME,
     startDate DATE,
     endDate DATE,

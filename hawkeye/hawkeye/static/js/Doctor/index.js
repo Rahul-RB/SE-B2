@@ -52,6 +52,7 @@ $(document).ready(function () {
         console.log('pressed');
         $('#notifications').toggle("slow");
     }
+
     $("#notifContainerCloseBtn").on("click",function(){
         toggleNotif();
     });
@@ -228,7 +229,7 @@ $(document).ready(function () {
     //     console.log('pressed');
     //     $('#notifications').toggle("slow");
     // });
-    /* End Adding your javascript here */
+    // /* End Adding your javascript here */
     // function deleteRow(row) {
     //   var i = row.parentNode.parentNode.rowIndex;
     //   document.getElementById('POITable').deleteRow(i);
@@ -250,5 +251,67 @@ $(document).ready(function () {
     //   inp2.value = '';
     //   x.appendChild(new_row);
     // }
-  
+
+    // $('#submitBtn').on("click",function(e){
+    //     console.log($('.form').serialize());
+    //     alert(12312312);
+
+    //     $.ajax({
+    //       url: '/eprescription',
+    //       data: ;
+    //     })
+    //     return false;
+    // });
+    $("#patientIDSeachBtn").on("click",function (event) {
+        var inpData = {
+            patientID : $("#patientIDInp").val()
+        };
+        $.ajax({
+            url: 'searchPatientHistory',
+            type: 'GET',
+            dataType: 'json',
+            data: inpData,
+        })
+        .done(function(data) {
+            // 0:
+            // description:Array(1)
+            // ePrescriptionID:Array(1)
+            // medicineSuggestion:Array(2)
+            // symptoms:Array(2)
+            // testType:Array(1)
+            console.log("Success:");
+            $.each(data,function(index,value){
+                // console.log(index);
+                // console.log(value["description"]);
+                // console.log(value["ePrescriptionID"]);
+                // console.log(value["medicineSuggestion"]);
+                // console.log(value["symptoms"]);
+                // console.log(value["testType"]);
+                console.log(value);
+                $.each(value["ePrescriptionID"],function (index,value) {
+                    $("#patientHistoryDispDiv").append("<div> Prescription ID is : "+value+"</div>");
+                });
+                $.each(value["symptoms"],function (index,value) {
+                    $("#patientHistoryDispDiv").append("<div> Symptoms are : "+value+"</div>");
+                });
+                $.each(value["medicineSuggestion"],function (index,value) {
+                    $("#patientHistoryDispDiv").append("<div> Medicines suggested is : "+value+"</div>");
+                });
+                $.each(value["testType"],function (index,value) {
+                    $("#patientHistoryDispDiv").append("<div> Test suggested is : "+value+"</div>");
+                });
+                $.each(value["description"],function (index,value) {
+                    $("#patientHistoryDispDiv").append("<div> Description of Lab Test is : "+value+"</div>");
+                });
+                
+            });
+        })
+        .fail(function(err) {
+            console.log("error");
+            console.log(err);
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    })
 });
