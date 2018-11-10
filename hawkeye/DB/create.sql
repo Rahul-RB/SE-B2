@@ -1,8 +1,8 @@
 
-DROP DATABASE Hawkeye;
-CREATE DATABASE Hawkeye;
+DROP DATABASE Hawkeye1;
+CREATE DATABASE Hawkeye1;
 
-USE Hawkeye;
+USE Hawkeye1;
 
 CREATE TABLE PatientDetails (
     patientID CHAR(12) ,
@@ -102,7 +102,7 @@ CREATE TABLE DoctorLogin (
 
 -- no AUTO_INCREMENT in ePrescriptionID so have to manually enter random number - time is a number, best.
 CREATE TABLE EPrescription (
-    ePrescriptionID INTEGER, 
+    ePrescriptionID VARCHAR(20), 
     patientID CHAR(12) ,
     doctorID CHAR(12) ,
     -- slNo INTEGER AUTO_INCREMENT,
@@ -113,7 +113,7 @@ CREATE TABLE EPrescription (
 );
 
 CREATE TABLE MedicineDetails(
-    ePrescriptionID INTEGER,
+    ePrescriptionID VARCHAR(20),
     symptoms VARCHAR(100),
     medicineSuggestion VARCHAR(100),    
     timeToTake TIME,
@@ -152,7 +152,7 @@ CREATE TABLE ELabRequestDocument(
     labRequestDocumentID INTEGER PRIMARY KEY AUTO_INCREMENT,
 
     doctorID CHAR(12),
-    ePrescriptionID INTEGER ,
+    ePrescriptionID VARCHAR(20) ,
     patientID CHAR(12),
 
     testType VARCHAR(100),
@@ -213,7 +213,7 @@ CREATE TABLE PharmacyLogin (
 
 CREATE TABLE MedicineRequest (
     -- medicineReqID INTEGER PRIMARY KEY AUTO_INCREMENT,
-    ePrescriptionID INTEGER,
+    ePrescriptionID VARCHAR(20),
     patientID CHAR(12),
     pharmacyID CHAR(12),
     pickupTime DATETIME ,
@@ -226,7 +226,7 @@ CREATE TABLE MedicineRequest (
 
 CREATE TABLE MedicineResponse (
     medicineResponseID INTEGER PRIMARY KEY AUTO_INCREMENT,
-    ePrescriptionID INTEGER NOT NULL,
+    ePrescriptionID VARCHAR(20) NOT NULL,
     patientID CHAR(12),
     remarks VARCHAR(100) ,
     FOREIGN KEY (ePrescriptionID,patientID) REFERENCES  MedicineRequest (ePrescriptionID,patientID) 
@@ -248,7 +248,7 @@ CREATE TABLE DoctorAppointments (
 -- reminderDate and reminderTime for order medicines only
 -- for take medicines time and dates in MedicineDetails tables.
 CREATE TABLE MedicineReminder (
-    ePrescriptionID INTEGER NOT NULL,
+    ePrescriptionID VARCHAR(20) NOT NULL,
     patientID CHAR(12) NOT NULL,
     reminderDate DATE, 
     reminderTime TIME,
