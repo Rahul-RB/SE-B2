@@ -59,11 +59,11 @@ $(document).ready(function () {
     },10000);
     
     // Get all FetchPrescriptions.
-    setInterval(function worker3() {
-        $.get('patientFetchPrescriptions', function(data) {
-            console.log("<GET:3> success",data);
-        });
-    },10000);
+    // setInterval(function worker3() {
+    //     $.get('patientFetchPrescriptions', function(data) {
+    //         console.log("<GET:3> success",data);
+    //     });
+    // },10000);
     
     // Get all LabRequest.
     setInterval(function worker4() {
