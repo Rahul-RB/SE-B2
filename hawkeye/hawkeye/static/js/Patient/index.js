@@ -51,47 +51,47 @@ $(document).ready(function () {
         });
     },10000);
 
-    // Get all DoctorAppointment.
-    setInterval(function worker2() {
-        $.get('patientDoctorAppointment', function(data) {
-            console.log("<GET:2> success",data);
-        });
-    },10000);
+    // // Get all DoctorAppointment.
+    // setInterval(function worker2() {
+    //     $.get('patientDoctorAppointment', function(data) {
+    //         console.log("<GET:2> success",data);
+    //     });
+    // },10000);
     
-    // Get all FetchPrescriptions.
+    // // Get all FetchPrescriptions.
     // setInterval(function worker3() {
     //     $.get('patientFetchPrescriptions', function(data) {
     //         console.log("<GET:3> success",data);
     //     });
     // },10000);
     
-    // Get all LabRequest.
-    setInterval(function worker4() {
-        $.get('patientLabRequest', function(data) {
-            console.log("<GET:4> success",data);
-        });
-    },10000);
+    // // Get all LabRequest.
+    // setInterval(function worker4() {
+    //     $.get('patientLabRequest', function(data) {
+    //         console.log("<GET:4> success",data);
+    //     });
+    // },10000);
     
-    // Get all LabResponse.
-    setInterval(function worker5() {
-        $.get('patientLabResponse', function(data) {
-            console.log("<GET:5> success",data);
-        });
-    },10000);
+    // // Get all LabResponse.
+    // setInterval(function worker5() {
+    //     $.get('patientLabResponse', function(data) {
+    //         console.log("<GET:5> success",data);
+    //     });
+    // },10000);
     
-    // Get all MedicineRequest.
-    setInterval(function worker6() {
-        $.get('patientMedicineRequest', function(data) {
-            console.log("<GET:6> success",data);
-        });
-    },10000);
+    // // Get all MedicineRequest.
+    // setInterval(function worker6() {
+    //     $.get('patientMedicineRequest', function(data) {
+    //         console.log("<GET:6> success",data);
+    //     });
+    // },10000);
     
-    // Get all MedicineResponse.
-    setInterval(function worker7() {
-        $.get('patientMedicineResponse', function(data) {
-            console.log("<GET:7> success",data);
-        });
-    },10000);
+    // // Get all MedicineResponse.
+    // setInterval(function worker7() {
+    //     $.get('patientMedicineResponse', function(data) {
+    //         console.log("<GET:7> success",data);
+    //     });
+    // },10000);
     
 
     function getTodayDate(){
