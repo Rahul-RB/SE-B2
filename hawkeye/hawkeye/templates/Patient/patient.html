@@ -39,6 +39,9 @@
 
                         <div id="basic" class="popupWrapperDiv">
                             <div class="container-fluid">
+                                <div id="labBookMessage">
+                                    
+                                </div>
                                 <div class="row justify-content-center">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 popupDiv">
                                         <div class="d-flex flex-row justify-content-around"> 
@@ -48,7 +51,7 @@
                                         </div>
                                         <div class="searchTextBoxResults" id="popupLabSearchResults">
                                             
-                                        </div>                                        
+                                        </div>
                                         <div class="dropdown show">
                                             <a class="btn btn-block noRadiusBtn dropdown-toggle popupDropdown" href="#" role="button" id="dropdownMenuLinkLabPopup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Choose a Lab Document
@@ -60,9 +63,9 @@
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
                                         </div>
-                                        <div class="d-flex flex-row justify-content-around"> 
+<!--                                         <div class="d-flex flex-row justify-content-around"> 
                                             <input type="date" class="form-control noRadiusBtn" id="popupLabDate" placeholder="Pick a date">
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>                            
@@ -81,7 +84,10 @@
                         <!-- Buy Medicines -->
 
                         <div id="basic2" class="popupWrapperDiv">
-                            <div class="container-fluid">
+                                <div id="labBookMessage">
+                                    
+                                </div>
+                                <div class="container-fluid">
                                 <div class="row justify-content-center">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 popupDiv">
                                         <div class="d-flex flex-row justify-content-around"> 
@@ -103,9 +109,9 @@
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
                                         </div>
-                                        <div class="d-flex flex-row justify-content-around"> 
+<!--                                         <div class="d-flex flex-row justify-content-around"> 
                                             <input type="date" class="form-control noRadiusBtn" id="popupMedicineDate" placeholder="Pick a date">
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>                            
@@ -141,8 +147,8 @@
                                         </div>
                                         <div class="d-flex flex-row justify-content-around"> 
                                             <input type="date" class="form-control noRadiusBtn" id="popupDoctorDate" placeholder="Pick a date" >
-                                            <!-- <input type="text" class="form-control time ui-timepicker-input noRadiusBtn timeScroller" id="popupDoctorTime" placeholder="Pick a time" style="margin-left: 10px;" > -->
-                                            <select class="form-control time ui-timepicker-input noRadiusBtn timeScroller" id="popupDoctorTime" placeholder="Pick a time" style="margin-left: 10px;">
+                                            <!-- <input type="text" class="form-control noRadiusBtn timeScroller" id="popupDoctorTime" placeholder="Pick a time" style="margin-left: 10px;" > -->
+                                            <select class="form-control noRadiusBtn timeScroller" id="popupDoctorTime" placeholder="Pick a time" style="margin-left: 10px;">
                                                 <option value="" disabled selected>Select a time</option>
                                             </select>
                                         </div>
@@ -199,7 +205,7 @@
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-top: 5px;">
                                         <div class="d-flex flex-row justify-content-around"> 
                                             <input id="doctorDateScroll" type="date" class="form-control noRadiusBtn" placeholder="Pick a date">
-                                            <input type="text" class="form-control time ui-timepicker-input noRadiusBtn timeScroller" placeholder="Pick a time" style="margin-left: 10px;">
+                                            <input type="text" class="form-control noRadiusBtn timeScroller" placeholder="Pick a time" style="margin-left: 10px;">
                                         </div>
 
                                         <div class="d-flex flex-row justify-content-around" style="margin-top: 5px;"> 
@@ -448,6 +454,26 @@
             </div>
         </div>
     </div>
+
+<div class="modal fade" id="commonModal" tabindex="-1" role="dialog" aria-labelledby="commonModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 

@@ -31,44 +31,6 @@ $(document).ready(function () {
 
     /* Start Adding your javascript here */
     
-    // Seven types of continuous fetch I've to do:
-    //      1. Fetch all reminders - medicine, doc visit, lab test
-    //      2. Fetch all doctor appointments
-    //      3. Previous Prescriptions
-    //      4. Lab Requests
-    //      5. Lab Responses
-    //      6. Medicine Requests
-    //      7. Medicine Responses
-
-    // On page load do:
-    //   - Get all DoctorAppointment, *reminders
-    //   - Get all Prescriptions and Lab Tests.
-    //   - Load them into calendar.  
-
-    // Get all reminders onetime-AJAX call.
-    // setInterval(function worker1() {
-    //     // $.get('http://localhost:5000/testAjax', function(data) {
-    //     $.get('patientCalendarReminderUpdate', function(data) { //http://localhost:5000/testAjax
-    //         console.log(data); //data is returning successfully, make sure calendar entries are done appropriately.
-    //     });
-    // },10000);
-
-    // Get all DoctorAppointment timedout-AJAX call.
-    // setInterval(function worker2() {
-    //     // $.get('http://localhost:5000/testAjax', function(data) {
-    //     $.get('patientDoctorAppointment', function(data) { //http://localhost:5000/testAjax
-    //         console.log(data); //data is returning successfully, make sure calendar entries are done appropriately.
-    //     });
-    // },10000);
-    
-    // Get all Prescriptions timedout-AJAX call.
-    // setInterval(function worker3() {
-    //     // $.get('http://localhost:5000/testAjax', function(data) {
-    //     $.get('patientLabRequest', function(data) { //http://localhost:5000/testAjax
-    //         console.log(data); //data is returning successfully, make sure calendar entries are done appropriately.
-    //     });
-    // },10000);
-    
     function getTodayDate(){
         var today = new Date();
         var dd = today.getDate();
@@ -130,54 +92,65 @@ $(document).ready(function () {
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         eventLimit: true, // allow "more" link when too many events
-        events: [
+        // eventMouseover: function(event) {
+        //     $(this).qtip();
+        // },
+        // eventMouseout: function(event) {
+        //     $(this).qtip().hide();
+        // },
+        // Don't render the modal on onclick
+        // Keep the classes and divs attached in the get request itself
+        // During the click, fetch data as per thing and display in modal.
+        eventClick: function(event, element) {
+            // element.qtip({
+            //     style: 'ui-tooltip-shadow ui-tooltip-jtools',
+            //     content: event.description
+            // });
+            if(event.hasOwnProperty("mainInfo"))
             {
-                title: 'All Day Event',
-                start: '2018-10-12',
-            },
+                if(event.hasOwnProperty("subInfo"))
+                {
+                    var res = "<span class='mainInfo'>"+event.mainInfo+"</span>"+
+                               "<span class='subInfo'>"+event.subInfo+"</span>";
+                }
+                else
+                {
+                    var res = "<span class='mainInfo'>"+event.mainInfo+"</span>";
+                }
+            }
+            else if(event.hasOwnProperty("subInfo"))
             {
-                title: 'Long Event',
-                start: '2018-10-12',
-                end: '2018-10-13'
-            },
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2018-10-13T16:00:00'
-            },
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2018-10-15T16:00:00'
-            },
-            {
-                title: 'Conference',
-                start: '2018-10-15',
-                end: '2018-10-17'
-            },
-            {
-                title: 'Meeting',
-                start: '2018-10-15T10:30:00',
-                end: '2018-10-16T12:30:00'
-            },
-            {
-                title: 'Lunch',
-                start: '2018-10-15T12:00:00'
-            },
-            {
-                title: 'Meeting',
-                start: '2018-10-17T14:30:00'
-            },
-            {
-                title: 'Happy Hour',
-                start: '2018-10-19T17:30:00'
-            },
-            {
-                title: 'Dinner',
-                start: '2018-10-21T20:00:00'
-            },
-        ]
+                var res = "<span class='subInfo'>"+event.subInfo+"</span>";
+            }
+            
+            $(".fc-list-item").attr('data-toggle', 'modal');
+            $(".fc-list-item").attr('data-target', '#commonModal');
+            $(".fc-event-container").attr('data-toggle', 'modal');
+            $(".fc-event-container").attr('data-target', '#commonModal');
+
+            $(".modal-body").empty();
+            $(".modal-title").empty();
+            $(".modal-title").append("<div class='calendarEvent'>"+event.title+"</div>");
+            $(".modal-body").append(res);
+        }
     });
+
+    // END: jqeury timeline calendar code
+
+
+    // Seven types of continuous fetch I've to do:
+    //      1. Fetch all reminders - medicine, doc visit, lab test
+    //      2. Fetch all doctor appointments
+    //      3. Previous Prescriptions
+    //      4. Lab Requests
+    //      5. Lab Responses
+    //      6. Medicine Requests
+    //      7. Medicine Responses
+    // On page load do:
+    //   - Get all DoctorAppointment, *reminders
+    //   - Get all Prescriptions and Lab Tests.
+    //   - Load them into calendar.  
+
     // var someEvent1 = {
     //         title: 'Birthday Party',
     //         start: '2018-10-12T23:00:00'
@@ -193,7 +166,112 @@ $(document).ready(function () {
     // $("#calendar").fullCalendar("renderEvent",someEvent1,"stick");
     // $("#calendar").fullCalendar("renderEvent",temp(),"stick");
 
-    // END: jqeury timeline calendar code
+    // Get all CalendarReminderUpdate.
+    // setInterval(function worker1() {
+    //     $.get('patientCalendarReminderUpdate', function(data) {
+    //         console.log("<GET:1> success",data);
+    //     });
+    // },10000);
+    function getISO8601DateTime(date,time)
+    {
+        if(time.length==7)
+        {
+            return date+"T"+"0"+time;
+        }
+        else
+        {
+            return date+"T"+time;            
+        }
+    }
+    (function worker1() {
+        $.get('patientCalendarReminderUpdate', function(data) {
+            console.log("<GET:1> success",data);
+
+            $.each(data["TakeMedicine"], function(index, val) {
+                var TakeMedicine = {
+                    title: "Take Medicine",
+                    start: getISO8601DateTime($(this)[3],$(this)[2]),
+                    end: getISO8601DateTime($(this)[4],$(this)[2]),
+                    subInfo: "Symptoms:"+$(this)[0]+"\n Medicine Suggested:"+$(this)[1]
+                };
+                console.log(TakeMedicine);
+                $("#calendar").fullCalendar("renderEvent",TakeMedicine,"stick");
+            });
+            
+            $.each(data["OrderMedicine"], function(index, val) {
+                var OrderMedicine = {
+                    title: "Order Medicine",
+                    start: getISO8601DateTime($(this)[1],$(this)[2]),
+                    subInfo: "Prescription ID:"+$(this)[0]
+                };
+                console.log(OrderMedicine);
+                $("#calendar").fullCalendar("renderEvent",OrderMedicine,"stick");
+            });
+
+            
+            $.each(data["LabVisit"], function(index, val) {
+                var LabVisit = {
+                    title: "Lab Visit",
+                    start: getISO8601DateTime($(this)[2],$(this)[3]),
+                    subInfo: "LabID:"+$(this)[0]+"\tDocument ID:"+$(this)[1]
+                };
+                console.log(LabVisit);
+                $("#calendar").fullCalendar("renderEvent",LabVisit,"stick");
+            });
+
+            $.each(data["DocVisit"], function(index, val) {
+                var DocVisit = {
+                    title: "Doctor Visit",
+                    start: getISO8601DateTime($(this)[1],$(this)[2])
+                };
+                console.log(DocVisit);
+                $("#calendar").fullCalendar("renderEvent",DocVisit,"stick");
+            });
+        });
+    })();
+
+    // // Get all DoctorAppointment.
+    // setInterval(function worker2() {
+    //     $.get('patientDoctorAppointment', function(data) {
+    //         console.log("<GET:2> success",data);
+    //     });
+    // },10000);
+    
+    // // Get all FetchPrescriptions.
+    // setInterval(function worker3() {
+    //     $.get('patientFetchPrescriptions', function(data) {
+    //         console.log("<GET:3> success",data);
+    //     });
+    // },10000);
+    
+    // // Get all LabRequest.
+    // setInterval(function worker4() {
+    //     $.get('patientLabRequest', function(data) {
+    //         console.log("<GET:4> success",data);
+    //     });
+    // },10000);
+    
+    // // Get all LabResponse.
+    // setInterval(function worker5() {
+    //     $.get('patientLabResponse', function(data) {
+    //         console.log("<GET:5> success",data);
+    //     });
+    // },10000);
+    
+    // // Get all MedicineRequest.
+    // setInterval(function worker6() {
+    //     $.get('patientMedicineRequest', function(data) {
+    //         console.log("<GET:6> success",data);
+    //     });
+    // },10000);
+    
+    // // Get all MedicineResponse.
+    // setInterval(function worker7() {
+    //     $.get('patientMedicineResponse', function(data) {
+    //         console.log("<GET:7> success",data);
+    //     });
+    // },10000);
+    
 
     // START: Popup defaults
     $.fn.popup.defaults.pagecontainer = '.popupClass';
@@ -517,7 +595,7 @@ $(document).ready(function () {
 
         var payload = {
             labID : $("#selectedLabID").val(),
-            apptDate : getInputTypeDateByID("popupLabDate"),
+            // apptDate : getInputTypeDateByID("popupLabDate"),
         }
         var jsonPayload = JSON.stringify(payload);
         console.log(jsonPayload)
@@ -532,24 +610,197 @@ $(document).ready(function () {
         .done(function(data) {
             console.log("success");
             console.log(data);
+            $("#labBookMessage").append("\
+                <div class='alert alert-success alert-dismissible fade show' role='alert'>\
+                    <strong>Lab request sent successfully!</strong><br> Your calendar will be updated soon.\
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+                        <span aria-hidden='true'>&times;</span>\
+                    </button>\
+                </div>\
+            ");
         })
         .fail(function(err) {
             console.log("error");
             console.log(err);
+            $("#labBookMessage").append("\
+                <div class='alert alert-danger alert-dismissible fade show' role='alert'>\
+                    <strong>Server Error:</strong>"+err+".\
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+                        <span aria-hidden='true'>&times;</span>\
+                    </button>\
+                </div>\
+            ");
         })
         .always(function() {
             console.log("complete");
-        });
-        
+        });  
     });
     
     $("#medicineBookBtn").on('click',function(event) {
         event.preventDefault();
         /* Act on the event */
+
+        var payload = {
+            labID : $("#selectedMedicineID").val(),
+            // apptDate : getInputTypeDateByID("popupMedicineDate"),
+        }
+        var jsonPayload = JSON.stringify(payload);
+        console.log(jsonPayload)
+
+        $.ajax({
+            url: 'patientMedicineRequest',
+            type: 'POST',
+            dataType: 'json',
+            data: jsonPayload,
+            contentType:"application/json; charset=UTF-8"
+        })
+        .done(function(data) {
+            console.log("success");
+            console.log(data);
+            $("#labBookMessage").append("\
+                <div class='alert alert-success alert-dismissible fade show' role='alert'>\
+                    <strong>Medicine request sent successfully!</strong><br> Your calendar will be updated soon.\
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+                        <span aria-hidden='true'>&times;</span>\
+                    </button>\
+                </div>\
+            ");
+        })
+        .fail(function(err) {
+            console.log("error");
+            console.log(err);
+            $("#labBookMessage").append("\
+                <div class='alert alert-danger alert-dismissible fade show' role='alert'>\
+                    <strong>Server Error:</strong>"+err+".\
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+                        <span aria-hidden='true'>&times;</span>\
+                    </button>\
+                </div>\
+            ");
+        })
+        .always(function() {
+            console.log("complete");
+        });
     });
     
         
     // END : Popup Book button fucntionality -> Booking doctor appointment, buy medicines etc.
+    
+
+    // Seven types of continuous fetch I've to do:
+    //      1. Fetch all reminders - medicine, doc visit, lab test
+    //      2. Fetch all doctor appointments
+    //      3. Previous Prescriptions
+    //      4. Lab Requests
+    //      5. Lab Responses
+    //      6. Medicine Requests
+    //      7. Medicine Responses
+    
+    // // START : 1. EventSource : Reminder fetch and update calendar
+    // var pcr = new EventSource("/patientCalendarReminderUpdate");
+    // pcr.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES1> PCR success:",event.data);
+    // });
+
+    // pcr.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // pcr.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // // END : 1. EventSource : Reminder fetch and update calendar
+
+    // // START : 2. EventSource : Appointment fetch and update calendar
+    // var pda = new EventSource("/patientDoctorAppointment");
+    // pda.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES2> PDA success:",event.data);
+    // });
+
+    // pda.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // pda.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // // END : 2. EventSource : Appointment fetch and update calendar
+
+    // // START : 3. EventSource : Prescription fetch and update calendar
+    // var pfp = new EventSource("/patientFetchPrescriptions");
+    // pfp.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES3> PFP success:",event.data);
+    // });
+
+    // pfp.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // pfp.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // // END : 3. EventSource : Prescription fetch and update calendar
+
+    // // START : 4. EventSource : LabRequest fetch and update calendar
+    // var plReq = new EventSource("/patientLabRequest");
+    // plReq.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES4> PLReq success:",event.data);
+    // });
+
+    // plReq.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // plReq.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // // END : 4. EventSource : LabRequest fetch and update calendar
+
+    // // START : 5. EventSource : LabRequest fetch and update calendar
+    // var plResp = new EventSource("/patientLabResponse");
+    // plResp.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES5> PLResp success:",event.data);
+    // });
+
+    // plResp.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // plResp.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // // END : 5. EventSource : LabRequest fetch and update calendar
+
+    // // START : 6. EventSource : MedicineRequest fetch and update calendar
+    // var pmReq = new EventSource("/patientMedicineRequest");
+    // pmReq.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES6> PMReq success:",event.data);
+    // });
+
+    // pmReq.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // pmReq.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // // END : 6. EventSource : MedicineRequest fetch and update calendar
+
+    // // START : 7. EventSource : MedicineResponse fetch and update calendar
+    // var pmResp = new EventSource("/patientMedicineResponse");
+    // pmResp.addEventListener("someEvent",function (event) {
+    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
+    //     console.log("<ES7> PMResp success:",event.data);
+    // });
+
+    // pmResp.onmessage = function(event) {
+    //     console.log(event.data);
+    // };
+    // pmResp.onerror = function(event) {
+    //     console.log(event.data);
+    // };
+    // // END : 7. EventSource : MedicineResponse fetch and update calendar
+
 
     /* End Adding your javascript here */
 });

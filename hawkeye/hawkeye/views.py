@@ -3,7 +3,8 @@ from hawkeye import app
 
 from hawkeye import models 
 from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify, Response
-
+import time
+    
 
 app.secret_key = 'secretkeyhereplease'
 
@@ -238,24 +239,17 @@ def labResponse():
     
     return render_template("Lab/labResponse.html",title="Pharmacy", userLoggedIn=True)
 
-i=1
-@app.route("/testAjax")
-def testAjax():
-    # global i
-    i+=1
-    return jsonify(result="test:"+str(i))
-
 @app.route("/patientCalendarReminderUpdate")
 def patientCalendarReminderUpdate():
     patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
     res = models.patientCalendarReminderUpdate(patientID)
     return jsonify(res)
-
+    
 @app.route("/patientDoctorAppointment",methods=["GET","POST"])
 def patientDoctorAppointment():
     if(request.method=="GET"): #GET all appointment
         patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
-        res = models.patientDoctorAppointment(patientID,None,"GET") #None is no payload
+        res = models.patientDoctorAppointment(patientID,None,"GET")
         return jsonify(res)
 
     elif(request.method=="POST"):#POST a new appointment
@@ -266,20 +260,19 @@ def patientDoctorAppointment():
         res = models.patientDoctorAppointment(patientID,payload,"POST")
         return jsonify(res)
 
-@app.route("/commonSearch",methods=["GET","POST"])
+@app.route("/commonSearch",methods=["GET"])
 def commonSearch():
-    if(request.method=="GET"):
-        inpText = request.args.get('inpText', "", type=str)
-        resType = request.args.get('resType', "", type=str)
-        # print(inpText,resType)
-        res = models.getDetailsByName(inpText,resType)
-        return jsonify(res)
+    inpText = request.args.get('inpText', "", type=str)
+    resType = request.args.get('resType', "", type=str)
+    # print(inpText,resType)
+    res = models.getDetailsByName(inpText,resType)
+    return jsonify(res)
 
 @app.route("/patientLabRequest",methods=["GET","POST"])
 def patientLabRequest():
-    if(request.method=="GET"): #GET all appointment
-        labID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
-        res = models.patientLabRequest(labID,None,"GET") #None is no payload
+    if (request.method == "GET"): #GET all appointments
+        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        res = models.patientLabRequest(patientID,None,"GET")
         return jsonify(res)
 
     elif(request.method=="POST"):#POST a new appointment
@@ -290,28 +283,43 @@ def patientLabRequest():
         res = models.patientLabRequest(labID,payload,"POST")
         return jsonify(res)
 
-@app.route("/getAvailableTimeSlots",methods=["GET"])
-def getAvailableTimeSlots():
-    if(request.method=="GET"):
-        doctorID = request.args.get("doctorID", "", type=str)
-        inpDate = request.args.get("inpDate", "", type=str)
-        res = models.getAvailableTimeSlots(doctorID,inpDate)
+@app.route("/patientMedicineRequest",methods=["GET","POST"])
+def patientMedicineRequest():
+    if(request.method=="GET"): #GET all requests
+        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        res = models.patientMedicineRequest(patientID,None,"GET") #None is no payload
         return jsonify(res)
 
-@app.route("/test")
-def test():
-    return render_template("Test/test.html")
+    elif(request.method=="POST"):#POST a new request
+        labID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        payload = request.get_json() #Converts incoming JSON into Python Dictionary
+        print("--------------------------------")
+        print(payload)
+        res = models.patientMedicineRequest(labID,payload,"POST")
+        return jsonify(res)
 
-@app.route("/stream")
-def stream():
-    from time import sleep
-    def eventStream():
-        while True:
-            # Poll data from the database
-            # and see if there's a new message
-            # if len(messages) > len(previous_messages):
-            #     yield "data:{}\n\n".format(messages[len(messages):-1])
-            res = {"d1":"dd1"}
-            yield "event:someEvent\ndata:{0}\n\n".format(str(res))
-            sleep(10)
-    return Response(eventStream(), mimetype="text/event-stream")
+@app.route("/getAvailableTimeSlots",methods=["GET"])
+def getAvailableTimeSlots():
+    doctorID = request.args.get("doctorID", "", type=str)
+    inpDate = request.args.get("inpDate", "", type=str)
+    res = models.getAvailableTimeSlots(doctorID,inpDate)
+    return jsonify(res)
+
+@app.route("/patientFetchPrescriptions",methods=["GET"])
+def patientFetchPrescriptions():
+    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    res = models.patientFetchPrescriptions(patientID)
+    return jsonify(res)
+
+
+@app.route("/patientLabResponse",methods=["GET"])
+def patientLabResponse():
+    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    res = models.patientLabResponse(patientID)
+    return jsonify(res)
+
+@app.route("/patientMedicineResponse",methods=["GET"])
+def patientMedicineResponse():
+    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    res = models.patientMedicineResponse(patientID)
+    return jsonify(res)
