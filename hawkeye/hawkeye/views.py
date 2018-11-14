@@ -2,17 +2,19 @@ from hawkeye import app
 # from hawkeye.forms import SignupForm 
 
 from hawkeye import models 
-from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify
-
+from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify, Response
+import time
+    
 
 app.secret_key = 'secretkeyhereplease'
 
 @app.route("/")
 def home():
-    res = session.get("{0}LoggedIn".format(session["accType"]),True)
-    if not res:
-        return redirect(url_for("login"),302)
-    return render_template("Home/home.html",title="User")
+    try:
+        res = session["{0}LoggedIn".format(session["accType"])]
+        return render_template("Home/home.html",title="User",userLoggedIn=True)
+    except Exception as e:
+        return render_template("Home/home.html",title="User",userLoggedIn=False)
 
 @app.route("/login",methods=["GET","POST"])
 def login():
@@ -172,7 +174,7 @@ def register_pharmacy():
 def patient():
     if ((not session.get("accType")=="Patient") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
-    return render_template("Patient/patient.html",title="Patient",user=models.getUsernameByEmail(session.get("accEmail"),session.get("accType")))
+    return render_template("Patient/patient.html",title="Patient",user=models.getUsernameByEmail(session.get("accEmail"),session.get("accType")), userLoggedIn=True)
 
 @app.route("/ctime",methods=['GET'])
 def ctime():
@@ -187,74 +189,67 @@ def doctor():
         return redirect(url_for("login"),302)
     print("Doctor:",session["currentEmail"])
     
-    return render_template("Doctor/doctor.html",title="Doctor")
+    return render_template("Doctor/doctor.html",title="Doctor", userLoggedIn=True)
 
 @app.route("/prescription_history")
 def prescription_history():
     if((not session.get("accType")=="Doctor") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
-    return render_template("Doctor/prescription_history.html",title="Doctor")
+    return render_template("Doctor/prescription_history.html",title="Doctor", userLoggedIn=True)
 
 @app.route("/history")
 def history():
     if((not session.get("accType")=="Doctor") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Doctor/history.html",title="Doctor")
+    return render_template("Doctor/history.html",title="Doctor", userLoggedIn=True)
 
 @app.route("/eprescription")
 def eprescription():
     if((not session.get("accType")=="Doctor") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Doctor/eprescription.html",title="Doctor")
+    return render_template("Doctor/eprescription.html",title="Doctor", userLoggedIn=True)
 
 @app.route("/pharmacy")
 def pharmacy():
     if ((not session.get("accType")=="Pharmacy") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Pharmacy/pharmacy.html",title="Pharmacy")
+    return render_template("Pharmacy/pharmacy.html",title="Pharmacy", userLoggedIn=True)
 
 @app.route("/pharmacy_prescription")
 def pharmacy_prescription():
     if ((not session.get("accType")=="Pharmacy") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Pharmacy/pharmacy_prescription.html",title="Pharmacy")
+    return render_template("Pharmacy/pharmacy_prescription.html",title="Pharmacy", userLoggedIn=True)
 
 @app.route("/lab")
 def lab():
     if ((not session.get("accType")=="Lab") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Lab/lab.html",title="Pharmacy")
+    return render_template("Lab/lab.html",title="Pharmacy", userLoggedIn=True)
 
 @app.route("/labResponse")
 def labResponse():
     if ((not session.get("accType")=="Lab") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
     
-    return render_template("Lab/labResponse.html",title="Pharmacy")
-
-i=1
-@app.route("/testAjax")
-def testAjax():
-    # global i
-    i+=1
-    return jsonify(result="test:"+str(i))
+    return render_template("Lab/labResponse.html",title="Pharmacy", userLoggedIn=True)
 
 @app.route("/patientCalendarReminderUpdate")
 def patientCalendarReminderUpdate():
     patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
     res = models.patientCalendarReminderUpdate(patientID)
     return jsonify(res)
-
+    
 @app.route("/patientDoctorAppointment",methods=["GET","POST"])
 def patientDoctorAppointment():
     if(request.method=="GET"): #GET all appointment
         patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
-        res = models.patientDoctorAppointment(patientID,None,"GET") #None is no payload
+        res = models.patientDoctorAppointment(patientID,None,"GET")
         return jsonify(res)
 
     elif(request.method=="POST"):#POST a new appointment
@@ -265,13 +260,66 @@ def patientDoctorAppointment():
         res = models.patientDoctorAppointment(patientID,payload,"POST")
         return jsonify(res)
 
-@app.route("/commonSearch",methods=["GET","POST"])
+@app.route("/commonSearch",methods=["GET"])
 def commonSearch():
-    if(request.method=="GET"):
-        inpText = request.args.get('inpText', "", type=str)
-        resType = request.args.get('resType', "", type=str)
-        # print(inpText,resType)
-        res = models.getDetailsByName(inpText,resType)
+    inpText = request.args.get('inpText', "", type=str)
+    resType = request.args.get('resType', "", type=str)
+    # print(inpText,resType)
+    res = models.getDetailsByName(inpText,resType)
+    return jsonify(res)
+
+@app.route("/patientLabRequest",methods=["GET","POST"])
+def patientLabRequest():
+    if (request.method == "GET"): #GET all appointments
+        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        res = models.patientLabRequest(patientID,None,"GET")
         return jsonify(res)
 
+    elif(request.method=="POST"):#POST a new appointment
+        labID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        payload = request.get_json() #Converts incoming JSON into Python Dictionary
+        print("--------------------------------")
+        print(payload)
+        res = models.patientLabRequest(labID,payload,"POST")
+        return jsonify(res)
 
+@app.route("/patientMedicineRequest",methods=["GET","POST"])
+def patientMedicineRequest():
+    if(request.method=="GET"): #GET all requests
+        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        res = models.patientMedicineRequest(patientID,None,"GET") #None is no payload
+        return jsonify(res)
+
+    elif(request.method=="POST"):#POST a new request
+        labID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        payload = request.get_json() #Converts incoming JSON into Python Dictionary
+        print("--------------------------------")
+        print(payload)
+        res = models.patientMedicineRequest(labID,payload,"POST")
+        return jsonify(res)
+
+@app.route("/getAvailableTimeSlots",methods=["GET"])
+def getAvailableTimeSlots():
+    doctorID = request.args.get("doctorID", "", type=str)
+    inpDate = request.args.get("inpDate", "", type=str)
+    res = models.getAvailableTimeSlots(doctorID,inpDate)
+    return jsonify(res)
+
+@app.route("/patientFetchPrescriptions",methods=["GET"])
+def patientFetchPrescriptions():
+    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    res = models.patientFetchPrescriptions(patientID)
+    return jsonify(res)
+
+
+@app.route("/patientLabResponse",methods=["GET"])
+def patientLabResponse():
+    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    res = models.patientLabResponse(patientID)
+    return jsonify(res)
+
+@app.route("/patientMedicineResponse",methods=["GET"])
+def patientMedicineResponse():
+    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    res = models.patientMedicineResponse(patientID)
+    return jsonify(res)

@@ -165,7 +165,7 @@ CREATE TABLE ELabRequestDocument(
 CREATE TABLE LabRequest (
     labRequestDocumentID INTEGER,
     labID CHAR(12),
-    dateTimeStamp DATETIME,
+    dateStamp DATE,
     isPending TINYINT,
     FOREIGN KEY (labID) REFERENCES  LabDetails (labID) ,
     FOREIGN KEY (labRequestDocumentID) REFERENCES ELabRequestDocument (labRequestDocumentID) ,
@@ -251,7 +251,8 @@ CREATE TABLE MedicineReminder (
     reminderDate DATE, 
     reminderTime TIME,
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
-    FOREIGN KEY (ePrescriptionID) REFERENCES  EPrescription (ePrescriptionID)
+    FOREIGN KEY (ePrescriptionID) REFERENCES  EPrescription (ePrescriptionID),
+    UNIQUE (ePrescriptionID,patientID)
 );
 
 CREATE TABLE LabVisitReminder (
@@ -263,7 +264,7 @@ CREATE TABLE LabVisitReminder (
     reminderTime TIME,
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
     FOREIGN KEY (labID) REFERENCES  LabDetails (labID),
-    FOREIGN KEY (labRequestDocumentID) REFERENCES  ELabRequestDocument (labRequestDocumentID)
+    FOREIGN KEY (labRequestDocumentID) REFERENCES  ELabRequestDocument (labRequestDocumentID),
 );
 
 
@@ -275,5 +276,5 @@ CREATE TABLE DoctorVisitReminder (
     reminderTime TIME,
     message VARCHAR(100),
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
-    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID)
+    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID),
 );

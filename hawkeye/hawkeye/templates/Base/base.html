@@ -11,6 +11,8 @@
         <!-- Bootstrap CSS CDN -->
         <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"> -->
         <link rel="stylesheet" type="text/css" href= {{ url_for("static",filename="vendor/bootstrap/css/bootstrap.min.css") }} >
+        <!--Favicon-->
+        <link rel="icon" type="image/png" href = {{ url_for("static",filename="images/icons/favicon.ico") }}>
 
         <!-- Scrollbar Custom CSS -->
         <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"> -->
@@ -147,12 +149,18 @@
                     <div class="container" id="userInfo">
                         <button class="btn btn-primary" id="userInfoCloseBtn">Close</button>
                         <table id="userInfoContainer">
-                            <tr>
-                                <td><a href="#">View Profile</a></td>
-                            </tr>
-                            <tr>
-                                <td><a href={{ url_for("logout") }}>Logout</a></td>
-                            </tr>
+                            {% if userLoggedIn %}
+                                <tr>
+                                    <td><a href="#">View Profile</a></td>
+                                </tr>
+                                <tr>
+                                    <td><a href={{ url_for("logout") }}>Logout</a></td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td><a href={{ url_for("login") }}>Login</a></td>
+                                </tr>
+                            {% endif %}
                         </table>
                     </div>
                 </nav>

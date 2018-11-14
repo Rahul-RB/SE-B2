@@ -160,13 +160,13 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
-#prescriptionsViewDivTitle,#labTestPendingTitle,#labTestDoneTitle{
+#prescriptionsViewDivTitle,#labRespTitle,#medRespPendingTitle,#labReqTitle{
     border-bottom: 1px solid black;
 }
-#labTestDoneTitle{
+#labReqTitle{
     border-top: 1px solid black;
 }
-#prescriptionsViewDivTitleDiv,#labTestDoneTitle,#labTestPendingTitle{
+#prescriptionsViewDivTitleDiv,#labReqTitle,#labRespTitle,#medRespPendingTitle{
     font-size: 24px;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -183,6 +183,27 @@
     cursor: pointer;
     font-size: 15px;
     background-color: gray;
+}
+
+.ui-timepicker-wrapper{
+    z-index: 999999!important;
+}
+
+.calendarEvent{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.mainInfo{
+    font-size: 20px;
+}
+
+.subInfo{
+    font-size: 20px;
+}
+
+.fc-list-item,.fc-event-container{
+    cursor: pointer;
 }
 
 @media screen and (max-width: 1024px) {
