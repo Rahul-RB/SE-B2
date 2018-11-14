@@ -91,10 +91,10 @@
     border-radius: 0 !important;
 }
 
-.searchBtn,.searchTextBox{
+.searchBtn,.popupSearchTextBox,.reminderSearchTextBox{
     height: 40px;
 }
-.searchTextBox{
+.popupSearchTextBox,.reminderSearchTextBox{
     width: 90%;
     padding: 15px 0 15px 20px;
     font-size: 16px;
@@ -107,16 +107,20 @@
     transition: all 0.4s;
 }
 
-.searchTextBox::-webkit-input-placeholder {
+.popupSearchTextBox::-webkit-input-placeholder ,
+.reminderSearchTextBox::-webkit-input-placeholder {
   color: #000000;
 }
-.searchTextBox::-moz-placeholder {
+.popupSearchTextBox::-moz-placeholder ,
+.reminderSearchTextBox::-moz-placeholder {
   color: #000000;
 }
-.searchTextBox:-ms-input-placeholder {
+.popupSearchTextBox:-ms-input-placeholder ,
+.reminderSearchTextBox:-ms-input-placeholder {
   color: #000000;
 }
-.searchTextBox:-moz-placeholder {
+.popupSearchTextBox:-moz-placeholder ,
+.reminderSearchTextBox:-moz-placeholder {
   color: #000000;
 }
 #labTestDropdown,#medicineDropdown{
@@ -129,7 +133,8 @@
     padding-right: 0px;
 }
 
-.searchTextBox:focus,
+.popupSearchTextBox:focus,
+.reminderSearchTextBox:focus,
 .searchBtn:focus {
     /*background: rgb(64, 151, 119);*/
     background-color: #164719;
@@ -155,13 +160,13 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
-#prescriptionsViewDivTitle,#labTestPendingTitle,#labTestDoneTitle{
+#prescriptionsViewDivTitle,#labRespTitle,#medRespPendingTitle,#labReqTitle{
     border-bottom: 1px solid black;
 }
-#labTestDoneTitle{
+#labReqTitle{
     border-top: 1px solid black;
 }
-#prescriptionsViewDivTitleDiv,#labTestDoneTitle,#labTestPendingTitle{
+#prescriptionsViewDivTitleDiv,#labReqTitle,#labRespTitle,#medRespPendingTitle{
     font-size: 24px;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -170,8 +175,40 @@
 .individualRowTwoItem{
     cursor: pointer;
 }
+
+.popupSearchResultsDiv
+{
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    background-color: gray;
+}
+
+.ui-timepicker-wrapper{
+    z-index: 999999!important;
+}
+
+.calendarEvent{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.mainInfo{
+    font-size: 20px;
+}
+
+.subInfo{
+    font-size: 20px;
+}
+
+.fc-list-item,.fc-event-container{
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1024px) {
-    .searchTextBox{
+    .popupSearchTextBox,
+    .reminderSearchTextBox{
         width: 80%;
     }
     .searchBtn{

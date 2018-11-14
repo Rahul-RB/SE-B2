@@ -1,0 +1,4 @@
+- doctor are asking for too many lab tests
+- no. of lab tests this month
+- how much medicine per medicine - infeer if some medicine has become immune to that person.
+- in prescription say how mcu medicine is taken in person  -if doctor enters symptoms then show medidinces taken for the same symptoms in previous date.

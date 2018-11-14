@@ -1,8 +1,7 @@
+-- DROP DATABASE Hawkeye;
+-- CREATE DATABASE Hawkeye;
 
-DROP DATABASE Hawkeye1;
-CREATE DATABASE Hawkeye1;
-
-USE Hawkeye1;
+-- USE Hawkeye;
 
 CREATE TABLE PatientDetails (
     patientID CHAR(12) ,
@@ -47,30 +46,30 @@ CREATE TABLE PharmacyDetails (
 
 -- What's these tables for?
 
-CREATE TABLE Consultation (
-    patientID CHAR(12),
-    doctorID CHAR(12),
-    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
-    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID),
-    PRIMARY KEY (patientID ,doctorID)
-);
+-- CREATE TABLE Consultation (
+--     patientID CHAR(12),
+--     doctorID CHAR(12),
+--     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
+--     FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID),
+--     PRIMARY KEY (patientID ,doctorID)
+-- );
 
-CREATE TABLE PatientLab (
-    patientID CHAR(12),
-    labID CHAR(12),
-    accessRight TINYINT,
-    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
-    FOREIGN KEY (labID) REFERENCES  LabDetails (labID),
-    PRIMARY KEY (patientID ,labID )
-);
+-- CREATE TABLE PatientLab (
+--     patientID CHAR(12),
+--     labID CHAR(12),
+--     accessRight TINYINT,
+--     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
+--     FOREIGN KEY (labID) REFERENCES  LabDetails (labID),
+--     PRIMARY KEY (patientID ,labID )
+-- );
 
-CREATE TABLE PatientPharmacy (
-    patientID CHAR(12) ,
-    pharmacyID CHAR(12) ,
-    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
-    FOREIGN KEY (pharmacyID) REFERENCES  PharmacyDetails (pharmacyID),
-    PRIMARY KEY( patientID,pharmacyID )
-);
+-- CREATE TABLE PatientPharmacy (
+--     patientID CHAR(12) ,
+--     pharmacyID CHAR(12) ,
+--     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
+--     FOREIGN KEY (pharmacyID) REFERENCES  PharmacyDetails (pharmacyID),
+--     PRIMARY KEY( patientID,pharmacyID )
+-- );
 
 -- End of question area.
 
@@ -166,7 +165,7 @@ CREATE TABLE ELabRequestDocument(
 CREATE TABLE LabRequest (
     labRequestDocumentID INTEGER,
     labID CHAR(12),
-    dateTimeStamp DATETIME,
+    dateStamp DATE,
     isPending TINYINT,
     FOREIGN KEY (labID) REFERENCES  LabDetails (labID) ,
     FOREIGN KEY (labRequestDocumentID) REFERENCES ELabRequestDocument (labRequestDocumentID) ,
@@ -240,8 +239,7 @@ CREATE TABLE DoctorAppointments (
     pickATime TIME,
     addedToDoctorCalendar TINYINT,
     FOREIGN KEY (patientID) REFERENCES PatientDetails (patientID)  ,
-    FOREIGN KEY (doctorID) REFERENCES DoctorDetails (doctorID) ,
-    PRIMARY KEY (doctorID,patientID)
+    FOREIGN KEY (doctorID) REFERENCES DoctorDetails (doctorID)
 );
  -- No entres requried
 
@@ -253,7 +251,8 @@ CREATE TABLE MedicineReminder (
     reminderDate DATE, 
     reminderTime TIME,
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
-    FOREIGN KEY (ePrescriptionID) REFERENCES  EPrescription (ePrescriptionID)
+    FOREIGN KEY (ePrescriptionID) REFERENCES  EPrescription (ePrescriptionID),
+    UNIQUE (ePrescriptionID,patientID)
 );
 
 CREATE TABLE LabVisitReminder (
@@ -265,7 +264,7 @@ CREATE TABLE LabVisitReminder (
     reminderTime TIME,
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
     FOREIGN KEY (labID) REFERENCES  LabDetails (labID),
-    FOREIGN KEY (labRequestDocumentID) REFERENCES  ELabRequestDocument (labRequestDocumentID)
+    FOREIGN KEY (labRequestDocumentID) REFERENCES  ELabRequestDocument (labRequestDocumentID),
 );
 
 
@@ -277,5 +276,5 @@ CREATE TABLE DoctorVisitReminder (
     reminderTime TIME,
     message VARCHAR(100),
     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
-    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID)
+    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID),
 );
