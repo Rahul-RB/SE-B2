@@ -306,7 +306,19 @@ def searchPatientHistory():
         # inpText = request.args.get('inpText', "", type=str)
         print("patientID is ",patientID)
         res = models.searchPatientHistory(patientID)
+        print("res in views file is ", res)
         # return render_template("Doctor/searchPatientHistory.html",title="Doctor")
+        return jsonify(res)
+
+@app.route("/checkDoctorsHistory", methods=["GET","POST"])
+def checkDoctorsHistory():
+    if(request.method=="GET"):
+        searchBy = request.args.get('searchBy',"",type=str)
+        print("searchBy is ", searchBy)
+        POST_EMAIL = session["currentEmail"]
+        
+        res = models.checkDoctorsHistory(POST_EMAIL, searchBy)
+
         return jsonify(res)
 
 def allowed_file(filename):

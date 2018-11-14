@@ -262,6 +262,41 @@ $(document).ready(function () {
     //     })
     //     return false;
     // });
+
+    $("#doctorHistoryBtn").on("click", function (event) {
+        var inpData = {
+            searchBy : $("#date-input").val(),
+            //searchByy : $("#doctorHistoryBtn1").val()
+            //month : $("#doctorHistoryBtn").val(),
+        };
+        $.ajax({
+            url: 'checkDoctorsHistory',
+            type: 'GET',
+            dataType: 'json',
+            data: inpData,
+        })
+        .done(function(data) {
+            console.log(data);
+            
+            console.log(data["countPatientsMonth"]);
+            console.log(data["countPatientsToday"]);
+            console.log(data["monthWiseDataThatYear"][11]);
+            $("#analyticsDiv").append("<div> Total Patients seen today is " + data["countPatientsToday"] + "</div>" );
+            $("#analyticsDiv").append("<div> Total Patients seen for the selected month is " + data["countPatientsMonth"] + "</div>");
+            $("#analyticsDiv").append("<div> Total Patients seen for the selected year is " + data["countPatientsYear"] + "</div>");
+
+            
+
+        })
+        .fail(function(err) {
+            console.log("error");
+            console.log(err);
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    })
+
     $("#patientIDSeachBtn").on("click",function (event) {
         var inpData = {
             patientID : $("#patientIDInp").val()
@@ -280,6 +315,33 @@ $(document).ready(function () {
             // symptoms:Array(2)
             // testType:Array(1)
             console.log("Success:");
+            console.log(data);
+
+            // var ctx = document.getElementById('barChart').getContext('2d');
+            
+            // ctx.moveTo(0, 0);
+            // ctx.lineTo(200, 100);
+            // ctx.stroke();
+            
+            // var chart = new Chart(ctx, {
+            //     // The type of chart we want to create
+            //     type: 'line',
+
+            //     // The data for our dataset
+            //     data: {
+            //         labels: ["January", "February", "March", "April", "May", "June", "July"],
+            //         datasets: [{
+            //             label: "My First dataset",
+            //             backgroundColor: 'rgb(255, 99, 132)',
+            //             borderColor: 'rgb(255, 99, 132)',
+            //             data: [0, 10, 5, 2, 20, 30, 45],
+            //         }]
+            //     },
+
+            //     // Configuration options go here
+            //     options: {}
+            // });
+
             $.each(data,function(index,value){
                 // console.log(index);
                 // console.log(value["description"]);
@@ -288,9 +350,9 @@ $(document).ready(function () {
                 // console.log(value["symptoms"]);
                 // console.log(value["testType"]);
                 console.log(value);
-                $.each(value["ePrescriptionID"],function (index,value) {
-                    $("#patientHistoryDispDiv").append("<div> Prescription ID is : "+value+"</div>");
-                });
+                // $.each(value["ePrescriptionID"],function (index,value) {
+                $("#patientHistoryDispDiv").append("<div> Prescription ID is : "+value["ePrescriptionID"]+"</div>");
+                // });
                 $.each(value["symptoms"],function (index,value) {
                     $("#patientHistoryDispDiv").append("<div> Symptoms are : "+value+"</div>");
                 });
@@ -303,7 +365,7 @@ $(document).ready(function () {
                 $.each(value["description"],function (index,value) {
                     $("#patientHistoryDispDiv").append("<div> Description of Lab Test is : "+value+"</div>");
                 });
-                
+
             });
         })
         .fail(function(err) {
