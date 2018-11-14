@@ -2,7 +2,7 @@ from hawkeye import app
 # from hawkeye.forms import SignupForm 
 
 from hawkeye import models 
-from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify
+from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify, Response
 from werkzeug import secure_filename
 from flask import send_from_directory
 import os
@@ -116,8 +116,14 @@ def eprescription():
 
 @app.route("/logout")
 def logout():
-    if not session.get(session.get("accType")+"LoggedIn"):
+    try:
+        res = session.get(session.get("accType")+"LoggedIn")
+    except Exception as e:
+        res = None
+        pass
+    if not res:
         return redirect(url_for("login"),302)
+    
     session[session.get("accType")+"LoggedIn"] = False
     session["accType"] = None
     session["currentEmail"] = None
@@ -332,7 +338,7 @@ def patientCalendarReminderUpdate():
     patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
     res = models.patientCalendarReminderUpdate(patientID)
     return jsonify(res)
-
+    
 @app.route("/patientDoctorAppointment",methods=["GET","POST"])
 def patientDoctorAppointment():
     if(request.method=="GET"): #GET all appointment
@@ -341,7 +347,74 @@ def patientDoctorAppointment():
         return jsonify(res)
 
     elif(request.method=="POST"):#POST a new appointment
-        patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
-        doctorID = request.form["doctorID"]
-        res = models.patientDoctorAppointment(patientID,doctorID,"POST")
+        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        payload = request.get_json() #Converts incoming JSON into Python Dictionary
+        print("--------------------------------")
+        print(payload)
+        res = models.patientDoctorAppointment(patientID,payload,"POST")
         return jsonify(res)
+
+@app.route("/commonSearch",methods=["GET"])
+def commonSearch():
+    inpText = request.args.get('inpText', "", type=str)
+    resType = request.args.get('resType', "", type=str)
+    # print(inpText,resType)
+    res = models.getDetailsByName(inpText,resType)
+    return jsonify(res)
+
+@app.route("/patientLabRequest",methods=["GET","POST"])
+def patientLabRequest():
+    if (request.method == "GET"): #GET all appointments
+        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        res = models.patientLabRequest(patientID,None,"GET")
+        return jsonify(res)
+
+    elif(request.method=="POST"):#POST a new appointment
+        labID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        payload = request.get_json() #Converts incoming JSON into Python Dictionary
+        print("--------------------------------")
+        print(payload)
+        res = models.patientLabRequest(labID,payload,"POST")
+        return jsonify(res)
+
+@app.route("/patientMedicineRequest",methods=["GET","POST"])
+def patientMedicineRequest():
+    if(request.method=="GET"): #GET all requests
+        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        res = models.patientMedicineRequest(patientID,None,"GET") #None is no payload
+        return jsonify(res)
+
+    elif(request.method=="POST"):#POST a new request
+        labID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        payload = request.get_json() #Converts incoming JSON into Python Dictionary
+        print("--------------------------------")
+        print(payload)
+        res = models.patientMedicineRequest(labID,payload,"POST")
+        return jsonify(res)
+
+@app.route("/getAvailableTimeSlots",methods=["GET"])
+def getAvailableTimeSlots():
+    doctorID = request.args.get("doctorID", "", type=str)
+    inpDate = request.args.get("inpDate", "", type=str)
+    res = models.getAvailableTimeSlots(doctorID,inpDate)
+    return jsonify(res)
+
+@app.route("/patientFetchPrescriptions",methods=["GET"])
+def patientFetchPrescriptions():
+    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    res = models.patientFetchPrescriptions(patientID)
+    return jsonify(res)
+
+
+@app.route("/patientLabResponse",methods=["GET"])
+def patientLabResponse():
+    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    res = models.patientLabResponse(patientID)
+    return jsonify(res)
+
+@app.route("/patientMedicineResponse",methods=["GET"])
+def patientMedicineResponse():
+    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    res = models.patientMedicineResponse(patientID)
+    return jsonify(res)
+
