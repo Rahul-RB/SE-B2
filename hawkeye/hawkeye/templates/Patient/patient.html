@@ -2,19 +2,16 @@
 
 {% block customCSS %}
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href= {{ url_for("static",filename="css/Patient/patient.css") }}>
-    <!-- jQuery Timeline -->
-    <link href={{ url_for("static",filename="css/Patient/JqueryTimeline/timeline.min.css", ver="1.0.5") }} rel="stylesheet">
-
-    <!-- jQuery Timepicker -->
-    <link href={{ url_for("static",filename="css/Patient/JqueryTimepicker/jquery.timepicker.min.css") }} rel="stylesheet">
-
+    <link rel="stylesheet" href = {{ url_for("static",filename="css/Patient/patient.css") }}>
+    <!-- Full Calendar -->
+    <link rel='stylesheet' href = {{ url_for("static",filename="css/Patient/fullcalendar/fullcalendar.min.css") }} />
+    
 {% endblock %}
 
 {% block customContent %}
     <div class="container-fluid">
         <div class="row" id="welcomeDiv">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-left: 10px">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-left: 10px" id="welcomeDivTitle">
                 Welcome back {{ user }}
             </div>
         </div>
@@ -42,14 +39,21 @@
 
                         <div id="basic" class="popupWrapperDiv">
                             <div class="container-fluid">
+                                <div id="labBookMessage">
+                                    
+                                </div>
                                 <div class="row justify-content-center">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 popupDiv">
                                         <div class="d-flex flex-row justify-content-around"> 
-                                            <input type="text" name="searchTextBox" class="searchTextBox" id="popupLabSearch" placeholder="Search for labs">
+                                            <input type="text" name="popupLabSearch" class="popupSearchTextBox" id="popupLabSearch" placeholder="Search for labs"> 
+                                            <input type="text" class="selectedSearchID" id="selectedLabID" hidden>
                                             <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
                                         </div>
+                                        <div class="searchTextBoxResults" id="popupLabSearchResults">
+                                            
+                                        </div>
                                         <div class="dropdown show">
-                                            <a class="btn btn-block noRadiusBtn dropdown-toggle" href="#" role="button" id="dropdownMenuLinkLabPopup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <a class="btn btn-block noRadiusBtn dropdown-toggle popupDropdown" href="#" role="button" id="dropdownMenuLinkLabPopup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Choose a Lab Document
                                             </a>
 
@@ -59,18 +63,16 @@
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
                                         </div>
-                                        <div class="d-flex flex-row justify-content-around"> 
-                                            <input id="doctorDateScroll" type="date" class="form-control noRadiusBtn" placeholder="Pick a date">
-                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input noRadiusBtn" placeholder="Pick a time" style="margin-left: 10px;">
-                                        </div>
-
+<!--                                         <div class="d-flex flex-row justify-content-around"> 
+                                            <input type="date" class="form-control noRadiusBtn" id="popupLabDate" placeholder="Pick a date">
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>                            
                             <div class="container-fluid">
                                 <div class="row justify-content-center">
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-9" style="padding: 0px 0px 0px 0px;">
-                                        <button class="btn btn-success btn-block popupFinalBtn noRadiusBtn">Book</button>
+                                        <button class="btn btn-success btn-block popupFinalBtn noRadiusBtn" id="labBookBtn">Book</button>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-3 col-3" style="padding-right: 0px;">
                                         <button class="basic_close btn btn-danger popupCloseBtn noRadiusBtn float-right">Close</button>
@@ -82,15 +84,22 @@
                         <!-- Buy Medicines -->
 
                         <div id="basic2" class="popupWrapperDiv">
-                            <div class="container-fluid">
+                                <div id="labBookMessage">
+                                    
+                                </div>
+                                <div class="container-fluid">
                                 <div class="row justify-content-center">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 popupDiv">
                                         <div class="d-flex flex-row justify-content-around"> 
-                                            <input type="text" name="searchTextBox" class="searchTextBox" id="popupMedicineSearch" placeholder="Search for pharmacies">
+                                            <input type="text" name="popupMedicineSearch" class="popupSearchTextBox" id="popupMedicineSearch" placeholder="Search for pharmacies">
+                                            <input type="text" class="selectedSearchID" id="selectedMedicineID" hidden>
                                             <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
                                         </div>
+                                        <div class="searchTextBoxResults" id="popupMedicineSearchResults">
+                                            
+                                        </div>                                        
                                         <div class="dropdown show">
-                                            <a class="btn btn-block noRadiusBtn dropdown-toggle" href="#" role="button" id="dropdownMenuLinkPrescriptionPopup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <a class="btn btn-block noRadiusBtn dropdown-toggle popupDropdown" href="#" role="button" id="dropdownMenuLinkPrescriptionPopup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Choose a prescription
                                             </a>
 
@@ -100,17 +109,16 @@
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
                                         </div>
-                                        <div class="d-flex flex-row justify-content-around"> 
-                                            <input id="doctorDateScroll" type="date" class="form-control noRadiusBtn" placeholder="Pick a date">
-                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input noRadiusBtn" placeholder="Pick a time" style="margin-left: 10px;">
-                                        </div>
+<!--                                         <div class="d-flex flex-row justify-content-around"> 
+                                            <input type="date" class="form-control noRadiusBtn" id="popupMedicineDate" placeholder="Pick a date">
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>                            
                             <div class="container-fluid">
                                 <div class="row justify-content-center">
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-9" style="padding: 0px 0px 0px 0px;">
-                                        <button class="btn btn-success btn-block popupFinalBtn noRadiusBtn">Book</button>
+                                        <button class="btn btn-success btn-block popupFinalBtn noRadiusBtn" id="medicineBookBtn">Book</button>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-3 col-3" style="padding-right: 0px;">
                                         <button class="basic2_close btn btn-danger popupCloseBtn noRadiusBtn float-right">Close</button>
@@ -123,17 +131,26 @@
 
                         <div id="basic3" class="popupWrapperDiv">
                             <div class="container-fluid">
+                                <div id="doctorBookMessage">
+                                    
+                                </div>
                                 <div class="row justify-content-center">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 popupDiv">
                                         
                                         <div class="d-flex flex-row justify-content-around"> 
-                                            <input type="text" name="searchTextBox" class="searchTextBox" id="popupDoctorSearch" placeholder="Search for doctors">
+                                            <input type="text" name="popupDoctorSearch" class="popupSearchTextBox" id="popupDoctorSearch" placeholder="Search for doctors">
+                                            <input type="text" class="selectedSearchID" id="selectedDoctorID" hidden>
                                             <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
                                         </div>
-
+                                        <div class="searchTextBoxResults" id="popupDoctorSearchResults">
+                                            
+                                        </div>
                                         <div class="d-flex flex-row justify-content-around"> 
-                                            <input id="doctorDateScroll" type="date" class="form-control noRadiusBtn" placeholder="Pick a date">
-                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input noRadiusBtn" placeholder="Pick a time" style="margin-left: 10px;">
+                                            <input type="date" class="form-control noRadiusBtn" id="popupDoctorDate" placeholder="Pick a date" >
+                                            <!-- <input type="text" class="form-control noRadiusBtn timeScroller" id="popupDoctorTime" placeholder="Pick a time" style="margin-left: 10px;" > -->
+                                            <select class="form-control noRadiusBtn timeScroller" id="popupDoctorTime" placeholder="Pick a time" style="margin-left: 10px;">
+                                                <option value="" disabled selected>Select a time</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -142,7 +159,7 @@
                             <div class="container-fluid">
                                 <div class="row justify-content-center">
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-9" style="padding: 0px 0px 0px 0px;">
-                                        <button class="btn btn-success btn-block popupFinalBtn noRadiusBtn">Book</button>
+                                        <button class="btn btn-success btn-block popupFinalBtn noRadiusBtn" id="doctorApptBookBtn">Book</button>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-3 col-3" style="padding-right: 0px;">
                                         <button class="basic3_close btn btn-danger popupCloseBtn noRadiusBtn float-right">Close</button>
@@ -182,13 +199,13 @@
                             <div class="container-fluid tab-pane fade show active" id="doctorReminderOptions">
                                 <div class="row">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 input-group">
-                                        <input type="text" name="searchTextBox" class="searchTextBox" placeholder="Search for doctors">
+                                        <input type="text" name="reminderDoctorSearch" id="docReminderSearchTextBox" class="reminderSearchTextBox" placeholder="Search for doctors">
                                         <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
                                     </div>
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-top: 5px;">
                                         <div class="d-flex flex-row justify-content-around"> 
                                             <input id="doctorDateScroll" type="date" class="form-control noRadiusBtn" placeholder="Pick a date">
-                                            <input id="doctorTimeScroll" type="text" class="form-control time ui-timepicker-input noRadiusBtn" placeholder="Pick a time" style="margin-left: 10px;">
+                                            <input type="text" class="form-control noRadiusBtn timeScroller" placeholder="Pick a time" style="margin-left: 10px;">
                                         </div>
 
                                         <div class="d-flex flex-row justify-content-around" style="margin-top: 5px;"> 
@@ -226,40 +243,15 @@
                     </div>
                 </div>
                 <div class="topRowWrapper col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12" id = "myTimelineCol">
-                    <div id="myTimeline">
-                        <ul class="container-fluid timeline-events">
-                            <li>Not allowed event definition</li>
-                            <li data-timeline-node="{ start:'2017-5-29 8:00',end:'2017-5-29 10:30',content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis luctus tortor nec bibendum malesuada. Etiam sed libero cursus, placerat est at, fermentum quam. In sed fringilla mauris. Fusce auctor turpis ac imperdiet porttitor. Duis vel pharetra magna, ut mollis libero. Etiam cursus in leo et viverra. Praesent egestas dui a magna eleifend, id elementum felis maximus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum sed elit gravida, euismod nunc id, ullamcorper tellus. Morbi elementum urna faucibus tempor lacinia. Quisque pharetra purus at risus tempor hendrerit. Nam dui justo, molestie quis tincidunt sit amet, eleifend porttitor mauris. Maecenas sit amet ex vitae mi finibus pharetra. Donec vulputate leo eu vestibulum gravida. Ut in facilisis dolor, vitae iaculis dui.' }">Event Label</li>
-                            <li data-timeline-node="{ start:'2017-5-29 10:30',end:'2017-5-29 12:15',bgColor:'#a3d6cc',content:'<p>In this way, you can include <em>HTML tags</em> in the event body.<br><i class=\'fa fa-ellipsis-v\'></i><br><i class=\'fa fa-ellipsis-v\'></i></p>' }">HTML tags is included in the event content</li>
-                            <li data-timeline-node="{ start:'2017-5-29 13:00',content:'For the bar type on the timeline, event blocks are displayed in minimum units unless you specify an event end time.' }">Event with undefined of end date</li>
-                            <li data-timeline-node="{ end:'2017-5-29 15:00',bgColor:'#e6eb94',content:'In this case, no displayed.' }">Event with undefined of start date</li>
-                            <li data-timeline-node="{ start:'2017-5-29 12:45',end:'2017-5-29 16:00',row:2,bgColor:'#89c997',color:'#ffffff',callback:'$(\'#myModal\').modal()',content:'Show modal window via bootstrap' }">Event having callback</li>
-                            <li data-timeline-node="{ start:'2017-5-29 16:03',end:'2017-5-29 19:05',row:3,bgColor:'#a1d8e6',color:'#008db7',extend:{toggle:'popover',placement:'bottom',content:'It is also possible to bind external custom events.'} }">Show popover via bootstrap</li>
-                            <li data-timeline-node="{ start:'2017-5-28 23:00',end:'2017-5-29 5:15',row:3,extend:{'post_id':13,'permalink':'https://www.google.com/'} }">Event having extended params</li>
-                            <li data-timeline-node="{ start:'2017-5-29 5:40',end:'2017-5-29 8:20',row:3,bgColor:'#ef857d',color:'#fff',content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis luctus tortor nec bibendum malesuada. Etiam sed libero cursus, placerat est at, fermentum quam. In sed fringilla mauris. Fusce auctor turpis ac imperdiet porttitor.' }">Lorem Ipsum</li>
-                            <li data-timeline-node="{ start:'2017-5-29 10:00',end:'2017-5-29 19:00',row:4,bdColor:'#942343' }">Event having image for point type</li>
-                            <li data-timeline-node="{ start:'2017-4-1 20:00',end:'2017-5-29 8:30',row:5 }">Long event from the past over range</li>
-                            <li data-timeline-node="{ start:'2017-5-29 19:00',end:'2017-6-14 1:00',row:5,bgColor:'#fbdac8' }">Long event until the future over range</li>
-                        </ul>
+                    <div id="calendar" style="padding-top: 10px;padding-bottom: 10px">
+                        
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-12" hidden>
-                  <div class="card mb-3">
-                    <div class="card-block">
-                      <h5><i class="fa fa-cog"></i> Timeline Configuration</h5>
-                      <div class="card-text">
-                        configuration content
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /.card -->
-                </div>
-                <!-- /.col -->
             </div>
             <div class="row" style="margin-top: 15px;">
                 <!-- View previous prescriptions div -->
                 <!-- provide options to select only a few prescriptions -->
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                     <div class="container-fluid">
                         <div class="row" id="prescriptionsViewDivTitle">
                             <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-12 topRowWrapper" id="prescriptionsViewDivTitleDiv">
@@ -313,12 +305,85 @@
                         </div>
                     </div>
                 </div>
-                <!-- View lab-tests -- with result and pending and unsent ones div -->
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 topRowWrapper">
-                    <div class="container-fluid">
-                        <div class="row" id="labTestPendingTitle">
+                <!-- View Medicine requests and responses -->
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                    <div class="container-fluid topRowWrapper">
+                        <div class="row" id="medRespPendingTitle">
                             <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
-                                Pending Lab Tests
+                                Medicine Responses
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                                <div class="dropdown">
+                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuMedRespList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Sort By
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuMedRespList">
+                                        <a class="dropdown-item" href="#">Date ascending</a>
+                                        <a class="dropdown-item" href="#">Date descending</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="list-group list-group-flush" id="medRespDiv">
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Receipt 1.
+                                    </div>
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Receipt 2.
+                                    </div>
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Receipt 3.
+                                    </div>                              
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Receipt 4.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="medReqTitle">
+                            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
+                                Medicine Requests
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                                <div class="dropdown">
+                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuMedReqList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Sort By
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuMedReqList">
+                                        <a class="dropdown-item" href="#">Date ascending</a>
+                                        <a class="dropdown-item" href="#">Date descending</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="list-group list-group-flush" id="medReqDiv">
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Order 1.
+                                    </div>
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Order 2.
+                                    </div>
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Order 3.
+                                    </div>                              
+                                    <div class="individualRowTwoItem list-group-item">
+                                        Order 4.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+                <!-- View lab-tests -- with result and pending and unsent ones div -->
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                    <div class="container-fluid topRowWrapper">
+                        <div class="row" id="labRespTitle">
+                            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
+                                Lab Test Responses
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                                 <div class="dropdown">
@@ -334,32 +399,32 @@
                         </div>
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="list-group list-group-flush" id="labTestPendingDiv">
+                                <div class="list-group list-group-flush" id="labRespDiv">
                                     <div class="individualRowTwoItem list-group-item">
-                                        Pending Test 1.
+                                        Report 1.
                                     </div>
                                     <div class="individualRowTwoItem list-group-item">
-                                        Pending Test 2.
+                                        Report 2.
                                     </div>
                                     <div class="individualRowTwoItem list-group-item">
-                                        Pending Test 3.
+                                        Report 3.
                                     </div>                              
                                     <div class="individualRowTwoItem list-group-item">
-                                        Pending Test 4.
+                                        Report 4.
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row" id="labTestDoneTitle">
+                        <div class="row" id="labReqTitle">
                             <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
-                                Previous Lab Tests
+                                Unused Lab Test Requests 
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                                 <div class="dropdown">
-                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuPDoneLabTestist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuDoneLabReqList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Sort By
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuDoneLabTestList">
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuDoneLabReqList">
                                         <a class="dropdown-item" href="#">Date ascending</a>
                                         <a class="dropdown-item" href="#">Date descending</a>
                                     </div>
@@ -368,18 +433,18 @@
                         </div>
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="list-group list-group-flush" id="labTestPendingDiv">
+                                <div class="list-group list-group-flush" id="labReqDiv">
                                     <div class="individualRowTwoItem list-group-item">
-                                        Completed Test 1.
+                                        Document 1.
                                     </div>
                                     <div class="individualRowTwoItem list-group-item">
-                                        Completed Test 2.
+                                        Document 2.
                                     </div>
                                     <div class="individualRowTwoItem list-group-item">
-                                        Completed Test 3.
+                                        Document 3.
                                     </div>                              
                                     <div class="individualRowTwoItem list-group-item">
-                                        Completed Test 4.
+                                        Document 4.
                                     </div>
                                 </div>
                             </div>
@@ -389,35 +454,37 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="myModal">
-      <div class="modal-dialog" role="document">
+
+<div class="modal fade" id="commonModal" tabindex="-1" role="dialog" aria-labelledby="commonModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="timeline-event-view"></div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
         </div>
-      </div>
     </div>
+</div>
 
 {% endblock %}
 
-
 {% block customJS %}
+    <!-- MomentJS - FullCalendar -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script> -->
+    <script src= {{ url_for("static",filename="vendor/moment/moment.js") }}></script>
     
-    <!-- jQuery Timeline -->
-    <script src= {{ url_for("static",filename="js/Patient/JqueryTimeline/timeline.min.js", ver="1.0.5") }}></script>
-    
-    <!-- jQuery Timepicker -->
-    <script src= {{ url_for("static",filename="js/Patient/JqueryTimepicker/jquery.timepicker.min.js") }}></script>
+    <!-- FullCalendar JS -->
+    <script src= {{ url_for("static",filename="js/Patient/fullcalendar/fullcalendar.min.js") }}></script>
+
     
     <!-- Include jQuery Popup Overlay -->
     <script src= {{ url_for("static",filename="js/Patient/jquery.popupoverlay.js") }}></script>
