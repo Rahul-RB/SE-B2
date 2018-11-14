@@ -17,7 +17,7 @@ def loginCheck(email,password,acctType):
     data = cursor.fetchall()
 
     # mysql.get_db().commit()
-    data = cursor.fetchall()
+    # data = cursor.fetchall()
     cursor.close()
 
     conn.close()

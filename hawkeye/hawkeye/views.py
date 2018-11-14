@@ -374,7 +374,7 @@ def patientDoctorAppointment():
         return jsonify(res)
 
     elif(request.method=="POST"):#POST a new appointment
-        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
         payload = request.get_json() #Converts incoming JSON into Python Dictionary
         print("--------------------------------")
         print(payload)
@@ -392,12 +392,12 @@ def commonSearch():
 @app.route("/patientLabRequest",methods=["GET","POST"])
 def patientLabRequest():
     if (request.method == "GET"): #GET all appointments
-        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
         res = models.patientLabRequest(patientID,None,"GET")
         return jsonify(res)
 
     elif(request.method=="POST"):#POST a new appointment
-        labID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        labID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
         payload = request.get_json() #Converts incoming JSON into Python Dictionary
         print("--------------------------------")
         print(payload)
@@ -407,12 +407,12 @@ def patientLabRequest():
 @app.route("/patientMedicineRequest",methods=["GET","POST"])
 def patientMedicineRequest():
     if(request.method=="GET"): #GET all requests
-        patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
         res = models.patientMedicineRequest(patientID,None,"GET") #None is no payload
         return jsonify(res)
 
     elif(request.method=="POST"):#POST a new request
-        labID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+        labID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
         payload = request.get_json() #Converts incoming JSON into Python Dictionary
         print("--------------------------------")
         print(payload)
@@ -428,19 +428,19 @@ def getAvailableTimeSlots():
 
 @app.route("/patientFetchPrescriptions",methods=["GET"])
 def patientFetchPrescriptions():
-    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
     res = models.patientFetchPrescriptions(patientID)
     return jsonify(res)
 
 
 @app.route("/patientLabResponse",methods=["GET"])
 def patientLabResponse():
-    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
     res = models.patientLabResponse(patientID)
     return jsonify(res)
 
 @app.route("/patientMedicineResponse",methods=["GET"])
 def patientMedicineResponse():
-    patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
+    patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
     res = models.patientMedicineResponse(patientID)
     return jsonify(res)
