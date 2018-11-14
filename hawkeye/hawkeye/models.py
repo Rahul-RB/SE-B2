@@ -7,14 +7,15 @@ import matplotlib.pyplot as plt
 
 # conn = mysql.connect()
 
-
-
 def loginCheck(email,password,acctType): 
     query = "SELECT password FROM {0}Login WHERE email='{1}'".format(acctType,email)   
     
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
     cursor.execute(query)
+    # conn.commit()
+    data = cursor.fetchall()
+
     # mysql.get_db().commit()
     data = cursor.fetchall()
     cursor.close()
@@ -32,6 +33,25 @@ def loginCheck(email,password,acctType):
 def myconverter(o):
     if isinstance(o, datetime.datetime):
         return o.__str__()
+
+def firstAppointmentUpdate(email):
+    conn = mysql.connect()
+    print(mysql)
+    #conn = mysql.connection
+    query= "SELECT patientID, dateStamp, pickATime from DoctorAppointments where addedToDoctorCalendar=1 and doctorID in (SELECT doctorID from DoctorDetails where email='" + email + "') for update"
+    cursor =conn.cursor()
+    cursor.execute(query)
+    data = cursor.fetchall()
+    # print("data is ",data)
+    if(data != ''):
+        somedict = {"patientID" : [x[0] for x in data],
+                    "start_datetime" : [datetime.datetime.combine(x[1],(datetime.datetime.min + x[2]).time()) for x in data],
+                    "end_datetime" : [datetime.datetime.combine(x[1],(datetime.datetime.min + x[2]+datetime.timedelta(minutes=30)).time()) for x in data]
+                    }
+        print(somedict)
+        return json.dumps(somedict,default=myconverter)
+    return {}
+
 
 def checkForAppointments(email):
     # conn = mysql.connect()
@@ -230,6 +250,151 @@ def plotBarChart(monthsList):
     plt.show()
 
 
+def searchPatientHistory(patientID):
+    conn = mysql.connect()
+    conn.autocommit = False
+    query = "SELECT ePrescriptionID, doctorID from EPrescription where patientID='" + patientID + "'"
+    cursor =conn.cursor()
+    cursor.execute(query)
+    data = cursor.fetchall()
+    global_dict=dict(dict())
+    if(data != ''):
+        somedict = {"ePrescriptionID": [x[0] for x in data],
+                    "doctorID": [x[1] for x in data]
+                    }
+        print("somedict of search is ", somedict)
+        for i in range(len(somedict["ePrescriptionID"])):
+            json_data = {}
+            json_data["ePrescriptionID"] = somedict["ePrescriptionID"][i]
+            query1 = "SELECT symptoms, medicineSuggestion from MedicineDetails where ePrescriptionID='" + str(somedict["ePrescriptionID"][i]) + "'"
+            cursor.execute(query1)
+            data = cursor.fetchall()
+            json_data["symptoms"] = []
+            json_data["medicineSuggestion"] = []
+            for j in range(len(data)):
+                json_data["symptoms"].append(data[j][0])
+                json_data["medicineSuggestion"].append(data[j][1])
+
+            query2 = "SELECT testType, description FROM ELabRequestDocument where ePrescriptionID='" + str(somedict["ePrescriptionID"][i]) + "'"
+            cursor.execute(query2)
+            data2 = cursor.fetchall()
+            json_data["testType"] = []
+            json_data["description"] = []
+            for j in range(len(data2)):
+                json_data["testType"].append(data2[j][0])
+                json_data["description"].append(data2[j][1])
+            print(json_data)
+            print(type(json_data))
+            global_dict[i] = json_data
+            # print(data2)
+        print("global_dict is ", global_dict)
+
+        return global_dict 
+
+
+def checkDoctorsHistory(doctorsEmail,searchBy):
+    conn = mysql.connect()
+    conn.autocommit = False
+    # if searchBy=="month":
+    splitSearchBy = searchBy.split("-")
+    splitByYear = splitSearchBy[0]
+    splitByMonth = splitSearchBy[1]
+    now = datetime.datetime.now()
+    cur_month = str(now.month)
+    cur_day = str(now.day)
+    countPatientsMonth=0
+    countPatientsYear=0
+    countPatientsToday=0
+    query = "SELECT doctorID from DoctorDetails where email='" + doctorsEmail + "'"
+    cursor =conn.cursor()
+    cursor.execute(query)
+    doctorIDquery = cursor.fetchall()
+    doctorID = str(doctorIDquery[0][0])
+    query2 = "SELECT ePrescriptionID from EPrescription where doctorID='" + doctorID + "'"
+    cursor.execute(query2)
+    ePrescriptionquery = cursor.fetchall()
+    for i in range(len(ePrescriptionquery)):
+        monthsSplitList = ePrescriptionquery[i][0].split("-")
+        if(monthsSplitList[1] == splitByMonth):
+            countPatientsMonth += 1
+        if(monthsSplitList[2] == cur_day):
+            countPatientsToday += 1
+        if(monthsSplitList[0] == splitByYear):
+            countPatientsYear += 1
+
+    results = computeDaysMonthwise(ePrescriptionquery,splitByYear)
+    # plotBarChart(results)
+    print("countPatientsToday is ", countPatientsToday)
+    print("countPatientsMonth is ", countPatientsMonth)
+    print("countPatientsYear is ", countPatientsYear)
+    return {"countPatientsYear" : countPatientsYear,"countPatientsToday" : countPatientsToday, "countPatientsMonth": countPatientsMonth, "monthWiseDataThatYear": results}
+        # print("eprescriptions are ", ePrescriptionquery)
+    # elif searchBy=="year":
+    #     now = datetime.datetime.now()
+    #     cur_year = str(now.year)
+    #     cur_day = str(now.day)
+    #     countPatientsMonth=0
+    #     countPatientsToday=0
+    #     query = "SELECT doctorID from DoctorDetails where email='" + doctorsEmail + "'"
+    #     cursor =conn.cursor()
+    #     cursor.execute(query)
+    #     doctorIDquery = cursor.fetchall()
+    #     doctorID = str(doctorIDquery[0][0])
+    #     query2 = "SELECT ePrescriptionID from EPrescription where doctorID='" + doctorID + "'"
+    #     cursor.execute(query2)
+    #     ePrescriptionquery = cursor.fetchall()
+    #     for i in range(len(ePrescriptionquery)):
+    #         monthsSplitList = ePrescriptionquery[i][0].split("-")
+    #         if(monthsSplitList[1] == cur_year):
+    #             countPatientsMonth += 1
+    #         if(monthsSplitList[2] == cur_day):
+    #             countPatientsToday += 1
+    #     print("countPatientsToday is ", countPatientsToday)
+    #     print("countPatientsMonth is ", countPatientsMonth)
+    #     return {"countPatientsToday" : countPatientsToday, "countPatientsMonth": countPatientsMonth}
+def computeDaysMonthwise(ePrescriptionquery, splitByYear):
+    print("eprescription quer is ", ePrescriptionquery)
+    print("splitByYear is ", splitByYear)
+
+    monthsList = [0 for i in range(12)]
+    print("monthslist before is is ", monthsList)
+
+    for i in range(len(ePrescriptionquery)):
+        monthsSplitList = ePrescriptionquery[i][0].split("-")
+        if(monthsSplitList[1] == '1' and monthsSplitList[0] == splitByYear):
+            monthsList[0] += 1
+        elif(monthsSplitList[1] == '2' and monthsSplitList[0] == splitByYear):
+            monthsList[1] += 1
+        elif(monthsSplitList[1] == '3' and monthsSplitList[0] == splitByYear):
+            monthsList[2] += 1
+        elif(monthsSplitList[1] == '4' and monthsSplitList[0] == splitByYear):
+            monthsList[3] += 1
+        elif(monthsSplitList[1] == '5' and monthsSplitList[0] == splitByYear):
+            monthsList[4] += 1
+        elif(monthsSplitList[1] == '6' and monthsSplitList[0] == splitByYear):
+            monthsList[5] += 1
+        elif(monthsSplitList[1] == '7' and monthsSplitList[0] == splitByYear):
+            monthsList[6] += 1
+        elif(monthsSplitList[1] == '8' and monthsSplitList[0] == splitByYear):
+            monthsList[7] += 1
+        elif(monthsSplitList[1] == '9' and monthsSplitList[0] == splitByYear):
+            monthsList[8] += 1
+        elif(monthsSplitList[1] == '10' and monthsSplitList[0] == splitByYear):
+            monthsList[9] += 1
+        elif(monthsSplitList[1] == '11' and monthsSplitList[0] == splitByYear):
+            monthsList[10] += 1
+        elif(monthsSplitList[1] == '12' and monthsSplitList[0] == splitByYear):
+            monthsList[11] += 1
+    print("monthslist is ", monthsList)
+    return monthsList
+            
+def plotBarChart(monthsList):
+    months = ("Jan","Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug","Sept", "Oct", "Nov", "Dec")
+    y_pos = np.arange(len(months))
+    plt.bar(y_pos,monthsList,align='center',alpha=0.5)
+    plt.xticks(y_pos,months)
+    plt.ylabel('Number of Patients seen')
+    plt.show()
 
     
 def isExistingUser(ID,acctType):
@@ -454,7 +619,6 @@ def getIDByEmail(email,acctType):
 
     return data[0][0]
 
-    symptoms,medicineSuggestion,timeToTake,startDate,endDate,
 
 def patientMedReminderUpdate(patientID):
     res = {
@@ -786,4 +950,3 @@ def patientMedicineResponse(ID):
     # for i,result in enumerate(data1):
 
     return res
-

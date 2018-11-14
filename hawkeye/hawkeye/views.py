@@ -240,6 +240,14 @@ def patient():
         return redirect(url_for("login"),302)
     return render_template("Patient/patient.html",title="Patient",user=models.getUsernameByEmail(session.get("currentEmail"),session.get("accType")), userLoggedIn=True)
 
+@app.route("/ctime/firstupdate",methods=['GET'])
+def ctime_firstupdate():
+    result = models.firstAppointmentUpdate(session["currentEmail"])
+    # print("result is: ", result)
+    # print("In ctime:",session["currentEmail"])
+    return jsonify(result=result)
+
+
 @app.route("/ctime",methods=['GET'])
 def ctime():
     result = models.checkForAppointments(session["currentEmail"])
@@ -298,6 +306,73 @@ def labResponse():
     reqid=request.args.get('reqdata')
     email=session["currentEmail"]
     return render_template("Lab/labResponse.html",title="Lab", useremail=email,userid= session["user_id"],labReqData=models.getLabRequestDetails(email,reqid),labPresData= models.getLabPrescriptionDetails(reqid))
+
+    
+@app.route("/searchPatientHistory", methods=["GET","POST"])
+def searchPatientHistory():
+    if(request.method=="GET"):
+        patientID = request.args.get('patientID',"",type=str)
+        # inpText = request.args.get('inpText', "", type=str)
+        print("patientID is ",patientID)
+        res = models.searchPatientHistory(patientID)
+        print("res in views file is ", res)
+        # return render_template("Doctor/searchPatientHistory.html",title="Doctor")
+        return jsonify(res)
+
+@app.route("/checkDoctorsHistory", methods=["GET","POST"])
+def checkDoctorsHistory():
+    if(request.method=="GET"):
+        searchBy = request.args.get('searchBy',"",type=str)
+        print("searchBy is ", searchBy)
+        POST_EMAIL = session["currentEmail"]
+        
+        res = models.checkDoctorsHistory(POST_EMAIL, searchBy)
+
+        return jsonify(res)
+
+def allowed_file(filename):
+   return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/uploader', methods = ['GET', 'POST'])
+def upload_file():
+   if request.method == 'POST':
+      if 'file' not in request.files:
+          return redirect(url_for("lab"))
+      file = request.files['file']
+      if file.filename == '':
+          return redirect( url_for("lab"))
+      if file and allowed_file(file.filename):
+          labRequestId=str(request.form["labReqId"])
+          description=str(request.form["message"])
+          print(labRequestId, description)
+          format = "%Y-%m-%dT%H:%M:%S"
+          now = datetime.datetime.utcnow().strftime(format)
+          filename = now + '_' +str(session["user_id"]) + '_' + file.filename
+          filename = secure_filename(filename)
+          file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+          models.putLabReponse(labRequestId, str(filename), description)
+          return redirect(url_for("lab")) 
+      return redirect( url_for("lab"))
+
+@app.route("/patientCalendarReminderUpdate")
+def patientCalendarReminderUpdate():
+    patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
+    res = models.patientCalendarReminderUpdate(patientID)
+    return jsonify(res)
+
+@app.route("/patientDoctorAppointment",methods=["GET","POST"])
+def patientDoctorAppointment():
+    if(request.method=="GET"): #GET all appointment
+        patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
+        res = models.patientDoctorAppointment(patientID,None,"GET")
+        return jsonify(res)
+
+    elif(request.method=="POST"):#POST a new appointment
+        patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
+        doctorID = request.form["doctorID"]
+        res = models.patientDoctorAppointment(patientID,doctorID,"POST")
+        return jsonify(res)
+
    
 @app.route("/searchPatientHistory", methods=["GET","POST"])
 def searchPatientHistory():
@@ -429,4 +504,3 @@ def patientMedicineResponse():
     patientID = models.getIDByEmail(session.get("accEmail"),session.get("accType"))
     res = models.patientMedicineResponse(patientID)
     return jsonify(res)
-

@@ -79,7 +79,7 @@
         </div>
     </div>
 
-   <!--  <canvas id="barChart" style="height: 100px; width: 150px; border: black 2px solid;"></canvas> -->
+    <!-- <canvas id="barChart" style="height: 100px; width: 150px; border: black 2px solid;"></canvas> -->
 
     <!-- <div class="topnav">
       <a class="active" href="#home">Home</a>
@@ -121,10 +121,22 @@
     </script>
 
     <script type=text/javascript>
+    firstUpdate = false;
+    url = null;
     $(function update() {
-      $.getJSON($SCRIPT_ROOT + '/ctime', {}, function(data) {
-      
-      var obj = jQuery.parseJSON(data.result);
+      if(!firstUpdate){
+        url = '/ctime/firstupdate';
+        firstUpdate = true;
+      }
+      else
+        url = '/ctime';
+      console.log('url' + url);
+
+      $.getJSON($SCRIPT_ROOT + url, {}, function(data) {
+      d = data.result;
+      console.log(d);
+      var obj = jQuery.parseJSON(d);
+      // var obj = jQuery.parseJSON(data.result);
       // $.each(obj, function(key,value) {
       //    var x = key;
       //    // alert(value);
@@ -139,7 +151,6 @@
           $("#ctime").text(data.result);
 
       }
-      
       //$("#array").text(data.array);
       window.setTimeout(update, 60000); // 1 minute update interval
     });
