@@ -29,8 +29,7 @@ $(document).ready(function () {
     /* Do not disturb above lines */
 
 
-    /* Start Adding your javascript here */
-    
+    /* Start Adding your javascript here */    
     function getTodayDate(){
         var today = new Date();
         var dd = today.getDate();

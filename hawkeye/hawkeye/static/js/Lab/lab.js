@@ -70,5 +70,19 @@ $(document).ready(function () {
         };
     })(jQuery);
     /* End Adding your javascript here */
+	
+   	/*function appendTableColumn(table, rowData) {
+  		var lastRow = $('<tr/>').appendTo(table.find('tbody:last'));
+ 	 	$.each(rowData, function(colIndex, c) { 
+      			lastRow.append($('<td/>').text(c));
+  		});
+   
+  		return lastRow;
+		}
+ 
+	$(document).ready(function() {
+   	 var table = makeTable(data);
+    	appendTableColumn(table, ["Calgary", "Ottawa", "Yellowknife"]);
+	});*/
 });
         

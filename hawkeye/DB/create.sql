@@ -1,7 +1,8 @@
-DROP DATABASE Hawkeye;
-CREATE DATABASE Hawkeye;
 
-USE Hawkeye;
+-- DROP DATABASE Hawkeye;
+-- CREATE DATABASE Hawkeye;
+
+-- USE Hawkeye;
 
 CREATE TABLE PatientDetails (
     patientID CHAR(12) ,
@@ -46,30 +47,30 @@ CREATE TABLE PharmacyDetails (
 
 -- What's these tables for?
 
-CREATE TABLE Consultation (
-    patientID CHAR(12),
-    doctorID CHAR(12),
-    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
-    FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID),
-    PRIMARY KEY (patientID ,doctorID)
-);
+-- CREATE TABLE Consultation (
+--     patientID CHAR(12),
+--     doctorID CHAR(12),
+--     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID),
+--     FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID),
+--     PRIMARY KEY (patientID ,doctorID)
+-- );
 
-CREATE TABLE PatientLab (
-    patientID CHAR(12),
-    labID CHAR(12),
-    accessRight TINYINT,
-    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
-    FOREIGN KEY (labID) REFERENCES  LabDetails (labID),
-    PRIMARY KEY (patientID ,labID )
-);
+-- CREATE TABLE PatientLab (
+--     patientID CHAR(12),
+--     labID CHAR(12),
+--     accessRight TINYINT,
+--     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
+--     FOREIGN KEY (labID) REFERENCES  LabDetails (labID),
+--     PRIMARY KEY (patientID ,labID )
+-- );
 
-CREATE TABLE PatientPharmacy (
-    patientID CHAR(12) ,
-    pharmacyID CHAR(12) ,
-    FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
-    FOREIGN KEY (pharmacyID) REFERENCES  PharmacyDetails (pharmacyID),
-    PRIMARY KEY( patientID,pharmacyID )
-);
+-- CREATE TABLE PatientPharmacy (
+--     patientID CHAR(12) ,
+--     pharmacyID CHAR(12) ,
+--     FOREIGN KEY (patientID) REFERENCES  PatientDetails (patientID) ,
+--     FOREIGN KEY (pharmacyID) REFERENCES  PharmacyDetails (pharmacyID),
+--     PRIMARY KEY( patientID,pharmacyID )
+-- );
 
 -- End of question area.
 
@@ -114,7 +115,7 @@ CREATE TABLE EPrescription (
 CREATE TABLE MedicineDetails(
     ePrescriptionID INTEGER,
     symptoms VARCHAR(100),
-    medicineSuggestion VARCHAR(100),
+    medicineSuggestion VARCHAR(100),    
     timeToTake TIME,
     startDate DATE,
     endDate DATE,
