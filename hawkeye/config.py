@@ -17,6 +17,8 @@ class DevelopmentConfig(Config):
     MYSQL_DATABASE_DB = 'HawkeyeWithData'
     MYSQL_DATABASE_HOST = 'localhost'
     CACHE_TYPE = "null"
+    UPLOAD_FOLDER = './uploads'
+    ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'doc'])
 
 class TestingConfig(Config):
     TESTING = True
