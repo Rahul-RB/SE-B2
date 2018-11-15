@@ -766,7 +766,7 @@ def patientFetchPrescriptions(patientID):
     res = {}
     
     for i,result in enumerate(data):
-        res[i] = [result[0],result[1],result[2],result[3],result[4]]
+        res[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3]),str(result[4])]
 
     cursor.close()
     conn.close()
