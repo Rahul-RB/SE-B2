@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block customContent %}
-    <div class="container-fluid">
+        <!-- START EDITING FROM HERE -->
+		<div id="customContent">
+        <div class="container-fluid">
         <div class="row" id="welcomeDiv">
             <div class="col-xl-4 col-lg-4 col-md-12 col-4">
                 Welcome back XYZ
@@ -17,21 +19,20 @@
                 Ph_no:123
             </div>
         </div>
-        <hr class="welcomeHorLine">
-        <div class="container-fluid">
-            <div class="row">
-                <div id="sidebar2" class="col-sm-2 p-t-2 hidden-xs-down">
+        
 
-                    <div class="card card-body">
-                        Updates.
-                    </div>
-                    <div class="card card-body ">
-                        Updates.
-                    </div>
-                    <div class="card card-body">
-                        Updates.
-                    </div>
-                </div>
+                    <hr class="welcomeHorLine">
+							<div class="row">
+							<div class="col-lg-3 col-md-4">
+							<div class="card">
+      
+							<div class="card-body">
+							<h4 class="card-title">Requests</h4>
+							<p class="card-text">Click here to view all the medicine requests</p>
+							<a href="request.html" class="btn btn-primary">Request</a>
+							</div>
+							</div>
+							</div>
 
                 <div class="row">
                     <form class="form-horizontal" action="new.html" method="get" role="form" id="Cent">
@@ -54,9 +55,21 @@
             </div>
         </div>
     </div>
-{% endblock %}
+
+
+
+
+                    <!-- Once you're developing, delete below div -->
+
+
+
+                    <!-- END EDITING HERE -->
+                    
+
+            {% endblock %}
 
 
 {% block customJS %}
 
+    
 {% endblock %}
