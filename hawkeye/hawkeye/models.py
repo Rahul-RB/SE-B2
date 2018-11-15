@@ -259,21 +259,33 @@ def insertNewPrescription(doctorsEmail, patientName, symptoms, medicines, medFre
 
 # START : DEEPIKA'S FUNCTIONS
 def getLabRequests(email):
-    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID FROM ELabRequestDocument a ,LabRequest lr, LabLogin lo, LabDetails ld where lo.email= '"+email+"' and ld.email = lo.email and ld.labid= lr.labid and lr.labRequestDocumentID=a.labRequestDocumentID ;"
+    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID FROM ELabRequestDocument a ,LabRequest lr, LabLogin lo, LabDetails ld where lo.email= '"+email+"' and ld.email = lo.email and ld.labid= lr.labid and lr.labRequestDocumentID=a.labRequestDocumentID and lr.isPending=1;"
+    cursor.execute(query)
+    res=cursor.fetchall()
+    print(res)
+    return (res)
+
+def getLabResponses(email):
+    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID FROM ELabRequestDocument a ,LabRequest lr, LabLogin lo, LabDetails ld where lo.email= '"+email+"' and ld.email = lo.email and ld.labid= lr.labid and lr.labRequestDocumentID=a.labRequestDocumentID and lr.isPending=0;"
     cursor.execute(query)
     res=cursor.fetchall()
     print(res)
     return (res)
 
 def getLabRequestDetails(email, reqid):
-    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID FROM ELabRequestDocument a WHERE a.labRequestDocumentID='"+reqid+"';"
+    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID, a.testType, a.description FROM ELabRequestDocument a, LabRequest lr WHERE a.labRequestDocumentID='"+reqid+"' and a.labRequestDocumentID= lr.labRequestDocumentID and lr.isPending=1;"
     cursor.execute(query)
     res=cursor.fetchall()
     print(res)
     return (res)
 
+
 def getLabPrescriptionDetails(reqid):
-    return True
+    query="SELECT  md.ePrescriptionID, md.symptoms, md.medicineSuggestion, md.timeToTake, md.startDate, md.endDate from MedicineDetails md, ELabRequestDocument elrd where elrd.labRequestDocumentID = "+reqid+ " and elrd. ePrescriptionID = md.ePrescriptionID;"
+    cursor.execute(query)
+    res=cursor.fetchall()
+    print(res)
+    return res
 
 def getLabId(email) :
     query = "SELECT labID FROM LabDetails WHERE email ='"+email+"';"

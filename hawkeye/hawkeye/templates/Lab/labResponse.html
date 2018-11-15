@@ -48,51 +48,21 @@
                         <tr>
                             <th>Symptom</th>
                             <th>Medicine</th>
-                            <th>Morn</th>
-                            <th>Noon</th>
-                            <th>Night</th>
-                            <th>Num</th>
-                            <th>Details</th>
+                            <th>Time</th>
+                            <th>startDate</th>
+                            <th>endDate</th>
                         </tr>
                     </thead>
                     <tbody>
+                    {% for d in labPresData %}
                         <tr>
-                            <td>Cold</td>
-                            <td>Dolo</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>1</td>
-                            <td>3</td>
-                            <td>Continue after 3days only if necessary</td>
-
+                            <td>{{ d[1] }}</td>
+                            <td>{{ d[2] }}</td>
+                            <td>{{ d[3] }}</td>
+                            <td>{{ d[4] }}</td>
+                            <td>{{ d[5] }}</td>
                         </tr>
-                        <tr>
-                            <td>Cold</td>
-                            <td>Dolo</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>1</td>
-                            <td>3</td>
-                            <td>Continue after 3days only if necessary</td>
-                        </tr>
-                        <tr>
-                            <td>Cold</td>
-                            <td>Dolo</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>1</td>
-                            <td>3</td>
-                            <td>Continue after 3days only if necessary</td>
-                        </tr>
-                        <tr>
-                            <td>Cold</td>
-                            <td>Dolo</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>1</td>
-                            <td>3</td>
-                            <td>Continue after 3days only if necessary</td>
-                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -106,21 +76,19 @@
             </div>
             <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
         </div>
+        {% for d in labReqData %}
         <div class="row" id="labreq">
             <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
-            <div class="col-xl-2 col-lg-2 col-md-2 col-4">
-                <span id="paitient_id">Test type: Blood Test </span>
-            </div>
-            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
-            <div class="col-xl-2 col-lg-2 col-md-2 col-4">
-                <span id="doctor"> Description: </span>
-            </div>
-            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
-            <div class="col-xl-2 col-lg-2 col-md-2 col-4">
-                <span id="labreq_id">Additional</span>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-12">
+                <span id="paitient_id">Test type: {{ d[3] }} </span>
             </div>
             <div class="col-xl-2 col-lg-2 col-md-2 "> </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-12">
+                <span id="doctor"> Description: {{ d[4] }} </span>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 "></div>
         </div>
+        {% endfor %}
         <div class="row">
             <div class="col-xl-1 col-lg-1 col-md-1  col-1"> </div>
             <div class="col-xl-10 col-lg-10 col-md-10 col-10">
@@ -158,14 +126,6 @@
                       
                             <input type="text" class="form-control" id="date" placeholder="" readonly>
     
-                    </div>
-                    <div class="col-sm-6 pb-3">
-                        <label for="exampleFirst">Lab Reviewer Name</label>
-                        <input type="text" class="form-control" id="exampleFirst">
-                    </div>
-                    <div class="col-sm-6 pb-3">
-                        <label for="exampleLast">Lab Reviewer ID</label>
-                        <input type="text" class="form-control" id="exampleLast">
                     </div>
                     <div class="col-md-6 pb-3">
                         <label for="exampleFormControlFile1">Example file input</label>

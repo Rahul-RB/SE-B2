@@ -283,7 +283,7 @@ def lab():
     email=session["currentEmail"]
     session["user_id"]= models.getLabId(email)[0][0];
     print(session["user_id"])
-    return render_template("Lab/lab.html",title="Lab", useremail=email,data=models.getLabRequests(email))
+    return render_template("Lab/lab.html",title="Lab", useremail=email,labReqData=models.getLabRequests(email), labResData= models.getLabResponses(email))
 
 @app.route("/labResponse")
 def labResponse():
