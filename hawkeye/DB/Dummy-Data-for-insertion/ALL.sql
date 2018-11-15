@@ -1,8 +1,9 @@
-DROP DATABASE HawkeyeWithData;
+DROP DATABASE IF EXISTS HawkeyeWithData;
 CREATE DATABASE HawkeyeWithData;
 
 USE HawkeyeWithData;
 
+DROP TABLE IF EXISTS PatientDetails; 
 CREATE TABLE PatientDetails (
     patientID CHAR(12) ,
     patientName VARCHAR(20),
@@ -14,6 +15,7 @@ CREATE TABLE PatientDetails (
     PRIMARY KEY (patientID)
 );
 
+DROP TABLE IF EXISTS DoctorDetails; 
 CREATE TABLE DoctorDetails (
     doctorID CHAR(12),
     doctorName VARCHAR(20),
@@ -26,6 +28,7 @@ CREATE TABLE DoctorDetails (
     PRIMARY KEY(doctorID)
 );
 
+DROP TABLE IF EXISTS LabDetails; 
 CREATE TABLE LabDetails (
     labID CHAR(12),
     labName VARCHAR(20),
@@ -35,6 +38,7 @@ CREATE TABLE LabDetails (
     PRIMARY KEY(labID)    
 );
 
+DROP TABLE IF EXISTS PharmacyDetails; 
 CREATE TABLE PharmacyDetails (
     pharmacyID CHAR(12),
     pharmacyName VARCHAR(20),
@@ -46,6 +50,7 @@ CREATE TABLE PharmacyDetails (
 
 -- What's these tables for?
 
+DROP TABLE IF EXISTS Consultation; 
 -- CREATE TABLE Consultation (
 --     patientID CHAR(12),
 --     doctorID CHAR(12),
@@ -54,6 +59,7 @@ CREATE TABLE PharmacyDetails (
 --     PRIMARY KEY (patientID ,doctorID)
 -- );
 
+DROP TABLE IF EXISTS PatientLab; 
 -- CREATE TABLE PatientLab (
 --     patientID CHAR(12),
 --     labID CHAR(12),
@@ -63,6 +69,7 @@ CREATE TABLE PharmacyDetails (
 --     PRIMARY KEY (patientID ,labID )
 -- );
 
+DROP TABLE IF EXISTS PatientPharmacy; 
 -- CREATE TABLE PatientPharmacy (
 --     patientID CHAR(12) ,
 --     pharmacyID CHAR(12) ,
@@ -73,6 +80,7 @@ CREATE TABLE PharmacyDetails (
 
 -- End of question area.
 
+DROP TABLE IF EXISTS PatientLogin; 
 CREATE TABLE PatientLogin (
     email VARCHAR(100),
     password VARCHAR(100),
@@ -80,7 +88,8 @@ CREATE TABLE PatientLogin (
     PRIMARY KEY (email)
 );
 
--- Should be split for "Analysis"
+
+DROP TABLE IF EXISTS GenPatientHistory; -- Should be split for "Analysis"
 CREATE TABLE GenPatientHistory (
     patientID CHAR(12) ,
     bloodGroup CHAR(2),
@@ -92,6 +101,7 @@ CREATE TABLE GenPatientHistory (
     PRIMARY KEY( patientID)
 );
 
+DROP TABLE IF EXISTS DoctorLogin; 
 CREATE TABLE DoctorLogin (
     email VARCHAR(100),
     password VARCHAR(100),
@@ -99,7 +109,8 @@ CREATE TABLE DoctorLogin (
     PRIMARY KEY(email)
 );
 
--- no AUTO_INCREMENT in ePrescriptionID so have to manually enter random number - time is a number, best.
+
+DROP TABLE IF EXISTS EPrescription; -- no AUTO_INCREMENT in ePrescriptionID so have to manually enter random number - time is a number, best.
 CREATE TABLE EPrescription (
     ePrescriptionID INTEGER, 
     patientID CHAR(12) ,
@@ -111,6 +122,7 @@ CREATE TABLE EPrescription (
     PRIMARY KEY(ePrescriptionID ,patientID)
 );
 
+DROP TABLE IF EXISTS MedicineDetails; 
 CREATE TABLE MedicineDetails(
     ePrescriptionID INTEGER,
     symptoms VARCHAR(100),
@@ -121,7 +133,8 @@ CREATE TABLE MedicineDetails(
     FOREIGN KEY (ePrescriptionID) REFERENCES  EPrescription (ePrescriptionID)     
 );
 
- -- No entres requried
+
+DROP TABLE IF EXISTS Prescription;  -- No entres requried
 CREATE TABLE Prescription (
     patientID CHAR(12) NOT NULL ,
     prescriptionID INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -132,7 +145,8 @@ CREATE TABLE Prescription (
 );
  -- No entres requried
 
- -- No entres requried
+
+DROP TABLE IF EXISTS LabRequestDocument;  -- No entres requried
 CREATE TABLE LabRequestDocument(
     labRequestDocumentID INTEGER PRIMARY KEY AUTO_INCREMENT,
 
@@ -147,6 +161,7 @@ CREATE TABLE LabRequestDocument(
 ); 
  -- No entres requried
 
+DROP TABLE IF EXISTS ELabRequestDocument; 
 CREATE TABLE ELabRequestDocument(
     labRequestDocumentID INTEGER PRIMARY KEY AUTO_INCREMENT,
 
@@ -162,6 +177,7 @@ CREATE TABLE ELabRequestDocument(
     FOREIGN KEY (doctorID) REFERENCES  DoctorDetails (doctorID)
 ); 
 
+DROP TABLE IF EXISTS LabRequest; 
 CREATE TABLE LabRequest (
     labRequestDocumentID INTEGER,
     labID CHAR(12),
@@ -172,6 +188,7 @@ CREATE TABLE LabRequest (
     PRIMARY KEY (labRequestDocumentID)
 );
 
+DROP TABLE IF EXISTS LabResponse; 
 CREATE TABLE LabResponse (
     reportID INTEGER PRIMARY KEY AUTO_INCREMENT,
     labRequestID INTEGER NOT NULL,
@@ -182,6 +199,7 @@ CREATE TABLE LabResponse (
     UNIQUE(labRequestID,reportID)
 );
 
+DROP TABLE IF EXISTS DoctorFeedback; 
 CREATE TABLE DoctorFeedback (
     reportID INTEGER ,
     prescriptionID INTEGER,
@@ -195,6 +213,7 @@ CREATE TABLE DoctorFeedback (
 );
 
 
+DROP TABLE IF EXISTS LabLogin; 
 CREATE TABLE LabLogin (
     email VARCHAR(100),
     password VARCHAR(100),
@@ -203,6 +222,7 @@ CREATE TABLE LabLogin (
 );
 
 
+DROP TABLE IF EXISTS PharmacyLogin; 
 CREATE TABLE PharmacyLogin (
     email VARCHAR(100) ,
     password VARCHAR(100),
@@ -210,6 +230,7 @@ CREATE TABLE PharmacyLogin (
     PRIMARY KEY(email)
 );
 
+DROP TABLE IF EXISTS MedicineRequest; 
 CREATE TABLE MedicineRequest (
     -- medicineReqID INTEGER PRIMARY KEY AUTO_INCREMENT,
     ePrescriptionID INTEGER,
@@ -223,6 +244,7 @@ CREATE TABLE MedicineRequest (
     PRIMARY KEY (ePrescriptionID,patientID)
 );
 
+DROP TABLE IF EXISTS MedicineResponse; 
 CREATE TABLE MedicineResponse (
     medicineResponseID INTEGER PRIMARY KEY AUTO_INCREMENT,
     ePrescriptionID INTEGER NOT NULL,
@@ -231,7 +253,8 @@ CREATE TABLE MedicineResponse (
     FOREIGN KEY (ePrescriptionID,patientID) REFERENCES  MedicineRequest (ePrescriptionID,patientID) 
 );
 
- -- No entres requried
+
+DROP TABLE IF EXISTS DoctorAppointments;  -- No entres requried
 CREATE TABLE DoctorAppointments (
     patientID CHAR(12),
     doctorID CHAR(12),
@@ -245,7 +268,8 @@ CREATE TABLE DoctorAppointments (
  -- No entres requried
 
 -- reminderDate and reminderTime for order medicines only
--- for take medicines time and dates in MedicineDetails tables.
+
+DROP TABLE IF EXISTS MedicineReminder; -- for take medicines time and dates in MedicineDetails tables.
 CREATE TABLE MedicineReminder (
     ePrescriptionID INTEGER NOT NULL,
     patientID CHAR(12) NOT NULL,
@@ -255,6 +279,7 @@ CREATE TABLE MedicineReminder (
     FOREIGN KEY (ePrescriptionID) REFERENCES  EPrescription (ePrescriptionID)
 );
 
+DROP TABLE IF EXISTS LabVisitReminder; 
 CREATE TABLE LabVisitReminder (
     patientID CHAR(12) NOT NULL,
     labID CHAR(12) NOT NULL,
@@ -268,6 +293,7 @@ CREATE TABLE LabVisitReminder (
 );
 
 
+DROP TABLE IF EXISTS DoctorVisitReminder; 
 CREATE TABLE DoctorVisitReminder (
     patientID CHAR(12) NOT NULL,
     doctorID CHAR(12) NOT NULL,
