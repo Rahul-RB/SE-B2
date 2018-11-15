@@ -198,9 +198,3 @@ INSERT INTO DoctorDetails VALUES ('000970023012','Terence Langworth','bauch.eldr
 ('975303663730','sunt','glangworth@example.com','1994-09-19','36719 Wehner Gardens Suite 497\nSouth Vallie, OH 15836','F','(868)479-3','labore'),
 ('979174019883','et','vincent.dubuque@example.org','2017-10-17','2004 Heather Courts\nLake Khalil, MA 33890','F','(351)711-4','exercitationem'),
 ('992764643925','necessitatibus','labadie.emerald@example.net','1983-07-16','6888 Zulauf Falls\nLake Bessieport, NC 03926','M','(274)039-1','aut'); 
-
-
-
-
-
-
