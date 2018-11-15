@@ -1,0 +1,106 @@
+{% extends "Base/base.html" %}
+
+{% block customCSS %}
+
+{% endblock %}
+
+{% block customContent %}
+            <!-- START EDITING FROM HERE -->
+			 <div id="customContent">
+    <div class="container-fluid">
+        <div class="row" id="welcomeDiv">
+            <div class="col-xl-4 col-lg-4 col-md-12 col-4">
+                Requested medicines
+            </div>
+
+        </div>
+
+
+
+
+        <div class="col-lg-9 col-md-8">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>SL#</th>
+							<th>Patient_ID</th>
+							<th>Medicine</th>
+                            <th>Medicine</th>
+                            <th>Medicine</th>
+							<th> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1,001</td>
+							<td>xyz</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <a href="/update/" class="btn btn-warning btn-xs" data-toggle="modal">Yes</a>
+                                <a href="/delete/" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure You dont have?')">No</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1,002</td>
+							<td>abc</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>1,003</td>
+							<td>Adderall.</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>1,004</td>
+							<td>Ativan</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>1,005</td>
+							<td>Econza</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--/row-->
+
+
+
+</div>
+						
+						
+						
+            <!-- Once you're developing, delete below div -->
+                 
+            
+
+            <!-- END EDITING HERE -->
+            
+        
+
+{% endblock %}
+
+
+{% block customJS %}
+
+    
+
+{% endblock %}
