@@ -1,5 +1,9 @@
 # Hawkeye
-> Huge thanks to Ganesh for providing expertise in CICD integration (TravisCI). 
+
+[![Build Status](https://api.travis-ci.org/Rahul-RB/SE-B2.svg?branch=master)](https://api.travis-ci.org/Rahul-RB/SE-B2)
+
+> Huge thanks to Ganesh for providing expertise in CICD integration (TravisCI).
+
 > Do **NOT** put a Pull Request(PR) from your master branch. <br>
 > PR **SHOULD** come from a development branch of yours (i.e. a non-master branch) to my master branch.
 
