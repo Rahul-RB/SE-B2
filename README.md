@@ -1,6 +1,6 @@
 # Hawkeye
 
-[![Build Status](https://api.travis-ci.org/Rahul-RB/SE-B2.svg?branch=master)](https://api.travis-ci.org/Rahul-RB/SE-B2)
+[![Build Status](https://api.travis-ci.org/Rahul-RB/SE-B2.svg?branch=master)](https://travis-ci.org/Rahul-RB/SE-B2)
 
 > Huge thanks to Ganesh for providing expertise in CICD integration (TravisCI).
 
