@@ -346,12 +346,21 @@ $(document).ready(function () {
     })();
 
     // // Get all DoctorAppointment.
-    // setInterval(function worker2() {
-    //     $.get('patientDoctorAppointment', function(data) {
-    //         console.log("<GET:2> success",data);
-    //     });
-    // },10000);
-    
+    (function worker2() {
+        $.get('patientDoctorAppointment', function(data) {
+            console.log("<GET:2> success",data);
+            $.each(data, function(index, val) {
+                var DocVisit = {
+                    title: "Doctor Appointment",
+                    start: getISO8601DateTime($(this)[1],$(this)[2]),
+                    doctorID: $(this)[0],
+                    typeOfData : "DocVisit"
+                };
+                console.log(DocVisit);
+                $("#calendar").fullCalendar("renderEvent",DocVisit,"stick");                
+            });
+        });
+    })();    
     // // Get all FetchPrescriptions.
     // setInterval(function worker3() {
     //     $.get('patientFetchPrescriptions', function(data) {
