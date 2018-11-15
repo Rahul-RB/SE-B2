@@ -806,3 +806,42 @@ def patientMedicineResponse(ID):
     # for i,result in enumerate(data1):
 
     return res
+
+def getDetailsByID(ID,acctType):
+    query = "SELECT * FROM {0}Details WHERE {0}ID='{1}'".format(acctType,ID);
+
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+    queryResults = cursor.execute(query)
+    data = cursor.fetchall()
+    cursor.close()
+
+    conn.close()
+    
+    res = {}
+
+    if(acctType=="Doctor"):
+        for i,result in enumerate(data):
+            res[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3]),str(result[4]),str(result[5]),str(result[6]),str(result[7])]
+    else:
+        for i,result in enumerate(data):
+            res[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3]),str(result[4])]
+
+    return res
+
+def getMedicineDetailsByEPrescriptionID(ID):
+    query = "SELECT symptoms,medicineSuggestion\
+            FROM MedicineDetails \
+            WHERE ePrescriptionID='{0}'".format(ID)
+
+    print("---------query-----------",query)
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+    queryResults = cursor.execute(query)
+    data = cursor.fetchall()
+    res = {}
+
+    for i,result in enumerate(data):
+        res[i] = [str(result[0]),str(result[1])]
+    print("---------res-----------",res)
+    return res

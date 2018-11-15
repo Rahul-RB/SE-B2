@@ -100,10 +100,9 @@ $(document).ready(function () {
         // Don't render the modal on onclick
         // Keep the classes and divs attached in the get request itself
         // During the click, fetch data as per thing and display in modal.
-        eventClick: function(event, element) {
+        eventClick: function(event, element, view) {
             // element.qtip({
-            //     style: 'ui-tooltip-shadow ui-tooltip-jtools',
-            //     content: event.description
+            //     content: event.subInfo
             // });
             if(event.hasOwnProperty("mainInfo"))
             {
@@ -121,6 +120,10 @@ $(document).ready(function () {
             {
                 var res = "<span class='subInfo'>"+event.subInfo+"</span>";
             }
+            else
+            {
+                var res = "<span class='subInfo'></span>";
+            }
             
             $(".fc-list-item").attr('data-toggle', 'modal');
             $(".fc-list-item").attr('data-target', '#commonModal');
@@ -131,7 +134,113 @@ $(document).ready(function () {
             $(".modal-title").empty();
             $(".modal-title").append("<div class='calendarEvent'>"+event.title+"</div>");
             $(".modal-body").append(res);
-        }
+
+            switch(event.typeOfData)
+            {
+                case "OrderMedicine" :
+                    var inpData = {
+                        ID:event.ePrescriptionID
+                    }
+                    $.ajax({
+                        url: 'getMedicineDetailsByEPrescriptionID',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: inpData,
+                    })
+                    .done(function(data) {
+                        console.log("Order data:",data);
+                        $(".modal-body").append("\
+                            <div><b>Symptoms:                  </b>"+data[0][0]+" </div>\
+                            <div><b>Medicines Suggested:       </b>"+data[0][1]+" </div>\
+                        ");
+
+                    })
+                    .fail(function(err) {
+                        console.log("error");
+                        console.log(err);
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
+                    break;
+
+                case "LabVisit" :
+                    var inpData = {
+                        ID:event.labID,
+                        accType:"Lab"
+                    }
+                    $.ajax({
+                        url: 'getDetailsByID',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: inpData,
+                    })
+                    .done(function(data) {
+                        console.log("LabVisit data:",data);
+                        $(".modal-body").append("\
+                            <div><b>Lab ID:         </b>"+data[0][0]+" </div>\
+                            <div><b>Lab Name:       </b>"+data[0][1]+" </div>\
+                            <div><b>Address:        </b>"+data[0][2]+" </div>\
+                            <div><b>Email:          </b>"+data[0][3]+" </div>\
+                            <div><b>Phone NO:       </b>"+data[0][4]+" </div>\
+                        ");
+
+                    })
+                    .fail(function(err) {
+                        console.log("error");
+                        console.log(err);
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
+                    break;
+
+                case "DocVisit" :
+                    var inpData = {
+                        ID:event.doctorID,
+                        accType:"Doctor"
+                    }
+                    $.ajax({
+                        url: 'getDetailsByID',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: inpData,
+                    })
+                    .done(function(data) {
+                        // doctorID
+                        // doctorName
+                        // email
+                        // dob
+                        // address
+                        // sex
+                        // phoneNO
+                        // designation
+                        console.log("DocVisit data:",data);
+                        $(".modal-body").append("\
+                            <div><b>Doctor ID:     </b>"+data[0][0]+" </div>\
+                            <div><b>Doctor Name:    </b>"+data[0][1]+" </div>\
+                            <div><b>email:         </b>"+data[0][2]+" </div>\
+                            <div><b>dob:           </b>"+data[0][3]+" </div>\
+                            <div><b>address:       </b>"+data[0][4]+" </div>\
+                            <div><b>sex:           </b>"+data[0][5]+" </div>\
+                            <div><b>phoneNO:       </b>"+data[0][6]+" </div>\
+                            <div><b>designation:   </b>"+data[0][7]+" </div>\
+                        ");
+
+                    })
+                    .fail(function(err) {
+                        console.log("error");
+                        console.log(err);
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
+
+                    break; 
+                default: break;
+            }
+
+        },
     });
 
     // END: jqeury timeline calendar code
@@ -191,7 +300,8 @@ $(document).ready(function () {
                     title: "Take Medicine",
                     start: getISO8601DateTime($(this)[3],$(this)[2]),
                     end: getISO8601DateTime($(this)[4],$(this)[2]),
-                    subInfo: "Symptoms:"+$(this)[0]+"\n Medicine Suggested:"+$(this)[1]
+                    subInfo: "Symptoms:"+$(this)[0]+"\n Medicine Suggested:"+$(this)[1],
+                    typeOfData : "TakeMedicine"
                 };
                 console.log(TakeMedicine);
                 $("#calendar").fullCalendar("renderEvent",TakeMedicine,"stick");
@@ -201,7 +311,9 @@ $(document).ready(function () {
                 var OrderMedicine = {
                     title: "Order Medicine",
                     start: getISO8601DateTime($(this)[1],$(this)[2]),
-                    subInfo: "Prescription ID:"+$(this)[0]
+                    subInfo: "Prescription ID:"+$(this)[0],
+                    ePrescriptionID:$(this)[0],
+                    typeOfData : "OrderMedicine"
                 };
                 console.log(OrderMedicine);
                 $("#calendar").fullCalendar("renderEvent",OrderMedicine,"stick");
@@ -212,7 +324,9 @@ $(document).ready(function () {
                 var LabVisit = {
                     title: "Lab Visit",
                     start: getISO8601DateTime($(this)[2],$(this)[3]),
-                    subInfo: "LabID:"+$(this)[0]+"\tDocument ID:"+$(this)[1]
+                    subInfo: "LabID:"+$(this)[0]+"\tDocument ID:"+$(this)[1],
+                    labID: $(this)[0],
+                    typeOfData : "LabVisit"
                 };
                 console.log(LabVisit);
                 $("#calendar").fullCalendar("renderEvent",LabVisit,"stick");
@@ -221,7 +335,9 @@ $(document).ready(function () {
             $.each(data["DocVisit"], function(index, val) {
                 var DocVisit = {
                     title: "Doctor Visit",
-                    start: getISO8601DateTime($(this)[1],$(this)[2])
+                    start: getISO8601DateTime($(this)[1],$(this)[2]),
+                    doctorID: $(this)[0],
+                    typeOfData : "DocVisit"
                 };
                 console.log(DocVisit);
                 $("#calendar").fullCalendar("renderEvent",DocVisit,"stick");

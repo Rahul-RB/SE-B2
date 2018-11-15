@@ -444,3 +444,17 @@ def patientMedicineResponse():
     patientID = models.getIDByEmail(session.get("currentEmail"),session.get("accType"))
     res = models.patientMedicineResponse(patientID)
     return jsonify(res)
+
+@app.route("/getDetailsByID",methods=["GET"])
+def getDetailsByID():
+    ID = request.args.get("ID", "", type=str)
+    accType = request.args.get("accType", "", type=str)
+    res = models.getDetailsByID(ID,accType)
+    return jsonify(res)
+
+@app.route("/getMedicineDetailsByEPrescriptionID",methods=["GET"])
+def getMedicineDetailsByEPrescriptionID():
+    ID = request.args.get("ID", "", type=str)
+    # print("---------ID-----------",ID)
+    res = models.getMedicineDetailsByEPrescriptionID(ID)
+    return jsonify(res)
