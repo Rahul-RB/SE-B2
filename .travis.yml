@@ -1,0 +1,44 @@
+#  Copyright 2018, SE-B5. Licensed for use under permission from SE-B5.
+#  This file and it's contents are a part of SE-B5 project. 
+#  All the code belong to it's respective owners. We would like to thank the specific
+#  member responsible for this code : Ganesh Kathiresan.
+
+language: python
+
+python:
+  - "3.6"
+
+matrix:
+  include:
+    - os: linux
+      sudo: required
+      python: 3.6
+  exclude:
+    - os: osx
+      language: generic
+      env: TOXENV=py36    
+    
+sudo: required
+
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
+
+before_install:
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade -u root
+  - sudo service mysql restart
+  - mysql < hawkeye/DB/Dummy-Data-for-insertion/ALL.sql
+
+services:
+  - docker
+
+install: 
+  - pip3 install -r requirements.txt
+
+script:
+  - pytest
