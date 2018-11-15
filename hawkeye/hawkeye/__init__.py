@@ -7,6 +7,8 @@ app.config.from_object("config.DevelopmentConfig")
 
 mysql = MySQL()
 mysql.init_app(app)
-
-
+	
 from hawkeye import views
+	
+	
+
