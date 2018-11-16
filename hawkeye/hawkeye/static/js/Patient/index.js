@@ -149,7 +149,7 @@ $(document).ready(function () {
                     })
                     .done(function(data) {
                         console.log("Order data:",data);
-                        $(".modal-body").append("\
+                        $("#commonModalBody").append("\
                             <div><b>Symptoms:                  </b>"+data[0][0]+" </div>\
                             <div><b>Medicines Suggested:       </b>"+data[0][1]+" </div>\
                         ");
@@ -177,7 +177,7 @@ $(document).ready(function () {
                     })
                     .done(function(data) {
                         console.log("LabVisit data:",data);
-                        $(".modal-body").append("\
+                        $("#commonModalBody").append("\
                             <div><b>Lab ID:         </b>"+data[0][0]+" </div>\
                             <div><b>Lab Name:       </b>"+data[0][1]+" </div>\
                             <div><b>Address:        </b>"+data[0][2]+" </div>\
@@ -216,7 +216,7 @@ $(document).ready(function () {
                         // phoneNO
                         // designation
                         console.log("DocVisit data:",data);
-                        $(".modal-body").append("\
+                        $("#commonModalBody").append("\
                             <div><b>Doctor ID:     </b>"+data[0][0]+" </div>\
                             <div><b>Doctor Name:    </b>"+data[0][1]+" </div>\
                             <div><b>email:         </b>"+data[0][2]+" </div>\
@@ -374,33 +374,38 @@ $(document).ready(function () {
             
             // $("#prescriptionsViewCol").append("<div class='individualRowTwoItem list-group-item'>Prescription 1</div>");
             // $("#prescriptionData").text(data);
-            $("#commonModalBody").empty();
-            $("#commonModalLongTitle").empty();
             $("#prescriptionsViewCol").empty();
             $("#prescriptionModalBody").empty();
+
             $.each(data, function(index, value) {
                 /* iterate through array or object */
                 $("#prescriptionsViewCol").append("\
                     <div class='individualRowTwoItem list-group-item' id='prescription"+index+"'data-toggle='modal' data-target='#prescriptionModal'>\
-                        Prescription 1\
+                        Prescription "+(index)+"\
                     </div>");
                 $("#prescription"+index).each(function(index, el) {
-                    $("#prescriptionModalLongTitle").text("Prescription "+(index+1));
-                    $(this).on('click', function(event) {
-                        $("#prescriptionModalBody").append(value);
-                        // $("#prescriptionModalBody").text("\n");
-                    });
+                    $("#prescriptionModalLongTitle").text("Prescription "+(index));
+                    $("#prescriptionModalBody").append("\
+                        <div> <b> Prescription ID: </b>"+value[0]+"</div>\
+                        <div> <b> Symptoms: </b>"+value[1]+"</div>\
+                        <div> <b> Medicine Suggestion: </b>"+value[2]+"</div>\
+                        <div> <b> Time To Take: </b>"+value[3]+"</div>\
+                        <div> <b> Start Date: </b>"+value[4]+"</div>\
+                    ");
+                    // $(this).on('click', function(event) {
+                    //     // $("#prescriptionModalBody").text("\n");
+                    // });
                 });
             });
         });
-    })();    
-    
+    })();
+
     // // Get all LabRequest.
-    // setInterval(function worker4() {
-    //     $.get('patientLabRequest', function(data) {
-    //         console.log("<GET:4> success",data);
-    //     });
-    // },10000);
+    (function worker4() {
+        $.get('patientLabRequest', function(data) {
+            console.log("<GET:4> success",data);
+        });
+    })();
     
     // // Get all LabResponse.
     // setInterval(function worker5() {
