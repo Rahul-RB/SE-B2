@@ -198,9 +198,3 @@ INSERT INTO PatientDetails VALUES ('001831940407','Dana Murazik','julio01@exampl
 ('924395497357','maxime','grant.aliya@example.com','2003-02-19','808 Franecki Lakes\nCollierview, NY 31729','F','+81(6)4061'),
 ('931230859078','consectetur','verlie.gulgowski@example.com','1994-06-17','04765 Corkery Stravenue Apt. 752\nStarkmouth, NJ 21019','M','(859)126-4'),
 ('935377532336','earum','gerhold.art@example.net','1992-12-21','4858 Declan Park Apt. 852\nLake Michelhaven, CA 24686-7074','F','1-072-054-'); 
-
-
-
-
-
-

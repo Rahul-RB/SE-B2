@@ -130,10 +130,10 @@ $(document).ready(function () {
             $(".fc-event-container").attr('data-toggle', 'modal');
             $(".fc-event-container").attr('data-target', '#commonModal');
 
-            $(".modal-body").empty();
-            $(".modal-title").empty();
-            $(".modal-title").append("<div class='calendarEvent'>"+event.title+"</div>");
-            $(".modal-body").append(res);
+            $("#commonModalBody").empty();
+            $("#commonModalLongTitle").empty();
+            $("#commonModalLongTitle").append("<div class='calendarEvent'>"+event.title+"</div>");
+            $("#commonModalBody").append(res);
 
             switch(event.typeOfData)
             {
@@ -280,6 +280,7 @@ $(document).ready(function () {
     //         console.log("<GET:1> success",data);
     //     });
     // },10000);
+
     function getISO8601DateTime(date,time)
     {
         if(time.length==7)
@@ -346,18 +347,53 @@ $(document).ready(function () {
     })();
 
     // // Get all DoctorAppointment.
-    // setInterval(function worker2() {
-    //     $.get('patientDoctorAppointment', function(data) {
-    //         console.log("<GET:2> success",data);
-    //     });
-    // },10000);
-    
+    (function worker2() {
+        $.get('patientDoctorAppointment', function(data) {
+            console.log("<GET:2> success",data);
+            $.each(data, function(index, val) {
+                var DocVisit = {
+                    title: "Doctor Appointment",
+                    start: getISO8601DateTime($(this)[1],$(this)[2]),
+                    doctorID: $(this)[0],
+                    typeOfData : "DocVisit"
+                };
+                console.log(DocVisit);
+                $("#calendar").fullCalendar("renderEvent",DocVisit,"stick");                
+            });
+        });
+    })();    
     // // Get all FetchPrescriptions.
     // setInterval(function worker3() {
     //     $.get('patientFetchPrescriptions', function(data) {
     //         console.log("<GET:3> success",data);
     //     });
     // },10000);
+    (function worker3() {
+        $.get('patientFetchPrescriptions', function(data) {
+            console.log("<GET:3> success",data);
+            
+            // $("#prescriptionsViewCol").append("<div class='individualRowTwoItem list-group-item'>Prescription 1</div>");
+            // $("#prescriptionData").text(data);
+            $("#commonModalBody").empty();
+            $("#commonModalLongTitle").empty();
+            $("#prescriptionsViewCol").empty();
+            $("#prescriptionModalBody").empty();
+            $.each(data, function(index, value) {
+                /* iterate through array or object */
+                $("#prescriptionsViewCol").append("\
+                    <div class='individualRowTwoItem list-group-item' id='prescription"+index+"'data-toggle='modal' data-target='#prescriptionModal'>\
+                        Prescription 1\
+                    </div>");
+                $("#prescription"+index).each(function(index, el) {
+                    $("#prescriptionModalLongTitle").text("Prescription "+(index+1));
+                    $(this).on('click', function(event) {
+                        $("#prescriptionModalBody").append(value);
+                        // $("#prescriptionModalBody").text("\n");
+                    });
+                });
+            });
+        });
+    })();    
     
     // // Get all LabRequest.
     // setInterval(function worker4() {
@@ -464,30 +500,6 @@ $(document).ready(function () {
     // }); 
     // END : jquery dropdown timepicker code.
 
-    // START : individualPrescription functionality
-    var i = 4; //since previous popus took 1,2,3.
-    $(".individualRowTwoItem").each(function(){
-        var popupDiv = "<div id=basic"+i.toString()+" "+"class='popupWrapperDiv'>\
-                            <div class='container-fluid'>\
-                                <div class='row justify-content-center'>\
-                                    <div class='col-xl-12 col-lg-12 col-md-12 col-12 popupDiv'>\
-                                    </div>\
-                                </div>\
-                            </div>\
-                            <div class='container-fluid'>\
-                                <div class='row justify-content-center'>\
-                                    <div class='col-xl-12 col-lg-12 col-md-12 col-12' style='padding-right: 0px;'>\
-                                        <button class='basic"+i+"_close btn btn-danger popupCloseBtn noRadiusBtn' id='basic"+i+"_close'>Close</button>\
-                                    </div>\
-                                </div>\
-                            </div>\
-                        </div>";
-        $("#popupDivHolder").append(popupDiv);
-        $("#basic"+i).popup();
-        $(this).addClass("basic"+i+"_open");    
-        i++;
-    });
-    // END : individualPrescription functionality
 
     // START : Search functionality
     function getResTypeByName(name) {
