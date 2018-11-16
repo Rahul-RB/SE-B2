@@ -28,25 +28,28 @@ $(document).ready(function () {
     });
     /* Do not disturb above lines */
     /* Start Adding your javascript here */
-    /*Toggle the view of prescription*/
     $("#pres").hide();
     $('#viewPrescription').click(function(){
         if($(this).prop("checked") == true){
+        /*alert("Checkbox is checked.");*/
             $("#pres").show();
 
         }
         else if($(this).prop("checked") == false){
+        /*alert("Checkbox is unchecked.");*/
             $("#pres").hide();
         }
     });
     
-    /*Toggle the view of response*/
-    $('#writeResponse').click(function(){
+    
+    $('#seeResponse').click(function(){
         if($(this).prop("checked") == true){
-            $("#labform").show();
+            /*alert("Checkbox is checked.");*/
+            $("#labResponse").show();
         }
         else if($(this).prop("checked") == false){
-            $("#labform").hide();
+            /*alert("Checkbox is unchecked.");*/
+            $("#labResponse").hide();
         }
     });
    function SetDate()
@@ -60,8 +63,7 @@ $(document).ready(function () {
        var today = year + "-" + month + "-" + day;
        return today;
    }
-   
-   document.getElementById('date').value = SetDate();
+  
  
 
     /* End Adding your javascript here */
