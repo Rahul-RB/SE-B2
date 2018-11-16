@@ -9,7 +9,7 @@ from hawkeye.models import models_lab
 
 from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify, Response
 from werkzeug import secure_filename
-from flask import send_from_directory
+from flask import send_from_directory, send_file
 import os
 import datetime
 
@@ -40,6 +40,27 @@ def upload_file():
           return redirect(url_for("lab")) 
       return redirect( url_for("lab"))
 
+@app.route("/labExistingResponse")
+def labExistingResponse():
+    if ((not session.get("accType")=="Lab") or (not session.get(session.get("accType")+"LoggedIn"))):
+        return redirect(url_for("login"),302)
+    reqid=request.args.get('reqdata')
+    email=session["currentEmail"]
+    return render_template("Lab/labExistingResponse.html",
+                            title="Lab",
+                            useremail=email,
+                            userid= session["user_id"],
+                            labReqData=models_lab.getLabRequestDetails(email,reqid),
+                            labPresData= models_lab.getLabPrescriptionDetails(reqid), 
+                            filename= models_lab.getLabReportFilename(reqid),
+                            userLoggedIn=True)
+
+@app.route('/uploads/<path:filename>')
+def uploaded_file(filename):
+    print("---------------------",str(filename),"---------------")
+    #filename = str(filename)
+    return send_file('uploads/'+str(filename),as_attachment=True)
+
 @app.route("/lab")
 def lab():
     if ((not session.get("accType")=="Lab") or (not session.get(session.get("accType")+"LoggedIn"))):
@@ -47,7 +68,13 @@ def lab():
     email=session["currentEmail"]
     session["user_id"]= models_lab.getLabId(email)[0][0];
     print(session["user_id"])
-    return render_template("Lab/lab.html",title="Lab", useremail=email,data=models_lab.getLabRequests(email), userLoggedIn=True)
+    return render_template("Lab/lab.html",
+                            title="Lab", 
+                            useremail=email,
+                            labReqData=models_lab.getLabRequests(email), 
+                            labResData= models_lab.getLabResponses(email),
+                            userLoggedIn=True
+                            )
 
 @app.route("/labResponse")
 def labResponse():
@@ -60,5 +87,6 @@ def labResponse():
                             useremail=email,
                             userid= session["user_id"],
                             labReqData=models_lab.getLabRequestDetails(email,reqid),
-                            labPresData= models_lab.getLabPrescriptionDetails(reqid), 
-                            userLoggedIn=True)
+                            labPresData= models.getLabPrescriptionDetails(reqid),
+                            userLoggedIn=True
+                            )

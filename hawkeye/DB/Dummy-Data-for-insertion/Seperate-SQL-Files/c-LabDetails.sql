@@ -198,9 +198,3 @@ INSERT INTO LabDetails VALUES ('004583959839','Becker, Mayert and Q','11477 Laba
 ('969814952593','deserunt','77490 Gerlach Burgs Suite 962\nMinaberg, MS 98000-2729','wilbert.kilback@example.org','(388)496-2'),
 ('972251121700','nam','184 Boehm Village Apt. 376\nLake Mayemouth, MN 46734-7233','schoen.karianne@example.net','347.889.72'),
 ('987695962053','eligendi','132 Ben Parkway Suite 906\nEliseofurt, ID 66482-5443','wkuhic@example.net','0998252702'); 
-
-
-
-
-
-

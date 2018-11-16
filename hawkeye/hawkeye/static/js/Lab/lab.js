@@ -29,14 +29,21 @@ $(document).ready(function () {
     /* Do not disturb above lines */
     /* Start Adding your javascript here */
      
-     $("#search_bar").on("keyup", function() {
+     $("#search_bar1").on("keyup", function() {
         var value = $(this).val();
-        var search_p = $("#search_param").val();
+        var search_p = $("#search_param1").val();
         //console.log(search_p);
-        $("#myTable").filterTable(value, search_p);
+        $("#myTable1").filterTable(value, search_p);
        
     });
-
+    $("#search_bar2").on("keyup", function() {
+        var value = $(this).val();
+        var search_p = $("#search_param2").val();
+        //console.log(search_p);
+        $("#myTable2").filterTable(value, search_p);
+       
+    }); 
+        
     (function($) {
         $.fn.filterTable = function(filter, columnname) {
             var index = null;
@@ -68,6 +75,7 @@ $(document).ready(function () {
             });
             return this;
         };
+
     })(jQuery);
     /* End Adding your javascript here */
 	
