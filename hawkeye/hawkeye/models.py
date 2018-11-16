@@ -273,7 +273,7 @@ def getLabResponses(email):
     return (res)
 
 def getLabRequestDetails(email, reqid):
-    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID, a.testType, a.description FROM ELabRequestDocument a, LabRequest lr WHERE a.labRequestDocumentID='"+reqid+"' and a.labRequestDocumentID= lr.labRequestDocumentID and lr.isPending=1;"
+    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID, a.testType, a.description FROM ELabRequestDocument a, LabRequest lr WHERE a.labRequestDocumentID='"+reqid+"' and a.labRequestDocumentID= lr.labRequestDocumentID ;"
     cursor.execute(query)
     res=cursor.fetchall()
     print(res)
@@ -310,10 +310,23 @@ def putLabReponse(labRequestID,resultLink, description):
     # res=cursor.execute("INSERT INTO LabResponse ('labRequestID', 'description') VALUES  (%s,%s)",(labRequestID,description))
     res=cursor.execute(query)
     conn.commit()
+    query = "UPDATE LabRequest SET isPending=0 WHERE labRequestDocumentID="+labRequestID+";"
+    res2=cursor.execute(query)
+    conn.commit()
     #res=1
-    if (res==1):
+    if ((res1) and(res2)):
         print("Successful entry")
     return True
+
+def getLabReportFilename(reqid):
+    query= "SELECT resultLink FROM LabResponse WHERE labRequestID = "+reqid+";"
+    cursor.execute(query)
+    res=cursor.fetchall()
+    print(res[0][0])
+    return res[0][0]
+
+
+
 # END : DEEPIKA'S FUNCTIONS
 
 def getUsernameByEmail(email,acctType):

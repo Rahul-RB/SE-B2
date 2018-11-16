@@ -4,10 +4,10 @@ from hawkeye import app
 from hawkeye import models 
 from flask import Flask,render_template,redirect,url_for,flash, redirect, request, session, abort, jsonify
 from werkzeug import secure_filename
-from flask import send_from_directory
+from flask import send_from_directory, send_file
 import os
 import datetime
-UPLOAD_FOLDER = './uploads'
+UPLOAD_FOLDER = './hawkeye/uploads'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'doc'])
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -326,6 +326,22 @@ def upload_file():
           models.putLabReponse(labRequestId, str(filename), description)
           return redirect(url_for("lab")) 
       return redirect( url_for("lab"))
+
+@app.route("/labExistingResponse")
+def labExistingResponse():
+    if ((not session.get("accType")=="Lab") or (not session.get(session.get("accType")+"LoggedIn"))):
+        return redirect(url_for("login"),302)
+    reqid=request.args.get('reqdata')
+    email=session["currentEmail"]
+    return render_template("Lab/labExistingResponse.html",title="Lab",
+        useremail=email,userid= session["user_id"],labReqData=models.getLabRequestDetails(email,reqid),
+        labPresData= models.getLabPrescriptionDetails(reqid), filename= models.getLabReportFilename(reqid))
+
+@app.route('/uploads/<path:filename>')
+def uploaded_file(filename):
+    print("---------------------",str(filename),"---------------")
+    #filename = str(filename)
+    return send_file('uploads/'+str(filename),as_attachment=True)
 
 @app.route("/patientCalendarReminderUpdate")
 def patientCalendarReminderUpdate():
