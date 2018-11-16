@@ -46,9 +46,14 @@ def labExistingResponse():
         return redirect(url_for("login"),302)
     reqid=request.args.get('reqdata')
     email=session["currentEmail"]
-    return render_template("Lab/labExistingResponse.html",title="Lab",
-        useremail=email,userid= session["user_id"],labReqData=models_lab.getLabRequestDetails(email,reqid),
-        labPresData= models_lab.getLabPrescriptionDetails(reqid), filename= models_lab.getLabReportFilename(reqid),userLoggedIn=True)
+    return render_template("Lab/labExistingResponse.html",
+                            title="Lab",
+                            useremail=email,
+                            userid= session["user_id"],
+                            labReqData=models_lab.getLabRequestDetails(email,reqid),
+                            labPresData= models_lab.getLabPrescriptionDetails(reqid), 
+                            filename= models_lab.getLabReportFilename(reqid),
+                            userLoggedIn=True)
 
 @app.route('/uploads/<path:filename>')
 def uploaded_file(filename):
