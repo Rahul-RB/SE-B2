@@ -546,12 +546,62 @@ $(document).ready(function () {
         });
     })();
     
-    // // Get all MedicineRequest.
+    // Get all MedicineRequest.
     // setInterval(function worker6() {
     //     $.get('patientMedicineRequest', function(data) {
     //         console.log("<GET:6> success",data);
     //     });
     // },10000);
+    (function worker6() {
+        $.get('patientMedicineRequest', function(data) {
+            console.log("<GET:6> success",data);
+            $("#medReqDiv").empty();
+            $("#medReqModalBody").empty();
+            $.each(data, function(index, value) {
+                /* iterate through array or object */
+                $("#medReqDiv").append("\
+                    <div class='individualRowTwoItem list-group-item' id='medReq"+index+"'data-toggle='modal' data-target='#medReqModal'>\
+                        Request "+(index)+"\
+                    </div>");
+                $("#medReq"+index).each(function(index, el) {
+                    $("#medReqModalLongTitle").text("Request "+(index));
+                    $("#medReqModalBody").append("\
+                        <div><b> Delivery Time : </b>"+value[3]+"</div>\
+                    ");
+
+                    var inpData={
+                        ID:value[2],
+                        accType:"Pharmacy"
+                    };
+                    // Fetch Lab request document details
+                    $.ajax({
+                        url: 'getDetailsByID',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: inpData,
+                    })
+                    .done(function(data) {
+                        console.log("Order data:",data);
+                        $("#medReqModalBody").append("\
+                            <div><b> Issued to Pharmacy : </b>"+value[2]+"</div>\
+                            <div style='margin-left:20px'><b>Pharmacy Name : </b>"+data[0][1]+" </div>\
+                            <div style='margin-left:20px'><b>Address : </b>"+data[0][2]+" </div>\
+                            <div style='margin-left:20px'><b>Phone No : </b>"+data[0][3]+" </div>\
+                            <div style='margin-left:20px'><b>Email : </b>"+data[0][4]+" </div>\
+                        ");
+
+                    })
+                    .fail(function(err) {
+                        console.log("error");
+                        console.log(err);
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });                    
+                });
+            });
+        });
+    })();
     
     // // Get all MedicineResponse.
     // setInterval(function worker7() {
@@ -559,6 +609,56 @@ $(document).ready(function () {
     //         console.log("<GET:7> success",data);
     //     });
     // },10000);
+
+    (function worker7() {
+        $.get('patientMedicineResponse', function(data) {
+            console.log("<GET:7> success",data);
+            
+            $("#medRespDiv").empty();
+            $("#medRespModalBody").empty();
+
+            $.each(data, function(index, value) {
+                /* iterate through array or object */
+                $("#medRespDiv").append("\
+                    <div class='individualRowTwoItem list-group-item' id='medResp"+index+"'data-toggle='modal' data-target='#medRespModal'>\
+                        Responses "+(index)+"\
+                    </div>");
+                $("#medResp"+index).each(function(index, el) {
+                    $("#medRespModalLongTitle").text("Responses "+(index));
+                    $("#medRespModalBody").append("\
+                        <div><b>Remarks : </b>"+value[3]+"</div>\
+                    ");
+
+                    var inpData = {
+                        ID:value[1]
+                    };
+                    // Fetch Prescription details
+                    $.ajax({
+                        url: 'getMedicineDetailsByEPrescriptionID',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: inpData,
+                    })
+                    .done(function(data) {
+                        console.log("Order data:",data);
+                        $("#medRespModalBody").append("\
+                            <div><b> Issued for Prescription : </b>"+value[1]+"</div>\
+                            <div style='margin-left:20px'><b>Symptoms:                  </b>"+data[0][0]+" </div>\
+                            <div style='margin-left:20px'><b>Medicines Suggested:       </b>"+data[0][1]+" </div>\
+                        ");
+
+                    })
+                    .fail(function(err) {
+                        console.log("error");
+                        console.log(err);
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
+                });
+            });
+        });
+    })();
     
 
     // START: Popup defaults
