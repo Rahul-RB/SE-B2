@@ -131,6 +131,37 @@ def getLabReportFilename(reqid):
     print(res[0][0])
     return res[0][0]
 
+def getTop4Request(labid):
+    query1= "SELECT testType, COUNT(testType) FROM ELabRequestDocument GROUP BY testType ORDER BY COUNT(testType) DESC LIMIT 4;"
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+
+    cursor.execute(query1)
+    res1=cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    query2= "SELECT COUNT(*) FROM ELabRequestDocument;"
+    
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+
+    cursor.execute(query2)
+    res2=cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    print(res1)
+    print("==\n",res2)
+    if (res1) and (res2):
+        data=[]
+        for tuple in res1:
+            data.append([str(tuple[0]),tuple[1]])
+        data.append(["Other",res2[0][0]])
+        print(data)
+    return (data);
 
 
 # END : DEEPIKA'S FUNCTIONS

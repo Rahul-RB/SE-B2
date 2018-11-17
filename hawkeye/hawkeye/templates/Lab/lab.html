@@ -178,13 +178,14 @@
           series: [{
             type: 'pie',
             name: 'Test Request share',
-            data: [
+            data: {{ labPieData | tojson | safe }}
+            /*[
               ['BloodTest', 3],
               ['Xray', 2],
               ['ECG', 1],
               ['SugarCheckup', 0.5],
               ['Other',0.5]
-            ]
+            ]*/
           }]
         });
     </script>

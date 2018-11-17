@@ -73,6 +73,7 @@ def lab():
                             useremail=email,
                             labReqData=models_lab.getLabRequests(email), 
                             labResData= models_lab.getLabResponses(email),
+                            labPieData= models_lab.getTop4Request(email),
                             userLoggedIn=True
                             )
 
