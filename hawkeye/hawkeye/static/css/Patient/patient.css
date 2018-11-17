@@ -160,13 +160,13 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
-#prescriptionsViewDivTitle,#labRespTitle,#medRespPendingTitle,#labReqTitle{
+#prescriptionsViewDivTitle,#labRespTitle,#medRespPendingTitle,#medReqTitle,#labReqTitle{
     border-bottom: 1px solid black;
 }
 #labReqTitle{
     border-top: 1px solid black;
 }
-#prescriptionsViewDivTitleDiv,#labReqTitle,#labRespTitle,#medRespPendingTitle{
+#prescriptionsViewDivTitleDiv,#labReqTitle,#labRespTitle,#medRespPendingTitle,#medReqTitle{
     font-size: 24px;
     padding-top: 5px;
     padding-bottom: 5px;
