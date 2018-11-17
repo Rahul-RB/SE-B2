@@ -411,10 +411,10 @@ $(document).ready(function () {
                 /* iterate through array or object */
                 $("#labReqDiv").append("\
                     <div class='individualRowTwoItem list-group-item' id='labReq"+index+"'data-toggle='modal' data-target='#labReqModal'>\
-                        Document "+(index)+"\
+                        Request "+(index)+"\
                     </div>");
                 $("#labReq"+index).each(function(index, el) {
-                    $("#labReqModalLongTitle").text("Prescription "+(index));
+                    $("#labReqModalLongTitle").text("Request "+(index));
                     $("#labReqModalBody").append("\
                         <div> <b> Test Type : </b>"+value[2]+"</div>\
                         <div> <b> Test Details : </b>"+value[3]+"</div>\
@@ -456,7 +456,7 @@ $(document).ready(function () {
                     var inpData = {
                         ID:value[1]
                     };
-                    // Fetch pRescription details
+                    // Fetch Prescription details
                     $.ajax({
                         url: 'getMedicineDetailsByEPrescriptionID',
                         type: 'GET',
@@ -491,11 +491,60 @@ $(document).ready(function () {
     //         console.log("<GET:5> success",data);
     //     });
     // },10000);
-    // (function worker5() {
-    //     $.get('patientLabResponse', function(data) {
-    //         console.log("<GET:5> success",data);
-    //     });
-    // })();
+    (function worker5() {
+        $.get('patientLabResponse', function(data) {
+            console.log("<GET:5> success",data);
+
+            $("#labRespDiv").empty();
+            $("#labRespModalBody").empty();
+
+            $.each(data, function(index, value) {
+                /* iterate through array or object */
+                $("#labRespDiv").append("\
+                    <div class='individualRowTwoItem list-group-item' id='labResp"+index+"'data-toggle='modal' data-target='#labRespModal'>\
+                        Response "+(index)+"\
+                    </div>");
+                $("#labResp"+index).each(function(index, el) {
+                    $("#labRespModalLongTitle").text("Response "+(index));
+                    $("#labRespModalBody").append("\
+                        <div> <b> Result Link : </b><a href='"+value[2]+"'> Click Here </a></div>\
+                        <div> <b> Result Details : </b>"+value[3]+"</div>\
+                        <div> <b> Response Date and Time : </b>"+value[4]+"</div>\
+                        <div> <b> Report ID : </b>"+value[0]+"</div>\
+                    ");
+
+                    var inpData={
+                        ID:value[1]
+                    };
+                    // Fetch Lab request document details
+                    $.ajax({
+                        url: 'getELabRequestDocumentByID',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: inpData,
+                    })
+                    .done(function(data) {
+                        console.log("Order data:",data);
+                        $("#labRespModalBody").append("\
+                            <div><b> Issued for Lab Request Document : </b>"+data[0][0]+"</div>\
+                            <div style='margin-left:20px'><b>Test Type : </b>"+data[0][4]+" </div>\
+                            <div style='margin-left:20px'><b>Test Description : </b>"+data[0][5]+" </div>\
+                            <div style='margin-left:20px'><b>Was Issued by Doctor : </b>"+data[0][1]+" </div>\
+                            <div style='margin-left:20px'><b>Was Issued for Prescription : </b>"+data[0][2]+" </div>\
+                        ");
+
+                    })
+                    .fail(function(err) {
+                        console.log("error");
+                        console.log(err);
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });                    
+                });
+            });
+        });
+    })();
     
     // // Get all MedicineRequest.
     // setInterval(function worker6() {

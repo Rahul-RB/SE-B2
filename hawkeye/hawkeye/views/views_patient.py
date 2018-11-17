@@ -106,3 +106,10 @@ def getMedicineDetailsByEPrescriptionID():
     res = models_patient.getMedicineDetailsByEPrescriptionID(ID)
     return jsonify(res)
 
+@app.route("/getELabRequestDocumentByID",methods=["GET"])
+def getELabRequestDocumentByID():
+    ID = request.args.get("ID", "", type=str)
+    print("---------ID-----------",ID)
+    res = models_patient.getELabRequestDocumentByID(ID)
+    return jsonify(res)
+

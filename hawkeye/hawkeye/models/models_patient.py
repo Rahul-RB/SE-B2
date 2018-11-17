@@ -290,10 +290,13 @@ def patientFetchPrescriptions(patientID):
     return res
 
 def patientLabResponse(patientID): 
-    query = "SELECT doctorID,ePrescriptionID,testType,description FROM ELabRequestDocument WHERE patientID='{0}' AND labRequestDocumentID IN (\
-             SELECT labRequestDocumentID FROM LabResponse\
-            )".format(patientID)
+    # query = "SELECT doctorID,ePrescriptionID,testType,description FROM ELabRequestDocument WHERE patientID='{0}' AND labRequestDocumentID IN (\
+    #          SELECT labRequestDocumentID FROM LabResponse\
+    #         )".format(patientID)
 
+    query = "SELECT * FROM LabResponse WHERE labRequestID IN \
+    (SELECT labRequestDocumentID FROM ELabRequestDocument WHERE patientID='{0}')".format(patientID)
+    
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
     queryResults = cursor.execute(query)
@@ -305,7 +308,7 @@ def patientLabResponse(patientID):
     labReqRes = {}
 
     for i,result in enumerate(data):
-        labReqRes[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3])]
+        labReqRes[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3]),str(result[4])]
 
     return labReqRes
 
@@ -337,5 +340,21 @@ def getMedicineDetailsByEPrescriptionID(ID):
 
     for i,result in enumerate(data):
         res[i] = [str(result[0]),str(result[1])]
+    print("---------res-----------",res)
+    return res
+
+def getELabRequestDocumentByID(ID):
+    query = "SELECT * FROM ELabRequestDocument \
+            WHERE labRequestDocumentID='{0}'".format(ID)
+
+    print("---------query-----------",query)
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+    queryResults = cursor.execute(query)
+    data = cursor.fetchall()
+    res = {}
+
+    for i,result in enumerate(data):
+        res[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3]),str(result[4])]
     print("---------res-----------",res)
     return res
