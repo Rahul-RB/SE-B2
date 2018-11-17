@@ -301,7 +301,7 @@ $(document).ready(function () {
                     title: "Take Medicine",
                     start: getISO8601DateTime($(this)[3],$(this)[2]),
                     end: getISO8601DateTime($(this)[4],$(this)[2]),
-                    subInfo: "Symptoms:"+$(this)[0]+"\n Medicine Suggested:"+$(this)[1],
+                    subInfo: "<b>Symptoms:</b>"+$(this)[0]+"<br> <b>Medicine Suggested:</b>"+$(this)[1],
                     typeOfData : "TakeMedicine"
                 };
                 console.log(TakeMedicine);
@@ -404,15 +404,98 @@ $(document).ready(function () {
     (function worker4() {
         $.get('patientLabRequest', function(data) {
             console.log("<GET:4> success",data);
+            $("#labReqDiv").empty();
+            $("#labReqModalBody").empty();
+
+            $.each(data, function(index, value) {
+                /* iterate through array or object */
+                $("#labReqDiv").append("\
+                    <div class='individualRowTwoItem list-group-item' id='labReq"+index+"'data-toggle='modal' data-target='#labReqModal'>\
+                        Document "+(index)+"\
+                    </div>");
+                $("#labReq"+index).each(function(index, el) {
+                    $("#labReqModalLongTitle").text("Prescription "+(index));
+                    $("#labReqModalBody").append("\
+                        <div> <b> Test Type : </b>"+value[2]+"</div>\
+                        <div> <b> Test Details : </b>"+value[3]+"</div>\
+                    ");
+
+                    var inpData = {
+                        ID:value[0],
+                        accType:"Doctor"
+                    }
+                    $.ajax({
+                        url: 'getDetailsByID',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: inpData,
+                    })
+                    .done(function(data) {
+                        console.log("DocVisit data:",data);
+                        $("#labReqModalBody").append("\
+                            <div><b> Issued by Doctor ID : </b>"+value[0]+"</div>\
+                            <div style='margin-left:20px'><b>Doctor ID:     </b>"+data[0][0]+" </div>\
+                            <div style='margin-left:20px'><b>Doctor Name:    </b>"+data[0][1]+" </div>\
+                            <div style='margin-left:20px'><b>email:         </b>"+data[0][2]+" </div>\
+                            <div style='margin-left:20px'><b>dob:           </b>"+data[0][3]+" </div>\
+                            <div style='margin-left:20px'><b>address:       </b>"+data[0][4]+" </div>\
+                            <div style='margin-left:20px'><b>sex:           </b>"+data[0][5]+" </div>\
+                            <div style='margin-left:20px'><b>phoneNO:       </b>"+data[0][6]+" </div>\
+                            <div style='margin-left:20px'><b>designation:   </b>"+data[0][7]+" </div>\
+                        ");
+
+                    })
+                    .fail(function(err) {
+                        console.log("error");
+                        console.log(err);
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
+
+                    var inpData = {
+                        ID:value[1]
+                    };
+                    // Fetch pRescription details
+                    $.ajax({
+                        url: 'getMedicineDetailsByEPrescriptionID',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: inpData,
+                    })
+                    .done(function(data) {
+                        console.log("Order data:",data);
+                        $("#labReqModalBody").append("\
+                            <div><b> Issued for Prescription : </b>"+value[1]+"</div>\
+                            <div style='margin-left:20px'><b>Symptoms:                  </b>"+data[0][0]+" </div>\
+                            <div style='margin-left:20px'><b>Medicines Suggested:       </b>"+data[0][1]+" </div>\
+                        ");
+
+                    })
+                    .fail(function(err) {
+                        console.log("error");
+                        console.log(err);
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
+
+                });
+            });            
         });
     })();
     
-    // // Get all LabResponse.
+    // Get all LabResponse.
     // setInterval(function worker5() {
     //     $.get('patientLabResponse', function(data) {
     //         console.log("<GET:5> success",data);
     //     });
     // },10000);
+    // (function worker5() {
+    //     $.get('patientLabResponse', function(data) {
+    //         console.log("<GET:5> success",data);
+    //     });
+    // })();
     
     // // Get all MedicineRequest.
     // setInterval(function worker6() {

@@ -305,7 +305,7 @@ def patientLabResponse(patientID):
     labReqRes = {}
 
     for i,result in enumerate(data):
-        labReqRes[i] = [result[0],result[1],result[2],result[3]]
+        labReqRes[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3])]
 
     return labReqRes
 
@@ -323,3 +323,19 @@ def patientMedicineResponse(ID):
 
     return res
 
+def getMedicineDetailsByEPrescriptionID(ID):
+    query = "SELECT symptoms,medicineSuggestion\
+            FROM MedicineDetails \
+            WHERE ePrescriptionID='{0}'".format(ID)
+
+    print("---------query-----------",query)
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+    queryResults = cursor.execute(query)
+    data = cursor.fetchall()
+    res = {}
+
+    for i,result in enumerate(data):
+        res[i] = [str(result[0]),str(result[1])]
+    print("---------res-----------",res)
+    return res
