@@ -73,7 +73,9 @@ def lab():
                             useremail=email,
                             labReqData=models_lab.getLabRequests(email), 
                             labResData= models_lab.getLabResponses(email),
-                            labPieData= models_lab.getTop4Request(email),
+                            labPieData= models_lab.getTop4Request(session["user_id"]),
+                            lablineReqData= models_lab.getNumberOfRequests(session["user_id"]),
+                            lablineRespData= models_lab.getNumberOfResponses(session["user_id"]),
                             userLoggedIn=True
                             )
 

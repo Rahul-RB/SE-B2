@@ -85,20 +85,15 @@ def getLabId(email) :
     return (res)
 
 def putLabReponse(labRequestID,resultLink, description):
-    #responseTime = datetime.datetime.strptime(str(datetime.datetime.now()), "%Y-%m-%d %H:%M:%S")
     format = "%Y-%m-%d"
     now = datetime.datetime.utcnow().strftime(format)
     responseTime =now
     print(responseTime)
     print(labRequestID)
     print(resultLink)
-    #query = "INSERT INTO LabResponse ('labRequestID','resultLink', 'description','dateTimeStamp') VALUES  ('"+ labRequestID+"','"+(resultLink)+"','"+description+"','"+ responseTime+"';"
-    #query = "INSERT INTO LabResponse ('labRequestID', 'description','dateTimeStamp') VALUES  (%s,%s,%s)"
-    #query = "INSERT INTO Files Values ('"+resultLink+"');"
     query = "INSERT INTO LabResponse (labRequestID, description , dateTimeStamp, resultLink) VALUES ('{0}','{1}','{2}','{3}')".format(labRequestID,description,responseTime,resultLink)
     print("----------------------query:---------------\n",query)
-    # res=cursor.execute("INSERT INTO LabResponse ('labRequestID', 'description') VALUES  (%s,%s)",(labRequestID,description))
-
+    
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
 
@@ -111,7 +106,6 @@ def putLabReponse(labRequestID,resultLink, description):
 
     cursor.close()
     conn.close()
-    #res=1
     if ((res1) and(res2)):
         print("Successful entry")
     return True
@@ -132,7 +126,12 @@ def getLabReportFilename(reqid):
     return res[0][0]
 
 def getTop4Request(labid):
-    query1= "SELECT testType, COUNT(testType) FROM ELabRequestDocument GROUP BY testType ORDER BY COUNT(testType) DESC LIMIT 4;"
+    query1= "SELECT testType, COUNT(testType) FROM ELabRequestDocument GROUP BY testType \
+            ORDER BY COUNT(testType) DESC LIMIT 4;"
+    # query1= "SELECT rd.testType, COUNT(rd.testType) FROM ELabRequestDocument rd, LabRequest lr \
+    #         WHERE rd.labRequestDocumentID= lr.labRequestDocumentID and \
+    #         lr.labID= '"+labID+"' GROUP BY rd.testType
+    #         ORDER BY COUNT(rd.testType) DESC LIMIT 4;"
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
 
@@ -143,7 +142,9 @@ def getTop4Request(labid):
     conn.close()
 
     query2= "SELECT COUNT(*) FROM ELabRequestDocument;"
-    
+    # query2= "SELECT COUNT(*) FROM ELabRequestDocument rd , LabRequest lr \
+    #          WHERE rd.labRequestDocumentID= lr.labRequestDocumentID and \
+    #          lr.labID= '"+labID+"';"
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
 
@@ -162,6 +163,51 @@ def getTop4Request(labid):
         data.append(["Other",res2[0][0]])
         print(data)
     return (data);
+
+def getNumberOfResponses(labid):
+    query="select DATE(dateTimeStamp) , COUNT(DATE(dateTimeStamp)) from LabRequest\
+           where isPending=0 group by DATE(dateTimeStamp) order by DATE(dateTimeStamp) ;"
+    # query="select DATE(dateTimeStamp) , COUNT(DATE(dateTimeStamp)) from LabRequest\
+    #        where isPending=0 and labID='"+labid+"' group by DATE(dateTimeStamp) order by DATE(dateTimeStamp) ;"
+
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+
+    cursor.execute(query)
+    res=cursor.fetchall()
+    cursor.close()
+    conn.close()
+    format = "%Y-%m-%d"
+    if(res):
+        data=[]
+        for tuple in res:
+            data.append([str(tuple[0]),tuple[1]])
+    print(data)
+
+    return data
+
+def getNumberOfRequests(labid):
+    query="select DATE(dateTimeStamp) , COUNT(DATE(dateTimeStamp)) from LabRequest \
+           where isPending=1 group by DATE(dateTimeStamp) order by DATE(dateTimeStamp) ;"
+    # query="select DATE(dateTimeStamp) , COUNT(DATE(dateTimeStamp)) from LabRequest\
+    #        where isPending=1 and labID='"+labid+"' group by DATE(dateTimeStamp) order by DATE(dateTimeStamp) ;"
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+
+    cursor.execute(query)
+    res=cursor.fetchall()
+    cursor.close()
+    conn.close()
+    format = "%Y-%m-%d"
+    if(res):
+        data=[]
+        for tuple in res:
+            data.append([str(tuple[0]),tuple[1]])
+    print(data)
+
+    return data
+
+
 
 
 # END : DEEPIKA'S FUNCTIONS

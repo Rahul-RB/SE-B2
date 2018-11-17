@@ -191,6 +191,26 @@
     </script>
     <script type="text/javascript">
 
+    var reqObj= {{ lablineReqData | tojson | safe }};
+
+    var reqLineData= new Array();
+    for (i=0;i<reqObj.length;i++){
+        var entry= reqObj[i];
+        var date_str= entry[0];
+        date_str= date_str.split('-');
+        reqLineData.push(new Array( Date.UTC(parseInt(date_str[0]),parseInt(date_str[1]),parseInt(date_str[2])) , entry[1]));
+    }
+
+    var respObj= {{ lablineRespData | tojson | safe }};
+
+    var respLineData= new Array();
+    for (i=0;i<respObj.length;i++){
+        var entry= respObj[i];
+        var date_str= entry[0];
+        date_str= date_str.split('-');
+        respLineData.push(new Array( Date.UTC(parseInt(date_str[0]),parseInt(date_str[1]),parseInt(date_str[2])) , entry[1]));
+    }
+
         Highcharts.chart('linecontainer', {
           chart: {
             type: 'spline'
@@ -234,7 +254,10 @@
           // that in JavaScript, months start at 0 for January, 1 for February etc.
           series: [{
             name: "Requests",
-            data: [
+            data: reqLineData
+            //{{ lablineReqData | tojson | safe }}
+
+            /*[
               [Date.UTC(1970, 10, 25), 0],
               [Date.UTC(1970, 11,  6), 0.25],
               [Date.UTC(1970, 11, 20), 1.41],
@@ -245,10 +268,11 @@
               [Date.UTC(1971, 1,  4), 2.5],
               [Date.UTC(1971, 1,  1), 2.81],
               [Date.UTC(1971, 1, 11), 2.63]
-            ]
-          }, {
+            ]*/
+          } ,{
             name: "Reports",
-            data: [
+            data: respLineData
+            /*[
               [Date.UTC(1970, 10,  9), 0],
               [Date.UTC(1970, 10, 15), 0.23],
               [Date.UTC(1970, 10, 20), 0.25],
@@ -265,9 +289,11 @@
               [Date.UTC(1971, 0, 17), 1.04],
               [Date.UTC(1971, 0, 20), 1.02],
               [Date.UTC(1971, 0, 25), 1.03]
-            ]
-          }]
-        });
+            ]*/
+          }
+        ]
+    });
+    
     </script>
 
 {% endblock %}
