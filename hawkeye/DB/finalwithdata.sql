@@ -239,8 +239,7 @@ CREATE TABLE DoctorAppointments (
     pickATime TIME,
     addedToDoctorCalendar TINYINT,
     FOREIGN KEY (patientID) REFERENCES PatientDetails (patientID)  ,
-    FOREIGN KEY (doctorID) REFERENCES DoctorDetails (doctorID) ,
-    PRIMARY KEY (doctorID,patientID)
+    FOREIGN KEY (doctorID) REFERENCES DoctorDetails (doctorID)
 );
  -- No entres requried
 
