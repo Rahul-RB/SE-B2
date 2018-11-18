@@ -28,43 +28,20 @@ $(document).ready(function () {
     });
     /* Do not disturb above lines */
     /* Start Adding your javascript here */
+    
+    /*Setting up initial state of Prescription View to Hidden*/
     $("#pres").hide();
+
+    /*Toggle Prescription View based on slider*/
     $('#viewPrescription').click(function(){
         if($(this).prop("checked") == true){
-        /*alert("Checkbox is checked.");*/
             $("#pres").show();
 
         }
         else if($(this).prop("checked") == false){
-        /*alert("Checkbox is unchecked.");*/
             $("#pres").hide();
         }
     });
-    
-    
-    $('#seeResponse').click(function(){
-        if($(this).prop("checked") == true){
-            /*alert("Checkbox is checked.");*/
-            $("#labResponse").show();
-        }
-        else if($(this).prop("checked") == false){
-            /*alert("Checkbox is unchecked.");*/
-            $("#labResponse").hide();
-        }
-    });
-   function SetDate()
-   {
-       var date = new Date();
-       var day = date.getDate();
-       var month = date.getMonth() + 1;
-       var year = date.getFullYear();
-       if (month < 10) month = "0" + month;
-       if (day < 10) day = "0" + day;
-       var today = year + "-" + month + "-" + day;
-       return today;
-   }
-  
- 
 
     /* End Adding your javascript here */
 });

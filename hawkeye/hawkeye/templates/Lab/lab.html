@@ -10,6 +10,18 @@
 {% block customContent %}
     <div class="container -fluid" style="margin-top: 50px">
         <div class="row">
+           
+            <div class="col-xl-4 col-lg-4 col-md-10 col-12">
+              <div id="piecontainer" style="height: 400px" style="padding: 10px 10px 10px 10px;"></div>
+            </div>
+            <div class="col-xl-8 col-lg-8 col-md-10 col-12 table-responsive-sm" tyle="padding: 10px 10px 10px 10px;">
+              <div id="linecontainer" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            </div>
+            
+        </div>
+        <div class="row" style="padding: 10px 10px 10px 10px;">
+        </div>
+        <div class="row">
             <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
             <div class="col-xl-10 col-lg-10 col-md-10 col-12">
                 <h5>Pending Lab Request Search</h5>
@@ -59,6 +71,8 @@
                 </table>
             </div>
             <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+        </div>
+        <div class="row" style="padding: 10px 10px 10px 10px;">
         </div>
          <div class="row">
             <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
@@ -111,6 +125,24 @@
             </div>
             <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
         </div>
+        <div class="row" id="">
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+            <div class="col-10">
+                <hr class="my-5">
+            </div> 
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>       
+        </div>
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
+            <div class="col-md "> </div>
+            <div class="col-md text-right">
+                <a href= {{ url_for('lab') }} > <button type="button" class="btn btn-primary" >Refresh </button> </a>         
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
+        </div>
+         <div class="row" style="padding: 10px 10px 10px 10px;">
+        </div>
+
     </div>
 
 {% endblock %}
@@ -118,6 +150,127 @@
 
 {% block customJS %}
 
-    <script src={{url_for("static",filename="js/Lab/lab.js")}}></script>}
+    <script src={{url_for("static",filename="js/Lab/lab.js")}}></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+
+    <script type=text/javascript>
+    /*PieChart*/
+        Highcharts.chart('piecontainer', {
+          chart: {
+            type: 'pie',
+            options3d: {
+              enabled: true,
+              alpha: 45,
+              beta: 0
+            }
+          },
+          title: {
+            text: 'Lab Test'
+          },
+          tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          },
+          plotOptions: {
+            pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              depth: 35,
+              dataLabels: {
+                enabled: true,
+                format: '{point.name}'
+              }
+            }
+          },
+          series: [{
+            type: 'pie',
+            name: 'Test Request share',
+            data: {{ labPieData | tojson | safe }}
+           
+          }]
+        });
+    </script>
+    <script type="text/javascript">
+        /*Cleaning data for Line Chart*/
+        /*LabRequest Timeline Data*/
+        var reqObj= {{ lablineReqData | tojson | safe }};
+
+        var reqLineData= new Array();
+
+        /*Converting date to Date.UTC*/
+        for (i=0;i<reqObj.length;i++){
+            var entry= reqObj[i];
+            var date_str= entry[0];
+            date_str= date_str.split('-');
+            reqLineData.push(new Array( Date.UTC(parseInt(date_str[0]),parseInt(date_str[1]),parseInt(date_str[2])) , entry[1]));
+        }
+        /*LabResponse Timeline Data*/
+        var respObj= {{ lablineRespData | tojson | safe }};
+
+        /*Converting date to Date.UTC*/
+        var respLineData= new Array();
+        for (i=0;i<respObj.length;i++){
+            var entry= respObj[i];
+            var date_str= entry[0];
+            date_str= date_str.split('-');
+            respLineData.push(new Array( Date.UTC(parseInt(date_str[0]),parseInt(date_str[1]),parseInt(date_str[2])) , entry[1]));
+        }
+        /*LineChart*/
+
+        Highcharts.chart('linecontainer', {
+          chart: {
+            type: 'spline'
+          },
+          title: {
+            text: 'Performance Summary'
+          },
+           xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: { // don't display the dummy year
+              month: '%e. %b',
+              year: '%b'
+            },
+            title: {
+              text: 'Date'
+            }
+          },
+          yAxis: {
+            title: {
+              text: 'Frequency'
+            },
+            min: 0
+          },
+          tooltip: {
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
+          },
+
+          plotOptions: {
+            spline: {
+              marker: {
+                enabled: true
+              }
+            }
+          },
+
+          colors: ['#F00', '#39F', '#06C', '#036', '#000'],
+
+          // Define the data points. All series have a dummy year
+          // of 1970/71 in order to be compared on the same x axis. Note
+          // that in JavaScript, months start at 0 for January, 1 for February etc.
+          series: [{
+            name: "Requests",
+            data: reqLineData
+            },
+            {
+            name: "Reports",
+            data: respLineData
+            }]
+        });
+    
+    </script>
 
 {% endblock %}
