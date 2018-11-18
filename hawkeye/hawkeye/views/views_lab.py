@@ -14,7 +14,7 @@ import os
 import datetime
 
 app.secret_key = 'secretkeyhereplease'
-
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'doc'])
 
 def allowed_file(filename):
    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -58,7 +58,6 @@ def labExistingResponse():
 @app.route('/uploads/<path:filename>')
 def uploaded_file(filename):
     print("---------------------",str(filename),"---------------")
-    #filename = str(filename)
     return send_file('uploads/'+str(filename),as_attachment=True)
 
 @app.route("/lab")
@@ -90,6 +89,6 @@ def labResponse():
                             useremail=email,
                             userid= session["user_id"],
                             labReqData=models_lab.getLabRequestDetails(email,reqid),
-                            labPresData= models.getLabPrescriptionDetails(reqid),
+                            labPresData= models_lab.getLabPrescriptionDetails(reqid),
                             userLoggedIn=True
                             )

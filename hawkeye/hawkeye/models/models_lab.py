@@ -9,7 +9,10 @@ import matplotlib.pyplot as plt
 
 # START : DEEPIKA'S FUNCTIONS
 def getLabRequests(email):
-    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID FROM ELabRequestDocument a ,LabRequest lr, LabLogin lo, LabDetails ld where lo.email= '"+email+"' and ld.email = lo.email and ld.labid= lr.labid and lr.labRequestDocumentID=a.labRequestDocumentID and lr.isPending=1;"
+    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID FROM \
+        ELabRequestDocument a ,LabRequest lr, LabLogin lo, LabDetails ld \
+        where lo.email= '"+email+"' and ld.email = lo.email \
+        and ld.labid= lr.labid and lr.labRequestDocumentID=a.labRequestDocumentID and lr.isPending=1;"
     
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
@@ -88,24 +91,25 @@ def putLabReponse(labRequestID,resultLink, description):
     format = "%Y-%m-%d"
     now = datetime.datetime.utcnow().strftime(format)
     responseTime =now
-    print(responseTime)
-    print(labRequestID)
-    print(resultLink)
-    query = "INSERT INTO LabResponse (labRequestID, description , dateTimeStamp, resultLink) VALUES ('{0}','{1}','{2}','{3}')".format(labRequestID,description,responseTime,resultLink)
-    print("----------------------query:---------------\n",query)
-    
+    query1 = "INSERT INTO LabResponse (labRequestID, description , dateTimeStamp, resultLink) VALUES ('{0}','{1}','{2}','{3}')".format(labRequestID,description,responseTime,resultLink)
+    print(query1)
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
-
-    res=cursor.execute(query)
-    conn.commit()
-
-    query = "UPDATE LabRequest SET isPending=0 WHERE labRequestDocumentID="+labRequestID+";"
-    res2=cursor.execute(query)
-    conn.commit()
-
+    res1=cursor.execute(query1)
+    mysql.get_db().commit()
+    print("Here",res1)
     cursor.close()
     conn.close()
+
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+    query2 = "UPDATE LabRequest SET isPending=0 WHERE labRequestDocumentID="+labRequestID+";"
+    res2=cursor.execute(query2)
+    mysql.get_db().commit()
+    print("WHERE??", query2 , res2)
+    cursor.close()
+    conn.close()
+
     if ((res1) and(res2)):
         print("Successful entry")
     return True
