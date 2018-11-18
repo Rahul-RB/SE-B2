@@ -24,15 +24,15 @@ def pharmacyViewRequest():
 
 @app.route("/prescriptionRequest",methods=['GET'])
 def prescriptionRequest():
-	ID = models_pharmacy.getIDByEmail(session.get("currentEmail"),session.get("accType"))
-	res = models_pharmacy.prescriptionRequest(ID)
-	return jsonify(res)
+    ID = models_pharmacy.getIDByEmail(session.get("currentEmail"),session.get("accType"))
+    res = models_pharmacy.prescriptionRequest(ID)
+    return jsonify(res)
 
 @app.route("/prescriptionResponseUpdate",methods=["POST"])
 def prescriptionResponseUpdate():
-	payload = request.get_json()
-	ID = models_pharmacy.getIDByEmail(session.get("currentEmail"),session.get("accType"))
-	res = models_pharmacy.prescriptionResponseUpdate(payload,ID)
-	return jsonify(res)
+    payload = request.get_json()
+    ID = models_pharmacy.getIDByEmail(session.get("currentEmail"),session.get("accType"))
+    res = models_pharmacy.prescriptionResponseUpdate(payload,ID)
+    return jsonify(res)
 
 #end pharmacyViewRequest
