@@ -681,10 +681,55 @@ $(document).ready(function () {
     $("#reqLabTestBtn").on("click",function(event) {
         $(".popupSearchTextBox").val("");
         $(".selectedSearchID").val("");
+        $("#reqLabDocDropdown").empty();
+        $.get('patientFetchLabDocs', function(data) {
+            console.log(data);
+            $.each(data, function(index, value) {
+                $("#reqLabDocDropdown").append("\
+                    <div class='labDoc dropdown-item' style='cursor:pointer'>"+
+                        "<div class='testType'style='font-size:20px;'><b>Test Type:</b>"+value[4]+"</div>"+
+                        "<div class='testDetails'style='font-size:15px;'>Details"+value[5]+"</div>"+
+                        "<div class='labDocID' hidden>"+value[0]+"</div>"+
+                    "</div>"
+                );
+                $(".labDoc").each(function (argument) {
+                    $(this).on('click', function(event) {
+                        // console.log($(this).children('.labDocID').text());
+                        $("#selectedLabReqDocID").val($(this).children('.labDocID').text());
+                        // console.log($(this).children('.testType').text());
+                        $("#dropdownMenuLinkLabPopup").text($(this).children('.testType').text());
+                        // console.log($("#selectedLabReqDocID").val());
+                    });
+                });
+            });
+        });
     });
     $("#bookMedicineBtn").on("click",function(event) {
         $(".popupSearchTextBox").val("");
         $(".selectedSearchID").val("");
+
+        $("#reqPrescriptionDropdown").empty();
+        $.get('patientFetchPrescriptions', function(data) {
+            console.log(data);
+            $.each(data, function(index, value) {
+                $("#reqPrescriptionDropdown").append("\
+                    <div class='prescriptionDoc dropdown-item' style='cursor:pointer'>"+
+                        "<div class='prescriptionDocID:'style='font-size:20px;'><b>Prescription ID:</b>"+value[0]+"</div>"+
+                        "<div class='prescriptionDetails'style='font-size:15px;'>Details"+value[2]+"</div>"+
+                        "<div class='prescriptionDocID' hidden>"+value[0]+"</div>"+
+                    "</div>"
+                );
+                $(".prescriptionDoc").each(function (argument) {
+                    $(this).on('click', function(event) {
+                        // console.log($(this).children('.labDocID').text());
+                        $("#selectedPrescriptionID").val($(this).children('.prescriptionDocID').text());
+                        // console.log($(this).children('.testType').text());
+                        $("#dropdownMenuLinkPrescriptionPopup").text($(this).children('.prescriptionDocID').text());
+                        // console.log($("#selectedLabReqDocID").val());
+                    });
+                });
+            });
+        });
     });
     $("#bookApptBtn").on("click",function(event) {
         $(".popupSearchTextBox").val("");
@@ -967,60 +1012,14 @@ $(document).ready(function () {
 
         var payload = {
             labID : $("#selectedLabID").val(),
-            // apptDate : getInputTypeDateByID("popupLabDate"),
-        }
-        var jsonPayload = JSON.stringify(payload);
-        console.log(jsonPayload)
-
-        // $.ajax({
-        //     url: 'patientLabRequest',
-        //     type: 'POST',
-        //     dataType: 'json',
-        //     data: jsonPayload,
-        //     contentType:"application/json; charset=UTF-8"
-        // })
-        // .done(function(data) {
-        //     console.log("success");
-        //     console.log(data);
-        //     $("#labBookMessage").append("\
-        //         <div class='alert alert-success alert-dismissible fade show' role='alert'>\
-        //             <strong>Lab request sent successfully!</strong><br> Your calendar will be updated soon.\
-        //             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
-        //                 <span aria-hidden='true'>&times;</span>\
-        //             </button>\
-        //         </div>\
-        //     ");
-        // })
-        // .fail(function(err) {
-        //     console.log("error");
-        //     console.log(err);
-        //     $("#labBookMessage").append("\
-        //         <div class='alert alert-danger alert-dismissible fade show' role='alert'>\
-        //             <strong>Server Error:</strong>"+err+".\
-        //             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
-        //                 <span aria-hidden='true'>&times;</span>\
-        //             </button>\
-        //         </div>\
-        //     ");
-        // })
-        // .always(function() {
-        //     console.log("complete");
-        // });  
-    });
-    
-    $("#medicineBookBtn").on('click',function(event) {
-        event.preventDefault();
-        /* Act on the event */
-
-        var payload = {
-            labID : $("#selectedMedicineID").val(),
-            // apptDate : getInputTypeDateByID("popupMedicineDate"),
+            apptDate : getTodayDate(),
+            labRequestDocumentID : $("#selectedLabReqDocID").val()
         }
         var jsonPayload = JSON.stringify(payload);
         console.log(jsonPayload)
 
         $.ajax({
-            url: 'patientMedicineRequest',
+            url: 'patientLabRequest',
             type: 'POST',
             dataType: 'json',
             data: jsonPayload,
@@ -1031,7 +1030,7 @@ $(document).ready(function () {
             console.log(data);
             $("#labBookMessage").append("\
                 <div class='alert alert-success alert-dismissible fade show' role='alert'>\
-                    <strong>Medicine request sent successfully!</strong><br> Your calendar will be updated soon.\
+                    <strong>Lab request sent successfully!</strong><br> Your calendar will be updated soon.\
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
                         <span aria-hidden='true'>&times;</span>\
                     </button>\
@@ -1055,124 +1054,54 @@ $(document).ready(function () {
         });
     });
     
-        
-    // END : Popup Book button fucntionality -> Booking doctor appointment, buy medicines etc.
-    
+    $("#medicineBookBtn").on('click',function(event) {
+        event.preventDefault();
+        /* Act on the event */
 
-    // Seven types of continuous fetch I've to do:
-    //      1. Fetch all reminders - medicine, doc visit, lab test
-    //      2. Fetch all doctor appointments
-    //      3. Previous Prescriptions
-    //      4. Lab Requests
-    //      5. Lab Responses
-    //      6. Medicine Requests
-    //      7. Medicine Responses
-    
-    // // START : 1. EventSource : Reminder fetch and update calendar
-    // var pcr = new EventSource("/patientCalendarReminderUpdate");
-    // pcr.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES1> PCR success:",event.data);
-    // });
+        var payload = {
+            ePrescriptionID: $("#selectedPrescriptionID").val(),
+            pharmacyID : $("#selectedPharmacyID").val(),
+            pickupTime : getTodayDate(),
 
-    // pcr.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // pcr.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 1. EventSource : Reminder fetch and update calendar
+        }
+        var jsonPayload = JSON.stringify(payload);
+        console.log(jsonPayload)
 
-    // // START : 2. EventSource : Appointment fetch and update calendar
-    // var pda = new EventSource("/patientDoctorAppointment");
-    // pda.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES2> PDA success:",event.data);
-    // });
-
-    // pda.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // pda.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 2. EventSource : Appointment fetch and update calendar
-
-    // // START : 3. EventSource : Prescription fetch and update calendar
-    // var pfp = new EventSource("/patientFetchPrescriptions");
-    // pfp.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES3> PFP success:",event.data);
-    // });
-
-    // pfp.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // pfp.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 3. EventSource : Prescription fetch and update calendar
-
-    // // START : 4. EventSource : LabRequest fetch and update calendar
-    // var plReq = new EventSource("/patientLabRequest");
-    // plReq.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES4> PLReq success:",event.data);
-    // });
-
-    // plReq.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // plReq.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 4. EventSource : LabRequest fetch and update calendar
-
-    // // START : 5. EventSource : LabRequest fetch and update calendar
-    // var plResp = new EventSource("/patientLabResponse");
-    // plResp.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES5> PLResp success:",event.data);
-    // });
-
-    // plResp.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // plResp.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 5. EventSource : LabRequest fetch and update calendar
-
-    // // START : 6. EventSource : MedicineRequest fetch and update calendar
-    // var pmReq = new EventSource("/patientMedicineRequest");
-    // pmReq.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES6> PMReq success:",event.data);
-    // });
-
-    // pmReq.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // pmReq.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 6. EventSource : MedicineRequest fetch and update calendar
-
-    // // START : 7. EventSource : MedicineResponse fetch and update calendar
-    // var pmResp = new EventSource("/patientMedicineResponse");
-    // pmResp.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES7> PMResp success:",event.data);
-    // });
-
-    // pmResp.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // pmResp.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 7. EventSource : MedicineResponse fetch and update calendar
-
+        $.ajax({
+            url: 'patientMedicineRequest',
+            type: 'POST',
+            dataType: 'json',
+            data: jsonPayload,
+            contentType:"application/json; charset=UTF-8"
+        })
+        .done(function(data) {
+            console.log("success");
+            console.log(data);
+            $("#medicineBookMessage").append("\
+                <div class='alert alert-success alert-dismissible fade show' role='alert'>\
+                    <strong>Medicine request sent successfully!</strong><br> Your calendar will be updated soon.\
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+                        <span aria-hidden='true'>&times;</span>\
+                    </button>\
+                </div>\
+            ");
+        })
+        .fail(function(err) {
+            console.log("error");
+            console.log(err);
+            $("#medicineBookMessage").append("\
+                <div class='alert alert-danger alert-dismissible fade show' role='alert'>\
+                    <strong>Server Error:</strong>"+err+".\
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+                        <span aria-hidden='true'>&times;</span>\
+                    </button>\
+                </div>\
+            ");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    });
 
     /* End Adding your javascript here */
 });

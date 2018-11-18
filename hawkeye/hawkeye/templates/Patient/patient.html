@@ -47,6 +47,7 @@
                                         <div class="d-flex flex-row justify-content-around"> 
                                             <input type="text" name="popupLabSearch" class="popupSearchTextBox" id="popupLabSearch" placeholder="Search for labs"> 
                                             <input type="text" class="selectedSearchID" id="selectedLabID" hidden>
+                                            <input type="text" id="selectedLabReqDocID" hidden>
                                             <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
                                         </div>
                                         <div class="searchTextBoxResults" id="popupLabSearchResults">
@@ -57,15 +58,15 @@
                                                 Choose a Lab Document
                                             </a>
 
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkLabPopup">
-                                                <a class="dropdown-item" href="#">Action</a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkLabPopup" id="reqLabDocDropdown">
+<!--                                                 <a class="dropdown-item" href="#">Action</a>
                                                 <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
+                                                <a class="dropdown-item" href="#">Something else here</a> -->
                                             </div>
                                         </div>
-<!--                                         <div class="d-flex flex-row justify-content-around"> 
-                                            <input type="date" class="form-control noRadiusBtn" id="popupLabDate" placeholder="Pick a date">
-                                        </div> -->
+                                        <div class="d-flex flex-row justify-content-around"> 
+                                            <!-- <input type="date" class="form-control noRadiusBtn" id="popupLabDate" placeholder="Pick a date"> -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>                            
@@ -84,18 +85,19 @@
                         <!-- Buy Medicines -->
 
                         <div id="basic2" class="popupWrapperDiv">
-                                <div id="labBookMessage">
+                                <div id="medicineBookMessage">
                                     
                                 </div>
                                 <div class="container-fluid">
                                 <div class="row justify-content-center">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 popupDiv">
                                         <div class="d-flex flex-row justify-content-around"> 
-                                            <input type="text" name="popupMedicineSearch" class="popupSearchTextBox" id="popupMedicineSearch" placeholder="Search for pharmacies">
-                                            <input type="text" class="selectedSearchID" id="selectedMedicineID" hidden>
+                                            <input type="text" name="popupMedicineSearch" class="popupSearchTextBox" id="popupPharmacySearch" placeholder="Search for pharmacies">
+                                            <input type="text" class="selectedSearchID" id="selectedPharmacyID" hidden>
+                                            <input type="text" id="selectedPrescriptionID" hidden>
                                             <button name="searchBtn" class="searchBtn"><i class="fas fa-search"></i></button>
                                         </div>
-                                        <div class="searchTextBoxResults" id="popupMedicineSearchResults">
+                                        <div class="searchTextBoxResults" id="popupPharmacySearchResults">
                                             
                                         </div>                                        
                                         <div class="dropdown show">
@@ -103,10 +105,10 @@
                                                 Choose a prescription
                                             </a>
 
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkPrescriptionPopup">
-                                                <a class="dropdown-item" href="#">Action</a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkPrescriptionPopup" id="reqPrescriptionDropdown">
+<!--                                                 <a class="dropdown-item" href="#">Action</a>
                                                 <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
+                                                <a class="dropdown-item" href="#">Something else here</a> -->
                                             </div>
                                         </div>
 <!--                                         <div class="d-flex flex-row justify-content-around"> 

@@ -169,8 +169,8 @@ def patientLabRequest(ID,payload,method): #ID is labID if POST, patientID if GET
         # return json of available times.
 
         query = "INSERT INTO LabRequest VALUES ('{0}','{1}','{2}','{3}')".format(\
-                payload["labDocID"],
-                labID,
+                payload["labRequestDocumentID"],
+                payload["labID"],
                 payload["apptDate"],
                 1
             )
@@ -232,10 +232,11 @@ def patientMedicineRequest(ID,payload,method):
         # get date from form
         # return json of available times.
 
-        query = "INSERT INTO MedicineRequest VALUES ('{0}','{1}','{2}','{3}')".format(\
-                payload["labDocID"],
-                labID,
-                payload["apptDate"],
+        query = "INSERT INTO MedicineRequest VALUES ('{0}','{1}','{2}','{3}','{4}')".format(\
+                payload["ePrescriptionID"],
+                ID,
+                payload["pharmacyID"],
+                payload["pickupTime"],
                 1
             )
         conn = mysql.connect()
@@ -365,4 +366,22 @@ def getELabRequestDocumentByID(ID):
     for i,result in enumerate(data):
         res[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3]),str(result[4])]
     print("---------res-----------",res)
+    return res
+
+def patientFetchLabDocs(patientID):
+    query = "SELECT * FROM ELabRequestDocument WHERE patientID='{0}'".format(patientID)
+
+    conn = mysql.connect()
+
+    cursor =mysql.get_db().cursor()
+    queryResults = cursor.execute(query)
+    data = cursor.fetchall()
+    res = {}
+    
+    for i,result in enumerate(data):
+        res[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3]),str(result[4]),str(result[5])]
+
+    cursor.close()
+    conn.close()
+
     return res
