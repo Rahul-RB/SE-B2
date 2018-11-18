@@ -10,20 +10,14 @@
 {% block customContent %}
     <div class="container -fluid" style="margin-top: 50px">
         <div class="row">
-            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
-            <div class="col-xl-10 col-lg-10 col-md-10 col-12">
-              <div id="piecontainer" style="height: 400px"></div>
+           
+            <div class="col-xl-4 col-lg-4 col-md-10 col-12">
+              <div id="piecontainer" style="height: 400px" style="padding: 10px 10px 10px 10px;"></div>
             </div>
-            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
-        </div>
-        <div class="row" style="padding: 10px 10px 10px 10px;">
-        </div>
-        <div class="row">
-            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
-            <div class="col-xl-10 col-lg-10 col-md-10 col-12 table-responsive-sm">
+            <div class="col-xl-8 col-lg-8 col-md-10 col-12 table-responsive-sm" tyle="padding: 10px 10px 10px 10px;">
               <div id="linecontainer" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
             </div>
-            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+            
         </div>
         <div class="row" style="padding: 10px 10px 10px 10px;">
         </div>
@@ -131,6 +125,21 @@
             </div>
             <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
         </div>
+        <div class="row" id="">
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+            <div class="col-10">
+                <hr class="my-5">
+            </div> 
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>       
+        </div>
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
+            <div class="col-md "> </div>
+            <div class="col-md text-right">
+                <a href= {{ url_for('lab') }} > <button type="button" class="btn btn-primary" >Refresh </button> </a>         
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
+        </div>
          <div class="row" style="padding: 10px 10px 10px 10px;">
         </div>
 
@@ -149,6 +158,7 @@
     <script src="https://code.highcharts.com/modules/series-label.js"></script>
 
     <script type=text/javascript>
+    /*PieChart*/
         Highcharts.chart('piecontainer', {
           chart: {
             type: 'pie',
@@ -179,37 +189,36 @@
             type: 'pie',
             name: 'Test Request share',
             data: {{ labPieData | tojson | safe }}
-            /*[
-              ['BloodTest', 3],
-              ['Xray', 2],
-              ['ECG', 1],
-              ['SugarCheckup', 0.5],
-              ['Other',0.5]
-            ]*/
+           
           }]
         });
     </script>
     <script type="text/javascript">
+        /*Cleaning data for Line Chart*/
+        /*LabRequest Timeline Data*/
+        var reqObj= {{ lablineReqData | tojson | safe }};
 
-    var reqObj= {{ lablineReqData | tojson | safe }};
+        var reqLineData= new Array();
 
-    var reqLineData= new Array();
-    for (i=0;i<reqObj.length;i++){
-        var entry= reqObj[i];
-        var date_str= entry[0];
-        date_str= date_str.split('-');
-        reqLineData.push(new Array( Date.UTC(parseInt(date_str[0]),parseInt(date_str[1]),parseInt(date_str[2])) , entry[1]));
-    }
+        /*Converting date to Date.UTC*/
+        for (i=0;i<reqObj.length;i++){
+            var entry= reqObj[i];
+            var date_str= entry[0];
+            date_str= date_str.split('-');
+            reqLineData.push(new Array( Date.UTC(parseInt(date_str[0]),parseInt(date_str[1]),parseInt(date_str[2])) , entry[1]));
+        }
+        /*LabResponse Timeline Data*/
+        var respObj= {{ lablineRespData | tojson | safe }};
 
-    var respObj= {{ lablineRespData | tojson | safe }};
-
-    var respLineData= new Array();
-    for (i=0;i<respObj.length;i++){
-        var entry= respObj[i];
-        var date_str= entry[0];
-        date_str= date_str.split('-');
-        respLineData.push(new Array( Date.UTC(parseInt(date_str[0]),parseInt(date_str[1]),parseInt(date_str[2])) , entry[1]));
-    }
+        /*Converting date to Date.UTC*/
+        var respLineData= new Array();
+        for (i=0;i<respObj.length;i++){
+            var entry= respObj[i];
+            var date_str= entry[0];
+            date_str= date_str.split('-');
+            respLineData.push(new Array( Date.UTC(parseInt(date_str[0]),parseInt(date_str[1]),parseInt(date_str[2])) , entry[1]));
+        }
+        /*LineChart*/
 
         Highcharts.chart('linecontainer', {
           chart: {
@@ -255,44 +264,12 @@
           series: [{
             name: "Requests",
             data: reqLineData
-            //{{ lablineReqData | tojson | safe }}
-
-            /*[
-              [Date.UTC(1970, 10, 25), 0],
-              [Date.UTC(1970, 11,  6), 0.25],
-              [Date.UTC(1970, 11, 20), 1.41],
-              [Date.UTC(1970, 11, 25), 1.64],
-              [Date.UTC(1971, 0,  4), 1.6],
-              [Date.UTC(1971, 0, 17), 2.55],
-              [Date.UTC(1971, 0, 24), 2.62],
-              [Date.UTC(1971, 1,  4), 2.5],
-              [Date.UTC(1971, 1,  1), 2.81],
-              [Date.UTC(1971, 1, 11), 2.63]
-            ]*/
-          } ,{
+            },
+            {
             name: "Reports",
             data: respLineData
-            /*[
-              [Date.UTC(1970, 10,  9), 0],
-              [Date.UTC(1970, 10, 15), 0.23],
-              [Date.UTC(1970, 10, 20), 0.25],
-              [Date.UTC(1970, 10, 25), 0.23],
-              [Date.UTC(1970, 10, 30), 0.39],
-              [Date.UTC(1970, 11,  5), 0.41],
-              [Date.UTC(1970, 11, 10), 0.59],
-              [Date.UTC(1970, 11, 15), 0.73],
-              [Date.UTC(1970, 11, 20), 0.41],
-              [Date.UTC(1970, 11, 25), 1.07],
-              [Date.UTC(1970, 11, 30), 0.88],
-              [Date.UTC(1971, 0,  5), 0.85],
-              [Date.UTC(1971, 0, 11), 0.89],
-              [Date.UTC(1971, 0, 17), 1.04],
-              [Date.UTC(1971, 0, 20), 1.02],
-              [Date.UTC(1971, 0, 25), 1.03]
-            ]*/
-          }
-        ]
-    });
+            }]
+        });
     
     </script>
 

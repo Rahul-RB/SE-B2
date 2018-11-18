@@ -31,7 +31,7 @@ def upload_file():
           labRequestId=str(request.form["labReqId"])
           description=str(request.form["message"])
           print(labRequestId, description)
-          format = "%Y-%m-%dT%H:%M:%S"
+          format = "%Y%m%d%H%M%S"
           now = datetime.datetime.utcnow().strftime(format)
           filename = now + '_' +str(session["user_id"]) + '_' + file.filename
           filename = secure_filename(filename)
