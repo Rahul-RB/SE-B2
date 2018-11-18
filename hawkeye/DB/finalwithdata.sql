@@ -241,7 +241,6 @@ CREATE TABLE DoctorAppointments (
     FOREIGN KEY (patientID) REFERENCES PatientDetails (patientID)  ,
     FOREIGN KEY (doctorID) REFERENCES DoctorDetails (doctorID)
 );
--- PRIMARY KEY (doctorID,patientID)
  -- No entres requried
 
 -- reminderDate and reminderTime for order medicines only
