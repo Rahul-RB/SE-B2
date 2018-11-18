@@ -383,7 +383,9 @@ $(document).ready(function () {
                     <div class='individualRowTwoItem list-group-item' id='prescription"+index+"'data-toggle='modal' data-target='#prescriptionModal'>\
                         Prescription "+(index)+"\
                     </div>");
-                $("#prescription"+index).each(function(index, el) {
+                $("#prescription"+index).on("click",function(event) {
+                    // $("#prescriptionsViewCol").empty();
+                    $("#prescriptionModalBody").empty();
                     $("#prescriptionModalLongTitle").text("Prescription "+(index));
                     $("#prescriptionModalBody").append("\
                         <div> <b> Prescription ID: </b>"+value[0]+"</div>\
@@ -504,7 +506,9 @@ $(document).ready(function () {
                     <div class='individualRowTwoItem list-group-item' id='labResp"+index+"'data-toggle='modal' data-target='#labRespModal'>\
                         Response "+(index)+"\
                     </div>");
-                $("#labResp"+index).each(function(index, el) {
+                $("#labResp"+index).on("click",function(event) {
+                    $("#labRespModalBody").empty();
+                    
                     $("#labRespModalLongTitle").text("Response "+(index));
                     $("#labRespModalBody").append("\
                         <div> <b> Result Link : </b><a href='"+value[2]+"'> Click Here </a></div>\
@@ -563,7 +567,8 @@ $(document).ready(function () {
                     <div class='individualRowTwoItem list-group-item' id='medReq"+index+"'data-toggle='modal' data-target='#medReqModal'>\
                         Request "+(index)+"\
                     </div>");
-                $("#medReq"+index).each(function(index, el) {
+                $("#medReq"+index).on("click",function(event) {
+                    $("#medReqModalBody").empty();
                     $("#medReqModalLongTitle").text("Request "+(index));
                     $("#medReqModalBody").append("\
                         <div><b> Delivery Time : </b>"+value[3]+"</div>\
@@ -623,7 +628,8 @@ $(document).ready(function () {
                     <div class='individualRowTwoItem list-group-item' id='medResp"+index+"'data-toggle='modal' data-target='#medRespModal'>\
                         Responses "+(index)+"\
                     </div>");
-                $("#medResp"+index).each(function(index, el) {
+                $("#medResp"+index).on("click",function(event) {
+                    $("#medRespModalBody").empty();
                     $("#medRespModalLongTitle").text("Responses "+(index));
                     $("#medRespModalBody").append("\
                         <div><b>Remarks : </b>"+value[3]+"</div>\
@@ -775,7 +781,7 @@ $(document).ready(function () {
                     data: inpData,
                 })
                 .done(function(data) {
-
+                    console.log(data);
                     if(!data.hasOwnProperty("data"))//make divs and put data
                     {
                         $.each(data, function(index, val) {
@@ -790,13 +796,14 @@ $(document).ready(function () {
                                     "</div>\
                                 </div>\
                             ");
-                            $(".popupSearchResultsDiv").on('click', function(event) {
-                                /* Act on the event */
-                                console.log("$('.popupSearchResultsName').text():",$(".popupSearchResultsName").text());
-                                $(".popupSearchTextBox").val($(".popupSearchResultsName").text());
-                                $(".selectedSearchID").val($(".popupSearchResultsID").text());
-                                $("#popup"+inpData["resType"]+"SearchResults").empty();
-                            }); 
+                            $(".popupSearchResultsDiv").each(function(index,el){
+                                $(this).on('click', function(event) {
+                                    /* Act on the event */
+                                    $("#popup"+inpData["resType"]+"Search").val($(this).text());
+                                    $("#selected"+inpData["resType"]+"ID").val($(this).children(".popupSearchResultsID").text());
+                                    $("#popup"+inpData["resType"]+"SearchResults").empty();
+                                });
+                            });
                         });
                     }
                 })
@@ -896,7 +903,7 @@ $(document).ready(function () {
     // For doctor appt booking:
     $("#popupDoctorDate").on('blur', function(event) {
         //might need to clear old doctorID and inpDate
-
+        $(".timeScroller").empty();
         var doctorID = $("#selectedDoctorID").val();
         var inpDate = getInputTypeDateByID("popupDoctorDate");
         setAvailableTimeSlots(doctorID,inpDate);
