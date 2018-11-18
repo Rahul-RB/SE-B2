@@ -752,7 +752,8 @@ $(document).ready(function () {
         }
         else if(name.search("Medicine")!=-1)
         {
-            return "Medicine";
+            // return "Medicine";
+            return "Pharmacy";
         }
         else if(name.search("Lab")!=-1)
         {
@@ -971,40 +972,40 @@ $(document).ready(function () {
         var jsonPayload = JSON.stringify(payload);
         console.log(jsonPayload)
 
-        $.ajax({
-            url: 'patientLabRequest',
-            type: 'POST',
-            dataType: 'json',
-            data: jsonPayload,
-            contentType:"application/json; charset=UTF-8"
-        })
-        .done(function(data) {
-            console.log("success");
-            console.log(data);
-            $("#labBookMessage").append("\
-                <div class='alert alert-success alert-dismissible fade show' role='alert'>\
-                    <strong>Lab request sent successfully!</strong><br> Your calendar will be updated soon.\
-                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
-                        <span aria-hidden='true'>&times;</span>\
-                    </button>\
-                </div>\
-            ");
-        })
-        .fail(function(err) {
-            console.log("error");
-            console.log(err);
-            $("#labBookMessage").append("\
-                <div class='alert alert-danger alert-dismissible fade show' role='alert'>\
-                    <strong>Server Error:</strong>"+err+".\
-                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
-                        <span aria-hidden='true'>&times;</span>\
-                    </button>\
-                </div>\
-            ");
-        })
-        .always(function() {
-            console.log("complete");
-        });  
+        // $.ajax({
+        //     url: 'patientLabRequest',
+        //     type: 'POST',
+        //     dataType: 'json',
+        //     data: jsonPayload,
+        //     contentType:"application/json; charset=UTF-8"
+        // })
+        // .done(function(data) {
+        //     console.log("success");
+        //     console.log(data);
+        //     $("#labBookMessage").append("\
+        //         <div class='alert alert-success alert-dismissible fade show' role='alert'>\
+        //             <strong>Lab request sent successfully!</strong><br> Your calendar will be updated soon.\
+        //             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+        //                 <span aria-hidden='true'>&times;</span>\
+        //             </button>\
+        //         </div>\
+        //     ");
+        // })
+        // .fail(function(err) {
+        //     console.log("error");
+        //     console.log(err);
+        //     $("#labBookMessage").append("\
+        //         <div class='alert alert-danger alert-dismissible fade show' role='alert'>\
+        //             <strong>Server Error:</strong>"+err+".\
+        //             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+        //                 <span aria-hidden='true'>&times;</span>\
+        //             </button>\
+        //         </div>\
+        //     ");
+        // })
+        // .always(function() {
+        //     console.log("complete");
+        // });  
     });
     
     $("#medicineBookBtn").on('click',function(event) {

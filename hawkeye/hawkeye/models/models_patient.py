@@ -94,7 +94,7 @@ def patientCalendarReminderUpdate(patientID):
 
 def patientDoctorAppointment(patientID,payload,method):
     if(method=="GET"):
-        query = "SELECT doctorID,dateStamp,pickATime FROM DoctorAppointments WHERE patientID='{0}' AND addedToDoctorCalendar=0".format(\
+        query = "SELECT doctorID,dateStamp,pickATime FROM DoctorAppointments WHERE patientID='{0}'".format(\
                 patientID
             )
 
@@ -105,7 +105,6 @@ def patientDoctorAppointment(patientID,payload,method):
         cursor.close()
 
         conn.close()
-        
         doctorApptRes = {}
 
         for i,result in enumerate(data):
