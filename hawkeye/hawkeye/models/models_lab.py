@@ -9,7 +9,10 @@ import matplotlib.pyplot as plt
 
 # START : DEEPIKA'S FUNCTIONS
 def getLabRequests(email):
-    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID FROM ELabRequestDocument a ,LabRequest lr, LabLogin lo, LabDetails ld where lo.email= '"+email+"' and ld.email = lo.email and ld.labid= lr.labid and lr.labRequestDocumentID=a.labRequestDocumentID and lr.isPending=1;"
+    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID FROM \
+        ELabRequestDocument a ,LabRequest lr, LabLogin lo, LabDetails ld \
+        where lo.email= '"+email+"' and ld.email = lo.email \
+        and ld.labid= lr.labid and lr.labRequestDocumentID=a.labRequestDocumentID and lr.isPending=1;"
     
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
@@ -24,7 +27,10 @@ def getLabRequests(email):
     return (res)
 
 def getLabResponses(email):
-    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID FROM ELabRequestDocument a ,LabRequest lr, LabLogin lo, LabDetails ld where lo.email= '"+email+"' and ld.email = lo.email and ld.labid= lr.labid and lr.labRequestDocumentID=a.labRequestDocumentID and lr.isPending=0;"
+    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID \
+           FROM ELabRequestDocument a ,LabRequest lr, LabLogin lo, LabDetails ld \
+           where lo.email= '"+email+"' and ld.email = lo.email and ld.labid= lr.labid \
+           and lr.labRequestDocumentID=a.labRequestDocumentID and lr.isPending=0;"
 
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
@@ -39,7 +45,9 @@ def getLabResponses(email):
     return (res)
 
 def getLabRequestDetails(email, reqid):
-    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID, a.testType, a.description FROM ELabRequestDocument a, LabRequest lr WHERE a.labRequestDocumentID='"+reqid+"' and a.labRequestDocumentID= lr.labRequestDocumentID ;"
+    query="SELECT  a.patientID, a.doctorID , a.labRequestDocumentID, a.testType, \
+           a.description FROM ELabRequestDocument a, LabRequest lr WHERE \
+           a.labRequestDocumentID='"+reqid+"' and a.labRequestDocumentID= lr.labRequestDocumentID ;"
 
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
@@ -55,7 +63,10 @@ def getLabRequestDetails(email, reqid):
 
 
 def getLabPrescriptionDetails(reqid):
-    query="SELECT  md.ePrescriptionID, md.symptoms, md.medicineSuggestion, md.timeToTake, md.startDate, md.endDate from MedicineDetails md, ELabRequestDocument elrd where elrd.labRequestDocumentID = "+reqid+ " and elrd. ePrescriptionID = md.ePrescriptionID;"
+    query="SELECT  md.ePrescriptionID, md.symptoms, md.medicineSuggestion,\
+           md.timeToTake, md.startDate, md.endDate from MedicineDetails md, \
+           ELabRequestDocument elrd where elrd.labRequestDocumentID = "+reqid+ " \
+           and elrd. ePrescriptionID = md.ePrescriptionID;"
     
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
@@ -85,33 +96,27 @@ def getLabId(email) :
     return (res)
 
 def putLabReponse(labRequestID,resultLink, description):
-    #responseTime = datetime.datetime.strptime(str(datetime.datetime.now()), "%Y-%m-%d %H:%M:%S")
     format = "%Y-%m-%d"
     now = datetime.datetime.utcnow().strftime(format)
     responseTime =now
-    print(responseTime)
-    print(labRequestID)
-    print(resultLink)
-    #query = "INSERT INTO LabResponse ('labRequestID','resultLink', 'description','dateTimeStamp') VALUES  ('"+ labRequestID+"','"+(resultLink)+"','"+description+"','"+ responseTime+"';"
-    #query = "INSERT INTO LabResponse ('labRequestID', 'description','dateTimeStamp') VALUES  (%s,%s,%s)"
-    #query = "INSERT INTO Files Values ('"+resultLink+"');"
-    query = "INSERT INTO LabResponse (labRequestID, description , dateTimeStamp, resultLink) VALUES ('{0}','{1}','{2}','{3}')".format(labRequestID,description,responseTime,resultLink)
-    print("----------------------query:---------------\n",query)
-    # res=cursor.execute("INSERT INTO LabResponse ('labRequestID', 'description') VALUES  (%s,%s)",(labRequestID,description))
+    query1 = "INSERT INTO LabResponse (labRequestID, description , dateTimeStamp, resultLink) \
+              VALUES ('{0}','{1}','{2}','{3}')".format(labRequestID,description,responseTime,resultLink)
+    #print(query1)
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+    res1=cursor.execute(query1)
+    mysql.get_db().commit()
+    cursor.close()
+    conn.close()
 
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
-
-    res=cursor.execute(query)
-    conn.commit()
-
-    query = "UPDATE LabRequest SET isPending=0 WHERE labRequestDocumentID="+labRequestID+";"
-    res2=cursor.execute(query)
-    conn.commit()
-
+    query2 = "UPDATE LabRequest SET isPending=0 WHERE labRequestDocumentID="+labRequestID+";"
+    res2=cursor.execute(query2)
+    mysql.get_db().commit()
     cursor.close()
     conn.close()
-    #res=1
+
     if ((res1) and(res2)):
         print("Successful entry")
     return True
@@ -130,6 +135,92 @@ def getLabReportFilename(reqid):
     
     print(res[0][0])
     return res[0][0]
+
+#Function to get at max the top 4 types of LabTests
+def getTop4Request(labid):
+    # query1= "SELECT testType, COUNT(testType) FROM ELabRequestDocument GROUP BY testType \
+    #         ORDER BY COUNT(testType) DESC LIMIT 4;"
+    query1= "SELECT rd.testType, COUNT(rd.testType) FROM ELabRequestDocument rd, LabRequest lr \
+            WHERE rd.labRequestDocumentID= lr.labRequestDocumentID and \
+            lr.labID= '"+labid+"' GROUP BY rd.testType \
+            ORDER BY COUNT(rd.testType) DESC LIMIT 4;"
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+
+    cursor.execute(query1)
+    res1=cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    # query2= "SELECT COUNT(*) FROM ELabRequestDocument;"
+    query2= "SELECT COUNT(*) FROM ELabRequestDocument rd , LabRequest lr \
+             WHERE rd.labRequestDocumentID= lr.labRequestDocumentID and \
+             lr.labID= '"+labid+"';"
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+
+    cursor.execute(query2)
+    res2=cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    print(res1)
+    print("==\n",res2)
+    data=[]
+    sum=0;
+    if (res1) and (res2):
+        for tuple in res1:
+            data.append([str(tuple[0]),tuple[1]])
+            sum+=tuple[1]
+        data.append(["Other",res2[0][0]-sum])
+        print(data)
+    return (data);
+
+def getNumberOfResponses(labid):
+    # query="select DATE(dateTimeStamp) , COUNT(DATE(dateTimeStamp)) from LabRequest\
+    #        where isPending=0 group by DATE(dateTimeStamp) order by DATE(dateTimeStamp) ;"
+    query="select DATE(dateTimeStamp) , COUNT(DATE(dateTimeStamp)) from LabRequest\
+           where isPending=0 and labID='"+labid+"' group by DATE(dateTimeStamp) \
+           order by DATE(dateTimeStamp) ;"
+
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+
+    cursor.execute(query)
+    res=cursor.fetchall()
+    cursor.close()
+    conn.close()
+    format = "%Y-%m-%d"
+    data=[]
+    if(res):
+        for tuple in res:
+            data.append([str(tuple[0]),tuple[1]])
+    print(data)
+
+    return data
+
+def getNumberOfRequests(labid):
+    # query="select DATE(dateTimeStamp) , COUNT(DATE(dateTimeStamp)) from LabRequest \
+    #        group by DATE(dateTimeStamp) order by DATE(dateTimeStamp) ;"
+    query="select DATE(dateTimeStamp) , COUNT(DATE(dateTimeStamp)) from LabRequest\
+           where labID='"+labid+"' group by DATE(dateTimeStamp) \
+           order by DATE(dateTimeStamp) ;"
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+
+    cursor.execute(query)
+    res=cursor.fetchall()
+    cursor.close()
+    conn.close()
+    format = "%Y-%m-%d"
+    data=[]
+    if(res):
+        for tuple in res:
+            data.append([str(tuple[0]),tuple[1]])
+    return data
+
 
 
 

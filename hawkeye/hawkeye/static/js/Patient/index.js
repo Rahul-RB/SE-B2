@@ -383,7 +383,9 @@ $(document).ready(function () {
                     <div class='individualRowTwoItem list-group-item' id='prescription"+index+"'data-toggle='modal' data-target='#prescriptionModal'>\
                         Prescription "+(index)+"\
                     </div>");
-                $("#prescription"+index).each(function(index, el) {
+                $("#prescription"+index).on("click",function(event) {
+                    // $("#prescriptionsViewCol").empty();
+                    $("#prescriptionModalBody").empty();
                     $("#prescriptionModalLongTitle").text("Prescription "+(index));
                     $("#prescriptionModalBody").append("\
                         <div> <b> Prescription ID: </b>"+value[0]+"</div>\
@@ -504,7 +506,9 @@ $(document).ready(function () {
                     <div class='individualRowTwoItem list-group-item' id='labResp"+index+"'data-toggle='modal' data-target='#labRespModal'>\
                         Response "+(index)+"\
                     </div>");
-                $("#labResp"+index).each(function(index, el) {
+                $("#labResp"+index).on("click",function(event) {
+                    $("#labRespModalBody").empty();
+                    
                     $("#labRespModalLongTitle").text("Response "+(index));
                     $("#labRespModalBody").append("\
                         <div> <b> Result Link : </b><a href='"+value[2]+"'> Click Here </a></div>\
@@ -546,12 +550,63 @@ $(document).ready(function () {
         });
     })();
     
-    // // Get all MedicineRequest.
+    // Get all MedicineRequest.
     // setInterval(function worker6() {
     //     $.get('patientMedicineRequest', function(data) {
     //         console.log("<GET:6> success",data);
     //     });
     // },10000);
+    (function worker6() {
+        $.get('patientMedicineRequest', function(data) {
+            console.log("<GET:6> success",data);
+            $("#medReqDiv").empty();
+            $("#medReqModalBody").empty();
+            $.each(data, function(index, value) {
+                /* iterate through array or object */
+                $("#medReqDiv").append("\
+                    <div class='individualRowTwoItem list-group-item' id='medReq"+index+"'data-toggle='modal' data-target='#medReqModal'>\
+                        Request "+(index)+"\
+                    </div>");
+                $("#medReq"+index).on("click",function(event) {
+                    $("#medReqModalBody").empty();
+                    $("#medReqModalLongTitle").text("Request "+(index));
+                    $("#medReqModalBody").append("\
+                        <div><b> Delivery Time : </b>"+value[3]+"</div>\
+                    ");
+
+                    var inpData={
+                        ID:value[2],
+                        accType:"Pharmacy"
+                    };
+                    // Fetch Lab request document details
+                    $.ajax({
+                        url: 'getDetailsByID',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: inpData,
+                    })
+                    .done(function(data) {
+                        console.log("Order data:",data);
+                        $("#medReqModalBody").append("\
+                            <div><b> Issued to Pharmacy : </b>"+value[2]+"</div>\
+                            <div style='margin-left:20px'><b>Pharmacy Name : </b>"+data[0][1]+" </div>\
+                            <div style='margin-left:20px'><b>Address : </b>"+data[0][2]+" </div>\
+                            <div style='margin-left:20px'><b>Phone No : </b>"+data[0][3]+" </div>\
+                            <div style='margin-left:20px'><b>Email : </b>"+data[0][4]+" </div>\
+                        ");
+
+                    })
+                    .fail(function(err) {
+                        console.log("error");
+                        console.log(err);
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });                    
+                });
+            });
+        });
+    })();
     
     // // Get all MedicineResponse.
     // setInterval(function worker7() {
@@ -559,6 +614,57 @@ $(document).ready(function () {
     //         console.log("<GET:7> success",data);
     //     });
     // },10000);
+
+    (function worker7() {
+        $.get('patientMedicineResponse', function(data) {
+            console.log("<GET:7> success",data);
+            
+            $("#medRespDiv").empty();
+            $("#medRespModalBody").empty();
+
+            $.each(data, function(index, value) {
+                /* iterate through array or object */
+                $("#medRespDiv").append("\
+                    <div class='individualRowTwoItem list-group-item' id='medResp"+index+"'data-toggle='modal' data-target='#medRespModal'>\
+                        Responses "+(index)+"\
+                    </div>");
+                $("#medResp"+index).on("click",function(event) {
+                    $("#medRespModalBody").empty();
+                    $("#medRespModalLongTitle").text("Responses "+(index));
+                    $("#medRespModalBody").append("\
+                        <div><b>Remarks : </b>"+value[3]+"</div>\
+                    ");
+
+                    var inpData = {
+                        ID:value[1]
+                    };
+                    // Fetch Prescription details
+                    $.ajax({
+                        url: 'getMedicineDetailsByEPrescriptionID',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: inpData,
+                    })
+                    .done(function(data) {
+                        console.log("Order data:",data);
+                        $("#medRespModalBody").append("\
+                            <div><b> Issued for Prescription : </b>"+value[1]+"</div>\
+                            <div style='margin-left:20px'><b>Symptoms:                  </b>"+data[0][0]+" </div>\
+                            <div style='margin-left:20px'><b>Medicines Suggested:       </b>"+data[0][1]+" </div>\
+                        ");
+
+                    })
+                    .fail(function(err) {
+                        console.log("error");
+                        console.log(err);
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
+                });
+            });
+        });
+    })();
     
 
     // START: Popup defaults
@@ -575,10 +681,55 @@ $(document).ready(function () {
     $("#reqLabTestBtn").on("click",function(event) {
         $(".popupSearchTextBox").val("");
         $(".selectedSearchID").val("");
+        $("#reqLabDocDropdown").empty();
+        $.get('patientFetchLabDocs', function(data) {
+            console.log(data);
+            $.each(data, function(index, value) {
+                $("#reqLabDocDropdown").append("\
+                    <div class='labDoc dropdown-item' style='cursor:pointer'>"+
+                        "<div class='testType'style='font-size:20px;'><b>Test Type:</b>"+value[4]+"</div>"+
+                        "<div class='testDetails'style='font-size:15px;'>Details"+value[5]+"</div>"+
+                        "<div class='labDocID' hidden>"+value[0]+"</div>"+
+                    "</div>"
+                );
+                $(".labDoc").each(function (argument) {
+                    $(this).on('click', function(event) {
+                        // console.log($(this).children('.labDocID').text());
+                        $("#selectedLabReqDocID").val($(this).children('.labDocID').text());
+                        // console.log($(this).children('.testType').text());
+                        $("#dropdownMenuLinkLabPopup").text($(this).children('.testType').text());
+                        // console.log($("#selectedLabReqDocID").val());
+                    });
+                });
+            });
+        });
     });
     $("#bookMedicineBtn").on("click",function(event) {
         $(".popupSearchTextBox").val("");
         $(".selectedSearchID").val("");
+
+        $("#reqPrescriptionDropdown").empty();
+        $.get('patientFetchPrescriptions', function(data) {
+            console.log(data);
+            $.each(data, function(index, value) {
+                $("#reqPrescriptionDropdown").append("\
+                    <div class='prescriptionDoc dropdown-item' style='cursor:pointer'>"+
+                        "<div class='prescriptionDocID:'style='font-size:20px;'><b>Prescription ID:</b>"+value[0]+"</div>"+
+                        "<div class='prescriptionDetails'style='font-size:15px;'>Details"+value[2]+"</div>"+
+                        "<div class='prescriptionDocID' hidden>"+value[0]+"</div>"+
+                    "</div>"
+                );
+                $(".prescriptionDoc").each(function (argument) {
+                    $(this).on('click', function(event) {
+                        // console.log($(this).children('.labDocID').text());
+                        $("#selectedPrescriptionID").val($(this).children('.prescriptionDocID').text());
+                        // console.log($(this).children('.testType').text());
+                        $("#dropdownMenuLinkPrescriptionPopup").text($(this).children('.prescriptionDocID').text());
+                        // console.log($("#selectedLabReqDocID").val());
+                    });
+                });
+            });
+        });
     });
     $("#bookApptBtn").on("click",function(event) {
         $(".popupSearchTextBox").val("");
@@ -646,7 +797,8 @@ $(document).ready(function () {
         }
         else if(name.search("Medicine")!=-1)
         {
-            return "Medicine";
+            // return "Medicine";
+            return "Pharmacy";
         }
         else if(name.search("Lab")!=-1)
         {
@@ -675,7 +827,7 @@ $(document).ready(function () {
                     data: inpData,
                 })
                 .done(function(data) {
-
+                    console.log(data);
                     if(!data.hasOwnProperty("data"))//make divs and put data
                     {
                         $.each(data, function(index, val) {
@@ -690,13 +842,14 @@ $(document).ready(function () {
                                     "</div>\
                                 </div>\
                             ");
-                            $(".popupSearchResultsDiv").on('click', function(event) {
-                                /* Act on the event */
-                                console.log("$('.popupSearchResultsName').text():",$(".popupSearchResultsName").text());
-                                $(".popupSearchTextBox").val($(".popupSearchResultsName").text());
-                                $(".selectedSearchID").val($(".popupSearchResultsID").text());
-                                $("#popup"+inpData["resType"]+"SearchResults").empty();
-                            }); 
+                            $(".popupSearchResultsDiv").each(function(index,el){
+                                $(this).on('click', function(event) {
+                                    /* Act on the event */
+                                    $("#popup"+inpData["resType"]+"Search").val($(this).text());
+                                    $("#selected"+inpData["resType"]+"ID").val($(this).children(".popupSearchResultsID").text());
+                                    $("#popup"+inpData["resType"]+"SearchResults").empty();
+                                });
+                            });
                         });
                     }
                 })
@@ -796,7 +949,7 @@ $(document).ready(function () {
     // For doctor appt booking:
     $("#popupDoctorDate").on('blur', function(event) {
         //might need to clear old doctorID and inpDate
-
+        $(".timeScroller").empty();
         var doctorID = $("#selectedDoctorID").val();
         var inpDate = getInputTypeDateByID("popupDoctorDate");
         setAvailableTimeSlots(doctorID,inpDate);
@@ -859,7 +1012,8 @@ $(document).ready(function () {
 
         var payload = {
             labID : $("#selectedLabID").val(),
-            // apptDate : getInputTypeDateByID("popupLabDate"),
+            apptDate : getTodayDate(),
+            labRequestDocumentID : $("#selectedLabReqDocID").val()
         }
         var jsonPayload = JSON.stringify(payload);
         console.log(jsonPayload)
@@ -897,7 +1051,7 @@ $(document).ready(function () {
         })
         .always(function() {
             console.log("complete");
-        });  
+        });
     });
     
     $("#medicineBookBtn").on('click',function(event) {
@@ -905,8 +1059,10 @@ $(document).ready(function () {
         /* Act on the event */
 
         var payload = {
-            labID : $("#selectedMedicineID").val(),
-            // apptDate : getInputTypeDateByID("popupMedicineDate"),
+            ePrescriptionID: $("#selectedPrescriptionID").val(),
+            pharmacyID : $("#selectedPharmacyID").val(),
+            pickupTime : getTodayDate(),
+
         }
         var jsonPayload = JSON.stringify(payload);
         console.log(jsonPayload)
@@ -921,7 +1077,7 @@ $(document).ready(function () {
         .done(function(data) {
             console.log("success");
             console.log(data);
-            $("#labBookMessage").append("\
+            $("#medicineBookMessage").append("\
                 <div class='alert alert-success alert-dismissible fade show' role='alert'>\
                     <strong>Medicine request sent successfully!</strong><br> Your calendar will be updated soon.\
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
@@ -933,7 +1089,7 @@ $(document).ready(function () {
         .fail(function(err) {
             console.log("error");
             console.log(err);
-            $("#labBookMessage").append("\
+            $("#medicineBookMessage").append("\
                 <div class='alert alert-danger alert-dismissible fade show' role='alert'>\
                     <strong>Server Error:</strong>"+err+".\
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
@@ -946,125 +1102,6 @@ $(document).ready(function () {
             console.log("complete");
         });
     });
-    
-        
-    // END : Popup Book button fucntionality -> Booking doctor appointment, buy medicines etc.
-    
-
-    // Seven types of continuous fetch I've to do:
-    //      1. Fetch all reminders - medicine, doc visit, lab test
-    //      2. Fetch all doctor appointments
-    //      3. Previous Prescriptions
-    //      4. Lab Requests
-    //      5. Lab Responses
-    //      6. Medicine Requests
-    //      7. Medicine Responses
-    
-    // // START : 1. EventSource : Reminder fetch and update calendar
-    // var pcr = new EventSource("/patientCalendarReminderUpdate");
-    // pcr.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES1> PCR success:",event.data);
-    // });
-
-    // pcr.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // pcr.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 1. EventSource : Reminder fetch and update calendar
-
-    // // START : 2. EventSource : Appointment fetch and update calendar
-    // var pda = new EventSource("/patientDoctorAppointment");
-    // pda.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES2> PDA success:",event.data);
-    // });
-
-    // pda.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // pda.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 2. EventSource : Appointment fetch and update calendar
-
-    // // START : 3. EventSource : Prescription fetch and update calendar
-    // var pfp = new EventSource("/patientFetchPrescriptions");
-    // pfp.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES3> PFP success:",event.data);
-    // });
-
-    // pfp.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // pfp.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 3. EventSource : Prescription fetch and update calendar
-
-    // // START : 4. EventSource : LabRequest fetch and update calendar
-    // var plReq = new EventSource("/patientLabRequest");
-    // plReq.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES4> PLReq success:",event.data);
-    // });
-
-    // plReq.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // plReq.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 4. EventSource : LabRequest fetch and update calendar
-
-    // // START : 5. EventSource : LabRequest fetch and update calendar
-    // var plResp = new EventSource("/patientLabResponse");
-    // plResp.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES5> PLResp success:",event.data);
-    // });
-
-    // plResp.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // plResp.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 5. EventSource : LabRequest fetch and update calendar
-
-    // // START : 6. EventSource : MedicineRequest fetch and update calendar
-    // var pmReq = new EventSource("/patientMedicineRequest");
-    // pmReq.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES6> PMReq success:",event.data);
-    // });
-
-    // pmReq.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // pmReq.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 6. EventSource : MedicineRequest fetch and update calendar
-
-    // // START : 7. EventSource : MedicineResponse fetch and update calendar
-    // var pmResp = new EventSource("/patientMedicineResponse");
-    // pmResp.addEventListener("someEvent",function (event) {
-    //     // TODO: FORMAT THIS CRAP INTO FUCKING HTML
-    //     console.log("<ES7> PMResp success:",event.data);
-    // });
-
-    // pmResp.onmessage = function(event) {
-    //     console.log(event.data);
-    // };
-    // pmResp.onerror = function(event) {
-    //     console.log(event.data);
-    // };
-    // // END : 7. EventSource : MedicineResponse fetch and update calendar
-
 
     /* End Adding your javascript here */
 });

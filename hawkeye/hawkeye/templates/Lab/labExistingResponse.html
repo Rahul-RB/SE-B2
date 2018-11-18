@@ -90,9 +90,11 @@
         </div>
         {% endfor %}
         <div class="row" id="">
-            <div class="col-12">
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+            <div class="col-10">
                 <hr class="my-5">
-            </div>        
+            </div> 
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>       
         </div>
         <div class="row">
             <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
@@ -102,7 +104,21 @@
             </div>
             <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
         </div>
-        
+        <div class="row" id="">
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+            <div class="col-10">
+                <hr class="my-5">
+            </div> 
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>       
+        </div>
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
+            <div class="col-md "> </div>
+            <div class="col-md text-right">
+                <a href= {{ url_for('lab') }} > <button type="button" class="btn btn-primary" >Back </button> </a>         
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
+        </div>
         <div class="row" style="padding: 10px 10px 10px 10px;">
         </div>
 
@@ -113,6 +129,6 @@
 
 {% block customJS %}
 
-    <script src={{url_for("static",filename="js/Lab/labResponse.js")}}></script>}
+    <script src={{url_for("static",filename="js/Lab/labResponse.js")}}></script>
 
 {% endblock %}

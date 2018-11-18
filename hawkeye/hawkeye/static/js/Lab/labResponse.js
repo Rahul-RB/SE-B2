@@ -28,8 +28,11 @@ $(document).ready(function () {
     });
     /* Do not disturb above lines */
     /* Start Adding your javascript here */
-    /*Toggle the view of prescription*/
+
+    /*Setting up initial state of Prescription View to Hidden*/
     $("#pres").hide();
+
+    /*Toggle Prescription View based on slider*/
     $('#viewPrescription').click(function(){
         if($(this).prop("checked") == true){
             $("#pres").show();
@@ -39,7 +42,7 @@ $(document).ready(function () {
             $("#pres").hide();
         }
     });
-    
+
     /*Toggle the view of response*/
     $('#writeResponse').click(function(){
         if($(this).prop("checked") == true){
@@ -49,6 +52,8 @@ $(document).ready(function () {
             $("#labform").hide();
         }
     });
+
+    /*Function to fetch current date*/
    function SetDate()
    {
        var date = new Date();
@@ -62,7 +67,7 @@ $(document).ready(function () {
    }
    
    document.getElementById('date').value = SetDate();
- 
+
 
     /* End Adding your javascript here */
 });
