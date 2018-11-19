@@ -24,7 +24,7 @@ def pharmacy():
 	#session["user_id"] = models.getpharmacyID(email)[0][0];
 	#print(session["user_id"])
 	#print("-----------------",models.getpharmacytitle(email)[0])
-	return render_template("Pharmacy/pharmacy.html",title="Pharmacy", data=models.getpharmacytitle(email),userLoggedIn=True)
+	return render_template("Pharmacy/pharmacy.html",title="Pharmacy", data=models_pharmacy.getpharmacytitle(email),userLoggedIn=True)
 
 #pharmacy_prescription
 @app.route("/pharmacy_prescription",methods=["POST"])
@@ -35,8 +35,8 @@ def pharmacy_prescription():
 	patid=request.form.get('patID')
 	#email=session["currentEmail"]
 	#print(patid)
-	#print(models.getpharmacyPres(email,patid), models.getEprescitionDetails(email,patid))
-	return render_template("Pharmacy/pharmacy_prescription.html",title="Pharmacy",data=models.getpharmacytitle(email), pharPresData=models.getpharmacyPres(email,patid),details= models.getEprescriptionDetails(email,patid),userLoggedIn=True)
+	#print(models_pharmacy.getpharmacyPres(email,patid), models_pharmacy.getEprescitionDetails(email,patid))
+	return render_template("Pharmacy/pharmacy_prescription.html",title="Pharmacy",data=models_pharmacy.getpharmacytitle(email), pharPresData=models_pharmacy.getpharmacyPres(email,patid),details= models_pharmacy.getEprescriptionDetails(email,patid),userLoggedIn=True)
 
 #start pharmacyViewRequest
 @app.route("/pharmacyViewRequest")
@@ -48,14 +48,14 @@ def pharmacyViewRequest():
 
 @app.route("/prescriptionRequest",methods=['GET'])
 def prescriptionRequest():
-    ID = models_pharmacy.getIDByEmail(session.get("currentEmail"),session.get("accType"))
+    ID = models_common.getIDByEmail(session.get("currentEmail"),session.get("accType"))
     res = models_pharmacy.prescriptionRequest(ID)
     return jsonify(res)
 
 @app.route("/prescriptionResponseUpdate",methods=["POST"])
 def prescriptionResponseUpdate():
     payload = request.get_json()
-    ID = models_pharmacy.getIDByEmail(session.get("currentEmail"),session.get("accType"))
+    ID = models_common.getIDByEmail(session.get("currentEmail"),session.get("accType"))
     res = models_pharmacy.prescriptionResponseUpdate(payload,ID)
     return jsonify(res)
 

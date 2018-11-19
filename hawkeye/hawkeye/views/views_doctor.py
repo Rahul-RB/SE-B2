@@ -108,20 +108,6 @@ def history():
     
     return render_template("Doctor/history.html",title="Doctor", userLoggedIn=True)
 
-@app.route("/pharmacy")
-def pharmacy():
-    if ((not session.get("accType")=="Pharmacy") or (not session.get(session.get("accType")+"LoggedIn"))):
-        return redirect(url_for("login"),302)
-    
-    return render_template("Pharmacy/pharmacy.html",title="Pharmacy", userLoggedIn=True)
-
-@app.route("/pharmacy_prescription")
-def pharmacy_prescription():
-    if ((not session.get("accType")=="Pharmacy") or (not session.get(session.get("accType")+"LoggedIn"))):
-        return redirect(url_for("login"),302)
-    
-    return render_template("Pharmacy/pharmacy_prescription.html",title="Pharmacy", userLoggedIn=True)
-
     
 @app.route("/searchPatientHistory", methods=["GET","POST"])
 def searchPatientHistory():

@@ -96,7 +96,7 @@ def getpharmacyPres(email,patientID):
 	
 	
 # fetch other details from EPrescription
-def getEprescitionDetails(email,patientID):
+def getEprescritionDetails(email,patientID):
     query="SELECT p.patientID, p.ePrescriptionID, p.doctorID from EPrescription p WHERE p.patientID='"+patientID+"'; "
     print(query)
     conn = mysql.connect()

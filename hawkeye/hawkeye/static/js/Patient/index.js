@@ -259,27 +259,6 @@ $(document).ready(function () {
     //   - Get all Prescriptions and Lab Tests.
     //   - Load them into calendar.  
 
-    // var someEvent1 = {
-    //         title: 'Birthday Party',
-    //         start: '2018-10-12T23:00:00'
-    //     }
-    // function temp(){
-    //     var someEvent2 = {
-    //             title: 'Click for Google',
-    //             url: 'http://google.com/',
-    //             start: '2018-10-12'
-    //         }
-    //     return someEvent2;
-    // }
-    // $("#calendar").fullCalendar("renderEvent",someEvent1,"stick");
-    // $("#calendar").fullCalendar("renderEvent",temp(),"stick");
-
-    // Get all CalendarReminderUpdate.
-    // setInterval(function worker1() {
-    //     $.get('patientCalendarReminderUpdate', function(data) {
-    //         console.log("<GET:1> success",data);
-    //     });
-    // },10000);
 
     function getISO8601DateTime(date,time)
     {
