@@ -14,10 +14,10 @@ class DevelopmentConfig(Config):
     TEMPLATES_AUTO_RELOAD=True
     MYSQL_DATABASE_USER = 'root'
     MYSQL_DATABASE_PASSWORD = ''# Put your MySQL root password here
-    MYSQL_DATABASE_DB = 'Hawkeye'
+    MYSQL_DATABASE_DB = 'HawkeyeWithData'
     MYSQL_DATABASE_HOST = 'localhost'
     CACHE_TYPE = "null"
-    UPLOAD_FOLDER = './uploads'
+    UPLOAD_FOLDER = './hawkeye/uploads'
     ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'doc'])
 
 class TestingConfig(Config):

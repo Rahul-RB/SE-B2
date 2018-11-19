@@ -89,66 +89,20 @@
             <div class="col-xl-2 col-lg-2 col-md-2 "></div>
         </div>
         {% endfor %}
-        <div class="row">
-            <div class="col-xl-1 col-lg-1 col-md-1  col-1"> </div>
-            <div class="col-xl-10 col-lg-10 col-md-10 col-10">
+        <div class="row" id="">
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+            <div class="col-10">
                 <hr class="my-5">
-                <!--<button type="button" class="btn btn-primary" id="view_pres">View Prescription</button>-->
-                Respond
-                <label class="switch ">
-                    <input type="checkbox" class="primary" id="writeResponse" checked>
-                    <span class="slider round"></span></label>
-
-            </div>
-            <div class="col-xl-1 col-lg-1 col-md-1  col-1"> </div>
+            </div> 
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>       
         </div>
-        <div class="row" id="labform">
-            <div class="col-md-10 offset-md-1">
-                <span class="anchor" id="formComplex"></span>
-                <hr class="my-5">
-                <h3>Lab Response Form </h3>
-                <!-- form complex example -->
-                 <form action = {{ url_for("upload_file") }} method = "POST" enctype = "multipart/form-data" onSubmit="return Validate(this);">
-                <div class="form-row mt-4">
-                    <div class="col-sm-5 pb-3">
-                     {% for d in labReqData %}
-                        <label for="exampleAccount">LabRequestID #</label>
-                        <input type="text" class="form-control" id="labReqId" name= "labReqId"  value={{ d[2] }} readonly>
-                     {% endfor %}
-                    </div>
-                    <div class="col-sm-3 pb-3">
-                        <label for="exampleCtrl">LabId #</label>
-                        <input type="text" class="form-control" id="labId" placeholder={{ userid }} readonly>
-                    </div>
-                    <div class="col-sm-4 pb-3">
-                        <label for="exampleAmount">Date</label>
-                      
-                            <input type="text" class="form-control" id="date" placeholder="" readonly>
-    
-                    </div>
-                    <div class="col-md-6 pb-3">
-                        <label for="exampleFormControlFile1">Example file input</label>
-                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name = "file" required>
-                      
-                    </div>
-                    <div class="col-md-6 pb-3">
-                        <label for="exampleMessage">Notes</label>
-                        <textarea class="form-control" id="message" name="message" ></textarea>
-                        <small class="text-info">
-                                    Add the patient notes here.
-                                    </small>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-row">
-                            <div class="col-md "> </div>
-                            <div class="col-md text-right"> 
-                                <input type = "submit"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
+            <div class="col-md "><h4> View Report</h4> </div>
+            <div class="col-md text-right">
+                <a href= {{ url_for('uploaded_file', filename=filename) }} > <button type="button" class="btn btn-primary" >View </button> </a>         
             </div>
+            <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
         </div>
         <div class="row" id="">
             <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
@@ -161,7 +115,7 @@
             <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
             <div class="col-md "> </div>
             <div class="col-md text-right">
-                <a href= {{ url_for('lab') }} > <button type="button" class="btn btn-primary" > Back </button> </a>         
+                <a href= {{ url_for('lab') }} > <button type="button" class="btn btn-primary" >Back </button> </a>         
             </div>
             <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
         </div>
@@ -176,35 +130,5 @@
 {% block customJS %}
 
     <script src={{url_for("static",filename="js/Lab/labResponse.js")}}></script>
-    <script type="text/javascript">
-    var _validFileExtensions = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'doc'];    
-    function Validate(oForm) {
-        var arrInputs = oForm.getElementsByTagName("input");
-        for (var i = 0; i < arrInputs.length; i++) {
-            var oInput = arrInputs[i];
-            if (oInput.type == "file") {
-                var sFileName = oInput.value;
-                if (sFileName.length > 0) {
-                    var blnValid = false;
-                    for (var j = 0; j < _validFileExtensions.length; j++) {
-                        var sCurExtension = _validFileExtensions[j];
-                        if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-                            blnValid = true;
-                            break;
-                        }
-                    }
-                    
-                    if (!blnValid) {
-                        alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
-                        return false;
-                    }
-                }
-
-            }
-        }
-      
-        return true;
-    }
-    </script>
 
 {% endblock %}

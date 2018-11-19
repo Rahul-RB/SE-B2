@@ -28,15 +28,21 @@ $(document).ready(function () {
     });
     /* Do not disturb above lines */
     /* Start Adding your javascript here */
-     
-     $("#search_bar").on("keyup", function() {
+    /* Fetch Search Parameter for Request Table */
+     $("#search_bar1").on("keyup", function() {
         var value = $(this).val();
-        var search_p = $("#search_param").val();
-        //console.log(search_p);
-        $("#myTable").filterTable(value, search_p);
+        var search_p = $("#search_param1").val();
+        $("#myTable1").filterTable(value, search_p);
        
     });
-
+    /* Fetch Search Parameter for Response Table */
+    $("#search_bar2").on("keyup", function() {
+        var value = $(this).val();
+        var search_p = $("#search_param2").val();
+        $("#myTable2").filterTable(value, search_p);
+       
+    }); 
+    /*Filter Function for Table */
     (function($) {
         $.fn.filterTable = function(filter, columnname) {
             var index = null;
@@ -68,21 +74,9 @@ $(document).ready(function () {
             });
             return this;
         };
+
     })(jQuery);
     /* End Adding your javascript here */
 	
-   	/*function appendTableColumn(table, rowData) {
-  		var lastRow = $('<tr/>').appendTo(table.find('tbody:last'));
- 	 	$.each(rowData, function(colIndex, c) { 
-      			lastRow.append($('<td/>').text(c));
-  		});
-   
-  		return lastRow;
-		}
- 
-	$(document).ready(function() {
-   	 var table = makeTable(data);
-    	appendTableColumn(table, ["Calgary", "Ottawa", "Yellowknife"]);
-	});*/
 });
         
