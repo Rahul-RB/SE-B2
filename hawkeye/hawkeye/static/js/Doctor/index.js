@@ -284,8 +284,7 @@ $(document).ready(function () {
             $("#analyticsDiv").append("<div> Total Patients seen today is " + data["countPatientsToday"] + "</div>" );
             $("#analyticsDiv").append("<div> Total Patients seen for the selected month is " + data["countPatientsMonth"] + "</div>");
             $("#analyticsDiv").append("<div> Total Patients seen for the selected year is " + data["countPatientsYear"] + "</div>");
-
-            
+            $("#lineChart").fadeIn();
 
         })
         .fail(function(err) {
@@ -301,6 +300,25 @@ $(document).ready(function () {
         var inpData = {
             patientID : $("#patientIDInp").val()
         };
+
+        $.ajax({
+            url: '/getDetailsByID',
+            type: 'GET',
+            dataType: 'json',
+            data: {"ID": $("#patientIDInp").val(), "accType": "Patient"}
+        })
+        .done(function(data) {
+            console.log(data[0]);
+            $('#patient-identity li').remove();
+            $('#patient-identity').append("<li class='list-group-item'><strong>Name:  <span class='badge' style='background: white;'>" + data[0][1] + "  </span></strong></li>");
+            $("#patient-identity").append("<li class='list-group-item'><strong>Gender:  <span class='badge' style='background: green; color:white;'>" + data[0][5] + "  </span></strong></li>");
+            $("#patient-identity").append("<li class='list-group-item'><strong>Date of Birth:  <span class='badge' style='background: white;'>" + data[0][3] + "  </span></strong></li>");
+        })
+        .fail(function(err) {
+            console.log("error in fetching details");
+            console.log(err);
+        });
+
         $.ajax({
             url: 'searchPatientHistory',
             type: 'GET',
@@ -314,34 +332,11 @@ $(document).ready(function () {
             // medicineSuggestion:Array(2)
             // symptoms:Array(2)
             // testType:Array(1)
-            console.log("Success:");
-            console.log(data);
+            console.log("Success");
+            $('#patient-details li').remove();
+            // console.log(data);
 
-            // var ctx = document.getElementById('barChart').getContext('2d');
-            
-            // ctx.moveTo(0, 0);
-            // ctx.lineTo(200, 100);
-            // ctx.stroke();
-            
-            // var chart = new Chart(ctx, {
-            //     // The type of chart we want to create
-            //     type: 'line',
-
-            //     // The data for our dataset
-            //     data: {
-            //         labels: ["January", "February", "March", "April", "May", "June", "July"],
-            //         datasets: [{
-            //             label: "My First dataset",
-            //             backgroundColor: 'rgb(255, 99, 132)',
-            //             borderColor: 'rgb(255, 99, 132)',
-            //             data: [0, 10, 5, 2, 20, 30, 45],
-            //         }]
-            //     },
-
-            //     // Configuration options go here
-            //     options: {}
-            // });
-
+            var spans = null;
             $.each(data,function(index,value){
                 // console.log(index);
                 // console.log(value["description"]);
@@ -350,21 +345,38 @@ $(document).ready(function () {
                 // console.log(value["symptoms"]);
                 // console.log(value["testType"]);
                 console.log(value);
-                // $.each(value["ePrescriptionID"],function (index,value) {
-                $("#patientHistoryDispDiv").append("<div> Prescription ID is : "+value["ePrescriptionID"]+"</div>");
-                // });
+
+                // value["ePrescriptionID"] = ["1234"];
+                // value["description"] = ["helloworeadfsgbjv sfdv fsadgvds"];
+                // value["testType"] = ["hello", "one", "two", "three", "hello", "one", "two"];
+                // value["medicineSuggestion"] = ["med1", "med2","med1", "med2","med1", "med2"];
+                // value["symptoms"] = ["cold", "cough", "random"];
+
+                $("#patient-details").append("<li class='list-group-item' style='margin-top:10px;'><strong>PrescriptionID:  </strong><span class='badge' style='background: skyblue; margin-left:2px;'>" + value["ePrescriptionID"] + "</span></li>");
+
+                spans = "";
                 $.each(value["symptoms"],function (index,value) {
-                    $("#patientHistoryDispDiv").append("<div> Symptoms are : "+value+"</div>");
+                    spans += "<span class='badge' style='background: pink; margin-left:2px;'>" + value + "</span>";
                 });
+                $("#patient-details").append("<li class='list-group-item'><strong>Symptoms:  </strong>" + spans + "</li>");
+
+                spans = "";
                 $.each(value["medicineSuggestion"],function (index,value) {
-                    $("#patientHistoryDispDiv").append("<div> Medicines suggested is : "+value+"</div>");
+                   spans +=  "<span class='badge' style='background: lightgreen; margin-left:2px;'>" + value + "</span>";
                 });
+                $("#patient-details").append("<li class='list-group-item'><strong>Medicines:  </strong>" + spans + "</li>");
+
+                spans = "";
                 $.each(value["testType"],function (index,value) {
-                    $("#patientHistoryDispDiv").append("<div> Test suggested is : "+value+"</div>");
+                   spans += "<span class='badge' style='background: orange; margin-left:2px;'>" + value + "</span>";
                 });
+                $("#patient-details").append("<li class='list-group-item'><strong>Lab Tests:  </strong>" + spans + "</li>");
+
+                spans = "";
                 $.each(value["description"],function (index,value) {
-                    $("#patientHistoryDispDiv").append("<div> Description of Lab Test is : "+value+"</div>");
+                    spans += "<span class='badge' style='border: 1px solid black; margin-left:2px;'>" + value + "</span>";
                 });
+                $("#patient-details").append("<li class='list-group-item'><strong>Description:  </strong>" + spans + "</li>");
 
             });
         })

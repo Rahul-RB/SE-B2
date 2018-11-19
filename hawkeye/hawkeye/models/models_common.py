@@ -168,6 +168,9 @@ def getDetailsByID(ID,acctType):
     if(acctType=="Doctor"):
         for i,result in enumerate(data):
             res[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3]),str(result[4]),str(result[5]),str(result[6]),str(result[7])]
+    elif(acctType=="Patient"):
+        for i,result in enumerate(data):
+            res[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3]),str(result[4]),str(result[5])]
     else:
         for i,result in enumerate(data):
             res[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3]),str(result[4])]

@@ -79,17 +79,16 @@ def checkForAppointments(email):
 
 # def insertIntoPrescription():
 
-
-
-
 def searchPatientHistory(patientID):
     conn = mysql.connect()
     conn.autocommit = False
-    query = "SELECT ePrescriptionID, doctorID from EPrescription where patientID='" + patientID + "'"
     cursor =conn.cursor()
+    global_dict=dict(dict())
+
+    query = "SELECT ePrescriptionID, doctorID from EPrescription where patientID='" + patientID + "'"
     cursor.execute(query)
     data = cursor.fetchall()
-    global_dict=dict(dict())
+
     if(data != ''):
         somedict = {"ePrescriptionID": [x[0] for x in data],
                     "doctorID": [x[1] for x in data]
@@ -132,7 +131,7 @@ def checkDoctorsHistory(doctorsEmail,searchBy):
     splitByYear = splitSearchBy[0]
     splitByMonth = splitSearchBy[1]
     now = datetime.datetime.now()
-    cur_month = str(now.month)
+    cur_month = str(now.month) 
     cur_day = str(now.day)
     countPatientsMonth=0
     countPatientsYear=0
