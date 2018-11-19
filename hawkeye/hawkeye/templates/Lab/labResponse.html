@@ -108,8 +108,7 @@
                 <hr class="my-5">
                 <h3>Lab Response Form </h3>
                 <!-- form complex example -->
-                 <form action = {{ url_for("upload_file") }} method = "POST" 
-         enctype = "multipart/form-data">
+                 <form action = {{ url_for("upload_file") }} method = "POST" enctype = "multipart/form-data" onSubmit="return Validate(this);">
                 <div class="form-row mt-4">
                     <div class="col-sm-5 pb-3">
                      {% for d in labReqData %}
@@ -129,7 +128,7 @@
                     </div>
                     <div class="col-md-6 pb-3">
                         <label for="exampleFormControlFile1">Example file input</label>
-                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name = "file">
+                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name = "file" required>
                       
                     </div>
                     <div class="col-md-6 pb-3">
@@ -151,6 +150,21 @@
             </form>
             </div>
         </div>
+        <div class="row" id="">
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>
+            <div class="col-10">
+                <hr class="my-5">
+            </div> 
+            <div class="col-xl-1 col-lg-1 col-md-1 "> </div>       
+        </div>
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
+            <div class="col-md "> </div>
+            <div class="col-md text-right">
+                <a href= {{ url_for('lab') }} > <button type="button" class="btn btn-primary" > Back </button> </a>         
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
+        </div>
         <div class="row" style="padding: 10px 10px 10px 10px;">
         </div>
 
@@ -161,6 +175,36 @@
 
 {% block customJS %}
 
-    <script src={{url_for("static",filename="js/Lab/labResponse.js")}}></script>}
+    <script src={{url_for("static",filename="js/Lab/labResponse.js")}}></script>
+    <script type="text/javascript">
+    var _validFileExtensions = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'doc'];    
+    function Validate(oForm) {
+        var arrInputs = oForm.getElementsByTagName("input");
+        for (var i = 0; i < arrInputs.length; i++) {
+            var oInput = arrInputs[i];
+            if (oInput.type == "file") {
+                var sFileName = oInput.value;
+                if (sFileName.length > 0) {
+                    var blnValid = false;
+                    for (var j = 0; j < _validFileExtensions.length; j++) {
+                        var sCurExtension = _validFileExtensions[j];
+                        if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                            blnValid = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!blnValid) {
+                        alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                        return false;
+                    }
+                }
+
+            }
+        }
+      
+        return true;
+    }
+    </script>
 
 {% endblock %}

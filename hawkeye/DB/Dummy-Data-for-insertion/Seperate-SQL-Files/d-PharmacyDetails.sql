@@ -198,3 +198,4 @@ INSERT INTO PharmacyDetails VALUES ('016922216377','Marquardt and Sons','0351 He
 ('980901355474','distinctio','78463 McCullough Ville\nOrrinburgh, MS 52890','trevor.schultz@example.com','042.726.51'),
 ('994251131645','temporibus','270 Gaetano Inlet\nAndersonshire, MT 27791-2164','pgraham@example.net','885.955.76'),
 ('998989127906','quis','7720 Cole Estate Apt. 769\nClaudiaville, ME 74187','walker.monique@example.net','1-460-100-'); 
+

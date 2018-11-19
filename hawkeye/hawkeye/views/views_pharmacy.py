@@ -16,7 +16,7 @@ import datetime
 app.secret_key = 'secretkeyhereplease'
 
 #pharmacy
-app.route("/pharmacy")
+@app.route("/pharmacy")
 def pharmacy():
 	if ((not session.get("accType")=="Pharmacy") or (not session.get(session.get("accType")+"LoggedIn"))):
 		return redirect(url_for("login"),302)
@@ -37,3 +37,27 @@ def pharmacy_prescription():
 	#print(patid)
 	#print(models.getpharmacyPres(email,patid), models.getEprescitionDetails(email,patid))
 	return render_template("Pharmacy/pharmacy_prescription.html",title="Pharmacy",data=models.getpharmacytitle(email), pharPresData=models.getpharmacyPres(email,patid),details= models.getEprescriptionDetails(email,patid),userLoggedIn=True)
+
+#start pharmacyViewRequest
+@app.route("/pharmacyViewRequest")
+def pharmacyViewRequest():
+    if ((not session.get("accType")=="Pharmacy") or (not session.get(session.get("accType")+"LoggedIn"))):
+        return redirect(url_for("login"),302)
+    return render_template("Pharmacy/pharmacyViewRequest.html",title="Pharmacy",user=models_pharmacy.getUsernameByEmail(session.get("currentEmail"),session.get("accType")), userLoggedIn=True)
+
+
+@app.route("/prescriptionRequest",methods=['GET'])
+def prescriptionRequest():
+    ID = models_pharmacy.getIDByEmail(session.get("currentEmail"),session.get("accType"))
+    res = models_pharmacy.prescriptionRequest(ID)
+    return jsonify(res)
+
+@app.route("/prescriptionResponseUpdate",methods=["POST"])
+def prescriptionResponseUpdate():
+    payload = request.get_json()
+    ID = models_pharmacy.getIDByEmail(session.get("currentEmail"),session.get("accType"))
+    res = models_pharmacy.prescriptionResponseUpdate(payload,ID)
+    return jsonify(res)
+
+#end pharmacyViewRequest
+

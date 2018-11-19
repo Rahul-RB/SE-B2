@@ -14,7 +14,7 @@ import os
 import datetime
 
 app.secret_key = 'secretkeyhereplease'
-
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'doc'])
 
 def allowed_file(filename):
    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -31,7 +31,7 @@ def upload_file():
           labRequestId=str(request.form["labReqId"])
           description=str(request.form["message"])
           print(labRequestId, description)
-          format = "%Y-%m-%dT%H:%M:%S"
+          format = "%Y%m%d%H%M%S"
           now = datetime.datetime.utcnow().strftime(format)
           filename = now + '_' +str(session["user_id"]) + '_' + file.filename
           filename = secure_filename(filename)
@@ -58,7 +58,6 @@ def labExistingResponse():
 @app.route('/uploads/<path:filename>')
 def uploaded_file(filename):
     print("---------------------",str(filename),"---------------")
-    #filename = str(filename)
     return send_file('uploads/'+str(filename),as_attachment=True)
 
 @app.route("/lab")
@@ -73,6 +72,9 @@ def lab():
                             useremail=email,
                             labReqData=models_lab.getLabRequests(email), 
                             labResData= models_lab.getLabResponses(email),
+                            labPieData= models_lab.getTop4Request(session["user_id"]),
+                            lablineReqData= models_lab.getNumberOfRequests(session["user_id"]),
+                            lablineRespData= models_lab.getNumberOfResponses(session["user_id"]),
                             userLoggedIn=True
                             )
 
@@ -87,6 +89,6 @@ def labResponse():
                             useremail=email,
                             userid= session["user_id"],
                             labReqData=models_lab.getLabRequestDetails(email,reqid),
-                            labPresData= models.getLabPrescriptionDetails(reqid),
+                            labPresData= models_lab.getLabPrescriptionDetails(reqid),
                             userLoggedIn=True
                             )
