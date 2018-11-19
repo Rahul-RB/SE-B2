@@ -4,27 +4,27 @@ import datetime
 import time  
 import numpy as np
 import matplotlib.pyplot as plt  
-#start pharmacyViewRequest
-def getUsernameByEmail(email,acctType):
-    query = "SELECT "+ acctType.lower() + "Name from "+ acctType +"Details where email='"+email+"'"
-    print(query)
-    conn = mysql.connect()
-    cursor = mysql.get_db().cursor()
-    res = cursor.execute(query)
+# #start pharmacyViewRequest
+# def getUsernameByEmail(email,acctType):
+#     query = "SELECT "+ acctType.lower() + "Name from "+ acctType +"Details where email='"+email+"'"
+#     print(query)
+#     conn = mysql.connect()
+#     cursor = mysql.get_db().cursor()
+#     res = cursor.execute(query)
 
-    data = cursor.fetchall()
-    return data[0][0]
+#     data = cursor.fetchall()
+#     return data[0][0]
 
-def getIDByEmail(email,acctType):
-    query = "SELECT "+ acctType.lower() + "ID from "+ acctType +"Details where email='"+email+"'"
-    conn = mysql.connect()
-    cursor = mysql.get_db().cursor()
-    res = cursor.execute(query)
+# def getIDByEmail(email,acctType):
+#     query = "SELECT "+ acctType.lower() + "ID from "+ acctType +"Details where email='"+email+"'"
+#     conn = mysql.connect()
+#     cursor = mysql.get_db().cursor()
+#     res = cursor.execute(query)
 
-    data = cursor.fetchall()
-    return data[0][0]
+#     data = cursor.fetchall()
+#     return data[0][0]
 
-    symptoms,medicineSuggestion,timeToTake,startDate,endDate,
+#     symptoms,medicineSuggestion,timeToTake,startDate,endDate,
 
 
 def prescriptionRequest(pharmacyId):
@@ -64,3 +64,46 @@ def prescriptionResponseUpdate(payload,pharmacyID):
     conn.close()
 
 #end pharmacyViewRequest
+# START : Pharmacy FUNCTIONS
+# Get the required details for the pharmacy
+def getpharmacytitle(email):
+    query="SELECT p.pharmacyName, p.address, p.phoneNO from PharmacyDetails p, PharmacyLogin  WHERE PharmacyLogin.email='"+email+"';"
+    print(query)
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+    res = cursor.execute(query)
+    data = cursor.fetchall()
+    #print("Hi in sql ###############",data)
+    cursor.close()
+    conn.close()
+    return (data)
+
+
+	
+# Fetch the EPrescription for particular patient
+def getpharmacyPres(email,patientID):
+    query="SELECT p.slNo, p.medicineSuggestion, p.remarks from EPrescription p where p.patientID='"+patientID+"';"
+    print(query)
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+    res = cursor.execute(query)
+    data = cursor.fetchall()
+    #print("Hi in sql ###############",data)
+    cursor.close()
+    conn.close()
+    return (data)
+
+	
+	
+# fetch other details from EPrescription
+def getEprescitionDetails(email,patientID):
+    query="SELECT p.patientID, p.ePrescriptionID, p.doctorID from EPrescription p WHERE p.patientID='"+patientID+"'; "
+    print(query)
+    conn = mysql.connect()
+    cursor =mysql.get_db().cursor()
+    res = cursor.execute(query)
+    data = cursor.fetchall()
+    #print("Hi in sql ###############",data)
+    cursor.close()
+    conn.close()
+    return (data)
