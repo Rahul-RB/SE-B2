@@ -1,6 +1,5 @@
 from hawkeye import app
 # from hawkeye.forms import SignupForm 
-
 from hawkeye.models import models_common 
 from hawkeye.models import models_patient
 from hawkeye.models import models_doctor

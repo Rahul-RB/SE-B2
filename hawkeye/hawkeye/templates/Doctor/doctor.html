@@ -15,8 +15,8 @@
     <div class="container-fluid mt-2 mb-2" id="buttons-patient">
       <div class="row mt-2 mb-4 mr-1">
           <div class=col-md-10>
-            <h5>Dr. Name Here<br/></h5>
-            <h6>Dr. Designation here</h6>
+            <h5>{{ docName }} <br/></h5>
+            <!-- <h6>Dr. {{ docDesignation }}</h6> -->
           </div>  
         <button class="btn btn-info col-md-2"><a href={{ url_for("eprescription") }} style="text-decoration: none; color: white;">Write Prescription</a></button>
       </div>
@@ -150,42 +150,7 @@ function addToTimeline(appt_json_arr){
 </script>
 
 <!-- script for line graph in doctor interface; move later to index.js -->
-<script>
-  var line_ctx = document.getElementById('lineChart').getContext('2d');
-  var chart = new Chart(line_ctx, {
-      type: 'line',
-      data: {
-          labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-          datasets: [{
-              label: "Frequency of Patients through the Year",
-              backgroundColor: 'rgb(255, 99, 132)',
-              borderColor: 'rgb(255, 99, 132)',
-              data: [0, 10, 5, 2, 20, 30, 45], // put the frequency of each month list here
-          }]
-      },
 
-      // Configuration options go here
-      options: {
-          responsive: true
-      }
-  });
-
-  var pie_ctx = document.getElementById('pieChart').getContext('2d');
-  var myDoughnutChart = new Chart(pie_ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Red','Yellow','Blue'],
-      datasets: [{
-        data: [10, 20, 30],
-        backgroundColor: ['red', 'blue', 'yellow']
-      }]
-    },
-    
-    options: {
-      responsive: true
-    }
-});
-</script>
 
 <script src={{ url_for("static",filename="js/Doctor/index.js") }}></script>
 
