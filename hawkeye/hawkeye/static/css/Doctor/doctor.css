@@ -10,7 +10,7 @@
 	font-size: 20px;
 }
 
-#notifications {
+/*#notifications {
 	position: fixed;
 	top:0;
 	margin-top: 60px;
@@ -46,7 +46,6 @@
 }
 
 #notifications tr td {
-	/*border-radius: 15px;*/
 	padding: 10px;
 	color: black;
 	font-size: 10px; 	
@@ -66,4 +65,4 @@
     #notifContainerCloseBtn {
         top:55px;
     }
-}
+}*/

@@ -60,7 +60,8 @@ def login():
             return redirect(url_for("home"))
         else:
             flash('wrong password!')
-            return redirect(url_for("login"))
+            # return redirect(url_for("login",invalidLogin=True))
+            return render_template("Login/login.html",invalidLogin=True)
     else:
         flash("Error")
 
@@ -75,7 +76,7 @@ def logout():
         res = None
         pass
     if not res:
-        return redirect(url_for("login"),302)
+        return redirect(url_for("login",invalidLogin=True),302)
     
     session[session.get("accType")+"LoggedIn"] = False
     session["accType"] = None

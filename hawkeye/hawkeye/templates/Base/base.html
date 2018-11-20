@@ -80,7 +80,7 @@
             <div id="content">
                 <nav class="navbar navbar-expand-md justify-content-between" id="topNav">
                     <div class="container-fluid">
-                        <button class="btn btn-dark navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-nav">
+                        <button class="btn btn-dark navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-nav" id="mobileFixer">
                                 <i class="fas fa-align-justify"></i>
                             <!-- <span class="navbar-toggler-icon"></span> -->
                         </button>
@@ -151,14 +151,14 @@
                         <table id="userInfoContainer">
                             {% if userLoggedIn %}
                                 <tr>
-                                    <td><a href="#">View Profile</a></td>
+                                    <td class="topRightOptions"><a href="#">View Profile</a></td>
                                 </tr>
                                 <tr>
-                                    <td><a href={{ url_for("logout") }}>Logout</a></td>
+                                    <td class="topRightOptions"><a href={{ url_for("logout",invalidLogin=True) }}>Logout</a></td>
                                 </tr>
                             {% else %}
                                 <tr>
-                                    <td><a href={{ url_for("login") }}>Login</a></td>
+                                    <td class="topRightOptions"><a href={{ url_for("login") }}>Login</a></td>
                                 </tr>
                             {% endif %}
                         </table>
