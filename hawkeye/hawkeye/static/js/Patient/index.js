@@ -207,14 +207,6 @@ $(document).ready(function () {
                         data: inpData,
                     })
                     .done(function(data) {
-                        // doctorID
-                        // doctorName
-                        // email
-                        // dob
-                        // address
-                        // sex
-                        // phoneNO
-                        // designation
                         console.log("DocVisit data:",data);
                         $("#commonModalBody").append("\
                             <div><b>Doctor ID:     </b>"+data[0][0]+" </div>\
@@ -737,6 +729,7 @@ $(document).ready(function () {
     $("#doctorReminder").on("click", function(argument) {
         $(".reminderSearchTextBox").attr("placeholder","Search for Doctors");
         $(".reminderSearchTextBox").attr("name","popupDoctorSearch");
+        $(".setReminderBtn").attr("id","doctorSetReminderBtn");
         $("#doctorReminderMessage").show();
         $("#medicineReminderOptions").hide();
         $("#labTestReminderOptions").hide();
@@ -744,6 +737,7 @@ $(document).ready(function () {
     $("#medicineReminder").on("click", function(argument) {
         $(".reminderSearchTextBox").attr("placeholder","Search for Pharmacies");
         $(".reminderSearchTextBox").attr("name","popupMedicineSearch");
+        $(".setReminderBtn").attr("id","medOrderSetReminderBtn");
         $("#doctorReminderMessage").hide();
         $("#medicineReminderOptions").show();
         $("#labTestReminderOptions").hide();
@@ -751,6 +745,7 @@ $(document).ready(function () {
     $("#labTestReminder").on("click", function(argument) {
         $(".reminderSearchTextBox").attr("placeholder","Search for Labs");
         $(".reminderSearchTextBox").attr("name","popupLabSearch");
+        $(".setReminderBtn").attr("id","labTestSetReminderBtn");
         $("#doctorReminderMessage").hide();
         $("#labTestReminderOptions").show();
         $("#medicineReminderOptions").hide();
@@ -1081,6 +1076,11 @@ $(document).ready(function () {
             console.log("complete");
         });
     });
+
+    // START: Set Doctor Reminder
+
+
+    // END: Set Doctor Reminder
 
     /* End Adding your javascript here */
 });

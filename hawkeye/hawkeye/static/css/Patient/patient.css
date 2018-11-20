@@ -172,6 +172,10 @@
     padding-bottom: 5px;
 }
 
+#medReqTitle{
+    border-top:1px solid black;
+}
+
 .individualRowTwoItem{
     cursor: pointer;
 }
@@ -220,6 +224,15 @@
     #topRowLeftWrapperCol{
         padding-left: 0px;
         padding-right: 0px;
+        margin-bottom: 10px;
+    }
+    .topRowButtons{
+        height: 70px;
+        white-space: normal;
+    }
+    .mobileFix{
+        padding: 0px 0px 0px 0px;
+        margin-top: 5px;
         margin-bottom: 10px;
     }
 }

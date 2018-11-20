@@ -219,9 +219,9 @@
                                                 Choose a Lab-Test-Request Document
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="labTestDropdown">
-                                                    <a class="dropdown-item" href="#">Options to be added via javascript</a>
+<!--                                                     <a class="dropdown-item" href="#">Options to be added via javascript</a>
                                                     <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
+                                                    <a class="dropdown-item" href="#">Something else here</a> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -230,14 +230,14 @@
                                                 <button class="btn btn-block dropdown-toggle" type="button" id="medicineDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Choose a Prescription
                                                 </button>
-                                                <div class="dropdown-menu" aria-labelledby="medicineDropdown">
+                                                <div class="dropdown-menu" aria-labelledby="medicineDropdown"><!-- 
                                                     <a class="dropdown-item" href="#">Options to be added via javascript</a>
                                                     <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
+                                                    <a class="dropdown-item" href="#">Something else here</a> -->
                                                 </div>
                                             </div>
                                         </div>        
-                                        <button type="button" class="btn btn-success btn-block" id="setReminderBtn">Set Reminder</button> 
+                                        <button type="button" class="btn btn-success btn-block setReminderBtn" id="doctorSetReminderBtn">Set Reminder</button> 
                                     </div>
                                 </div>
                             </div>
@@ -253,7 +253,7 @@
             <div class="row" style="margin-top: 15px;">
                 <!-- View previous prescriptions div -->
                 <!-- provide options to select only a few prescriptions -->
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mobileFix">
                     <div class="container-fluid">
                         <div class="row" id="prescriptionsViewDivTitle">
                             <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-12 topRowWrapper" id="prescriptionsViewDivTitleDiv">
@@ -261,9 +261,9 @@
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 topRowWrapper">
                                 <div class="dropdown">
-                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuPrescriptionList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Sort By
-                                    </button>
+                                    <!-- <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuPrescriptionList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+                                        <!-- Sort By -->
+                                    <!-- </button> -->
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuPrescriptionList">
                                         <a class="dropdown-item" href="#">Date ascending</a>
                                         <a class="dropdown-item" href="#">Date descending</a>
@@ -282,7 +282,7 @@
                     </div>
                 </div>
                 <!-- View Medicine requests and responses -->
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mobileFix">
                     <div class="container-fluid topRowWrapper">
                         <div class="row" id="medRespPendingTitle">
                             <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
@@ -290,9 +290,9 @@
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                                 <div class="dropdown">
-                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuMedRespList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Sort By
-                                    </button>
+                                    <!-- <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuMedRespList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+                                        <!-- Sort By -->
+                                    <!-- </button> -->
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuMedRespList">
                                         <a class="dropdown-item" href="#">Date ascending</a>
                                         <a class="dropdown-item" href="#">Date descending</a>
@@ -324,9 +324,9 @@
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                                 <div class="dropdown">
-                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuMedReqList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Sort By
-                                    </button>
+                                    <!-- <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuMedReqList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+                                        <!-- Sort By -->
+                                    <!-- </button> -->
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuMedReqList">
                                         <a class="dropdown-item" href="#">Date ascending</a>
                                         <a class="dropdown-item" href="#">Date descending</a>
@@ -355,7 +355,7 @@
                     </div>
                 </div>  
                 <!-- View lab-tests -- with result and pending and unsent ones div -->
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mobileFix">
                     <div class="container-fluid topRowWrapper">
                         <div class="row" id="labRespTitle">
                             <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
@@ -363,9 +363,9 @@
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                                 <div class="dropdown">
-                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuPendingLabTestList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Sort By
-                                    </button>
+                                    <!-- <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuPendingLabTestList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+                                        <!-- Sort By -->
+                                    <!-- </button> -->
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuPendingLabTestList">
                                         <a class="dropdown-item" href="#">Date ascending</a>
                                         <a class="dropdown-item" href="#">Date descending</a>
@@ -397,9 +397,9 @@
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                                 <div class="dropdown">
-                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuDoneLabReqList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Sort By
-                                    </button>
+                                    <!-- <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuDoneLabReqList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+                                        <!-- Sort By -->
+                                    <!-- </button> -->
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuDoneLabReqList">
                                         <a class="dropdown-item" href="#">Date ascending</a>
                                         <a class="dropdown-item" href="#">Date descending</a>
