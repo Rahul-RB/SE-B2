@@ -93,7 +93,10 @@ def doctor():
         return redirect(url_for("login"),302)
     print("Doctor:",session["currentEmail"])
     
-    return render_template("Doctor/doctor.html",title="Doctor", userLoggedIn=True)
+    return render_template("Doctor/doctor.html",
+                            title="Doctor", 
+                            userLoggedIn=True,
+                            docName=models_common.getUsernameByEmail(session.get("currentEmail"),session.get("accType")))
 
 @app.route("/prescription_history")
 def prescription_history():
