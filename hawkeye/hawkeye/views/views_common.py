@@ -19,9 +19,9 @@ app.secret_key = 'secretkeyhereplease'
 def home():
     try:
         res = session["{0}LoggedIn".format(session["accType"])]
-        return render_template("Home/home.html",title="User",userLoggedIn=True)
+        return render_template("Home/index.html",title="User",userLoggedIn=True)
     except Exception as e:
-        return render_template("Home/home.html",title="User",userLoggedIn=False)
+        return render_template("Home/index.html",title="User",userLoggedIn=False)
 
 # Rahul's
 @app.route("/login",methods=["GET","POST"])
