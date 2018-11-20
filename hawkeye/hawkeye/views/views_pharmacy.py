@@ -43,7 +43,7 @@ def pharmacy_prescription():
 def pharmacyViewRequest():
     if ((not session.get("accType")=="Pharmacy") or (not session.get(session.get("accType")+"LoggedIn"))):
         return redirect(url_for("login"),302)
-    return render_template("Pharmacy/pharmacyViewRequest.html",title="Pharmacy",user=models_pharmacy.getUsernameByEmail(session.get("currentEmail"),session.get("accType")), userLoggedIn=True)
+    return render_template("Pharmacy/pharmacyViewRequest.html",title="Pharmacy",user=models_common.getUsernameByEmail(session.get("currentEmail"),session.get("accType")), userLoggedIn=True)
 
 
 @app.route("/prescriptionRequest",methods=['GET'])

@@ -3,59 +3,60 @@ $.ajax({
             url: 'prescriptionRequest'
         })
         .done(function(data) {
-	    console.log('success');	
-	    appendStr = "<thead class='thead-inverse'><tr><th>Prescription ID</th><th>Patient ID</th><th>Medicine</th><th>Action</th></tr></thead><tbody>";
-	    
+        console.log('success'); 
+        appendStr = "<thead class='thead-inverse'><tr><th>Prescription ID</th><th>Patient ID</th><th>Medicine</th><th>Action</th></tr></thead><tbody>";
+        
             /*$.each(data,function(index,value){
-		appendStr = appendStr + "<tr><td>"+i+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td></tr>"
-		i+=1
-	    })*/
-	    id = 1;
-	    for (i in data){
-		l = data[i].length;
-		a = i.split(" ");
-		appendStr = appendStr + '<tr><td rowspan="'+l+'">'+a[0]+'</td><td rowspan="'+l+'">'+a[1]+'</td><td>'+data[i][0]+'</td>'+'<td rowspan="'+l+'"'+'><button id="'+id+'" role="button" data-toggle="modal" data-target="#login-modal" onclick=updateInfo(this.id,this)>done</button></td></tr>';
-		for(j=1;j<l;j++){
-			appendStr = appendStr + '<tr><td>'+data[i][j]+'</td></tr>';
-		}
-		id+=1;
-		}
-	appendStr = appendStr + "</tbody>";
-	$("#TableDisplay").append(appendStr);
-	})
-	.fail(function(){
-	    console.log('failed');
-	})
+        appendStr = appendStr + "<tr><td>"+i+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td></tr>"
+        i+=1
+        })*/
+        id = 1;
+        for (i in data){
+        l = data[i].length;
+        a = i.split(" ");
+        appendStr = appendStr + '<tr><td rowspan="'+l+'">'+a[0]+'</td><td rowspan="'+l+'">'+a[1]+'</td><td>'+data[i][0]+'</td>'+'<td rowspan="'+l+'"'+'><button id="'+id+'" role="button" data-toggle="modal" data-target="#login-modal" onclick=updateInfo(this.id,this)>done</button></td></tr>';
+        for(j=1;j<l;j++){
+            appendStr = appendStr + '<tr><td>'+data[i][j]+'</td></tr>';
+        }
+        id+=1;
+        }
+    appendStr = appendStr + "</tbody>";
+    $("#TableDisplay").append(appendStr);
+    })
+    .fail(function(){
+        console.log('failed');
+    })
         .always(function(){
-	    console.log('always');
-	})
+        console.log('always');
+    })
 //$("#TableDisplay").append("<thead class='thead-inverse'><tr><th>SL#</th><th>Patient_ID</th><th>Medicine</th><th> Action </th></tr></thead>");
  $("#submit").on("click",function (event) {
+        event.preventDefault();
         var inpData = {
             patientID : $("#patientID").val(),
-	    prescriptionID : parseInt($("#prescriptionID").val()),
-	    response : $("#response").val(),
+            prescriptionID : $("#prescriptionID").val(),
+            response : $("#response").val(),
         }
-	var jsonPayload = JSON.stringify(inpData);
-	console.log(jsonPayload);
+    var jsonPayload = JSON.stringify(inpData);
+    console.log(jsonPayload);
         $.ajax({
             url: 'prescriptionResponseUpdate',
-            type: 'POST',	
+            type: 'POST',   
             dataType: 'json',
             data: jsonPayload,
             contentType:"application/json; charset=UTF-8"
         })
-	.done(function(data) {
-		console.log('success');
-		console.log(data);
-		//location.reload();
-	})
-	.fail(function() {
-		console.log('fail');
-	})
-	.always(function(){
-		console.log('always');
-	})
+    .done(function(data) {
+        console.log('success');
+        console.log(data);
+        location.reload();
+    })
+    .fail(function() {
+        console.log('fail');
+    })
+    .always(function(){
+        console.log('always');
+    })
 });
 
 $(function() {
@@ -104,14 +105,14 @@ $(function() {
             $divTag.removeClass($divClass);
             $iconTag.addClass("glyphicon-chevron-right");
             $iconTag.removeClass($iconClass + " " + $divClass);
-  		}, $msgShowTime);
+        }, $msgShowTime);
     }
 });
 function updateInfo(id,btn){
-	i = parseInt(id);
-	var a = document.getElementById("TableDisplay");
-	document.getElementById("prescriptionID").value=a.rows[i].cells[0].innerHTML;
-	document.getElementById("patientID").value=a.rows[i].cells[1].innerHTML;
-	//alert(a.rows[i].cells[0].innerHTML);
-	
+    i = parseInt(id);
+    var a = document.getElementById("TableDisplay");
+    document.getElementById("prescriptionID").value=a.rows[i].cells[0].innerHTML;
+    document.getElementById("patientID").value=a.rows[i].cells[1].innerHTML;
+    //alert(a.rows[i].cells[0].innerHTML);
+    
 }
