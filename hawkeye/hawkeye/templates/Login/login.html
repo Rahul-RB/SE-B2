@@ -43,7 +43,12 @@
                     </div>
 
                     <form class="login100-form validate-form" method="POST">
-                        <span class="login100-form-title">
+                        {% if invalidLogin %}
+                            <div class="alert alert-danger" role="alert">
+                                Username/Password does not match!
+                            </div>
+                        {% endif %}
+                        <span class="login100-form-title">                    
                             Login
                         </span>
                         
