@@ -263,6 +263,8 @@ $(document).ready(function () {
     //     return false;
     // });
 
+
+
     $("#doctorHistoryBtn").on("click", function (event) {
         var inpData = {
             searchBy : $("#date-input").val(),
@@ -284,6 +286,41 @@ $(document).ready(function () {
             $("#analyticsDiv").append("<div> Total Patients seen today is " + data["countPatientsToday"] + "</div>" );
             $("#analyticsDiv").append("<div> Total Patients seen for the selected month is " + data["countPatientsMonth"] + "</div>");
             $("#analyticsDiv").append("<div> Total Patients seen for the selected year is " + data["countPatientsYear"] + "</div>");
+            
+            var line_ctx = document.getElementById('lineChart').getContext('2d');
+            var chart = new Chart(line_ctx, {
+                  type: 'line',
+                  data: {
+                      labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                      datasets: [{
+                          label: "Frequency of Patients through the Year",
+                          backgroundColor: 'rgb(255, 99, 132)',
+                          borderColor: 'rgb(255, 99, 132)',
+                          data: data["monthWiseDataThatYear"], // put the frequency of each month list here
+                      }]
+                  },
+
+                  // Configuration options go here
+                  options: {
+                      responsive: true
+                  }
+            });
+            
+            var pie_ctx = document.getElementById('pieChart').getContext('2d');
+            var myDoughnutChart = new Chart(pie_ctx, {
+                type: 'doughnut',
+                data: {
+                  labels: ['Red','Yellow','Blue'],
+                  datasets: [{
+                    data: [10, 20, 30],
+                    backgroundColor: ['red', 'blue', 'yellow']
+                  }]
+                },
+                
+                options: {
+                  responsive: true
+                }
+            });
             $("#lineChart").fadeIn();
 
         })
@@ -295,6 +332,9 @@ $(document).ready(function () {
             console.log("complete");
         });
     })
+
+
+
 
     $("#patientIDSeachBtn").on("click",function (event) {
         var inpData = {
