@@ -6,131 +6,92 @@
 
 {% block customContent %}
 
-			 <div id="customContent">
-                    <div class="container-fluid">
-                        <div class="row" id="welcomeDiv">
-                            <div class="col-xl-4 col-lg-4 col-md-12 col-4">
-                                Welcome back XYZ
-                            </div>
-							<div class="col-xl-4 col-lg-4 col-md-12 col-4">
-                                Address:Abc
-                            </div>
-							<div class="col-xl-4 col-lg-4 col-md-12 col-4">
-                                Ph_no:123
-                            </div>
+<div id="customContent">
+                <div class="container-fluid">
+                    <div class="row" id="welcomeDiv">
+                      {% for d in data %}
+                        <div class="col-xl-4 col-lg-4 col-md-12 col-4">
+                            Welcome back {{d[0]}}
                         </div>
-						<hr class="welcomeHorLine">
-						
-							<div class="row">
-							<div class="col-lg-3 col-md-4">
-							<div class="card">
-      
-							<div class="card-body">
-							<h4 class="card-title">Subscribe</h4>
-							<p class="card-text">Diabetic Patient? Need reminder? Subscribe here for reminder! </p>
-							<a href="#" class="btn btn-primary">Subscribe</a>
-							</div>
-							</div>
+          <div class="col-xl-4 col-lg-4 col-md-12 col-4">
+                            Address: {{d[1]}}
+                        </div>
+          <div class="col-xl-4 col-lg-4 col-md-12 col-4">
+                            Ph_no: {{d[2]}}
+                        </div>
+                        {% endfor %}
+                    </div>
+        <hr class="welcomeHorLine">
 
-						<div class="card text-white" style="background-color: #333; border-color: #333;">
-						<div class="card-body">
-							<h3 class="card-title">Suggestion</h3>
-							<p class="card-text">Display if any medicine suggestion is there</p>
-						</div>
-						</div>
+          <div class="row">
+          <div class="col-lg-3 col-md-4">
+          <div class="card">
 
-							</div>
-		
-		<div class="col-lg-7 col-mg-8">
-		<div class="table-responsive">
-      <table class="table table-striped">
-       <thead class="thead-inverse">
-	   
-	   
-        <tr>
-		<th> Patient_ID : 1002</th>
-         <th>Prescription_ID : PR01</th>
-         <th>Doctor_ID : DC90</th>
-		 
-		 
-        </tr>
-       </thead>
-	   </tbody>
-      </table>
-	  </div>
-	  
-    <div class="col-lg-12 col-md-8">
-     <div class="table-responsive">
-      <table class="table table-striped">
-       <thead class="thead-inverse">
-        <tr>
-         <th>SL#</th>
-         
-		 <th>Medicines</th>
-		 
-         <th>Remarks</th>
-        </tr>
-       </thead>
-       <tbody>
-        <tr>
-         <td>1,001</td>
-         
-         <td>xyz</td>
-         <td></td>
-        </tr>
-        <tr>
-         <td>1,002</td>
-         
-         <td>abc</td>
-         <td></td>
-        </tr>
-        <tr>
-         <td>1,003</td>
-         
-         <td>Adderall.</td>
-         <td></td>
-        </tr>
-        <tr>
-         <td>1,004</td>
-         
-         <td>Ativan</td>
-		 <td></td>
-         
-        </tr>
-        <tr>
-         <td>1,005</td>
-         
-         <td>Econza</td>
-         <td></td>
-        </tr>
-        
-        
-        
-        
-       </tbody>
-      </table>
-     </div>
-    </div>
-   </div>
-   <!--/row-->
- 
- {% endblock %}
+          <div class="card-body">
+          <h4 class="card-title">Subscribe</h4>
+          <p class="card-text">Diabetic Patient? Need reminder? Subscribe here for reminder! </p>
+          <a href="#" class="btn btn-primary">Subscribe</a>
+          </div>
+          </div>
+
+        <div class="card text-white" style="background-color: #333; border-color: #333;">
+        <div class="card-body">
+          <h3 class="card-title">Suggestion</h3>
+          <p class="card-text">Display if any medicine suggestion is there</p>
+        </div>
+        </div>
+
+          </div>
+
+<div class="col-lg-7 col-mg-8">
+<div class="table-responsive">
+  <table class="table table-striped">
+   <thead class="thead-inverse">
+
+
+    <tr>
+
+      <th> Patient_ID : {{details}}</th>
+
+
+
+
+    </tr>
+   </thead>
+
+  </table>
+</div>
+
+<div class="col-lg-12 col-md-8">
+ <div class="table-responsive">
+  <table class="table table-striped">
+   <thead class="thead-inverse">
+    <tr>
+
+     <th>Medicines</th>
+     <th>TimeToTake</th>
+    </tr>
+   </thead>
+   <tbody>
+     {% for d in pharPresData %}
+    <tr>
+
+     <td>{{d[0]}}</td>
+     <td>{{d[1]}}</td>
+    </tr>
+    {% endfor %}
+
+
+
+
+   </tbody>
+  </table>
+ </div>
+</div>
+</div>
+{% endblock %}
 
 
 {% block customJS %}
 
-    
-
 {% endblock %}
-
- 
-
-						
-						
-						
-            <!-- Once you're developing, delete below div -->
-                 
-            
-
-            <!-- END EDITING HERE -->
-            
