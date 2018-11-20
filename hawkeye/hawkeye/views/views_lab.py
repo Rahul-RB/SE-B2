@@ -65,7 +65,11 @@ def labExistingResponse():
 @app.route('/uploads/<path:filename>')
 def uploaded_file(filename):
     print("---------------------",str(filename),"---------------")
-    return send_file('uploads/'+str(filename),as_attachment=True)
+    try:
+      return send_file('uploads/'+str(filename),as_attachment=True)
+    except Exception as e:
+      flash("File not Found")
+      return redirect(url_for("lab"))
 
 @app.route("/lab")
 def lab():
