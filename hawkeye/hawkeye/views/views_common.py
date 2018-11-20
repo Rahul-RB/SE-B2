@@ -14,7 +14,12 @@ import datetime
 
 app.secret_key = 'secretkeyhereplease'
 
+# First two lines of every view function tests whether a user is logged in.
+# Exceptions: Login, Logout, Registration and AJAX functions.
+
 # Rahul's
+# Depending on whether a user is logged in, the options shown on top-right
+# button changes from "View Profile and Logout" to and fro "Login".
 @app.route("/")
 def home():
     try:
@@ -24,6 +29,8 @@ def home():
         return render_template("Home/index.html",title="User",userLoggedIn=False)
 
 # Rahul's
+# GET request returns the login page.
+# POST request means user submits login details.
 @app.route("/login",methods=["GET","POST"])
 def login():
     if (request.method == "GET"):
@@ -59,6 +66,7 @@ def login():
 
 
 # Rahul's
+# Set all session variables to none, redirect back to login page.
 @app.route("/logout")
 def logout():
     try:
@@ -75,11 +83,14 @@ def logout():
     return redirect(url_for("home"))
 
 # Rahul's
+# Return patient's register page by default.
 @app.route("/register")
 def register():
     return redirect(url_for("register_patient"))
 
 # Rahul's
+# GET request returns the registration page.
+# POST request means user submits registration details.
 @app.route("/register_patient",methods=["GET","POST"])
 def register_patient():
     if (request.method=="GET"):
@@ -96,7 +107,8 @@ def register_patient():
             "phoneNO"    : str(request.form["phoneNo"]),
             "password"   : str(request.form["password"]), 
         }
-        if not models_common.isExistingUser(inpDict["patientID"],"Patient"): # Insert if not existing
+        # Insert if not existing user in DB, else return error.
+        if not models_common.isExistingUser(inpDict["patientID"],"Patient"): 
             res = models_common.insertNewUser(inpDict,"Patient")
             if(res==True):
                 return redirect(url_for("home"))
@@ -124,7 +136,7 @@ def register_doctor():
             "designation" : str(request.form["designation"]),
             "password"    : str(request.form["password"]), 
         }
-        if not models_common.isExistingUser(inpDict["doctorID"],"Doctor"): # Insert if not existing
+        if not models_common.isExistingUser(inpDict["doctorID"],"Doctor"):
             res = models_common.insertNewUser(inpDict,"Doctor")
             if(res==True):
                 return redirect(url_for("home"))
@@ -149,7 +161,7 @@ def register_lab():
             "phoneNO"  : str(request.form["phoneNo"]),
             "password" : str(request.form["password"]), 
         }
-        if not models_common.isExistingUser(inpDict["labID"],"Lab"): # Insert if not existing
+        if not models_common.isExistingUser(inpDict["labID"],"Lab"):
             res = models_common.insertNewUser(inpDict,"Lab")
             if(res==True):
                 return redirect(url_for("home"))
@@ -174,7 +186,7 @@ def register_pharmacy():
             "phoneNO"      : str(request.form["phoneNo"]),
             "password"     : str(request.form["password"]),
         }
-        if not models_common.isExistingUser(inpDict["pharmacyID"],"Pharmacy"): # Insert if not existing
+        if not models_common.isExistingUser(inpDict["pharmacyID"],"Pharmacy"):
             res = models_common.insertNewUser(inpDict,"Pharmacy")
             if(res==True):
                 return redirect(url_for("home"))
@@ -186,6 +198,9 @@ def register_pharmacy():
 
 
 # Rahul's
+# Get input text (can be like "Dwi" or "QWE" etc.)
+# The "resType" is an account type pointing to which DB to be searched in.
+# resType can be "Doctor", "Patient", "Lab" or "Pharmacy" (case sensitive).
 @app.route("/commonSearch",methods=["GET"])
 def commonSearch():
     inpText = request.args.get('inpText', "", type=str)

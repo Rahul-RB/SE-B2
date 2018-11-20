@@ -18,9 +18,6 @@ $(document).ready(function () {
         return(today);
     }
     // START: jqeury timeline calendar code
-    // $('#calendar').fullCalendar({
-    //     // put your options and callbacks here
-    // });
     $('#calendar').fullCalendar({
         header: {
             left: 'prev,next today',
@@ -61,19 +58,12 @@ $(document).ready(function () {
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         eventLimit: true, // allow "more" link when too many events
-        // eventMouseover: function(event) {
-        //     $(this).qtip();
-        // },
-        // eventMouseout: function(event) {
-        //     $(this).qtip().hide();
-        // },
         // Don't render the modal on onclick
         // Keep the classes and divs attached in the get request itself
         // During the click, fetch data as per thing and display in modal.
         eventClick: function(event, element, view) {
-            // element.qtip({
-            //     content: event.subInfo
-            // });
+            // Since many events types are there, it's important to distinuish
+            // them via property types they've. 
             if(event.hasOwnProperty("mainInfo"))
             {
                 if(event.hasOwnProperty("subInfo"))
@@ -95,18 +85,27 @@ $(document).ready(function () {
                 var res = "<span class='subInfo'></span>";
             }
             
+            // Add targets of these calendar event divs to a common modal.
+            // Thus clicking them invokes this event (eventClick) and then
+            // invoked bootstrap modal target which shows the modals. 
             $(".fc-list-item").attr('data-toggle', 'modal');
             $(".fc-list-item").attr('data-target', '#commonModal');
             $(".fc-event-container").attr('data-toggle', 'modal');
             $(".fc-event-container").attr('data-target', '#commonModal');
 
+            // Ensure previously clicked modals data in calendars are cleared
+            // before the next is clicked.
             $("#commonModalBody").empty();
             $("#commonModalLongTitle").empty();
-            $("#commonModalLongTitle").append("<div class='calendarEvent'>"+event.title+"</div>");
+            $("#commonModalLongTitle").append("<div class='calendarEvent'>"+
+                                                event.title+"</div>");
             $("#commonModalBody").append(res);
 
             switch(event.typeOfData)
             {
+                // If the event type was OrderMedicine then fetch the 
+                // corresponding Data for the prescription : The symptoms and
+                // medicines suggested for the same.
                 case "OrderMedicine" :
                     var inpData = {
                         ID:event.ePrescriptionID
@@ -120,8 +119,8 @@ $(document).ready(function () {
                     .done(function(data) {
                         console.log("Order data:",data);
                         $("#commonModalBody").append("\
-                            <div><b>Symptoms:                  </b>"+data[0][0]+" </div>\
-                            <div><b>Medicines Suggested:       </b>"+data[0][1]+" </div>\
+                            <div><b>Symptoms:           </b>"+data[0][0]+" </div>\
+                            <div><b>Medicines Suggested:</b>"+data[0][1]+" </div>\
                         ");
 
                     })
@@ -134,6 +133,10 @@ $(document).ready(function () {
                     });
                     break;
 
+                // If the event type was LabVisit then fetch the 
+                // corresponding Data for the visit : The lab details.
+                // The user can view his lab requests to see what lab document
+                // corresponds to this visit.
                 case "LabVisit" :
                     var inpData = {
                         ID:event.labID,
@@ -165,6 +168,9 @@ $(document).ready(function () {
                     });
                     break;
 
+                // If the event type was DocVisit then fetch the 
+                // corresponding Data for the visit : The doctor details.
+                // The user can view his doctor details.
                 case "DocVisit" :
                     var inpData = {
                         ID:event.doctorID,
@@ -219,9 +225,12 @@ $(document).ready(function () {
     // On page load do:
     //   - Get all DoctorAppointment, *reminders
     //   - Get all Prescriptions and Lab Tests.
-    //   - Load them into calendar.  
+    //   - Load them into calendar.
+    //   - Then fetch all from 3-7.  
 
 
+    // Function usage: Get date (yyyy/mm/dd) and time (hh:mm:ss) and convert it 
+    // into ISO-8601 format ($dateT$time).
     function getISO8601DateTime(date,time)
     {
         if(time.length==7)
@@ -233,6 +242,17 @@ $(document).ready(function () {
             return date+"T"+time;            
         }
     }
+    
+    // Function usage: Get all types of data that's required to be updated in 
+    // calendar. These are 4 types of events to be updated in calendar: 
+    //      - OrderMedicine
+    //      - TakeMedicine
+    //      - DocVisit
+    //      - LabVisit
+    // The AJAX call to patientCalendarReminderUpdate returns a JSON with
+    // keys as 4 events. The values are an array of values, each depending on
+    // data sent by backend.
+
     (function worker1() {
         $.get('patientCalendarReminderUpdate', function(data) {
             console.log("<GET:1> success",data);
@@ -286,8 +306,14 @@ $(document).ready(function () {
             });
         });
     })();
-
-    // // Get all DoctorAppointment.
+    
+    // Get all DoctorAppointment.
+    // Function usage: Get all Doctor Appointments for the patient that's been 
+    // booked on a earlier date by the same patient.
+    // The AJAX call to patientDoctorAppointment returns a JSON with
+    // keys as integer, each integer representing one [appointment]. 
+    // The values are an array of values corresponding to the appointment, which
+    // depends on the backend schema.
     (function worker2() {
         $.get('patientDoctorAppointment', function(data) {
             console.log("<GET:2> success",data);
@@ -302,13 +328,15 @@ $(document).ready(function () {
                 $("#calendar").fullCalendar("renderEvent",DocVisit,"stick");                
             });
         });
-    })();    
-    // // Get all FetchPrescriptions.
-    // setInterval(function worker3() {
-    //     $.get('patientFetchPrescriptions', function(data) {
-    //         console.log("<GET:3> success",data);
-    //     });
-    // },10000);
+    })();
+    
+    // Get all FetchPrescriptions.
+    // Function usage: Get all Prescriptions for the patient that's been 
+    // issued on a earlier date by some doctor.
+    // The AJAX call to patientFetchPrescriptions returns a JSON with
+    // keys as integer, each integer representing one [prescription]. 
+    // The values are an array of values corresponding to the appointment, which
+    // depends on the backend schema.
     (function worker3() {
         $.get('patientFetchPrescriptions', function(data) {
             console.log("<GET:3> success",data);
@@ -335,15 +363,19 @@ $(document).ready(function () {
                         <div> <b> Time To Take: </b>"+value[3]+"</div>\
                         <div> <b> Start Date: </b>"+value[4]+"</div>\
                     ");
-                    // $(this).on('click', function(event) {
-                    //     // $("#prescriptionModalBody").text("\n");
-                    // });
                 });
             });
         });
     })();
 
-    // // Get all LabRequest.
+    // Get all LabRequest.
+    // Function usage: Get all Lab Requests for the patient that's been 
+    // made by same patient using a lab document issued on a earlier date by 
+    // some doctor.
+    // The AJAX call to patientLabRequest returns a JSON with keys as integer, 
+    // each integer representing one [LabRequest]. 
+    // The values are an array of values corresponding to the appointment, which
+    // depends on the backend schema.
     (function worker4() {
         $.get('patientLabRequest', function(data) {
             console.log("<GET:4> success",data);
@@ -399,7 +431,8 @@ $(document).ready(function () {
                     var inpData = {
                         ID:value[1]
                     };
-                    // Fetch Prescription details
+                    // Fetch Prescription details for which the lab document
+                    // was issued. 
                     $.ajax({
                         url: 'getMedicineDetailsByEPrescriptionID',
                         type: 'GET',
@@ -429,11 +462,13 @@ $(document).ready(function () {
     })();
     
     // Get all LabResponse.
-    // setInterval(function worker5() {
-    //     $.get('patientLabResponse', function(data) {
-    //         console.log("<GET:5> success",data);
-    //     });
-    // },10000);
+    // Function usage: Get all Lab Responses for the patient that's been 
+    // made by some lab using a lab document issued for request on a earlier 
+    // date by same patient.
+    // The AJAX call to patientLabResponse returns a JSON with keys as integer, 
+    // each integer representing one [LabResponse]. 
+    // The values are an array of values corresponding to the appointment, which
+    // depends on the backend schema.
     (function worker5() {
         $.get('patientLabResponse', function(data) {
             console.log("<GET:5> success",data);
@@ -492,11 +527,13 @@ $(document).ready(function () {
     })();
     
     // Get all MedicineRequest.
-    // setInterval(function worker6() {
-    //     $.get('patientMedicineRequest', function(data) {
-    //         console.log("<GET:6> success",data);
-    //     });
-    // },10000);
+    // Function usage: Get all Medicine Requests for the patient that's been 
+    // made by same patient using a prescription issued on a earlier date by 
+    // some doctor.
+    // The AJAX call to patientMedicineRequest returns a JSON with keys as 
+    // integer, each integer representing one [MedicineRequest]. 
+    // The values are an array of values corresponding to the appointment, which
+    // depends on the backend schema.
     (function worker6() {
         $.get('patientMedicineRequest', function(data) {
             console.log("<GET:6> success",data);
@@ -550,11 +587,13 @@ $(document).ready(function () {
     })();
     
     // // Get all MedicineResponse.
-    // setInterval(function worker7() {
-    //     $.get('patientMedicineResponse', function(data) {
-    //         console.log("<GET:7> success",data);
-    //     });
-    // },10000);
+    // Function usage: Get all Medicine Responses for the patient that's been 
+    // made by same patient using a prescription issued on a earlier date by 
+    // some doctor.
+    // The AJAX call to patientMedicineResponse returns a JSON with keys as 
+    // integer, each integer representing one [MedicineResponse]. 
+    // The values are an array of values corresponding to the appointment, which
+    // depends on the backend schema.
 
     (function worker7() {
         $.get('patientMedicineResponse', function(data) {
@@ -608,17 +647,27 @@ $(document).ready(function () {
     })();
     
 
-    // START: Popup defaults
-    $.fn.popup.defaults.pagecontainer = '.popupClass';
-    $('#basic').popup();
-    $('#basic2').popup();
-    $('#basic3').popup();
+    // START: Popup defaults.
 
+    // START: DON'T MODIFY following line required as per jquery.popup library.
+    $.fn.popup.defaults.pagecontainer = '.popupClass';
+    // END: DON'T MODIFY following line required as per jquery.popup library.
+
+    // START: Add the following divs to popup functionality.
+    $('#basic').popup();        // For Request LabTest button
+    $('#basic2').popup();       // For Book Medicines button 
+    $('#basic3').popup();       // For Book Doctor Appointment button
+    // END: Add the following divs to popup functionality.
+
+    // Monkey patch CSS values since Bootstrap 4.0 is acting weird with buttons
+    // having popup functionality.
     var topRowBtnHeight = $("#mainButtons").css("height");
     $("#reqLabTestBtn").css("height",topRowBtnHeight);
     $("#bookMedicineBtn").css("height",topRowBtnHeight);
     $("#bookApptBtn").css("height",topRowBtnHeight);
 
+    // Fetch the patient's lab request documents on click of Request Lab Test 
+    // button. Then show it in dropdown.
     $("#reqLabTestBtn").on("click",function(event) {
         $(".popupSearchTextBox").val("");
         $(".selectedSearchID").val("");
@@ -645,6 +694,9 @@ $(document).ready(function () {
             });
         });
     });
+
+    // Fetch the patient's unused prescriptions on click of Request Lab Test 
+    // button. Then show it in dropdown.
     $("#bookMedicineBtn").on("click",function(event) {
         $(".popupSearchTextBox").val("");
         $(".selectedSearchID").val("");
@@ -672,6 +724,9 @@ $(document).ready(function () {
             });
         });
     });
+
+    // Booking appointments functionality was more complex and thus is on a
+    // later stage.
     $("#bookApptBtn").on("click",function(event) {
         $(".popupSearchTextBox").val("");
         $(".selectedSearchID").val("");
@@ -679,16 +734,6 @@ $(document).ready(function () {
 
     // END : Popup defaults
 
-    // START: Buy Medicine functionality
-    // $("#bookMedicineBtn").on("click",function(argument){
-        // Func 1: Early fetch doctors names as per customer's typing. -- make it such that any search can be invoked.
-        // Func 2: Fetch times as per doctor suggested. Refresh this every 5 seconds.
-        // Func 3: Poll Reminder tables and add them into calendar every 5 seconds.
-        // Func 4: On page load, get all entries from DoctorAppointment table and load to calendar. Then call func3 periodically.
-        // Step 1: Upon Doctor-Date-Time selection, make entry into DoctorAppointment table.
-        // Step 2: Make an entry into DoctorReminder table. Let Func3 handle updation part.           
-    // });
-    // END : Buy Medicine functionality
 
     // START : Following lines are used to control the 
     // Set reminder functionalities in tabs.
@@ -722,17 +767,6 @@ $(document).ready(function () {
     });
     //END : Set Reminder tab functionalities.
 
-    // START : jquery dropdown timepicker code.
-    // $('.timeScroller').each(function(index, el) {
-    //     $(this).timepicker({ 
-    //         'scrollDefault': 'now',
-    //         'forceRoundTime': true,
-    //         'timeFormat': 'H:i:s' 
-    //     });
-    // }); 
-    // END : jquery dropdown timepicker code.
-
-
     // START : Search functionality
     function getResTypeByName(name) {
         if(name.search("Doctor")!=-1)
@@ -750,6 +784,12 @@ $(document).ready(function () {
         }
     }
 
+    // All the search boxes in popups have same class .popupSearchTextBox .
+    // Thus this single function handles search of all those search boxes.
+    // Since the search is for LabDetails, DoctorDetails and PharmacyDetails 
+    // tables in backend, this function fetches data if length is >=3, gets
+    // type of data to be searched, makes AJAX call to commonSearch and then
+    // displays the results in divs to appopriate place.
     $(".popupSearchTextBox").each(function(index, el){
         $(this).on('input', function(event) {
             var inpData = {
@@ -812,6 +852,7 @@ $(document).ready(function () {
 
     // END : Search functionality
 
+
     // START : Popup Book button fucntionality -> Booking doctor appointment, buy medicines etc.
     function getInputTypeDateByID(ID){
         var date = new Date($("#"+ID).val());
@@ -820,7 +861,7 @@ $(document).ready(function () {
         year = date.getFullYear();
         return([year, month, day].join('-'));
     }
-
+    // (Set) difference between two arrays.
     function diffBetweenArrs (a1, a2) {
 
         var a = [], diff = [];
@@ -891,8 +932,10 @@ $(document).ready(function () {
 
 
     // For doctor appt booking:
+    // Get appointment date. Based on date, get all times based on doctor's ID
+    // in DoctorAppointment table, get difference to get available times and 
+    // display the same
     $("#popupDoctorDate").on('blur', function(event) {
-        //might need to clear old doctorID and inpDate
         $(".timeScroller").empty();
         var doctorID = $("#selectedDoctorID").val();
         var inpDate = getInputTypeDateByID("popupDoctorDate");
@@ -905,6 +948,8 @@ $(document).ready(function () {
         var doctorID = $("#selectedDoctorID").val();
         var inpDate = getInputTypeDateByID("popupDoctorDate");
         
+        // Get selected Doctor ID based on popupSearchTextBox's results.
+        // Then send selected date and time to patientDoctorAppointment.
         var payload = {
             doctorID : doctorID,
             apptDate : inpDate,
@@ -949,7 +994,7 @@ $(document).ready(function () {
         });
         
     });
-
+    // Similar functionality as Doctor Appointment booking button.
     $("#labBookBtn").on('click',function(event) {
         event.preventDefault();
         /* Act on the event */
@@ -998,6 +1043,7 @@ $(document).ready(function () {
         });
     });
     
+    // Similar functionality as Doctor Appointment booking button.
     $("#medicineBookBtn").on('click',function(event) {
         event.preventDefault();
         /* Act on the event */
