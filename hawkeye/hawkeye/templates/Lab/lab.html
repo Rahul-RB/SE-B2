@@ -140,7 +140,7 @@
             </div>
             <div class="col-xl-2 col-lg-2 col-md-2  "> </div>
         </div>
-         <div class="row" style="padding: 10px 10px 10px 10px;">
+        <div class="row" style="padding: 10px 10px 10px 10px;">
         </div>
 
     </div>
@@ -156,6 +156,16 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script type="text/javascript">
+    /*displaying message from server*/
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    alert( {{ message |tojson |safe }} );
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </script>
 
     <script type=text/javascript>
     /*PieChart*/

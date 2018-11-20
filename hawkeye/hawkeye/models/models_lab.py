@@ -108,7 +108,8 @@ def putLabReponse(labRequestID,resultLink, description):
     mysql.get_db().commit()
     cursor.close()
     conn.close()
-
+    if not(res1):
+        return False
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
     query2 = "UPDATE LabRequest SET isPending=0 WHERE labRequestDocumentID="+labRequestID+";"
@@ -119,7 +120,8 @@ def putLabReponse(labRequestID,resultLink, description):
 
     if ((res1) and(res2)):
         print("Successful entry")
-    return True
+        return True
+    return False
 
 def getLabReportFilename(reqid):
     query= "SELECT resultLink FROM LabResponse WHERE labRequestID = "+reqid+";"
