@@ -5,11 +5,13 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt  
 
-# from hawkeye import models 
+# utility converter for converting datetime object to string
 def myconverter(o):
     if isinstance(o, datetime.datetime):
         return o.__str__()
 
+
+# for updating calendar for appointment for the first time
 def firstAppointmentUpdate(email):
     conn = mysql.connect()
     print(mysql)
@@ -29,23 +31,9 @@ def firstAppointmentUpdate(email):
     return {}
 
 
+# check for pending appointments for a particular doctor
 def checkForAppointments(email):
-    # conn = mysql.connect()
-    # print(mysql)
-    # #conn = mysql.connection
-    # query= "SELECT patientID, dateTimeStamp from doctorAppointments where doctorID='"+'12'+"'"
-    # cursor =conn.cursor()
-    # cursor.execute(query)
-    # data = cursor.fetchall()
-    # somedict = {"patientID" : [x[0] for x in data],
-    #             "dateTimeStamp" : [x[1] for x in data]}
-    # print("somedict is ",somedict)
-    # print(type(somedict))
-    # somedict1 = json.dumps(somedict,default=myconverter)
-    # print("somedict1 is ",somedict1)
-
-    # return somedict1
-    #try:
+    
     conn = mysql.connect()
     conn.autocommit = False
     print(mysql)
@@ -77,8 +65,8 @@ def checkForAppointments(email):
         somedict1 = dict()
         return somedict1
 
-# def insertIntoPrescription():
 
+# utility function for searching the patient history given the patientID
 def searchPatientHistory(patientID):
     conn = mysql.connect()
     conn.autocommit = False
@@ -122,7 +110,7 @@ def searchPatientHistory(patientID):
 
         return global_dict 
 
-
+# utility function for checking the number of patients visited to a particular year in that particular day, month and year
 def checkDoctorsHistory(doctorsEmail,searchBy):
     conn = mysql.connect()
     conn.autocommit = False
@@ -159,30 +147,9 @@ def checkDoctorsHistory(doctorsEmail,searchBy):
     print("countPatientsMonth is ", countPatientsMonth)
     print("countPatientsYear is ", countPatientsYear)
     return {"countPatientsYear" : countPatientsYear,"countPatientsToday" : countPatientsToday, "countPatientsMonth": countPatientsMonth, "monthWiseDataThatYear": results}
-        # print("eprescriptions are ", ePrescriptionquery)
-    # elif searchBy=="year":
-    #     now = datetime.datetime.now()
-    #     cur_year = str(now.year)
-    #     cur_day = str(now.day)
-    #     countPatientsMonth=0
-    #     countPatientsToday=0
-    #     query = "SELECT doctorID from DoctorDetails where email='" + doctorsEmail + "'"
-    #     cursor =conn.cursor()
-    #     cursor.execute(query)
-    #     doctorIDquery = cursor.fetchall()
-    #     doctorID = str(doctorIDquery[0][0])
-    #     query2 = "SELECT ePrescriptionID from EPrescription where doctorID='" + doctorID + "'"
-    #     cursor.execute(query2)
-    #     ePrescriptionquery = cursor.fetchall()
-    #     for i in range(len(ePrescriptionquery)):
-    #         monthsSplitList = ePrescriptionquery[i][0].split("-")
-    #         if(monthsSplitList[1] == cur_year):
-    #             countPatientsMonth += 1
-    #         if(monthsSplitList[2] == cur_day):
-    #             countPatientsToday += 1
-    #     print("countPatientsToday is ", countPatientsToday)
-    #     print("countPatientsMonth is ", countPatientsMonth)
-    #     return {"countPatientsToday" : countPatientsToday, "countPatientsMonth": countPatientsMonth}
+
+
+# computes the number of patients monthwise
 def computeDaysMonthwise(ePrescriptionquery, splitByYear):
     print("eprescription quer is ", ePrescriptionquery)
     print("splitByYear is ", splitByYear)
@@ -218,17 +185,9 @@ def computeDaysMonthwise(ePrescriptionquery, splitByYear):
             monthsList[11] += 1
     print("monthslist is ", monthsList)
     return monthsList
-            
-def plotBarChart(monthsList):
-    months = ("Jan","Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug","Sept", "Oct", "Nov", "Dec")
-    y_pos = np.arange(len(months))
-    plt.bar(y_pos,monthsList,align='center',alpha=0.5)
-    plt.xticks(y_pos,months)
-    plt.ylabel('Number of Patients seen')
-    plt.show()
 
     
-
+# used for inserting a new ePrescription into the database
 
 def insertNewPrescription(doctorsEmail, patientName, symptoms, medicines, medFrequency, testType, testDescription) :
 
@@ -285,7 +244,6 @@ def insertNewPrescription(doctorsEmail, patientName, symptoms, medicines, medFre
 
 
     for num_testType in range(len(testType)):
-        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
         insertIntoELabRequest = "INSERT INTO ELabRequestDocument (doctorID, ePrescriptionID, patientID, testType, description) VALUES ('" + doctorID + "','" +\
         ePrescriptionRandom + "','" +\
         patientID + "','" +\

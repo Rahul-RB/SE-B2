@@ -1,3 +1,5 @@
+// for updating the sidebar and navigation bar
+
 $(document).ready(function () {
     /* Do not disturb below lines */
     $("#sidebar").mCustomScrollbar({
@@ -27,24 +29,6 @@ $(document).ready(function () {
     
     });
     /* Do not disturb above lines */
-    // START: jqeury timeline calendar code
-    // $("#myTimeline").timeline({
-    //     startDatetime: '2018-09-07',
-    //     rangeAlign: 'center'
-    // });
-
-    // $("#myTimeline").on('afterRender.timeline', function(){
-    //     // usage bootstrap's popover
-    //     $('.timeline-node').each(function(){
-    //         if ( $(this).data('toggle') === 'popover' ) {
-    //             $(this).attr( 'title', $(this).text() );
-    //             $(this).popover({
-    //                 trigger: 'hover'
-    //             });
-    //         }
-    //     });
-    // });
-    // END: jqeury timeline calendar code
     
     /* Start Adding your javascript here */
     $('#notifications').hide();
@@ -61,7 +45,7 @@ $(document).ready(function () {
     });
 
 
-    var timingVar=2; // because epresrioption.html has  timing1 used.
+    var timingVar=2; // because epresription.html has  timing1 used.
     // START: meant for dynamic addition of rows in a table for symptoms and medicines
     $(".addCF").click(function(){
         $("#customFields").append("\
@@ -96,7 +80,7 @@ $(document).ready(function () {
     //END
 
 
-    /* Start Adding your javascript here */
+    /* START: calendar utility functions like getTodayDate */
     function getTodayDate(){
         var today = new Date();
         var dd = today.getDate();
@@ -114,6 +98,10 @@ $(document).ready(function () {
         today = yyyy + '/' + mm + '/' + dd;
         return(today);
     }
+
+    // END
+
+    // START: Calendar updation with basic UI
 
     $("#calendar").fullCalendar({
         header: {
@@ -204,72 +192,15 @@ $(document).ready(function () {
             },
         ]
     });
-    // var someEvent1 = {
-    //         title: 'Birthday Party',
-    //         start: '2018-10-12T23:00:00'
-    //     }
-    // function temp(){
-    //     var someEvent2 = {
-    //             title: 'Click for Google',
-    //             url: 'http://google.com/',
-    //             start: '2018-10-12'
-    //         }
-    //     return someEvent2;
-    // }
-    // $("#calendar").fullCalendar("renderEvent",someEvent1,"stick");
-    // $("#calendar").fullCalendar("renderEvent",temp(),"stick");
 
-
-    // END: jqeury timeline calendar code
-
-
-
-
-    // $('#navbar-toggler').click(function(){
-    //     console.log('pressed');
-    //     $('#notifications').toggle("slow");
-    // });
-    // /* End Adding your javascript here */
-    // function deleteRow(row) {
-    //   var i = row.parentNode.parentNode.rowIndex;
-    //   document.getElementById('POITable').deleteRow(i);
-    // }
-
-
-    // function insRow() {
-    //   console.log('hi');
-    //   var x = document.getElementById('POITable');
-    //   var new_row = x.rows[1].cloneNode(true);
-    //   var len = x.rows.length;
-    //   new_row.cells[0].innerHTML = len;
-
-    //   var inp1 = new_row.cells[1].getElementsByTagName('input')[0];
-    //   inp1.id += len;
-    //   inp1.value = '';
-    //   var inp2 = new_row.cells[2].getElementsByTagName('input')[0];
-    //   inp2.id += len;
-    //   inp2.value = '';
-    //   x.appendChild(new_row);
-    // }
-
-    // $('#submitBtn').on("click",function(e){
-    //     console.log($('.form').serialize());
-    //     alert(12312312);
-
-    //     $.ajax({
-    //       url: '/eprescription',
-    //       data: ;
-    //     })
-    //     return false;
-    // });
-
-
+    // END
+    
+    // START: Check history of number of patients seen for Doctor and plot a line chart
 
     $("#doctorHistoryBtn").on("click", function (event) {
         var inpData = {
             searchBy : $("#date-input").val(),
-            //searchByy : $("#doctorHistoryBtn1").val()
-            //month : $("#doctorHistoryBtn").val(),
+            
         };
         $.ajax({
             url: 'checkDoctorsHistory',
@@ -306,21 +237,7 @@ $(document).ready(function () {
                   }
             });
             
-            var pie_ctx = document.getElementById('pieChart').getContext('2d');
-            var myDoughnutChart = new Chart(pie_ctx, {
-                type: 'doughnut',
-                data: {
-                  labels: ['Red','Yellow','Blue'],
-                  datasets: [{
-                    data: [10, 20, 30],
-                    backgroundColor: ['red', 'blue', 'yellow']
-                  }]
-                },
-                
-                options: {
-                  responsive: true
-                }
-            });
+            
             $("#lineChart").fadeIn();
 
         })
@@ -333,9 +250,9 @@ $(document).ready(function () {
         });
     })
 
+    // END
 
-
-
+    // START: Search bar for Patient's History
     $("#patientIDSeachBtn").on("click",function (event) {
         var inpData = {
             patientID : $("#patientIDInp").val()
@@ -366,31 +283,15 @@ $(document).ready(function () {
             data: inpData,
         })
         .done(function(data) {
-            // 0:
-            // description:Array(1)
-            // ePrescriptionID:Array(1)
-            // medicineSuggestion:Array(2)
-            // symptoms:Array(2)
-            // testType:Array(1)
+            
             console.log("Success");
             $('#patient-details li').remove();
             // console.log(data);
 
             var spans = null;
             $.each(data,function(index,value){
-                // console.log(index);
-                // console.log(value["description"]);
-                // console.log(value["ePrescriptionID"]);
-                // console.log(value["medicineSuggestion"]);
-                // console.log(value["symptoms"]);
-                // console.log(value["testType"]);
+                
                 console.log(value);
-
-                // value["ePrescriptionID"] = ["1234"];
-                // value["description"] = ["helloworeadfsgbjv sfdv fsadgvds"];
-                // value["testType"] = ["hello", "one", "two", "three", "hello", "one", "two"];
-                // value["medicineSuggestion"] = ["med1", "med2","med1", "med2","med1", "med2"];
-                // value["symptoms"] = ["cold", "cough", "random"];
 
                 $("#patient-details").append("<li class='list-group-item' style='margin-top:10px;'><strong>PrescriptionID:  </strong><span class='badge' style='background: skyblue; margin-left:2px;'>" + value["ePrescriptionID"] + "</span></li>");
 
@@ -429,3 +330,5 @@ $(document).ready(function () {
         });
     })
 });
+
+    // END
