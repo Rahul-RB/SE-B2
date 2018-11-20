@@ -1,12 +1,11 @@
 {% extends "Base/base.html" %}
 
 {% block customCSS %}
-<link rel="stylesheet" href={{ url_for("static",filename="css/Pharmacy/pharmacyViewRequest.css") }}>
+    <link rel="stylesheet" href={{ url_for("static",filename="css/Pharmacy/pharmacyViewRequest.css") }}>
 {% endblock %}
 
 {% block customContent %}
-            <!-- START EDITING FROM HERE -->
-			 <div id="customContent">
+    <!-- START EDITING FROM HERE -->
     <div class="container-fluid">
         <div class="row" id="welcomeDiv">
             <div class="col-xl-4 col-lg-4 col-md-12 col-4">
@@ -15,103 +14,93 @@
 
         </div>
 
-
-
-
         <div class="col-lg-9 col-md-8">
             <div class="table-responsive">
                 <table class="table table-striped" id="TableDisplay">
                     <!--thead class="thead-inverse">
-                        <tr>
-                            <th>SL#</th>
-			    <th>Patient_ID</th>
-			    <th>Medicine</th>
-                            <th>Medicine</th>
-                            <th>Medicine</th>
-			    <th> Action </th>
-                        </tr>
-                    </thead--->
+                            <tr>
+                                <th>SL#</th>
+                    <th>Patient_ID</th>
+                    <th>Medicine</th>
+                                <th>Medicine</th>
+                                <th>Medicine</th>
+                    <th> Action </th>
+                            </tr>
+                        </thead--->
                     <tbody>
                         <!-- Need to Insert here --->
                     </tbody>
                 </table>
             </div>
         </div>
-	</div>
-	<!--div class="modal" id="myModal" role="dialog">
-		<div class="modal-content">
-    			<span class="close">&times;</span>
-    			<p>Some text in the Modal..</p>
-  		</div>
-	</div--->
-    
-    <!--div id="myModal" class="modal fade" role="dialog">
-  	<div class="modal-dialog">
-   <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <p>Some text in the modal.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
     </div>
+    <!--div class="modal" id="myModal" role="dialog">
+            <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Some text in the Modal..</p>
+            </div>
+        </div--->
 
-  </div>
-</div--->
+    <!--div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+       <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body">
+            <p>Some text in the modal.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div--->
     <!--/row-->
 
-	<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    	<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header" align="center">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-                
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" align="center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
                 <!-- Begin # DIV Form -->
                 <div id="div-forms">
-                
+
                     <!-- Begin # Login Form -->
                     <form id="response-form">
-<form method="POST" action="/eprescription">
-		                <div class="modal-body">
-				 <div id="div-login-msg">
-                                <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right">Response</div>
+                        <form method="POST" action="/eprescription">
+                            <div class="modal-body">
+                                <div id="div-login-msg">
+                                    <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right">Response</div>
+                                </div>
+                                <input name="prescriptionID" id="prescriptionID" class="form-control" type="text">
+                                <input name="patientID" id="patientID" class="form-control" type="text">
+                                <textarea rows="4" columns="50" id="response" class="form-control" type="text" placeholder="Enter Resopnse"></textarea>
+
                             </div>
-				    		<input name = "prescriptionID" id="prescriptionID" class="form-control" type="text">
-				    		<input name="patientID" id="patientID" class="form-control" type="text">
-						<textarea rows="4" columns="50" id="response" class="form-control" type="text" placeholder ="Enter Resopnse"></textarea>
-                            
-        		    	</div>
-				        <div class="modal-footer">
-                            <div>
-                                <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">Submit</button>
+                            <div class="modal-footer">
+                                <div>
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">Submit</button>
+                                </div>
+
                             </div>
-				    	   
-				        </div>
-                    </form>
-                    <!-- End # Login Form -->
-                    
-                    
-                    
+                        </form>
+                        <!-- End # Login Form -->
+
                 </div>
                 <!-- End # DIV Form -->
-                
-			</div>
-		</div>
-	</div>					
-						
-						
-            <!-- Once you're developing, delete below div -->
-                 
-            
+        </div>
+    </div>
 
-            <!-- END EDITING HERE -->
+<!-- Once you're developing, delete below div -->
+
+<!-- END EDITING HERE -->
             
         
 
@@ -119,6 +108,6 @@
 
 
 {% block customJS %}
-<script src={{ url_for("static",filename="js/Pharmacy/pharmacyViewRequest.js") }}></script>
+    <script src={{ url_for("static",filename="js/Pharmacy/pharmacyViewRequest.js") }}></script>
 
 {% endblock %}

@@ -1,4 +1,4 @@
-$(document).ready(function() {
+// $(document).ready(function() {
     $.ajax({
             url: 'prescriptionRequest'
         })
@@ -130,4 +130,4 @@ $(document).ready(function() {
         //alert(a.rows[i].cells[0].innerHTML);
 
     }    
-});
+// });
