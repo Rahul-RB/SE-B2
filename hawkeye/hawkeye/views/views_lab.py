@@ -23,11 +23,11 @@ def allowed_file(filename):
 def upload_file():
    if request.method == 'POST':
       if 'file' not in request.files:
-          flash("Error occured")
+          flash("Error occured", "lab")
           return redirect(url_for("lab"))
       file = request.files['file']
       if file.filename == '':
-          flash("Error occured")
+          flash("Error occured","lab")
           return redirect( url_for("lab"))
       if file and allowed_file(file.filename):
           labRequestId=str(request.form["labReqId"])
@@ -40,11 +40,11 @@ def upload_file():
           file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
           result=models_lab.putLabReponse(labRequestId, str(filename), description)
           if (result):
-            flash("Successful Entry")
+            flash("Successful Entry","lab")
           else:
-            flash("Error occured")
+            flash("Error occured","lab")
           return redirect(url_for("lab")) 
-      flash("Error occured")
+      flash("Error occured","lab")
       return redirect( url_for("lab"))
 
 @app.route("/labExistingResponse")
@@ -68,7 +68,7 @@ def uploaded_file(filename):
     try:
       return send_file('uploads/'+str(filename),as_attachment=True)
     except Exception as e:
-      flash("File not Found")
+      flash("File not Found","lab")
       return redirect(url_for("lab"))
 
 @app.route("/lab")
