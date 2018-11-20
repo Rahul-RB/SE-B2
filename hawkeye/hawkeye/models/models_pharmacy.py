@@ -59,7 +59,9 @@ def prescriptionResponseUpdate(payload,pharmacyID):
 # START : Pharmacy FUNCTIONS
 # Get the required details for the pharmacy
 def getpharmacytitle(email):
-    query="SELECT p.pharmacyName, p.address, p.phoneNO from PharmacyDetails p, PharmacyLogin  WHERE PharmacyLogin.email='"+email+"';"
+    query= "SELECT pharmacyName,address,phoneNO \
+            FROM PharmacyDetails \
+            WHERE email in (SELECT email FROM PharmacyLogin WHERE email='{0}')".format(email)
     print(query)
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()

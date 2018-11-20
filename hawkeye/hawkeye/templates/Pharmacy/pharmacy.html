@@ -8,16 +8,14 @@
 {% endblock %}
 
 {% block customContent %}
-<div id="customContent">
-        <div class="container-fluid">
+    <div class="container-fluid">
         <div class="row" id="welcomeDiv">
-        {% for d in data %}
+            {% for d in data %}
             <div class="col-xl-4 col-lg-4 col-md-12 col-4">
                 Welcome back {{d[0]}}
             </div>
             <div class="col-xl-4 col-lg-4 col-md-12 col-4">
                 Address: {{d[1]}}
-
 
             </div>
             <div class="col-xl-4 col-lg-4 col-md-12 col-4">
@@ -25,65 +23,54 @@
             </div>
         </div>
         {% endfor %}
-		<hr class="welcomeHorLine">
-							<div class="row">
-							<div class="col-lg-3 col-md-4">
-							<div class="card">
-      
-							<div class="card-body">
-							<h4 class="card-title">Requests</h4>
-							<p class="card-text">Click here to view all the medicine requests</p>
-							<a href="request.html" class="btn btn-primary">Request</a>
-							</div>
-							</div>
-							
-							
-							<div class="card">
+        <hr class="welcomeHorLine">
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h4 class="card-title">Requests</h4>
+                        <p class="card-text">Click here to view all the medicine requests</p>
+                        <a href="request.html" class="btn btn-primary">Request</a>
+                    </div>
+                </div>
+
+                <div class="card">
                     <div class="card-body">
                         <h3 class="card-title">Prescripition</h3>
                         <p class="card-text">Enter Patient_id </p>
-                    
-							
-							<form class="form-horizontal" action="{{ url_for('pharmacy_prescription') }}" method="post" role="form" id="Cent">
 
-                        
-						<div style ="margin-left:10px" class="form-group">
-                            
-                            
+                        <form class="form-horizontal" action="{{ url_for('pharmacy_prescription') }}" method="post" role="form" id="Cent">
+
+                            <div style="margin-left:10px" class="form-group">
+
                                 <input type="ID" class="form-control" id="ID" placeholder="Enter ID" name="patID">
-                            
-                        </div>
 
-                        <div class="form-group" style ="margin-left: 10px">
-                            <div class="offset-lg-2 col-lg-10" >
-                                <button type="submit" form="Cent" class="btn btn-primary">Submit</button>
                             </div>
-                        </div>
-                    </form>  </div>
-							   </div>             
-							</div>
-							
-							
-		
-		
-		
-		
-		
-		
-		
-<!--
-                    <hr class="welcomeHorLine">
-							<div class="row">
-							<div class="col-lg-3 col-md-4">
-							<div class="card">
 
-							<div class="card-body">
-							<h4 class="card-title">Requests</h4>
-							<p class="card-text">Click here to view all the medicine requests</p>
-							<a href="request.html" class="btn btn-primary">Request</a>
-							</div>
-							</div>
-							</div>
+                            <div class="form-group" style="margin-left: 10px">
+                                <div class="offset-lg-2 col-lg-10">
+                                    <button type="submit" form="Cent" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+                    <hr class="welcomeHorLine">
+              <div class="row">
+              <div class="col-lg-3 col-md-4">
+              <div class="card">
+
+              <div class="card-body">
+              <h4 class="card-title">Requests</h4>
+              <p class="card-text">Click here to view all the medicine requests</p>
+              <a href="request.html" class="btn btn-primary">Request</a>
+              </div>
+              </div>
+              </div>
 
                 <div class="row">
                     <form class="form-horizontal" action="{{ url_for('pharmacy_prescription') }}" method="post" role="form" id="Cent">
@@ -105,68 +92,61 @@
                 </div>
             </div>
         </div> -->
-    
-    
-    
-        
-        
-        
+
             <div class="col-xl-3 col-lg-3 col-md-3 col-3">
-              <div id="piecontainer" style="height: 400px; min-width: 120px" style="padding: 10px 10px 10px 10px;"></div>
+                <div id="piecontainer" style="height: 400px; min-width: 120px" style="padding: 10px 10px 10px 10px;"></div>
             </div>
-			<div class="col-xl-5 col-lg-5 col-md-5 col-5 table-responsive-sm" style="padding: 10px 10px 10px 10px;">
-              <div id="linecontainer" style="min-width: 120px; height: 400px; margin: 0 auto"></div>
+            <div class="col-xl-5 col-lg-5 col-md-5 col-5 table-responsive-sm" style="padding: 10px 10px 10px 10px;">
+                <div id="linecontainer" style="min-width: 120px; height: 400px; margin: 0 auto"></div>
             </div>
-            </div>
-</div>
-</div>
+        </div>
+    </div>
 
 {% endblock %}
 {% block customJS %}
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-            
-            <script src="https://code.highcharts.com/modules/exporting.js"></script>
-            <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
 
 
 
-      <script type=text/javascript>
-          /*PieChart*/
-              Highcharts.chart('piecontainer', {
-                chart: {
-                  type: 'pie',
-                  options3d: {
+    <script type=text/javascript>
+    /*PieChart*/
+    Highcharts.chart('piecontainer', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: 'Medicine Request'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
                     enabled: true,
-                    alpha: 45,
-                    beta: 0
-                  }
-                },
-                title: {
-                  text: 'Medicine Request'
-                },
-                tooltip: {
-                  pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                plotOptions: {
-                  pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    depth: 35,
-                    dataLabels: {
-                      enabled: true,
-                      format: '{point.name}'
-                    }
-                  }
-                },
-                series: [{
-                  type: 'pie',
-                  name: 'Medicine Request',
-                  data: {{ pie | tojson | safe }}
-
-                }]
-              });
-          </script>
+                    format: '{point.name}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Medicine Request',
+            data: {{ pie | tojson | safe }}
+        }]
+    });
+    </script>
 
 <script type="text/javascript">
       var reqObj= {{ pharmacyReqData | tojson | safe }};
