@@ -131,7 +131,11 @@ def graph(email):
         #print(data1)
     return (medarray);
 def getNumberOfRequests(email):
-    query="select DATE(mr.pickupTime) , COUNT(DATE(mr.pickupTime)) from MedicineRequest mr, PharmacyDetails pd where isPending=1 and pd.pharmacyID=mr.pharmacyID and pd.email='"+email+"' group by DATE(pickupTime) order by DATE(pickupTime) ;"
+    query="SELECT DATE(mr.pickupTime) , COUNT(DATE(mr.pickupTime))\
+           FROM MedicineRequest mr, PharmacyDetails pd \
+           WHERE isPending=1 AND pd.pharmacyID=mr.pharmacyID AND pd.email='{0}'\
+           GROUP BY DATE(pickupTime) ORDER BY DATE(pickupTime)".format(email)
+           
     # query="select DATE(dateTimeStamp) , COUNT(DATE(dateTimeStamp)) from LabRequest\
     #        where isPending=1 and labID='"+labid+"' group by DATE(dateTimeStamp) order by DATE(dateTimeStamp) ;"
     conn = mysql.connect()
