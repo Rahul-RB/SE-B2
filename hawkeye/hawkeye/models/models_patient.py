@@ -5,8 +5,6 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt  
 
-# from hawkeye import models 
-
 
 def patientMedReminderUpdate(patientID):
     res = {
@@ -30,7 +28,9 @@ def patientMedReminderUpdate(patientID):
     res["TakeMedicine"] = takeMedicineRes
     
     # Order Medicine updates:
-    query = "SELECT ePrescriptionID,reminderDate,reminderTime FROM MedicineReminder WHERE patientID='{0}'".format(patientID)
+    query = "SELECT ePrescriptionID,reminderDate,reminderTime \
+             FROM MedicineReminder \
+             WHERE patientID='{0}'".format(patientID)
     queryResults = cursor.execute(query)
     data = cursor.fetchall()
     cursor.close()
@@ -45,9 +45,10 @@ def patientMedReminderUpdate(patientID):
 
     return res
 
-    # patientID,labID,labRequestDocumentID,reminderDate,reminderTime
 def patientLabVisitReminderUpdate(patientID):
-    query = "SELECT labID,labRequestDocumentID,reminderDate,reminderTime FROM LabVisitReminder WHERE patientID='{0}'".format(patientID)
+    query = "SELECT labID,labRequestDocumentID,reminderDate,reminderTime \
+             FROM LabVisitReminder \
+             WHERE patientID='{0}'".format(patientID)
 
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
@@ -64,7 +65,9 @@ def patientLabVisitReminderUpdate(patientID):
     return labVisitRes
 
 def patientDocVisitReminderUpdate(patientID):
-    query = "SELECT doctorID,reminderDate,reminderTime FROM DoctorVisitReminder WHERE patientID='{0}'".format(patientID)
+    query = "SELECT doctorID,reminderDate,reminderTime \
+             FROM DoctorVisitReminder \
+             WHERE patientID='{0}'".format(patientID)
 
     conn = mysql.connect()
     cursor =mysql.get_db().cursor()
@@ -118,7 +121,8 @@ def patientDoctorAppointment(patientID,payload,method):
         # return json of available times.
         # query = "SELECT"
 
-        query = "INSERT INTO DoctorAppointments VALUES ('{0}','{1}','{2}','{3}','{4}')".format(\
+        query = "INSERT INTO DoctorAppointments \
+                VALUES ('{0}','{1}','{2}','{3}','{4}')".format(\
                 patientID,
                 payload["doctorID"],
                 payload["apptDate"],
@@ -145,7 +149,9 @@ def patientDoctorAppointment(patientID,payload,method):
 
 def patientLabRequest(ID,payload,method): #ID is labID if POST, patientID if GET
     if(method=="GET"):
-        query = "SELECT doctorID,ePrescriptionID,testType,description FROM ELabRequestDocument WHERE patientID='{0}' AND labRequestDocumentID IN (\
+        query = "SELECT doctorID,ePrescriptionID,testType,description \
+                 FROM ELabRequestDocument \
+                 WHERE patientID='{0}' AND labRequestDocumentID IN (\
                  SELECT labRequestDocumentID FROM LabRequest WHERE isPending=1\
                 )".format(ID)
 
@@ -168,7 +174,8 @@ def patientLabRequest(ID,payload,method): #ID is labID if POST, patientID if GET
         # get date from form
         # return json of available times.
 
-        query = "INSERT INTO LabRequest VALUES ('{0}','{1}','{2}','{3}')".format(\
+        query = "INSERT INTO LabRequest \
+                VALUES ('{0}','{1}','{2}','{3}')".format(\
                 payload["labRequestDocumentID"],
                 payload["labID"],
                 payload["apptDate"],
@@ -196,24 +203,16 @@ def patientLabRequest(ID,payload,method): #ID is labID if POST, patientID if GET
 def patientMedicineRequest(ID,payload,method):
     if(method=="GET"):
 
-        queryGetAllPrescriptions = "SELECT * FROM MedicineRequest WHERE patientID={0} AND isPending=1".format(ID);
+        queryGetAllPrescriptions = "SELECT * \
+                                    FROM MedicineRequest \
+                                    WHERE patientID={0} \
+                                    AND isPending=1".format(ID);
         
-        # queryPrescriptionDetails = "SELECT MedicineDetails.symptoms,MedicineDetails.medicineSuggestion,MedicineDetails.timeToTake,MedicineDetails.startDate,MedicineDetails.endDate\
-        #                             FROM MedicineRequest,MedicineDetails \
-        #                             WHERE MedicineDetails.ePrescriptionID <=> MedicineRequest.ePrescriptionID \
-        #                             AND MedicineRequest.patientID<=>'{0}'".format(ID);
-        # queryPrescriptionDetails = "SELECT * FROM MedicineDetails \
-        #                             WHERE ePrescriptionID IN (SELECT ePrescriptionID FROM MedicineRequest WHERE \
-        #                             patientID = {0} \
-        #                             )".format(ID)
         conn = mysql.connect()
         cursor =mysql.get_db().cursor()
 
         queryGetAllPrescriptionsRes = cursor.execute(queryGetAllPrescriptions)
         data1 = cursor.fetchall()
-
-        # queryPrescriptionDetailsRes = cursor.execute(queryPrescriptionDetails)
-        # data2 = cursor.fetchall()
 
         cursor.close()
         conn.close()
@@ -222,7 +221,7 @@ def patientMedicineRequest(ID,payload,method):
         for i,result in enumerate(data1):
             res[i] = [str(result[0]),str(result[1]),str(result[2]),str(result[3]),str(result[4])]
 
-        print("---------------data1---------------------\n",data1)
+        # print("---------------data1---------------------\n",data1)
         # print("---------------data2---------------------\n",data2)
         # for i,result in enumerate(data1):
 
@@ -232,7 +231,8 @@ def patientMedicineRequest(ID,payload,method):
         # get date from form
         # return json of available times.
 
-        query = "INSERT INTO MedicineRequest VALUES ('{0}','{1}','{2}','{3}','{4}')".format(\
+        query = "INSERT INTO MedicineRequest \
+                VALUES ('{0}','{1}','{2}','{3}','{4}')".format(\
                 payload["ePrescriptionID"],
                 ID,
                 payload["pharmacyID"],
@@ -256,7 +256,9 @@ def patientMedicineRequest(ID,payload,method):
             return {"Failed":True}
 
 def getAvailableTimeSlots(doctorID,inpDate):
-    query = "SELECT pickATime FROM DoctorAppointments WHERE doctorID='{0}' AND dateStamp='{1}'".format(\
+    query = "SELECT pickATime \
+             FROM DoctorAppointments \
+             WHERE doctorID='{0}' AND dateStamp='{1}'".format(\
                 doctorID,
                 inpDate
             )
@@ -298,10 +300,6 @@ def patientFetchPrescriptions(patientID):
     return res
 
 def patientLabResponse(patientID): 
-    # query = "SELECT doctorID,ePrescriptionID,testType,description FROM ELabRequestDocument WHERE patientID='{0}' AND labRequestDocumentID IN (\
-    #          SELECT labRequestDocumentID FROM LabResponse\
-    #         )".format(patientID)
-
     query = "SELECT * FROM LabResponse WHERE labRequestID IN \
     (SELECT labRequestDocumentID FROM ELabRequestDocument WHERE patientID='{0}')".format(patientID)
     
