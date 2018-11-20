@@ -2,25 +2,76 @@
 
 {% block customCSS %}
 
+    <!-- Our Custom CSS -->
+
+
 {% endblock %}
 
 {% block customContent %}
-    <!-- START EDITING FROM HERE -->
-		<div id="customContent">
+<div id="customContent">
         <div class="container-fluid">
         <div class="row" id="welcomeDiv">
+        {% for d in data %}
             <div class="col-xl-4 col-lg-4 col-md-12 col-4">
-                Welcome back XYZ
+                Welcome back {{d[0]}}
             </div>
             <div class="col-xl-4 col-lg-4 col-md-12 col-4">
-                Address:Abc
+                Address: {{d[1]}}
+
+
             </div>
             <div class="col-xl-4 col-lg-4 col-md-12 col-4">
-                Ph_no:123
+                Ph_no: {{d[2]}}
             </div>
         </div>
-        
+        {% endfor %}
+		<hr class="welcomeHorLine">
+							<div class="row">
+							<div class="col-lg-3 col-md-4">
+							<div class="card">
+      
+							<div class="card-body">
+							<h4 class="card-title">Requests</h4>
+							<p class="card-text">Click here to view all the medicine requests</p>
+							<a href="request.html" class="btn btn-primary">Request</a>
+							</div>
+							</div>
+							
+							
+							<div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Prescripition</h3>
+                        <p class="card-text">Enter Patient_id </p>
+                    
+							
+							<form class="form-horizontal" action="{{ url_for('pharmacy_prescription') }}" method="post" role="form" id="Cent">
 
+                        
+						<div style ="margin-left:10px" class="form-group">
+                            
+                            
+                                <input type="ID" class="form-control" id="ID" placeholder="Enter ID" name="patID">
+                            
+                        </div>
+
+                        <div class="form-group" style ="margin-left: 10px">
+                            <div class="offset-lg-2 col-lg-10" >
+                                <button type="submit" form="Cent" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>  </div>
+							   </div>             
+							</div>
+							
+							
+		
+		
+		
+		
+		
+		
+		
+<!--
                     <hr class="welcomeHorLine">
 							<div class="row">
 							<div class="col-lg-3 col-md-4">
@@ -29,18 +80,18 @@
 							<div class="card-body">
 							<h4 class="card-title">Requests</h4>
 							<p class="card-text">Click here to view all the medicine requests</p>
-							<a href={{url_for("pharmacyViewRequest")}} class="btn btn-primary">Request</a>
+							<a href="request.html" class="btn btn-primary">Request</a>
 							</div>
 							</div>
 							</div>
 
                 <div class="row">
-                    <form class="form-horizontal" action="new.html" method="get" role="form" id="Cent">
+                    <form class="form-horizontal" action="{{ url_for('pharmacy_prescription') }}" method="post" role="form" id="Cent">
 
                         <div class="form-group">
                             <label for="ID" class="col-lg-2 control-label">Patient_id</label>
                             <div class="col-lg-10">
-                                <input type="ID" class="form-control" id="ID" placeholder="ID">
+                                <input type="ID" class="form-control" id="ID" placeholder="ID" name="patID">
                             </div>
                         </div>
 
@@ -53,21 +104,134 @@
 
                 </div>
             </div>
-        </div>
-    </div>
-
-
-
-
-                    <!-- Once you're developing, delete below div -->
-
-
-
-                    <!-- END EDITING HERE -->
-            {% endblock %}
-
-
-{% block customJS %}
-
+        </div> -->
     
+    
+    
+        
+        
+        
+            <div class="col-xl-3 col-lg-3 col-md-3 col-3">
+              <div id="piecontainer" style="height: 400px; min-width: 120px" style="padding: 10px 10px 10px 10px;"></div>
+            </div>
+			<div class="col-xl-5 col-lg-5 col-md-5 col-5 table-responsive-sm" style="padding: 10px 10px 10px 10px;">
+              <div id="linecontainer" style="min-width: 120px; height: 400px; margin: 0 auto"></div>
+            </div>
+            </div>
+</div>
+</div>
+
 {% endblock %}
+{% block customJS %}
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+            
+            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+
+
+
+      <script type=text/javascript>
+          /*PieChart*/
+              Highcharts.chart('piecontainer', {
+                chart: {
+                  type: 'pie',
+                  options3d: {
+                    enabled: true,
+                    alpha: 45,
+                    beta: 0
+                  }
+                },
+                title: {
+                  text: 'Medicine Request'
+                },
+                tooltip: {
+                  pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                  pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    depth: 35,
+                    dataLabels: {
+                      enabled: true,
+                      format: '{point.name}'
+                    }
+                  }
+                },
+                series: [{
+                  type: 'pie',
+                  name: 'Medicine Request',
+                  data: {{ pie | tojson | safe }}
+
+                }]
+              });
+          </script>
+
+<script type="text/javascript">
+      var reqObj= {{ pharmacyReqData | tojson | safe }};
+          var reqLineData= new Array();
+          /*Converting date to Date.UTC*/
+          for (i=0;i<reqObj.length;i++){
+              var entry= reqObj[i];
+              var date_str= entry[0];
+              date_str= date_str.split('-');
+              reqLineData.push(new Array( Date.UTC(parseInt(date_str[0]),parseInt(date_str[1]),parseInt(date_str[2])) , entry[1]));
+          }
+          /*LabResponse Timeline Data*/
+
+          /*LineChart*/
+          Highcharts.chart('linecontainer', {
+            chart: {
+              type: 'spline'
+            },
+            title: {
+              text: 'Performance Summary'
+            },
+             xAxis: {
+              type: 'datetime',
+              dateTimeLabelFormats: { // don't display the dummy year
+                month: '%e. %b',
+                year: '%b'
+              },
+              title: {
+                text: 'Date'
+              }
+            },
+            yAxis: {
+              title: {
+                text: 'Frequency'
+              },
+              min: 0
+            },
+            tooltip: {
+              headerFormat: '<b>{series.name}</b><br>',
+              pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
+            },
+            plotOptions: {
+              spline: {
+                marker: {
+                  enabled: true
+                }
+              }
+            },
+            colors: ['#C50', '#59F', '#06F', '#036', '#080'],
+            // Define the data points. All series have a dummy year
+            // of 1970/71 in order to be compared on the same x axis. Note
+            // that in JavaScript, months start at 0 for January, 1 for February etc.
+            series: [{
+              name: "Requests",
+              data: reqLineData
+              },
+              ]
+          });
+
+
+
+</script>
+          </script>
+
+
+
+
+    {% endblock %}
