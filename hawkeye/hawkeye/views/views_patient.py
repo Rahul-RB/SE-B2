@@ -22,7 +22,8 @@ def patient():
         return redirect(url_for("login"),302)
     return render_template("Patient/patient.html",
                             title="Patient",
-                            user=models_common.getUsernameByEmail(session.get("currentEmail"),session.get("accType")), 
+                            user=models_common.getUsernameByEmail(session.get("currentEmail"),session.get("accType")),
+                            userID=models_common.getIDByEmail(session.get("currentEmail"),session.get("accType")), 
                             userLoggedIn=True)
 
 @app.route("/patientCalendarReminderUpdate")

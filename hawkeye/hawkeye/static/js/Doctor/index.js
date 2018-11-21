@@ -1,34 +1,6 @@
 // for updating the sidebar and navigation bar
 
 $(document).ready(function () {
-    /* Do not disturb below lines */
-    $("#sidebar").mCustomScrollbar({
-        theme: "minimal"
-    });
-
-    $('#dismiss, .overlay').on('click', function () {
-        $('#sidebar').removeClass('active');
-        $('.overlay').removeClass('active');
-    });
-
-    $('#sidebarCollapse').on('click', function () {
-        $('#sidebar').addClass('active');
-        $('.overlay').addClass('active');
-        $('.navbar-collapse.in').toggleClass('in');
-        // $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-    });
-
-    $('#navbarCollapseBtn').on('shown.bs.collapse', function () {
-        console.log("Toggled!");
-        $("#navbarCollapseBtnLink").children('.fa-align-justify').remove();
-    
-        $("#navbarCollapseBtnLink").append("<span><i class='fas fa-sliders-h'></i>&nbsp;&nbsp;&nbsp;Options</span>");
-        $("#navbarCollapseBtnEnv").append("&nbsp;&nbsp; Messages");
-        $("#navbarCollapseBtnBell").append("&nbsp;&nbsp; Notifications");
-        $("#navbarCollapseBtnUser").append("&nbsp;&nbsp; You");
-    
-    });
-    /* Do not disturb above lines */
     
     /* Start Adding your javascript here */
     $('#notifications').hide();
@@ -144,53 +116,7 @@ $(document).ready(function () {
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         eventLimit: true, // allow "more" link when too many events
-        events: [
-            {
-                title: 'All Day Event',
-                start: '2018-10-12',
-            },
-            {
-                title: 'Long Event',
-                start: '2018-10-12',
-                end: '2018-10-13'
-            },
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2018-10-13T16:00:00'
-            },
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2018-10-15T16:00:00'
-            },
-            {
-                title: 'Conference',
-                start: '2018-10-15',
-                end: '2018-10-17'
-            },
-            {
-                title: 'Meeting',
-                start: '2018-10-15T10:30:00',
-                end: '2018-10-16T12:30:00'
-            },
-            {
-                title: 'Lunch',
-                start: '2018-10-15T12:00:00'
-            },
-            {
-                title: 'Meeting',
-                start: '2018-10-17T14:30:00'
-            },
-            {
-                title: 'Happy Hour',
-                start: '2018-10-19T17:30:00'
-            },
-            {
-                title: 'Dinner',
-                start: '2018-10-21T20:00:00'
-            },
-        ]
+
     });
 
     // END

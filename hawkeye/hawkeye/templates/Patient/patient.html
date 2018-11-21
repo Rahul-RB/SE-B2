@@ -11,13 +11,18 @@
 {% block customContent %}
     <div class="container-fluid">
         <div class="row" id="welcomeDiv">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-left: 10px" id="welcomeDivTitle">
-                Welcome back {{ user }}
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="margin-left: 10px">
+                    Welcome back {{ user }}
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12" id="patientIDDiv">
+                Your Patient ID: {{ userID }}
             </div>
         </div>
         <hr class="welcomeHorLine">
 
-        <div class="container-fluid">
+        <div class="container-fluid" id="topRowContainer">
             <div class="row">
                 <div class="col-xl-5 col-lg-5 col-md-5 col-sm-10 col-12" id="topRowLeftWrapperCol">
                     <div class="topRowWrapper" id="topRowLeftWrapper">
@@ -244,7 +249,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="topRowWrapper col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12" id = "myTimelineCol">
+                <div class="topRowWrapper col-xl-7 col-lg-7 col-md-7 col-12" id = "myTimelineCol">
                     <div id="calendar" style="padding-top: 10px;padding-bottom: 10px">
                         
                     </div>
