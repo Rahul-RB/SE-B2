@@ -312,7 +312,6 @@ buck-out/
 
 ### ReactNative.Android Stack ###
 # Built application files
-*.apk
 *.ap_
 
 # Files for the ART/Dalvik VM

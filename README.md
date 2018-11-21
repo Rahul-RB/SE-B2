@@ -2,7 +2,6 @@
 
 [![Build Status](https://api.travis-ci.org/Rahul-RB/SE-B2.svg?branch=master)](https://travis-ci.org/Rahul-RB/SE-B2)
 
-> Huge thanks to Ganesh for providing expertise in CICD integration (TravisCI).
 
 > Do **NOT** put a Pull Request(PR) from your master branch. <br>
 > PR **SHOULD** come from a development branch of yours (i.e. a non-master branch) to my master branch.
@@ -11,6 +10,11 @@
 - Check `requirements.txt`
 
 ### How to run?
+#### As an android app:
+- Download app_debug.apk
+- Install it in your mobile
+
+#### As a website:
 `cd hawkeye/` 
 > Add your Database root password into `__init__.py`
 
