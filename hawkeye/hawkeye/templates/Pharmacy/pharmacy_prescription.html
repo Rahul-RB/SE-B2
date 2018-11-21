@@ -1,97 +1,73 @@
-{% extends "Base/base.html" %}
-
-{% block customCSS %}
-
-{% endblock %}
+{% extends "Base/base.html" %} 
+{% block customCSS %} 
+{% endblock %} 
 
 {% block customContent %}
 
 <div id="customContent">
-                <div class="container-fluid">
-                    <div class="row" id="welcomeDiv">
-                      {% for d in data %}
-                        <div class="col-xl-4 col-lg-4 col-md-12 col-4">
-                            Welcome back {{d[0]}}
-                        </div>
-          <div class="col-xl-4 col-lg-4 col-md-12 col-4">
-                            Address: {{d[1]}}
-                        </div>
-          <div class="col-xl-4 col-lg-4 col-md-12 col-4">
-                            Ph_no: {{d[2]}}
-                        </div>
-                        {% endfor %}
+    <div class="container-fluid">
+        <div class="row" style=" margin-bottom: 10px;">
+            {% for d in data %}
+            <div class="col-xl-4 col-lg-4 col-md-12 col-4">
+                Welcome back {{d[0]}}
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12 col-4">
+                Address: {{d[1]}}
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12 col-4">
+                Ph_no: {{d[2]}}
+            </div>
+            {% endfor %}
+        </div>
+        <hr style="border: 0; 
+    height: 1px; 
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); 
+  padding-top:10px;">
+
+        <div class="row">
+            <div class="col-lg-3 col-md-4" style="padding: 10px 00px 10px 200px;">
+                
+
+                            <tr>
+
+                                <th> Patient_ID : {{details}}</th>
+
+                            </tr>
+                        </thead>
+
+                    </table>
+                </div>
+
+                <div class="col-lg-12 col-md-8" style="padding:10px 200px 100px 200px;">
+                    <div class="table-responsive">
+
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+    
+                  <th>ePrescriptionID</th>
+                  <th>Medicines</th>
+                                    <th>TimeToTake</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                {% for d in pharPresData %} 
+                                <tr>
+
+                                    <td>{{d[0]}}</td>
+                                    <td>{{d[1]}}</td>
+                                    <td>{{d[2]}}</td>
+                                </tr>
+                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
-        <hr class="welcomeHorLine">
-
-          <div class="row">
-          <div class="col-lg-3 col-md-4">
-          <div class="card">
-
-          <div class="card-body">
-          <h4 class="card-title">Subscribe</h4>
-          <p class="card-text">Diabetic Patient? Need reminder? Subscribe here for reminder! </p>
-          <a href="#" class="btn btn-primary">Subscribe</a>
-          </div>
-          </div>
-
-        <div class="card text-white" style="background-color: #333; border-color: #333;">
-        <div class="card-body">
-          <h3 class="card-title">Suggestion</h3>
-          <p class="card-text">Display if any medicine suggestion is there</p>
+                </div>
+            </div>
+            {% endblock %} 
         </div>
-        </div>
-
-          </div>
-
-<div class="col-lg-7 col-mg-8">
-<div class="table-responsive">
-  <table class="table table-striped">
-   <thead class="thead-inverse">
-
-
-    <tr>
-
-      <th> Patient_ID : {{details}}</th>
-
-
-
-
-    </tr>
-   </thead>
-
-  </table>
+    </div>
 </div>
 
-<div class="col-lg-12 col-md-8">
- <div class="table-responsive">
-  <table class="table table-striped">
-   <thead class="thead-inverse">
-    <tr>
-
-     <th>Medicines</th>
-     <th>TimeToTake</th>
-    </tr>
-   </thead>
-   <tbody>
-     {% for d in pharPresData %}
-    <tr>
-
-     <td>{{d[0]}}</td>
-     <td>{{d[1]}}</td>
-    </tr>
-    {% endfor %}
-
-
-
-
-   </tbody>
-  </table>
- </div>
-</div>
-</div>
-{% endblock %}
-
-
-{% block customJS %}
-
+{% block customJS %} 
 {% endblock %}

@@ -23,7 +23,10 @@
             </div>
         </div>
         {% endfor %}
-        <hr class="welcomeHorLine">
+        <hr style="border: 0; 
+    height: 1px; 
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); 
+  padding-top:10px;">
         <div class="row">
             <div class="col-lg-3 col-md-4">
                 <div class="card">
@@ -31,7 +34,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Requests</h4>
                         <p class="card-text">Click here to view all the medicine requests</p>
-                        <a href="request.html" class="btn btn-primary">Request</a>
+                        <a href="{{url_for("pharmacyViewRequest")}}" class="btn btn-primary">Request</a>
                     </div>
                 </div>
 
@@ -58,40 +61,7 @@
                 </div>
             </div>
 
-            <!--
-                    <hr class="welcomeHorLine">
-              <div class="row">
-              <div class="col-lg-3 col-md-4">
-              <div class="card">
-
-              <div class="card-body">
-              <h4 class="card-title">Requests</h4>
-              <p class="card-text">Click here to view all the medicine requests</p>
-              <a href="request.html" class="btn btn-primary">Request</a>
-              </div>
-              </div>
-              </div>
-
-                <div class="row">
-                    <form class="form-horizontal" action="{{ url_for('pharmacy_prescription') }}" method="post" role="form" id="Cent">
-
-                        <div class="form-group">
-                            <label for="ID" class="col-lg-2 control-label">Patient_id</label>
-                            <div class="col-lg-10">
-                                <input type="ID" class="form-control" id="ID" placeholder="ID" name="patID">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="offset-lg-2 col-lg-10">
-                                <button type="submit" form="Cent" class="btn btn-default">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-        </div> -->
+            
 
             <div class="col-xl-3 col-lg-3 col-md-3 col-3">
                 <div id="piecontainer" style="height: 400px; min-width: 120px" style="padding: 10px 10px 10px 10px;"></div>
