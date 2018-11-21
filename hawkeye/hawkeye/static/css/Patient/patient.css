@@ -235,6 +235,14 @@
         margin-top: 5px;
         margin-bottom: 10px;
     }
+    #patientIDDiv{
+        margin-left: 25px;
+    }
+    #topRowContainer,#myTimelineCol{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
 }
 
 /*
