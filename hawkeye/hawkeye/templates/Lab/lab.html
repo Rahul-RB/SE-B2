@@ -157,8 +157,8 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/series-label.js"></script>
     <script type="text/javascript">
-    /*displaying message from server*/
-        {% with messages = get_flashed_messages() %}
+    /*displaying message from server belonging to the lab category*/
+        {% with messages = get_flashed_messages(category_filter=["lab"]) %}
             {% if messages %}
                 {% for message in messages %}
                     alert( {{ message |tojson |safe }} );
