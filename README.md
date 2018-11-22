@@ -1,6 +1,10 @@
 # Hawkeye
-
 [![Build Status](https://api.travis-ci.org/Rahul-RB/SE-B2.svg?branch=master)](https://travis-ci.org/Rahul-RB/SE-B2)
+
+### This project has been effectively close as of November 22, 2018.
+### Thanks to all the contributors.
+
+
 
 
 > Do **NOT** put a Pull Request(PR) from your master branch. <br>
